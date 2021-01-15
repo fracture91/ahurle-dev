@@ -4,23 +4,23 @@
   "description": "A Medium inspired dev blog starter for Next.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/colinhacks/devii"
+    "url": "https://github.com/fracture91/ahurle-dev"
   },
-  "author": "Colin McDonnell <colin@colinhacks.com>",
+  "author": "Andrew Hurle <adhurle@gmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/colinhacks/devii/issues"
+    "url": "https://github.com/fracture91/ahurle-dev/issues"
   },
-  "homepage": "https://github.com/colinhacks/devii",
+  "homepage": "https://github.com/fracture91/ahurle-dev",
   "tags": [
-    "blog template",
+    "blog",
     "react",
     "nextjs",
     "syntax highlighting",
     "static generation"
   ],
   "keywords": [
-    "blog template",
+    "blog",
     "react",
     "nextjs",
     "syntax highlighting",
