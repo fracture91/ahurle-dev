@@ -1,7 +1,7 @@
 {
-  "name": "devii",
+  "name": "ahurle-dev",
   "version": "0.5.0",
-  "description": "A Medium inspired dev blog starter for Next.js",
+  "description": "ahurle.dev blog site, based on colinhacks/devii",
   "repository": {
     "type": "git",
     "url": "https://github.com/fracture91/ahurle-dev"
