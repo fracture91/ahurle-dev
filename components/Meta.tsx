@@ -31,8 +31,8 @@ export const Meta: React.FC<{
       <meta name="twitter:card" content="summary" />
       <meta name="twitter:title" content={meta.title} />
       {meta.desc && <meta name="twitter:description" content={meta.desc} />}
-      <meta name="twitter:site" content={globals.twitterHandle} />
-      <meta name="twitter:creator" content={globals.twitterHandle} />
+      {/* <meta name="twitter:site" content={globals.twitterHandle} /> */}
+      {/* <meta name="twitter:creator" content={globals.twitterHandle} /> */}
       {meta.image && <meta name="twitter:image" content={meta.image} />}
       {meta.image && <meta property="og:image" content={`${meta.image}`} />}
     </NextHead>
