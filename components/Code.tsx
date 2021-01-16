@@ -5,7 +5,8 @@ import { darcula } from 'react-syntax-highlighter/dist/cjs/styles/prism';
 // This is better than shipping every language together in one big chunk, but it would be even better if I could not
 // bother compiling anything besides the ~dozen languages I care about.
 // Not sure how to accomplish that without a lot of copypasta from react-syntax-highlighter.
-import { PrismAsyncLight as SyntaxHighlighter } from 'react-syntax-highlighter';
+import { Prism, PrismAsyncLight } from "react-syntax-highlighter";
+const SyntaxHighlighter = typeof window === "undefined" ? Prism : PrismAsyncLight;
 
 export default class Code extends React.PureComponent<{
   language: string;
