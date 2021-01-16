@@ -1,5 +1,5 @@
 import React from 'react';
-import { darcula } from 'react-syntax-highlighter/dist/cjs/styles/prism';
+import darcula from 'react-syntax-highlighter/dist/cjs/styles/prism/darcula';
 
 // Note that PrismAsyncLight will create one chunk for every language.
 // This is better than shipping every language together in one big chunk, but it would be even better if I could not
