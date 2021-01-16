@@ -8,6 +8,13 @@ import { darcula } from 'react-syntax-highlighter/dist/cjs/styles/prism';
 import { Prism, PrismAsyncLight } from "react-syntax-highlighter";
 const SyntaxHighlighter = typeof window === "undefined" ? Prism : PrismAsyncLight;
 
+const languageLongNames = {
+  "ts": "typescript",
+  "sh": "bash",
+} as const;
+
+const DEFAULT_LANGUAGE = "typescript";
+
 export default class Code extends React.PureComponent<{
   language: string;
   value?: string;
@@ -16,7 +23,7 @@ export default class Code extends React.PureComponent<{
     const { language, value } = this.props;
     return (
       <SyntaxHighlighter
-        language={(language === 'ts' ? 'typescript' : language) || 'typescript'}
+        language={languageLongNames[language as keyof typeof languageLongNames] || language || DEFAULT_LANGUAGE}
         style={darcula}
       >
         {value}
