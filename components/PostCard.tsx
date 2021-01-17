@@ -17,7 +17,7 @@ export const PostCard: React.FC<{ post: PostData }> = ({ post }) => {
           )}
           <div className="post-card-title">
             {post.title && <h2>{post.title}</h2>}
-            {false && post.subtitle && <p>{post.subtitle}</p>}
+            {post.subtitle && <p>{post.subtitle}</p>}
             <p>
               {post.datePublished
                 ? format(new Date(post.datePublished), 'MMMM Do, YYYY')

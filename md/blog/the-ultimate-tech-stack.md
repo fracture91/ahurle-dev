@@ -13,7 +13,6 @@ tags:
 thumbnailPhoto: /img/pancakes_thumb.jpeg
 bannerPhoto: /img/pancakes.jpeg
 bannerPhotoAlt: A stack of delicious pancakes
-canonicalUrl: https://colinhacks.com/essays/devii
 ---
 
 > Originally published at [https://colinhacks.com/essays/devii](https://colinhacks.com/essays/devii). Check out the HN <del>roast</del> discussion <a href="https://news.ycombinator.com/item?id=23309002">here</a>! 🤗
