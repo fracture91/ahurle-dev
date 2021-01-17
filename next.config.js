@@ -3,6 +3,7 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
 })
 
 module.exports = withBundleAnalyzer({
+  reactStrictMode: true,
   trailingSlash: true,
   webpack: function (config) {
     config.module.rules.push({
