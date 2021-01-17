@@ -2,14 +2,6 @@ import React from 'react';
 import { format } from 'fecha';
 import { PostData } from '../loader';
 
-export const FollowButton = () => {
-  return (
-    <a href="/newsletter">
-      <div className="follow-button">Follow</div>
-    </a>
-  );
-};
-
 export const Author: React.FC<{ post: PostData }> = (props) => {
   return (
     <div className="author-container">
