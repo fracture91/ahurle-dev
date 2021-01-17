@@ -4,7 +4,7 @@ import showdown from 'showdown';
 import { globals } from './globals';
 import { PostData } from './loader';
 
-export const generateRSS = async (posts: PostData[]) => {
+export const generateRSS = async (posts: PostData[]): Promise<void> => {
   posts.map((post) => {
     if (!post.canonicalUrl)
       throw new Error(

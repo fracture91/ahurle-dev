@@ -1,14 +1,14 @@
 import React from 'react';
+import { GetStaticPaths, GetStaticProps } from "next"
 import glob from 'glob';
 import { BlogPost } from '../../components/BlogPost';
-import { loadPost } from '../../loader';
+import { loadPost, PostData } from '../../loader';
 
-function Post(props: any) {
-  const { post } = props;
+const Post: React.FC<{post: PostData}> = ({ post }) => {
   return <BlogPost post={post} />;
 }
 
-export const getStaticPaths = () => {
+export const getStaticPaths: GetStaticPaths = async (_context) => {
   const blogs = glob.sync('./md/blog/*.md');
   const slugs = blogs.map((file: string) => {
     const popped = file.split('/').pop();
@@ -20,8 +20,8 @@ export const getStaticPaths = () => {
   return { paths, fallback: false };
 };
 
-export const getStaticProps = async ({ params }: any) => {
-  const post = await loadPost(`blog/${params.blog}.md`);
+export const getStaticProps: GetStaticProps<{post: PostData}, {blog: string}> = async ({ params }) => {
+  const post = await loadPost(`blog/${params?.blog}.md`);
   return { props: { post } };
 };
 

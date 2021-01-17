@@ -58,7 +58,7 @@ export const mdToPost = (file: RawFile): PostData => {
   return post as PostData;
 };
 
-export const loadMarkdownFiles = async (path: string) => {
+export const loadMarkdownFiles = async (path: string): Promise<RawFile[]> => {
   const blogPaths = glob.sync(`./md/${path}`);
   const postDataList = await Promise.all(
     blogPaths.map((blogPath) => {

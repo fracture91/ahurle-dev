@@ -2,37 +2,37 @@ import React from 'react';
 import { format } from 'fecha';
 import { PostData } from '../loader';
 
-export const Author: React.FC<{ post: PostData }> = (props) => {
+export const Author: React.FC<{ post: PostData }> = ({ post }) => {
   return (
     <div className="author-container">
       <div className="author">
-        {props.post.authorPhoto && (
-          <img src={props.post.authorPhoto} className="author-image" />
+        {post.authorPhoto && (
+          <img src={post.authorPhoto} className="author-image" />
         )}
-        <AuthorLines post={props.post} />
+        <AuthorLines post={post} />
       </div>
     </div>
   );
 };
 
-export const AuthorLines: React.FC<{ post: PostData }> = (props) => {
+export const AuthorLines: React.FC<{ post: PostData }> = ({ post }) => {
   return (
     <div>
       <p className="author-line">
-        {props.post.author && <span>{props.post.author}</span>}
+        {post.author && <span>{post.author}</span>}
 
-        {props.post.authorTwitter && (
+        {post.authorTwitter && (
           <span>
             {' '}
             <a
-              href={`https://twitter.com/${props.post.authorTwitter}`}
-            >{`@${props.post.authorTwitter}`}</a>{' '}
+              href={`https://twitter.com/${post.authorTwitter}`}
+            >{`@${post.authorTwitter}`}</a>{' '}
           </span>
         )}
       </p>
       <p className="author-line subtle">
-        {props.post.datePublished
-          ? format(new Date(props.post.datePublished), 'MMMM Do, YYYY')
+        {post.datePublished
+          ? format(new Date(post.datePublished), 'MMMM Do, YYYY')
           : ''}
       </p>
     </div>

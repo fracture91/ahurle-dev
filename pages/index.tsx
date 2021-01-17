@@ -3,13 +3,16 @@ import { generateRSS } from '../rssUtil';
 import { Markdown } from '../components/Markdown';
 import { PostData, loadBlogPosts, loadMarkdownFile } from '../loader';
 import { PostCard } from '../components/PostCard';
+import { GetStaticProps } from 'next';
 
-const Home = (props: {
+type HomeProps = {
   introduction: string;
   features: string;
-  readme: string;
+  // readme: string;
   posts: PostData[];
-}) => {
+}
+
+const Home: React.FC<HomeProps> = ({ introduction, features, posts}) => {
   return (
     <div className="content">
       <Head>
@@ -19,13 +22,13 @@ const Home = (props: {
 
       <div className="introduction">
         <h1>Introduction to Devii</h1>
-        <Markdown source={props.introduction} />
+        <Markdown source={introduction} />
       </div>
 
       <div className="section">
         <h2>Features</h2>
         <div className="medium-wide">
-          <Markdown source={props.features} />
+          <Markdown source={features} />
         </div>
       </div>
 
@@ -40,7 +43,7 @@ const Home = (props: {
           <code>/components/PostCard.tsx</code> component.
         </p>
         <div className="post-card-container">
-          {props.posts.map((post, j) => {
+          {posts.map((post, j) => {
             return <PostCard post={post} key={j} />;
           })}
         </div>
@@ -81,7 +84,7 @@ const Home = (props: {
 
       {/* <div className="section alternate">
         <div className="narrow">
-          <Markdown source={props.readme} />
+          <Markdown source={readme} />
         </div>
       </div> */}
 
@@ -97,7 +100,7 @@ const Home = (props: {
 
 export default Home;
 
-export const getStaticProps = async () => {
+export const getStaticProps: GetStaticProps<HomeProps> = async () => {
   const introduction = await loadMarkdownFile('introduction.md');
   const features = await loadMarkdownFile('features.md');
   const readmeFile = await import(`../${'README.md'}`);

@@ -4,8 +4,7 @@ import { format } from 'fecha';
 import { PostData } from '../loader';
 import { Tag } from './Tag';
 
-export const PostCard: React.FC<{ post: PostData }> = (props) => {
-  const post = props.post;
+export const PostCard: React.FC<{ post: PostData }> = ({ post }) => {
   return (
     <Link href={`/${post.path}`}>
       <a className="post-card">
@@ -20,8 +19,8 @@ export const PostCard: React.FC<{ post: PostData }> = (props) => {
             {post.title && <h2>{post.title}</h2>}
             {false && post.subtitle && <p>{post.subtitle}</p>}
             <p>
-              {props.post.datePublished
-                ? format(new Date(props.post.datePublished), 'MMMM Do, YYYY')
+              {post.datePublished
+                ? format(new Date(post.datePublished), 'MMMM Do, YYYY')
                 : ''}
             </p>
             <div className="flex-spacer"> </div>

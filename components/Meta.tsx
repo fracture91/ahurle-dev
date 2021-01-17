@@ -9,8 +9,7 @@ export const Meta: React.FC<{
     desc?: string;
     image?: string;
   };
-}> = (props) => {
-  const { meta } = props;
+}> = ({ meta }) => {
   return (
     <NextHead>
       <title>{meta.title}</title>
