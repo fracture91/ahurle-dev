@@ -13,9 +13,11 @@ export type PostData = {
   datePublished: number;
   author?: string;
   authorPhoto?: string;
+  authorPhotoAlt?: string;
   authorTwitter?: string;
   tags?: string[];
   bannerPhoto?: string;
+  bannerPhotoAlt?: string;
   thumbnailPhoto?: string;
 };
 
@@ -40,8 +42,10 @@ export const mdToPost = (file: RawFile): PostData => {
     canonicalUrl: metadata.data.canonicalUrl || `${globals.url}/${path}`,
     author: metadata.data.author || null,
     authorPhoto: metadata.data.authorPhoto || null,
+    authorPhotoAlt: metadata.data.authorPhotoAlt || null,
     authorTwitter: metadata.data.authorTwitter || null,
     bannerPhoto: metadata.data.bannerPhoto || null,
+    bannerPhotoAlt: metadata.data.bannerPhotoAlt || null,
     thumbnailPhoto: metadata.data.thumbnailPhoto || null,
     content: metadata.content,
   };
@@ -54,6 +58,12 @@ export const mdToPost = (file: RawFile): PostData => {
 
   if (!post.datePublished)
     throw new Error(`Missing required field: datePublished.`);
+
+  if (post.bannerPhoto && !post.bannerPhotoAlt)
+    throw new Error(`Missing required field: bannerPhotoAlt.`);
+
+  if (post.authorPhoto && !post.authorPhotoAlt)
+    throw new Error(`Missing required field: authorPhotoAlt.`);
 
   return post as PostData;
 };

@@ -5,12 +5,14 @@ datePublished: 1590463136775
 author: Colin McDonnell
 authorTwitter: colinhacks
 authorPhoto: /img/profile.jpg
+authorPhotoAlt: Closeup of Keanu Reeves
 tags:
   - Static Site Generators
   - React
   - Next.js
 thumbnailPhoto: /img/pancakes_thumb.jpeg
 bannerPhoto: /img/pancakes.jpeg
+bannerPhotoAlt: A stack of delicious pancakes
 canonicalUrl: https://colinhacks.com/essays/devii
 ---
 

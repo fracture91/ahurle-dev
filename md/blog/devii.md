@@ -8,7 +8,9 @@ tags:
   - Devii
   - Blogs
 authorPhoto: /img/profile.jpg
+authorPhotoAlt: Closeup of Keanu Reeves
 bannerPhoto: /img/brook.jpg
+bannerPhotoAlt: Long exposure of a brook flowing over rocks
 thumbnailPhoto: /img/brook.jpg
 canonicalUrl: https://devii.dev/blog/devii
 ---
