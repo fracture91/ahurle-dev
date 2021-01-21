@@ -1,4 +1,5 @@
 import React from 'react';
+import Image from "next/image";
 import { format } from 'fecha';
 import { PostData } from '../loader';
 
@@ -7,7 +8,13 @@ export const Author: React.FC<{ post: PostData }> = ({ post }) => {
     <div className="author-container">
       <div className="author">
         {post.authorPhoto && (
-          <img src={post.authorPhoto} alt={post.authorPhotoAlt} className="author-image" />
+          <Image
+            src={post.authorPhoto}
+            alt={post.authorPhotoAlt}
+            width={70}
+            height={70}
+            className="author-image"
+          />
         )}
         <AuthorLines post={post} />
       </div>

@@ -1,4 +1,5 @@
 import React from 'react';
+import Image from "next/image";
 import { Author } from './Author';
 import { Markdown } from './Markdown';
 import { PostData } from '../loader';
@@ -12,7 +13,9 @@ export const BlogPost: React.FunctionComponent<{ post: PostData }> = ({
     <article className="blog-post">
       <PostMeta post={post} />
       {post.bannerPhoto && (
-        <img className="blog-post-image" src={post.bannerPhoto} alt={post.bannerPhotoAlt} />
+        <div style={{ position: "relative", width: "100%" }}>
+          <Image sizes="100%" objectFit="cover" layout="fill" className="blog-post-image" src={post.bannerPhoto} alt={post.bannerPhotoAlt} />
+        </div>
       )}
 
       <div className="blog-post-title">
