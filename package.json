@@ -61,7 +61,7 @@
     "trackBranches": [
       "master"
     ],
-    "normalizeFilenames": "^.+?((\\.|-)[a-f0-9]+)\\.(?:js|css)$",
+    "normalizeFilenames": "^.+?((\\.|-)[a-f0-9]{20})?\\.(?:js|css|html)$",
     "files": [
       {
         "path": "./.next/static/chunks/**/!(polyfills|react-syntax-highlighter_languages_)*.js",
@@ -108,7 +108,7 @@
         "maxSize": "20kb"
       },
       {
-        "path": "./.next/static/*/_buildManifest*",
+        "path": "./.next/static/*/_buildManifest.js",
         "maxSize": "10kb"
       },
       {
