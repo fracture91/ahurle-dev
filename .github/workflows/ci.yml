@@ -2,9 +2,9 @@ name: CI
 
 on:
   push:
-    branches: [ master ]
+    branches: [master]
   pull_request:
-    branches: [ master ]
+    branches: [master]
     types: [synchronize, opened]
 
   # Allows you to run this workflow manually from the Actions tab
@@ -29,3 +29,11 @@ jobs:
       - uses: jackyef/bundlewatch-gh-action@master
         with:
           bundlewatch-github-token: ${{ secrets.BUNDLEWATCH_GITHUB_TOKEN }}
+
+      - name: Lint Action
+        uses: wearerequired/lint-action@v1.7.0
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          eslint: true
+          eslint_extensions: js,jsx,ts,tsx
+          prettier: true
