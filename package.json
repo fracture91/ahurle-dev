@@ -63,34 +63,56 @@
     ],
     "files": [
       {
-        "path": "./.next/static/chunks/main-*.js"
+        "path": "./.next/static/chunks/main-*.js",
+        "maxSize": "10kb"
       },
       {
-        "path": "./.next/static/chunks/webpack-*.js"
+        "path": "./.next/static/chunks/webpack-*.js",
+        "maxSize": "10kb"
       },
       {
-        "path": "./.next/static/chunks/framework.*.js"
+        "path": "./.next/static/chunks/framework.*.js",
+        "maxSize": "50kb"
       },
       {
-        "path": "./.next/static/chunks/commons.*.js"
+        "path": "./.next/static/chunks/commons.*.js",
+        "maxSize": "10kb"
       },
       {
-        "path": "./.next/static/chunks/polyfills-*.js"
+        "path": "./.next/static/chunks/polyfills-*.js",
+        "maxSize": "40kb"
       },
       {
-        "path": "./.next/static/chunks/!(polyfills|react-syntax-highlighter_languages_)*.js"
+        "path": "./.next/static/chunks/!(polyfills|react-syntax-highlighter_languages_)*.js",
+        "maxSize": "80kb"
       },
       {
-        "path": "./.next/static/*/pages/**/*.js"
+        "path": "./.next/static/chunks/pages/_(app|error)-*.js",
+        "maxSize": "10kb"
       },
       {
-        "path": "./.next/static/css/**/*.css"
+        "path": "./.next/static/chunks/pages/index-*.js",
+        "maxSize": "10kb"
       },
       {
-        "path": "./.next/static/*/_buildManifest*"
+        "path": "./.next/static/chunks/pages/blog/[blog]-*.js",
+        "maxSize": "10kb"
       },
       {
-        "path": "./.next/server/pages/**/*.html"
+        "path": "./.next/static/*/pages/**/*.js",
+        "maxSize": "20kb"
+      },
+      {
+        "path": "./.next/static/css/**/*.css",
+        "maxSize": "20kb"
+      },
+      {
+        "path": "./.next/static/*/_buildManifest*",
+        "maxSize": "10kb"
+      },
+      {
+        "path": "./.next/server/pages/**/*.html",
+        "maxSize": "50kb"
       }
     ]
   }
