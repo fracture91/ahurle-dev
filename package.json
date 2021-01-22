@@ -83,11 +83,7 @@
         "maxSize": "40kb"
       },
       {
-        "path": "./.next/static/chunks/!(polyfills|react-syntax-highlighter_languages_)*.js",
-        "maxSize": "80kb"
-      },
-      {
-        "path": "./.next/static/chunks/pages/_(app|error)-*.js",
+        "path": "./.next/static/chunks/pages/_@(app|error)-*.js",
         "maxSize": "10kb"
       },
       {
@@ -95,12 +91,16 @@
         "maxSize": "10kb"
       },
       {
-        "path": "./.next/static/chunks/pages/blog/[blog]-*.js",
+        "path": "./.next/static/chunks/pages/blog/\\[blog\\]-*.js",
         "maxSize": "10kb"
       },
       {
         "path": "./.next/static/*/pages/**/*.js",
         "maxSize": "20kb"
+      },
+      {
+        "path": "./.next/static/chunks/**/!(polyfills|react-syntax-highlighter_languages_)*.js",
+        "maxSize": "80kb"
       },
       {
         "path": "./.next/static/css/**/*.css",
