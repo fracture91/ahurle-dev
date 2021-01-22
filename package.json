@@ -75,10 +75,10 @@
         "path": "./.next/static/chunks/commons.*.js"
       },
       {
-        "path": "./.next/static/chunks/+(polyfills)-*.js"
+        "path": "./.next/static/chunks/polyfills-*.js"
       },
       {
-        "path": "./.next/static/chunks/!(polyfills*)*.js"
+        "path": "./.next/static/chunks/!(polyfills|react-syntax-highlighter_languages_)*.js"
       },
       {
         "path": "./.next/static/*/pages/**/*.js"
