@@ -14,8 +14,8 @@
 /build/
 /lib/
 
-# production
-/build
+# dynamically generated
+/public/rss.xml
 
 # misc
 .DS_Store

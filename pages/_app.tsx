@@ -1,11 +1,12 @@
 import React from 'react';
 import Head from 'next/head';
+import { AppProps } from "next/app";
 import { Footer } from '../components/Footer';
 import { globals } from '../globals';
 import { Header } from '../components/Header';
 import '../styles/base.css';
 
-const App: React.FC = ({ Component, pageProps }: any) => {
+const App: React.FC<AppProps> = ({ Component, pageProps }) => {
   return (
     <div className="container">
       <Head>

@@ -13,9 +13,11 @@ export type PostData = {
   datePublished: number;
   author?: string;
   authorPhoto?: string;
+  authorPhotoAlt?: string;
   authorTwitter?: string;
   tags?: string[];
   bannerPhoto?: string;
+  bannerPhotoAlt?: string;
   thumbnailPhoto?: string;
 };
 
@@ -36,12 +38,14 @@ export const mdToPost = (file: RawFile): PostData => {
     published: metadata.data.published || false,
     datePublished: metadata.data.datePublished || null,
     tags: metadata.data.tags || null,
-    description: metadata.data.description || null,
-    canonicalUrl: metadata.data.canonicalUrl || `${globals.url}/${path}`,
+    description: metadata.data.description || metadata.data.subtitle || null,
+    canonicalUrl: new URL(metadata.data.canonicalUrl || path, globals.url).href,
     author: metadata.data.author || null,
     authorPhoto: metadata.data.authorPhoto || null,
+    authorPhotoAlt: metadata.data.authorPhotoAlt || null,
     authorTwitter: metadata.data.authorTwitter || null,
     bannerPhoto: metadata.data.bannerPhoto || null,
+    bannerPhotoAlt: metadata.data.bannerPhotoAlt || null,
     thumbnailPhoto: metadata.data.thumbnailPhoto || null,
     content: metadata.content,
   };
@@ -55,10 +59,16 @@ export const mdToPost = (file: RawFile): PostData => {
   if (!post.datePublished)
     throw new Error(`Missing required field: datePublished.`);
 
+  if (post.bannerPhoto && !post.bannerPhotoAlt)
+    throw new Error(`Missing required field: bannerPhotoAlt.`);
+
+  if (post.authorPhoto && !post.authorPhotoAlt)
+    throw new Error(`Missing required field: authorPhotoAlt.`);
+
   return post as PostData;
 };
 
-export const loadMarkdownFiles = async (path: string) => {
+export const loadMarkdownFiles = async (path: string): Promise<RawFile[]> => {
   const blogPaths = glob.sync(`./md/${path}`);
   const postDataList = await Promise.all(
     blogPaths.map((blogPath) => {

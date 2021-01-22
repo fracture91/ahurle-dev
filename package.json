@@ -1,26 +1,26 @@
 {
-  "name": "devii",
+  "name": "ahurle-dev",
   "version": "0.5.0",
-  "description": "A Medium inspired dev blog starter for Next.js",
+  "description": "ahurle.dev blog site, based on colinhacks/devii",
   "repository": {
     "type": "git",
-    "url": "https://github.com/colinhacks/devii"
+    "url": "https://github.com/fracture91/ahurle-dev"
   },
-  "author": "Colin McDonnell <colin@colinhacks.com>",
+  "author": "Andrew Hurle <adhurle@gmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/colinhacks/devii/issues"
+    "url": "https://github.com/fracture91/ahurle-dev/issues"
   },
-  "homepage": "https://github.com/colinhacks/devii",
+  "homepage": "https://github.com/fracture91/ahurle-dev",
   "tags": [
-    "blog template",
+    "blog",
     "react",
     "nextjs",
     "syntax highlighting",
     "static generation"
   ],
   "keywords": [
-    "blog template",
+    "blog",
     "react",
     "nextjs",
     "syntax highlighting",
@@ -30,30 +30,68 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "export": "next export",
-    "deploy": "next build && next export && firebase deploy --only hosting"
+    "export": "next export"
   },
   "dependencies": {
     "fecha": "^4.2.0",
     "glob": "^7.1.6",
     "gray-matter": "^4.0.2",
-    "next": "9.5",
+    "next": "^10.0.5",
     "raw-loader": "^4.0.1",
-    "react": "16.13.0",
-    "react-dom": "16.13.0",
-    "react-markdown": "^4.3.1",
-    "react-syntax-highlighter": "^12.2.1",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "react-markdown": "^5.0.3",
+    "react-syntax-highlighter": "^15.4.3",
     "rss": "^1.2.2",
     "showdown": "^1.9.1"
   },
   "devDependencies": {
+    "@next/bundle-analyzer": "^10.0.5",
     "@types/glob": "^7.1.3",
     "@types/node": "14",
-    "@types/react": "^16.9.35",
-    "@types/react-syntax-highlighter": "^11.0.5",
+    "@types/react": "^17.0.0",
+    "@types/react-syntax-highlighter": "^13.5.0",
     "@types/rss": "^0.0.28",
     "@types/showdown": "^1.9.3",
+    "bundlewatch": "^0.3.1",
     "favicons": "^6.1.0",
-    "typescript": "^3.8.3"
+    "typescript": "^4.1.3"
+  },
+  "bundlewatch": {
+    "trackBranches": [
+      "master"
+    ],
+    "files": [
+      {
+        "path": "./.next/static/chunks/main-*.js"
+      },
+      {
+        "path": "./.next/static/chunks/webpack-*.js"
+      },
+      {
+        "path": "./.next/static/chunks/framework.*.js"
+      },
+      {
+        "path": "./.next/static/chunks/commons.*.js"
+      },
+      {
+        "path": "./.next/static/chunks/+(polyfills)-*.js"
+      },
+      {
+        "path": "./.next/static/chunks/!(polyfills*)*.js"
+      },
+      {
+        "path": "./.next/static/*/pages/**/*.js"
+      },
+      {
+        "path": "./.next/static/css/**/*.css"
+      },
+      {
+        "path": "./.next/static/*/_buildManifest*"
+      },
+      {
+        "path": "./.next/server/pages/**/*.html"
+      }
+    ]
   }
 }

@@ -3,7 +3,7 @@ import glob from 'glob';
 import { globals } from './globals';
 import { getStaticPaths as getBlogPaths } from './pages/blog/[blog]';
 
-export const generateSitemap = async () => {
+export const generateSitemap = async (): Promise<string> => {
   const pagesDir = './pages/**/*.*';
   const posts = await glob.sync(pagesDir);
 
@@ -12,7 +12,7 @@ export const generateSitemap = async () => {
     .filter((path) => !path.includes('/_'))
     .map((path) => path.slice(1));
 
-  const blogPaths = await getBlogPaths().paths;
+  const blogPaths = (await getBlogPaths({})).paths;
 
   const sitemap = `
 <?xml version="1.0" encoding="UTF-8"?>

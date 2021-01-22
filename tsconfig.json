@@ -24,6 +24,7 @@
     "noUnusedParameters": true,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
+    "strictNullChecks": true,
   },
   "exclude": [
     "node_modules"

@@ -6,9 +6,10 @@ author: Colin McDonnell
 tags:
   - Dan Abramov
 authorPhoto: /img/profile.jpg
+authorPhotoAlt: Closeup of Keanu Reeves
 bannerPhoto: /img/danabramov.png
+bannerPhotoAlt: Screenshot of Dan Abramov opening an issue on github
 thumbnailPhoto: /img/danabramov_thumb.png
-canonicalUrl: https://devii.dev/blog/dan-abramov
 ---
 
 Dan Abramov knows about Devii!
