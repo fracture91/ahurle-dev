@@ -61,6 +61,7 @@
     "trackBranches": [
       "master"
     ],
+    "normalizeFilenames": "^.+?((\\.|-)[a-f0-9]+)\\.(?:js|css)$",
     "files": [
       {
         "path": "./.next/static/chunks/**/!(polyfills|react-syntax-highlighter_languages_)*.js",
