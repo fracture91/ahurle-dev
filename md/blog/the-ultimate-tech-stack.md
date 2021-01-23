@@ -104,18 +104,18 @@ Every Markdown file can include a "frontmatter block" containing metadata. I imp
 
 ```ts
 type PostData = {
-  path: string; // the relative URL to this page, can be used as an href
-  content: string; // the body of the MD file
-  title?: string;
-  subtitle?: string;
-  date?: number;
-  author?: string;
-  authorPhoto?: string;
-  authorTwitter?: string;
-  tags?: string[];
-  bannerPhoto?: string;
-  thumbnailPhoto?: string;
-};
+  path: string // the relative URL to this page, can be used as an href
+  content: string // the body of the MD file
+  title?: string
+  subtitle?: string
+  date?: number
+  author?: string
+  authorPhoto?: string
+  authorTwitter?: string
+  tags?: string[]
+  bannerPhoto?: string
+  thumbnailPhoto?: string
+}
 ```
 
 I implemented a separate function `loadPosts` that loads _all_ the Markdown files under `/md/blog` and returns them as an array (`PostData[]`). I use `loadPosts` on this site's home page to render a list of all posts I've written.
@@ -145,8 +145,8 @@ turns into this:
 ```ts
 // pretty neat huh?
 const test = (arg: string) => {
-  return arg.length > 5;
-};
+  return arg.length > 5
+}
 ```
 
 ### RSS feed generation

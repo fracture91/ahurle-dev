@@ -1,74 +1,75 @@
-import Head from 'next/head';
-import { generateRSS } from '../rssUtil';
-import { Markdown } from '../components/Markdown';
-import { PostData, loadBlogPosts, loadMarkdownFile } from '../loader';
-import { PostCard } from '../components/PostCard';
-import { GetStaticProps } from 'next';
+import React from "react"
+import Head from "next/head"
+import { GetStaticProps } from "next"
+import { generateRSS } from "../rssUtil"
+import { Markdown } from "../components/Markdown"
+import { PostData, loadBlogPosts, loadMarkdownFile } from "../loader"
+import { PostCard } from "../components/PostCard"
 
 type HomeProps = {
-  introduction: string;
-  features: string;
+  introduction: string
+  features: string
   // readme: string;
-  posts: PostData[];
+  posts: PostData[]
 }
 
-const Home: React.FC<HomeProps> = ({ introduction, features, posts}) => {
-  return (
-    <div className="content">
-      <Head>
-        <title>Introducing Devii</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+const Home: React.FC<HomeProps> = ({ introduction, features, posts }) => (
+  <div className="content">
+    <Head>
+      <title>Introducing Devii</title>
+      <link rel="icon" href="/favicon.ico" />
+    </Head>
 
-      <div className="introduction">
-        <h1>Introduction to Devii</h1>
-        <Markdown source={introduction} />
+    <div className="introduction">
+      <h1>Introduction to Devii</h1>
+      <Markdown source={introduction} />
+    </div>
+
+    <div className="section">
+      <h2>Features</h2>
+      <div className="medium-wide">
+        <Markdown source={features} />
       </div>
+    </div>
 
-      <div className="section">
-        <h2>Features</h2>
-        <div className="medium-wide">
-          <Markdown source={features} />
-        </div>
+    <div className="section">
+      <h2>My blog posts</h2>
+      <p>
+        This section demonstrates the power of dynamic imports. Every Markdown
+        file under <code>/md/blog</code> is automatically parsed into a
+        structured TypeScript object and available in the{" "}
+        <code>props.posts</code> array. These blog post &quot;cards&quot; are
+        implemented in the
+        <code>/components/PostCard.tsx</code> component.
+      </p>
+      <div className="post-card-container">
+        {posts.map((post) => (
+          <PostCard post={post} key={post.path} />
+        ))}
       </div>
+    </div>
 
-      <div className="section">
-        <h2>My blog posts</h2>
+    <div className="section">
+      <h2>Testimonials</h2>
+      <blockquote>
         <p>
-          This section demonstrates the power of dynamic imports. Every Markdown
-          file under <code>/md/blog</code> is automatically parsed into a
-          structured TypeScript object and available in the{' '}
-          <code>props.posts</code> array. These blog post "cards" are
-          implemented in the
-          <code>/components/PostCard.tsx</code> component.
+          <em>Seems like it might be useful!</em>
         </p>
-        <div className="post-card-container">
-          {posts.map((post, j) => {
-            return <PostCard post={post} key={j} />;
-          })}
-        </div>
-      </div>
+        <p>
+          — Dan Abramov, taken{" "}
+          <a
+            href="https://github.com/colinhacks/devii/issues/2"
+            target="_blank"
+            rel="noreferrer"
+          >
+            {" "}
+            utterly out of context
+          </a>
+        </p>
+      </blockquote>
+    </div>
 
-      <div className="section">
-        <h2>Testimonials</h2>
-        <blockquote>
-          <p>
-            <em>Seems like it might be useful!</em>
-          </p>
-          <p>
-            — Dan Abramov, taken{' '}
-            <a
-              href="https://github.com/colinhacks/devii/issues/2"
-              target="_blank"
-            >
-              {' '}
-              utterly out of context
-            </a>
-          </p>
-        </blockquote>
-      </div>
-
-      {/* <div className="section">
+    {/* <div className="section">
         <h2>README.md</h2>
         <p>
           Below is the README.md for devii. It was imported and rendered using
@@ -82,40 +83,41 @@ const Home: React.FC<HomeProps> = ({ introduction, features, posts}) => {
         </p>
       </div> */}
 
-      {/* <div className="section alternate">
+    {/* <div className="section alternate">
         <div className="narrow">
           <Markdown source={readme} />
         </div>
       </div> */}
 
-      <div className="section alternate">
-        <h2 className="centered">Get started</h2>
-        <a href="https://github.com/colinhacks/devii">
-          <button className="fork-button">Go to README</button>
-        </a>
-      </div>
+    <div className="section alternate">
+      <h2 className="centered">Get started</h2>
+      <a href="https://github.com/colinhacks/devii">
+        <button className="fork-button" type="button">
+          Go to README
+        </button>
+      </a>
     </div>
-  );
-};
+  </div>
+)
 
-export default Home;
+export default Home
 
 export const getStaticProps: GetStaticProps<HomeProps> = async () => {
-  const introduction = await loadMarkdownFile('introduction.md');
-  const features = await loadMarkdownFile('features.md');
-  const readmeFile = await import(`../${'README.md'}`);
-  const readme = readmeFile.default;
-  const posts = await loadBlogPosts();
+  const introduction = await loadMarkdownFile("introduction.md")
+  const features = await loadMarkdownFile("features.md")
+  const readmeFile = await import(`../${"README.md"}`)
+  const readme = readmeFile.default
+  const posts = await loadBlogPosts()
 
   // comment out to turn off RSS generation during build step.
-  await generateRSS(posts);
+  await generateRSS(posts)
 
   const props = {
     introduction: introduction.contents,
     features: features.contents,
-    readme: readme,
+    readme,
     posts,
-  };
+  }
 
-  return { props };
-};
+  return { props }
+}

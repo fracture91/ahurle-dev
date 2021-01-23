@@ -28,8 +28,8 @@ Devii is a starter kit for building a personal website with the best tools 2020 
   ```ts
   // pretty neat huh?
   const test: (arg: string) => boolean = (arg) => {
-    return arg.length > 5;
-  };
+    return arg.length > 5
+  }
   ```
 
 - **Utterly customizable**: We provide a minimal interface to get you started, but you can customize every aspect of the rendering and styling by just modifying `index.tsx` (the home page), `BlogPost.tsx` (the blog post template), and `Markdown.tsx` (the Markdown renderer). And of course you can add entirely new pages as well!
