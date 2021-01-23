@@ -1,12 +1,13 @@
 import { getPage } from "next-page-tester"
 import { screen } from "@testing-library/react"
 import glob from "glob"
-import { PostData, loadBlogPosts } from "../../../loader"
+import { PostData, loadBlogPosts } from "../../../helpers/loader"
 
 describe("Blog pages", () => {
   let posts: PostData[] | undefined
   beforeAll(async () => {
     posts = await loadBlogPosts()
+    if (!posts) throw new Error("no posts loaded")
   })
 
   const blogs = glob.sync("./md/blog/*.md")

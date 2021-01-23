@@ -2,7 +2,7 @@ import React from "react"
 import { GetStaticPaths, GetStaticProps } from "next"
 import glob from "glob"
 import { BlogPost } from "../../components/BlogPost"
-import { loadPost, PostData } from "../../loader"
+import { loadPost, PostData } from "../../helpers/loader"
 
 const Post: React.FC<{ post: PostData }> = ({ post }) => (
   <BlogPost post={post} />

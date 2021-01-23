@@ -25,7 +25,7 @@ export type PostData = {
 type RawFile = { path: string; contents: string }
 
 export const loadMarkdownFile = async (path: string): Promise<RawFile> => {
-  const mdFile = await import(`./md/${path}`)
+  const mdFile = await import(`../md/${path}`)
   return { path, contents: mdFile.default }
 }
 

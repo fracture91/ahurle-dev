@@ -1,9 +1,9 @@
 import React from "react"
 import Head from "next/head"
 import { GetStaticProps } from "next"
-import { generateRSS } from "../rssUtil"
+import { generateRSS } from "../helpers/rssUtil"
 import { Markdown } from "../components/Markdown"
-import { PostData, loadBlogPosts, loadMarkdownFile } from "../loader"
+import { PostData, loadBlogPosts, loadMarkdownFile } from "../helpers/loader"
 import { PostCard } from "../components/PostCard"
 
 type HomeProps = {

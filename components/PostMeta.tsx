@@ -1,5 +1,5 @@
 import React from "react"
-import { PostData } from "../loader"
+import { PostData } from "../helpers/loader"
 import { Meta } from "./Meta"
 
 export const PostMeta: React.FC<{ post: PostData }> = ({ post }) => (
