@@ -3,7 +3,12 @@ import Head from "next/head"
 import { GetStaticProps } from "next"
 import { generateRSS } from "../helpers/rssUtil"
 import { Markdown } from "../components/Markdown"
-import { PostData, loadBlogPosts, loadMarkdownFile } from "../helpers/loader"
+import {
+  PostData,
+  loadBlogPosts,
+  loadMarkdownFile,
+  MarkdownFilePath,
+} from "../helpers/loader"
 import { PostCard } from "../components/PostCard"
 
 type HomeProps = {
@@ -103,8 +108,12 @@ const Home: React.FC<HomeProps> = ({ introduction, features, posts }) => (
 export default Home
 
 export const getStaticProps: GetStaticProps<HomeProps> = async () => {
-  const introduction = await loadMarkdownFile("introduction.md")
-  const features = await loadMarkdownFile("features.md")
+  const introduction = await loadMarkdownFile(
+    MarkdownFilePath.relativeToMdDir("introduction.md")
+  )
+  const features = await loadMarkdownFile(
+    MarkdownFilePath.relativeToMdDir("features.md")
+  )
   const readmeFile = await import(`../${"README.md"}`)
   const readme = readmeFile.default
   const posts = await loadBlogPosts()
