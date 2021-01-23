@@ -13,6 +13,7 @@ module.exports = {
   transform: {
     "^.+\\.(js|jsx|ts|tsx)$": "<rootDir>/node_modules/babel-jest",
     "^.+\\.css$": "<rootDir>/config/jest/cssTransform.js",
+    "^.+\\.md$": "jest-raw-loader",
   },
   transformIgnorePatterns: [
     "/node_modules/",

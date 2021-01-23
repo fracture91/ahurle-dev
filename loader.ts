@@ -4,6 +4,7 @@ import { globals } from "./globals"
 
 export type PostData = {
   path: string
+  slug: string
   title: string
   subtitle?: string
   content: string
@@ -33,6 +34,7 @@ export const mdToPost = (file: RawFile): PostData => {
   const path = file.path.replace(".md", "")
   const post = {
     path,
+    slug: path.split("/").pop(),
     title: metadata.data.title,
     subtitle: metadata.data.subtitle || null,
     published: metadata.data.published || false,
