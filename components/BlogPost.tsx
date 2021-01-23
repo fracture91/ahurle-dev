@@ -1,18 +1,22 @@
-import React from 'react';
-import { Author } from './Author';
-import { Markdown } from './Markdown';
-import { PostData } from '../loader';
-import { PostMeta } from './PostMeta';
+import React from "react"
+import { Author } from "./Author"
+import { Markdown } from "./Markdown"
+import { PostData } from "../loader"
+import { PostMeta } from "./PostMeta"
 
 export const BlogPost: React.FunctionComponent<{ post: PostData }> = ({
   post,
 }) => {
-  const { title, subtitle } = post;
+  const { title, subtitle } = post
   return (
     <article className="blog-post">
       <PostMeta post={post} />
       {post.bannerPhoto && (
-        <img className="blog-post-image" src={post.bannerPhoto} alt={post.bannerPhotoAlt} />
+        <img
+          className="blog-post-image"
+          src={post.bannerPhoto}
+          alt={post.bannerPhotoAlt}
+        />
       )}
 
       <div className="blog-post-title">
@@ -26,5 +30,5 @@ export const BlogPost: React.FunctionComponent<{ post: PostData }> = ({
         <Markdown source={post.content} />
       </div>
     </article>
-  );
-};
+  )
+}

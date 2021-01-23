@@ -121,19 +121,19 @@ Every Markdown file can include a "frontmatter block" containing various metadat
 
 ```ts
 type PostData = {
-  path: string;
-  title?: string;
-  subtitle?: string;
-  description?: string; // used for SEO
-  canonicalUrl?: string; // used for SEO
-  datePublished?: number; // Unix timestamp
-  author?: string;
-  authorPhoto?: string;
-  authorHandle?: string; // twitter handle
-  tags?: string[];
-  bannerPhoto?: string;
-  thumbnailPhoto?: string;
-};
+  path: string
+  title?: string
+  subtitle?: string
+  description?: string // used for SEO
+  canonicalUrl?: string // used for SEO
+  datePublished?: number // Unix timestamp
+  author?: string
+  authorPhoto?: string
+  authorHandle?: string // twitter handle
+  tags?: string[]
+  bannerPhoto?: string
+  thumbnailPhoto?: string
+}
 ```
 
 For example, here is the frontmatter blog from the sample blog post (`md/blog/the-ultimate-tech-stack.md`):
@@ -182,8 +182,8 @@ turns into
 ```ts
 // pretty neat huh?
 const test = (arg: string) => {
-  return arg.length > 5;
-};
+  return arg.length > 5
+}
 ```
 
 View `/components/Code.tsx` to see how this works or customize this behavior.
@@ -202,9 +202,9 @@ For an example of this, check out the `getStaticProps` implementation from the h
 
 ```ts
 export const getStaticProps = async () => {
-  const posts = await loadBlogPosts();
-  return { props: { posts } };
-};
+  const posts = await loadBlogPosts()
+  return { props: { posts } }
+}
 ```
 
 There are a few utility functions in `loader.ts` that Devii uses. All functions are _async_! All functions accept a _relative_ path which is expected to be \_relative to the `md/` directory. For instance `loadPost('blog/test.md'`) would load `/md/blog/test.md`.

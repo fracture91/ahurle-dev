@@ -1,5 +1,5 @@
-import React from 'react';
-import { globals } from '../globals';
+import React from "react"
+import { globals } from "../globals"
 
 export const Footer: React.FC = () => (
   <footer className="footer">
@@ -8,4 +8,4 @@ export const Footer: React.FC = () => (
       <img src="/img/rss-white.svg" alt="RSS Feed" height="30" width="30" />
     </a>
   </footer>
-);
+)

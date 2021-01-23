@@ -1,14 +1,14 @@
-import React from 'react';
-import NextHead from 'next/head';
-import { globals } from '../globals';
+import React from "react"
+import NextHead from "next/head"
+import { globals } from "../globals"
 
 export const Meta: React.FC<{
   meta: {
-    title: string;
-    link?: string;
-    desc?: string;
-    image?: string;
-  };
+    title: string
+    link?: string
+    desc?: string
+    image?: string
+  }
 }> = ({ meta }) => {
   const image = meta.image ? new URL(meta.image, globals.url).href : meta.image
   return (
@@ -36,5 +36,5 @@ export const Meta: React.FC<{
       {image && <meta name="twitter:image" content={image} />}
       {image && <meta property="og:image" content={image} />}
     </NextHead>
-  );
-};
+  )
+}

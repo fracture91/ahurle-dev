@@ -1,36 +1,36 @@
-import matter from 'gray-matter';
-import glob from 'glob';
-import { globals } from './globals';
+import matter from "gray-matter"
+import glob from "glob"
+import { globals } from "./globals"
 
 export type PostData = {
-  path: string;
-  title: string;
-  subtitle?: string;
-  content: string;
-  description?: string;
-  canonicalUrl?: string;
-  published: boolean;
-  datePublished: number;
-  author?: string;
-  authorPhoto?: string;
-  authorPhotoAlt?: string;
-  authorTwitter?: string;
-  tags?: string[];
-  bannerPhoto?: string;
-  bannerPhotoAlt?: string;
-  thumbnailPhoto?: string;
-};
+  path: string
+  title: string
+  subtitle?: string
+  content: string
+  description?: string
+  canonicalUrl?: string
+  published: boolean
+  datePublished: number
+  author?: string
+  authorPhoto?: string
+  authorPhotoAlt?: string
+  authorTwitter?: string
+  tags?: string[]
+  bannerPhoto?: string
+  bannerPhotoAlt?: string
+  thumbnailPhoto?: string
+}
 
-type RawFile = { path: string; contents: string };
+type RawFile = { path: string; contents: string }
 
 export const loadMarkdownFile = async (path: string): Promise<RawFile> => {
-  const mdFile = await import(`./md/${path}`);
-  return { path, contents: mdFile.default };
-};
+  const mdFile = await import(`./md/${path}`)
+  return { path, contents: mdFile.default }
+}
 
 export const mdToPost = (file: RawFile): PostData => {
-  const metadata = matter(file.contents);
-  const path = file.path.replace('.md', '');
+  const metadata = matter(file.contents)
+  const path = file.path.replace(".md", "")
   const post = {
     path,
     title: metadata.data.title,
@@ -48,45 +48,42 @@ export const mdToPost = (file: RawFile): PostData => {
     bannerPhotoAlt: metadata.data.bannerPhotoAlt || null,
     thumbnailPhoto: metadata.data.thumbnailPhoto || null,
     content: metadata.content,
-  };
+  }
 
-  if (!post.title)
-    throw new Error(`Missing required field: title.`);
+  if (!post.title) throw new Error("Missing required field: title.")
 
-  if (!post.content)
-    throw new Error(`Missing required field: content.`);
+  if (!post.content) throw new Error("Missing required field: content.")
 
   if (!post.datePublished)
-    throw new Error(`Missing required field: datePublished.`);
+    throw new Error("Missing required field: datePublished.")
 
   if (post.bannerPhoto && !post.bannerPhotoAlt)
-    throw new Error(`Missing required field: bannerPhotoAlt.`);
+    throw new Error("Missing required field: bannerPhotoAlt.")
 
   if (post.authorPhoto && !post.authorPhotoAlt)
-    throw new Error(`Missing required field: authorPhotoAlt.`);
+    throw new Error("Missing required field: authorPhotoAlt.")
 
-  return post as PostData;
-};
+  return post as PostData
+}
 
 export const loadMarkdownFiles = async (path: string): Promise<RawFile[]> => {
-  const blogPaths = glob.sync(`./md/${path}`);
+  const blogPaths = glob.sync(`./md/${path}`)
   const postDataList = await Promise.all(
     blogPaths.map((blogPath) => {
-      const modPath = blogPath.slice(blogPath.indexOf(`md/`) + 3);
-      return loadMarkdownFile(`${modPath}`);
+      const modPath = blogPath.slice(blogPath.indexOf("md/") + 3)
+      return loadMarkdownFile(`${modPath}`)
     })
-  );
-  return postDataList;
-};
+  )
+  return postDataList
+}
 
 export const loadPost = async (path: string): Promise<PostData> => {
-  const file = await loadMarkdownFile(path);
-  return mdToPost(file);
-};
+  const file = await loadMarkdownFile(path)
+  return mdToPost(file)
+}
 
-export const loadBlogPosts = async (): Promise<PostData[]> => {
-  return await (await loadMarkdownFiles(`blog/*.md`))
+export const loadBlogPosts = async (): Promise<PostData[]> =>
+  (await loadMarkdownFiles("blog/*.md"))
     .map(mdToPost)
     .filter((p) => p.published)
-    .sort((a, b) => (b.datePublished || 0) - (a.datePublished || 0));
-};
+    .sort((a, b) => (b.datePublished || 0) - (a.datePublished || 0))
