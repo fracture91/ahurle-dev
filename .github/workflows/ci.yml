@@ -45,3 +45,6 @@ jobs:
           eslint: true
           eslint_extensions: js,jsx,ts,tsx
           prettier: true
+
+      - name: Run tests
+        run: yarn test:ci
