@@ -8,4 +8,8 @@ import "@testing-library/jest-dom/extend-expect"
 
 import { initTestHelpers } from "next-page-tester"
 
+import failOnConsole from "jest-fail-on-console"
+
 initTestHelpers()
+
+failOnConsole()
