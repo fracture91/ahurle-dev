@@ -1,0 +1,11 @@
+import { getPage } from "next-page-tester"
+import { screen } from "@testing-library/react"
+
+describe("Homepage", () => {
+  it("renders nicely", async () => {
+    const { render } = await getPage({ route: "/" })
+    render()
+    expect(screen.getByText("ahurle.dev")).toBeVisible()
+    expect(screen.getByText("Introduction to Devii")).toBeVisible()
+  })
+})
