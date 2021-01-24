@@ -1,7 +1,10 @@
 import { getPage } from "next-page-tester"
 import { screen } from "@testing-library/react"
-import glob from "glob"
-import { PostData, loadBlogPosts } from "../../../helpers/loader"
+import {
+  PostData,
+  loadBlogPosts,
+  MarkdownFilePath,
+} from "../../../helpers/loader"
 
 describe("Blog pages", () => {
   let posts: PostData[] | undefined
@@ -10,22 +13,18 @@ describe("Blog pages", () => {
     if (!posts) throw new Error("no posts loaded")
   })
 
-  const blogs = glob.sync("./md/blog/*.md")
-  const slugs = blogs.map((file: string) => {
-    const popped = file.split("/").pop()
-    if (!popped) throw new Error(`Invalid blog path: ${file}`)
-    return popped.slice(0, -3).trim()
-  })
-  slugs.forEach((slug) => {
-    it(`renders ${slug} blog page`, async () => {
-      const post = posts?.filter((p) => p.slug === slug)[0] as PostData
+  const paths = MarkdownFilePath.fromBlogSlug("*").glob()
+  if (paths.length <= 0) throw new Error("no blog entries")
+  paths.forEach((path) => {
+    it(`renders ${path.blogSlug} blog page`, async () => {
+      const post = posts?.filter((p) => p.slug === path.blogSlug)[0] as PostData
       const { render } = await getPage({
-        route: `/blog/${slug}`,
+        route: `/blog/${path.blogSlug}`,
       })
 
       render()
-      expect(screen.getByText("ahurle.dev")).toBeInTheDocument()
-      expect(screen.getByText(post?.title)).toBeInTheDocument()
+      expect(screen.getByText("ahurle.dev")).toBeVisible()
+      expect(screen.getByText(post?.title)).toBeVisible()
     })
   })
 })
