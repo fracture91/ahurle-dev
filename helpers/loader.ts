@@ -1,9 +1,11 @@
 import matter from "gray-matter"
 import glob from "glob"
+import Path from "path"
 import { globals } from "./globals"
 
 export type PostData = {
   path: string
+  slug: string
   title: string
   subtitle?: string
   content: string
@@ -21,18 +23,74 @@ export type PostData = {
   thumbnailPhoto?: string
 }
 
-type RawFile = { path: string; contents: string }
+type RawFile = { path: MarkdownFilePath; contents: string }
 
-export const loadMarkdownFile = async (path: string): Promise<RawFile> => {
-  const mdFile = await import(`./md/${path}`)
+const MD_EXT = ".md"
+const MD_DIR_FROM_ROOT = "./md"
+const MD_BLOG_DIR_FROM_ROOT = `${MD_DIR_FROM_ROOT}/blog`
+
+export class MarkdownFilePath {
+  private pathFromRoot: string
+
+  private constructor({ pathFromRoot }: { pathFromRoot: string }) {
+    this.pathFromRoot = Path.normalize(pathFromRoot)
+    if (!this.pathFromRoot.endsWith(MD_EXT)) {
+      this.pathFromRoot += MD_EXT
+    }
+  }
+
+  get pathFromMdDir(): string {
+    return this.pathFromRoot.replace(/^md\//, "")
+  }
+
+  get blogPath(): string {
+    return `blog/${this.blogSlug}`
+  }
+
+  get blogSlug(): string {
+    const slug = Path.basename(
+      this.pathFromRoot,
+      Path.extname(this.pathFromRoot)
+    )
+    if (!slug) throw new Error(`Invalid blog path: ${this.pathFromRoot}`)
+    return slug
+  }
+
+  glob() {
+    return glob.sync(this.pathFromRoot).map(MarkdownFilePath.relativeToRoot)
+  }
+
+  static fromBlogSlug(slug: string) {
+    return new MarkdownFilePath({
+      pathFromRoot: `${MD_BLOG_DIR_FROM_ROOT}/${slug}`,
+    })
+  }
+
+  private static relativeToRoot(pathFromRoot: string) {
+    return new MarkdownFilePath({ pathFromRoot })
+  }
+
+  static relativeToMdDir(pathFromMdDir: string) {
+    return new MarkdownFilePath({
+      pathFromRoot: `${MD_DIR_FROM_ROOT}/${pathFromMdDir}`,
+    })
+  }
+}
+
+export const loadMarkdownFile = async (
+  path: MarkdownFilePath
+): Promise<RawFile> => {
+  // important: need "../md" here explicitly to help out webpack
+  const mdFile = await import(`../md/${path.pathFromMdDir}`)
   return { path, contents: mdFile.default }
 }
 
 export const mdToPost = (file: RawFile): PostData => {
   const metadata = matter(file.contents)
-  const path = file.path.replace(".md", "")
+  const path = file.path.blogPath
   const post = {
     path,
+    slug: file.path.blogSlug,
     title: metadata.data.title,
     subtitle: metadata.data.subtitle || null,
     published: metadata.data.published || false,
@@ -66,24 +124,18 @@ export const mdToPost = (file: RawFile): PostData => {
   return post as PostData
 }
 
-export const loadMarkdownFiles = async (path: string): Promise<RawFile[]> => {
-  const blogPaths = glob.sync(`./md/${path}`)
-  const postDataList = await Promise.all(
-    blogPaths.map((blogPath) => {
-      const modPath = blogPath.slice(blogPath.indexOf("md/") + 3)
-      return loadMarkdownFile(`${modPath}`)
-    })
-  )
-  return postDataList
-}
+export const loadMarkdownFiles = async (
+  paths: MarkdownFilePath[]
+): Promise<RawFile[]> =>
+  Promise.all(paths.map((path) => loadMarkdownFile(path)))
 
-export const loadPost = async (path: string): Promise<PostData> => {
+export const loadPost = async (path: MarkdownFilePath): Promise<PostData> => {
   const file = await loadMarkdownFile(path)
   return mdToPost(file)
 }
 
 export const loadBlogPosts = async (): Promise<PostData[]> =>
-  (await loadMarkdownFiles("blog/*.md"))
+  (await loadMarkdownFiles(MarkdownFilePath.fromBlogSlug("*").glob()))
     .map(mdToPost)
     .filter((p) => p.published)
     .sort((a, b) => (b.datePublished || 0) - (a.datePublished || 0))

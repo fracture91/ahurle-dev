@@ -1,22 +1,16 @@
 import React from "react"
 import { GetStaticPaths, GetStaticProps } from "next"
-import glob from "glob"
 import { BlogPost } from "../../components/BlogPost"
-import { loadPost, PostData } from "../../loader"
+import { loadPost, PostData, MarkdownFilePath } from "../../helpers/loader"
 
 const Post: React.FC<{ post: PostData }> = ({ post }) => (
   <BlogPost post={post} />
 )
 
 export const getStaticPaths: GetStaticPaths = async (_context) => {
-  const blogs = glob.sync("./md/blog/*.md")
-  const slugs = blogs.map((file: string) => {
-    const popped = file.split("/").pop()
-    if (!popped) throw new Error(`Invalid blog path: ${file}`)
-    return popped.slice(0, -3).trim()
-  })
-
-  const paths = slugs.map((slug) => `/blog/${slug}`)
+  const paths = MarkdownFilePath.fromBlogSlug("*")
+    .glob()
+    .map((p) => `/${p.blogPath}`)
   return { paths, fallback: false }
 }
 
@@ -24,7 +18,7 @@ export const getStaticProps: GetStaticProps<
   { post: PostData },
   { blog: string }
 > = async ({ params }) => {
-  const post = await loadPost(`blog/${params?.blog}.md`)
+  const post = await loadPost(MarkdownFilePath.fromBlogSlug(params?.blog || ""))
   return { props: { post } }
 }
 

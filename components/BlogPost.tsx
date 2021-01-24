@@ -1,7 +1,7 @@
 import React from "react"
 import { Author } from "./Author"
 import { Markdown } from "./Markdown"
-import { PostData } from "../loader"
+import { PostData } from "../helpers/loader"
 import { PostMeta } from "./PostMeta"
 
 export const BlogPost: React.FunctionComponent<{ post: PostData }> = ({

@@ -1,6 +1,6 @@
 import glob from "glob"
 import { globals } from "./globals"
-import { getStaticPaths as getBlogPaths } from "./pages/blog/[blog]"
+import { getStaticPaths as getBlogPaths } from "../pages/blog/[blog]"
 
 export const generateSitemap = async (): Promise<string> => {
   const pagesDir = "./pages/**/*.*"

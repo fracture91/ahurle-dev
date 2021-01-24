@@ -2,7 +2,7 @@ import React from "react"
 import Head from "next/head"
 import { AppProps } from "next/app"
 import { Footer } from "../components/Footer"
-import { globals } from "../globals"
+import { globals } from "../helpers/globals"
 import { Header } from "../components/Header"
 import "../styles/base.css"
 
