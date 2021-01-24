@@ -1,13 +1,29 @@
 import React from "react"
 import Head from "next/head"
 import { AppProps } from "next/app"
+import { createGlobalStyle, ThemeProvider } from "styled-components"
 import { Footer } from "components/Footer"
 import { globals } from "helpers/globals"
 import { Header } from "components/Header"
 import "styles/base.css"
 
+const GlobalStyle = createGlobalStyle`
+  body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+`
+
+const theme = {
+  colors: {
+    primary: "#0070f3",
+  },
+}
+
 const App: React.FC<AppProps> = ({ Component, pageProps }) => (
   <div className="container">
+    <GlobalStyle />
     <Head>
       {globals.googleAnalyticsId && (
         <script
@@ -30,10 +46,12 @@ const App: React.FC<AppProps> = ({ Component, pageProps }) => (
         />
       )}
     </Head>
-    <Header />
-    {/* eslint-disable-next-line react/jsx-props-no-spreading */}
-    <Component {...pageProps} />
-    <Footer />
+    <ThemeProvider theme={theme}>
+      <Header />
+      {/* eslint-disable-next-line react/jsx-props-no-spreading */}
+      <Component {...pageProps} />
+      <Footer />
+    </ThemeProvider>
   </div>
 )
 

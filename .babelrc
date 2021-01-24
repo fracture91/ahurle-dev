@@ -12,6 +12,7 @@
           "styles": "./styles"
         }
       }
-    ]
+    ],
+    ["styled-components", { "ssr": true }]
   ]
 }
