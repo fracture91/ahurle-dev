@@ -1,7 +1,7 @@
 import React from "react"
 import Link from "next/link"
 import { format } from "fecha"
-import { PostData } from "../helpers/loader"
+import { PostData } from "helpers/loader"
 import { Tag } from "./Tag"
 
 export const PostCard: React.FC<{ post: PostData }> = ({ post }) => (

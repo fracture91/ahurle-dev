@@ -20,7 +20,14 @@
     "noUnusedParameters": true,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
-    "strictNullChecks": true
+    "strictNullChecks": true,
+    "baseUrl": ".",
+    "paths": {
+      "helpers": ["./helpers"],
+      "components": ["./components"],
+      "pages": ["./pages"],
+      "styles": ["./styles"]
+    }
   },
   "exclude": ["node_modules"],
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "next.config.js"]

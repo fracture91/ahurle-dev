@@ -1,6 +1,6 @@
 import React from "react"
 import { format } from "fecha"
-import { PostData } from "../helpers/loader"
+import { PostData } from "helpers/loader"
 
 export const AuthorLines: React.FC<{ post: PostData }> = ({ post }) => (
   <div>

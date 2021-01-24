@@ -1,10 +1,6 @@
 import { getPage } from "next-page-tester"
 import { screen } from "@testing-library/react"
-import {
-  PostData,
-  loadBlogPosts,
-  MarkdownFilePath,
-} from "../../../helpers/loader"
+import { PostData, loadBlogPosts, MarkdownFilePath } from "helpers/loader"
 
 describe("Blog pages", () => {
   let posts: PostData[] | undefined
