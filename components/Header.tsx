@@ -1,6 +1,6 @@
 import React from "react"
 import Link from "next/link"
-import { globals } from "../helpers/globals"
+import { globals } from "helpers/globals"
 
 export const Header: React.FC = () => (
   <header className="header">

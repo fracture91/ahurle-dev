@@ -24,6 +24,7 @@ module.exports = {
   rules: {
     quotes: ["error", "double"],
     semi: ["error", "never"],
+    "no-restricted-imports": ["error", { patterns: ["../*"] }],
     "import/extensions": [
       "error",
       "ignorePackages",
@@ -47,6 +48,15 @@ module.exports = {
   },
   settings: {
     "import/resolver": {
+      alias: {
+        map: [
+          ["helpers", "./helpers"],
+          ["components", "./components"],
+          ["pages", "./pages"],
+          ["styles", "./styles"],
+        ],
+        extensions: [".js", ".jsx", ".ts", ".tsx"],
+      },
       node: {
         extensions: [".js", ".jsx", ".ts", ".tsx"],
       },

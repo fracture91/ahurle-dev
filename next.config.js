@@ -11,11 +11,6 @@ module.exports = withBundleAnalyzer({
       test: /\.md$/,
       use: "raw-loader",
     })
-    // eslint-disable-next-line no-param-reassign
-    config.resolve.alias = {
-      ...config.resolve.alias,
-      "~": __dirname,
-    }
     return config
   },
 })

@@ -1,15 +1,15 @@
 import React from "react"
 import Head from "next/head"
 import { GetStaticProps } from "next"
-import { generateRSS } from "../helpers/rssUtil"
-import { Markdown } from "../components/Markdown"
+import { generateRSS } from "helpers/rssUtil"
+import { Markdown } from "components/Markdown"
 import {
   PostData,
   loadBlogPosts,
   loadMarkdownFile,
   MarkdownFilePath,
-} from "../helpers/loader"
-import { PostCard } from "../components/PostCard"
+} from "helpers/loader"
+import { PostCard } from "components/PostCard"
 
 type HomeProps = {
   introduction: string

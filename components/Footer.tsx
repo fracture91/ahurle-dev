@@ -1,5 +1,5 @@
 import React from "react"
-import { globals } from "../helpers/globals"
+import { globals } from "helpers/globals"
 
 export const Footer: React.FC = () => (
   <footer className="footer">
