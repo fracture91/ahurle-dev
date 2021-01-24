@@ -38,6 +38,8 @@
     "test:ci": "jest --ci"
   },
   "dependencies": {
+    "@mdx-js/loader": "^1.6.22",
+    "@next/mdx": "^10.0.5",
     "fecha": "^4.2.0",
     "glob": "^7.1.6",
     "gray-matter": "^4.0.2",
