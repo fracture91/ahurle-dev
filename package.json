@@ -27,6 +27,7 @@
     "static generation"
   ],
   "scripts": {
+    "postinstall": "patch-package",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
@@ -80,6 +81,7 @@
     "jest-fail-on-console": "^2.0.3",
     "jest-raw-loader": "^1.0.1",
     "next-page-tester": "^0.18.0",
+    "patch-package": "^6.2.2",
     "prettier": "2.2.1",
     "react-test-renderer": "^17.0.1",
     "typescript": "^4.1.3"
