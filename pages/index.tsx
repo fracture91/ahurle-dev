@@ -1,7 +1,8 @@
+/** @jsxImportSource theme-ui */
 import React from "react"
 import Head from "next/head"
 import { GetStaticProps } from "next"
-import styled from "styled-components"
+import styled from "@emotion/styled"
 import { generateRSS } from "helpers/rssUtil"
 import { Markdown } from "components/Markdown"
 import {

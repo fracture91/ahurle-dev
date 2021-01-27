@@ -1,6 +1,7 @@
 {
-  "presets": ["next/babel"],
+  "presets": [["next/babel", { "preset-react": { "runtime": "automatic" } }]],
   "plugins": [
+    ["@emotion"],
     [
       "module-resolver",
       {
@@ -12,7 +13,6 @@
           "styles": "./styles"
         }
       }
-    ],
-    ["styled-components", { "ssr": true }]
+    ]
   ]
 }
