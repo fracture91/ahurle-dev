@@ -1,0 +1,30 @@
+diff --git a/node_modules/@theme-ui/color-modes/dist/index.d.ts b/node_modules/@theme-ui/color-modes/dist/index.d.ts
+index 3373788..657fc92 100644
+--- a/node_modules/@theme-ui/color-modes/dist/index.d.ts
++++ b/node_modules/@theme-ui/color-modes/dist/index.d.ts
+@@ -16,3 +16,4 @@ export declare const InitializeColorMode: () => React.DetailedReactHTMLElement<{
+         __html: string;
+     };
+ }, HTMLElement>;
++export declare const createColorStyles: (theme: any) => any;
+diff --git a/node_modules/@theme-ui/color-modes/dist/index.esm.js b/node_modules/@theme-ui/color-modes/dist/index.esm.js
+index 04ed349..5c1ee8a 100644
+--- a/node_modules/@theme-ui/color-modes/dist/index.esm.js
++++ b/node_modules/@theme-ui/color-modes/dist/index.esm.js
+@@ -276,5 +276,5 @@ var InitializeColorMode = function InitializeColorMode() {
+   });
+ };
+ 
+-export { ColorModeProvider, InitializeColorMode, useColorMode };
++export { ColorModeProvider, InitializeColorMode, useColorMode, createColorStyles };
+ //# sourceMappingURL=index.esm.js.map
+diff --git a/node_modules/@theme-ui/color-modes/dist/index.js b/node_modules/@theme-ui/color-modes/dist/index.js
+index d360bb7..f819d0d 100644
+--- a/node_modules/@theme-ui/color-modes/dist/index.js
++++ b/node_modules/@theme-ui/color-modes/dist/index.js
+@@ -283,4 +283,5 @@ var InitializeColorMode = function InitializeColorMode() {
+ exports.ColorModeProvider = ColorModeProvider;
+ exports.InitializeColorMode = InitializeColorMode;
+ exports.useColorMode = useColorMode;
++exports.createColorStyles = createColorStyles;
+ //# sourceMappingURL=index.js.map

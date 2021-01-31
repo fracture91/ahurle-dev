@@ -16,6 +16,7 @@ describe("Blog pages", () => {
       const post = posts?.filter((p) => p.slug === path.blogSlug)[0] as PostData
       const { render } = await getPage({
         route: `/blog/${path.blogSlug}`,
+        useDocument: true,
       })
 
       render()

@@ -1,6 +1,8 @@
+/** @jsxImportSource theme-ui */
 import React from "react"
 import Head from "next/head"
 import { GetStaticProps } from "next"
+import styled from "@emotion/styled"
 import { generateRSS } from "helpers/rssUtil"
 import { Markdown } from "components/Markdown"
 import {
@@ -10,6 +12,10 @@ import {
   MarkdownFilePath,
 } from "helpers/loader"
 import { PostCard } from "components/PostCard"
+
+const Centered = styled.h2`
+  text-align: center;
+`
 
 type HomeProps = {
   introduction: string
@@ -95,7 +101,7 @@ const Home: React.FC<HomeProps> = ({ introduction, features, posts }) => (
       </div> */}
 
     <div className="section alternate">
-      <h2 className="centered">Get started</h2>
+      <Centered>Get started</Centered>
       <a href="https://github.com/colinhacks/devii">
         <button className="fork-button" type="button">
           Go to README
