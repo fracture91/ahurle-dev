@@ -11,7 +11,7 @@ export const theme = makeTheme({
   initialColorModeName: "light",
   colors: {
     background: "white",
-    text: "black",
+    text: "#333",
     primary: "#0070f3",
     modes: {
       dark: {

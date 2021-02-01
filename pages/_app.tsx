@@ -10,23 +10,8 @@ import { theme } from "helpers/theme"
 import { Footer } from "components/Footer"
 import { globals } from "helpers/globals"
 import { Header } from "components/Header"
+import { CSSReset } from "components/CSSReset"
 import "styles/base.css"
-
-const GlobalStyle = (
-  <Global
-    styles={css`
-      html,
-      body,
-      #__next {
-        min-height: 100%;
-        padding: 0;
-        margin: 0;
-        font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-          Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
-      }
-    `}
-  />
-)
 
 // HACK: grab theme-ui's generated styles from non-exported function - see /patches
 // Use this to apply dark mode styles under a media query so they work without JS
@@ -47,7 +32,7 @@ const DarkMediaStyle = (
 const App: React.FC<AppProps> = ({ Component, pageProps }) => (
   <div className="container">
     <CacheProvider value={cache}>
-      {GlobalStyle}
+      {CSSReset}
       <Head>
         {globals.googleAnalyticsId && (
           <script

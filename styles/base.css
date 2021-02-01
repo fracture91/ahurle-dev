@@ -1,10 +1,7 @@
 /* font sizing */
 body {
-  color: #333;
   font-size: 100%;
-  font-family: Helvetica, sans-serif;
   line-height: 1.6;
-  text-rendering: optimizeLegibility;
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
 }
