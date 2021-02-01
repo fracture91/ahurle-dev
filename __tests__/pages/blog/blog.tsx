@@ -17,6 +17,7 @@ describe("Blog pages", () => {
       const { render } = await getPage({
         route: `/blog/${path.blogSlug}`,
         useDocument: true,
+        nonIsolatedModules: ["react"],
       })
 
       render()
