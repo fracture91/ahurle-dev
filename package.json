@@ -54,6 +54,7 @@
     "react-dom": "^17.0.1",
     "react-markdown": "^5.0.3",
     "react-syntax-highlighter": "^15.4.3",
+    "remark-directive": "^1.0.1",
     "rss": "^1.2.2",
     "showdown": "^1.9.1",
     "theme-ui": "^0.6.0-alpha.6"
@@ -139,10 +140,6 @@
       {
         "path": "./.next/static/chunks/pages/blog/\\[blog\\]-*.js",
         "maxSize": "10kb"
-      },
-      {
-        "path": "./.next/static/css/**/*.css",
-        "maxSize": "20kb"
       },
       {
         "path": "./.next/static/*/_buildManifest.js",

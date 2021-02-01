@@ -16,6 +16,6 @@ export namespace globals {
       : process.env.NODE_ENV === "production"
       ? prodUrl
       : "http://localhost:3000"
-  export const accentColor = "#4fc2b4"
+  export const accentColor = "#5a6a6d"
   export const googleAnalyticsId = "" // e.g. 'UA-999999999-1'
 }

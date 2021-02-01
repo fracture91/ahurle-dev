@@ -2,7 +2,6 @@
 import React from "react"
 import Head from "next/head"
 import { GetStaticProps } from "next"
-import styled from "@emotion/styled"
 import { generateRSS } from "helpers/rssUtil"
 import { Markdown } from "components/Markdown"
 import {
@@ -12,10 +11,7 @@ import {
   MarkdownFilePath,
 } from "helpers/loader"
 import { PostCard } from "components/PostCard"
-
-const Centered = styled.h2`
-  text-align: center;
-`
+import { Themed, Container, Button, Grid } from "theme-ui"
 
 type HomeProps = {
   introduction: string
@@ -24,70 +20,75 @@ type HomeProps = {
 }
 
 const Home: React.FC<HomeProps> = ({ introduction, features, posts }) => (
-  <div className="content">
+  <main>
     <Head>
       <title>Introducing Devii</title>
       <link rel="icon" href="/favicon.ico" />
     </Head>
 
-    <div className="introduction">
-      <h1>Introduction to Devii</h1>
+    <Container as="section" paddingX={3} marginY={4}>
+      <Themed.h1 sx={{ textAlign: "center" }}>Introduction to Devii</Themed.h1>
       <Markdown source={introduction} />
-    </div>
+    </Container>
 
-    <div className="section">
-      <h2>Features</h2>
-      <div className="medium-wide">
-        <Markdown source={features} />
-      </div>
-    </div>
+    <Container as="section" paddingX={3} marginY={4}>
+      <Themed.h2 sx={{ textAlign: "center" }}>Features</Themed.h2>
+      <Markdown source={features} />
+    </Container>
 
-    <div className="section">
-      <h2>My blog posts</h2>
-      <p>
+    <Container as="section" paddingX={3} marginY={4}>
+      <Themed.h2 sx={{ textAlign: "center" }}>My blog posts</Themed.h2>
+      <Themed.p>
         This section demonstrates the power of dynamic imports. Every Markdown
-        file under <code>/md/blog</code> is automatically parsed into a
-        structured TypeScript object and available in the{" "}
-        <code>props.posts</code> array. These blog post &quot;cards&quot; are
-        implemented in the
-        <code>/components/PostCard.tsx</code> component.
-      </p>
-      <div className="post-card-container">
+        file under <Themed.code>/md/blog</Themed.code> is automatically parsed
+        into a structured TypeScript object and available in the{" "}
+        <Themed.code>props.posts</Themed.code> array. These blog post
+        &quot;cards&quot; are implemented in the
+        <Themed.code>/components/PostCard.tsx</Themed.code> component.
+      </Themed.p>
+      <Grid columns="repeat(auto-fit,minmax(300px, 1fr))" gap={2} py={2} px={3}>
         {posts.map((post) => (
           <PostCard post={post} key={post.path} />
         ))}
-      </div>
-    </div>
+      </Grid>
+    </Container>
 
-    <div className="section">
-      <h2>Testimonials</h2>
-      <blockquote>
-        <p>
-          <em>Seems like it might be useful!</em>
-        </p>
-        <p>
-          — Dan Abramov, taken{" "}
-          <a
-            href="https://github.com/colinhacks/devii/issues/2"
-            target="_blank"
-            rel="noreferrer"
-          >
-            {" "}
-            utterly out of context
-          </a>
-        </p>
-      </blockquote>
-    </div>
+    <Container as="section" paddingX={3} marginY={4}>
+      <Themed.h2 sx={{ textAlign: "center" }}>Testimonials</Themed.h2>
+      <Themed.blockquote>
+        <Themed.p>
+          <Themed.em>Seems like it might be useful!</Themed.em>
+        </Themed.p>
+      </Themed.blockquote>
+      <Themed.p>
+        — Dan Abramov, taken{" "}
+        <Themed.a
+          href="https://github.com/colinhacks/devii/issues/2"
+          target="_blank"
+          rel="noreferrer"
+        >
+          {" "}
+          utterly out of context
+        </Themed.a>
+      </Themed.p>
+    </Container>
 
-    <div className="section alternate">
-      <Centered>Get started</Centered>
-      <a href="https://github.com/colinhacks/devii">
-        <button className="fork-button" type="button">
-          Go to README
-        </button>
-      </a>
-    </div>
-  </div>
+    <Container
+      as="section"
+      padding={3}
+      marginY={0}
+      sx={{
+        backgroundColor: "#00000010",
+        maxWidth: "none",
+        textAlign: "center",
+      }}
+    >
+      <Themed.h2 sx={{ textAlign: "center" }}>Get started</Themed.h2>
+      <Themed.a href="https://github.com/colinhacks/devii">
+        <Button>Go to README</Button>
+      </Themed.a>
+    </Container>
+  </main>
 )
 
 export default Home
