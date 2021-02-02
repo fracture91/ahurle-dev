@@ -6,7 +6,7 @@ import { Global, CacheProvider, css } from "@emotion/react"
 import { cache } from "@emotion/css"
 import { ThemeProvider, InitializeColorMode, CSSObject } from "theme-ui"
 import { createColorStyles } from "@theme-ui/color-modes"
-import { theme } from "helpers/theme"
+import { theme, useThemeUI } from "helpers/theme"
 import { Footer } from "components/Footer"
 import { globals } from "helpers/globals"
 import { Header } from "components/Header"
@@ -17,7 +17,7 @@ import "styles/base.css"
 // Use this to apply dark mode styles under a media query so they work without JS
 const themeUIStyles: CSSObject = createColorStyles(theme)
 
-const DarkMediaStyle = (
+const DarkMediaStyle: React.FC = () => (
   <Global
     styles={css`
       @media (prefers-color-scheme: dark) {
@@ -28,6 +28,12 @@ const DarkMediaStyle = (
     `}
   />
 )
+
+const Thing: React.FC = () => {
+  const ui = useThemeUI()
+  // console.log(ui)
+  return null
+}
 
 const App: React.FC<AppProps> = ({ Component, pageProps }) => (
   <div className="container">
@@ -56,8 +62,9 @@ const App: React.FC<AppProps> = ({ Component, pageProps }) => (
         )}
       </Head>
       <ThemeProvider theme={theme}>
+        <Thing />
         {/* important: prefers-color-scheme rules come after built-in theme-ui rules */}
-        {DarkMediaStyle}
+        <DarkMediaStyle />
         {/* when JS enabled, blocks rendering until preferred scheme read from localstorage/media */}
         <InitializeColorMode key="theme-ui-no-flash" />
         <Header />

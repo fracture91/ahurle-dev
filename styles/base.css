@@ -35,17 +35,6 @@ h5 {
   font-size: 1.1em;
 }
 
-h6,
-p,
-li {
-  font-size: 1em;
-}
-
-p {
-  margin: 0;
-  padding: 1em 0px;
-}
-
 blockquote {
   border-left: 5px solid turquoise;
   padding: 15px 0px 15px 15px;
@@ -245,35 +234,6 @@ hr {
 .blog-post-image {
   width: 100%;
   max-width: 1600px;
-}
-
-.blog-post-title {
-  width: 100%;
-  max-width: 550px;
-  margin-bottom: 15px;
-  padding: 40px 10px;
-}
-
-.blog-post-title h1 {
-  letter-spacing: -1px;
-  line-height: 1.2;
-  margin: 3px 0px;
-}
-
-.blog-post-title h2 {
-  margin: 0px;
-  padding: 3px 0px;
-  color: #808080;
-  letter-spacing: 0px;
-  line-height: 1.2;
-  font-size: 13pt;
-  font-weight: normal;
-}
-
-.blog-post-content {
-  width: 100%;
-  max-width: 550px;
-  padding: 0px 10px;
 }
 
 .follow-button {

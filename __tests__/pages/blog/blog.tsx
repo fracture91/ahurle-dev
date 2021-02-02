@@ -17,7 +17,21 @@ describe("Blog pages", () => {
       const { render } = await getPage({
         route: `/blog/${path.blogSlug}`,
         useDocument: true,
-        nonIsolatedModules: ["react"],
+        nonIsolatedModules: [
+          "react",
+          "@mdx-js/react",
+          "@emotion/utils",
+          "@emotion/server",
+          // "@emotion/react/dist/emotion-element-cb6e9ca7.cjs.dev",
+          "@emotion/react/dist/emotion-react.cjs.dev",
+          // "@theme-ui/core",
+          // "@theme-ui/theme-provider",
+          // "@theme-ui/mdx",
+          // "@theme-ui/css",
+          "@theme-ui/core",
+          // "theme-ui",
+          // "@theme-ui/color-modes",
+        ],
       })
 
       render()

@@ -22,7 +22,7 @@ module.exports = {
   },
   plugins: ["react", "react-hooks", "@typescript-eslint"],
   rules: {
-    quotes: ["error", "double"],
+    quotes: ["error", "double", { avoidEscape: true }],
     semi: ["error", "never"],
     "no-restricted-imports": ["error", { patterns: ["../*"] }],
     "import/extensions": [
@@ -39,6 +39,7 @@ module.exports = {
     "react/react-in-jsx-scope": "off", // next.js uses new JSX transform by default
     "react/prop-types": "off", // use types instead
     "react/jsx-filename-extension": ["error", { extensions: [".jsx", ".tsx"] }],
+    "react/jsx-pascal-case": "off", // does not like Themed.h1 from theme-ui
     "react-hooks/rules-of-hooks": "error",
     "react-hooks/exhaustive-deps": "error",
     "no-use-before-define": "off", // must disable in favor of next rule

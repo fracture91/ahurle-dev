@@ -1,3 +1,4 @@
+/** @jsxImportSource theme-ui */
 import React from "react"
 import { GetStaticPaths, GetStaticProps } from "next"
 import { BlogPost } from "components/BlogPost"

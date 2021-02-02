@@ -1,8 +1,17 @@
+/** @jsxImportSource theme-ui */
 import React from "react"
+import { Container, Themed } from "theme-ui"
 import { PostData } from "helpers/loader"
 import { Author } from "./Author"
 import { Markdown } from "./Markdown"
 import { PostMeta } from "./PostMeta"
+import { useThemeUI } from "helpers/theme"
+
+const Thing: React.FC = ({children}) => {
+  const ui = useThemeUI()
+  console.log(ui)
+  return <Themed.h1>{children}</Themed.h1>
+}
 
 export const BlogPost: React.FunctionComponent<{ post: PostData }> = ({
   post,
@@ -19,16 +28,24 @@ export const BlogPost: React.FunctionComponent<{ post: PostData }> = ({
         />
       )}
 
-      <div className="blog-post-title">
-        {title && <h1>{title}</h1>}
-        {subtitle && <h2>{subtitle}</h2>}
+      <Container as="section" marginX={3} marginY={4}>
+        {title && <Thing>{title}</Thing>}
+        {subtitle && (
+          <Themed.h3
+            sx={{ color: "tertiary", fontWeight: "body", paddingY: 2 }}
+            as="p"
+            role="doc-subtitle"
+          >
+            {subtitle}
+          </Themed.h3>
+        )}
         <br />
         <Author post={post} />
-      </div>
+      </Container>
 
-      <div className="blog-post-content">
+      <Container as="section" marginX={3} marginY={4}>
         <Markdown source={post.content} />
-      </div>
+      </Container>
     </article>
   )
 }
