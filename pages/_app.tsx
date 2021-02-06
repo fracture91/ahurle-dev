@@ -6,7 +6,7 @@ import { Global, CacheProvider, css } from "@emotion/react"
 import { cache } from "@emotion/css"
 import { ThemeProvider, InitializeColorMode, CSSObject } from "theme-ui"
 import { createColorStyles } from "@theme-ui/color-modes"
-import { theme, useThemeUI } from "helpers/theme"
+import { theme } from "helpers/theme"
 import { Footer } from "components/Footer"
 import { globals } from "helpers/globals"
 import { Header } from "components/Header"
@@ -30,50 +30,48 @@ const DarkMediaStyle: React.FC = () => (
 )
 
 const Thing: React.FC = () => {
-  const ui = useThemeUI()
+  // const ui = useThemeUI()
   // console.log(ui)
   return null
 }
 
 const App: React.FC<AppProps> = ({ Component, pageProps }) => (
-  <div className="container">
-    <CacheProvider value={cache}>
-      {CSSReset}
-      <Head>
-        {globals.googleAnalyticsId && (
-          <script
-            async
-            src={`https://www.googletagmanager.com/gtag/js?id=${globals.googleAnalyticsId}`}
-          />
-        )}
-        {globals.googleAnalyticsId && (
-          <script
-            // eslint-disable-next-line react/no-danger
-            dangerouslySetInnerHTML={{
-              __html: `
+  <CacheProvider value={cache}>
+    {CSSReset}
+    <Head>
+      {globals.googleAnalyticsId && (
+        <script
+          async
+          src={`https://www.googletagmanager.com/gtag/js?id=${globals.googleAnalyticsId}`}
+        />
+      )}
+      {globals.googleAnalyticsId && (
+        <script
+          // eslint-disable-next-line react/no-danger
+          dangerouslySetInnerHTML={{
+            __html: `
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
 
             gtag('globals', '${globals.googleAnalyticsId}');
             `,
-            }}
-          />
-        )}
-      </Head>
-      <ThemeProvider theme={theme}>
-        <Thing />
-        {/* important: prefers-color-scheme rules come after built-in theme-ui rules */}
-        <DarkMediaStyle />
-        {/* when JS enabled, blocks rendering until preferred scheme read from localstorage/media */}
-        <InitializeColorMode key="theme-ui-no-flash" />
-        <Header />
-        {/* eslint-disable-next-line react/jsx-props-no-spreading */}
-        <Component {...pageProps} />
-        <Footer />
-      </ThemeProvider>
-    </CacheProvider>
-  </div>
+          }}
+        />
+      )}
+    </Head>
+    <ThemeProvider theme={theme}>
+      <Thing />
+      {/* important: prefers-color-scheme rules come after built-in theme-ui rules */}
+      <DarkMediaStyle />
+      {/* when JS enabled, blocks rendering until preferred scheme read from localstorage/media */}
+      <InitializeColorMode key="theme-ui-no-flash" />
+      <Header />
+      {/* eslint-disable-next-line react/jsx-props-no-spreading */}
+      <Component {...pageProps} />
+      <Footer />
+    </ThemeProvider>
+  </CacheProvider>
 )
 
 export default App

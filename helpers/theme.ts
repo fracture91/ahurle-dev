@@ -50,6 +50,7 @@ export const theme = makeTheme({
   fontSizes: [
     "0.875rem",
     "1rem",
+    "1.125rem",
     "1.1875rem",
     "1.25rem",
     "1.5rem",
@@ -60,7 +61,8 @@ export const theme = makeTheme({
   ],
   lineHeights: {
     body: 1.6,
-    heading: 1.2,
+    pre: 1.4,
+    heading: 1.15,
   },
   sizes: {
     container: "40em",
@@ -70,6 +72,14 @@ export const theme = makeTheme({
       fontFamily: "heading",
       lineHeight: "heading",
       fontWeight: "heading",
+      marginTop: "1.7em",
+      marginBottom: "1rem",
+      ":first-child": {
+        marginTop: 0,
+      },
+      ":last-child": {
+        marginBottom: 0,
+      },
     },
   },
   styles: {
@@ -79,53 +89,73 @@ export const theme = makeTheme({
       fontFamily: "body",
       lineHeight: "body",
       fontWeight: "body",
-      fontSize: 2,
+      fontSize: 3,
+      MozOsxFontSmoothing: "grayscale",
+      WebkitFontSmoothing: "antialiased",
     },
     h1: {
       variant: "text.heading",
-      fontSize: 6,
-      letterSpacing: "-1px",
+      fontSize: 7,
+      letterSpacing: "-0.03em",
     },
     h2: {
       variant: "text.heading",
-      fontSize: 5,
+      fontSize: 6,
     },
     h3: {
       variant: "text.heading",
-      fontSize: 4,
+      fontSize: 5,
     },
     h4: {
       variant: "text.heading",
-      fontSize: 3,
+      fontSize: 4,
     },
     h5: {
       variant: "text.heading",
-      fontSize: 2,
+      fontSize: 3,
     },
     h6: {
       variant: "text.heading",
-      fontSize: 1,
+      fontSize: 2,
     },
     p: {
-      paddingY: "1em",
-      // color: "text",
-      // fontFamily: "body",
-      // fontWeight: "body",
-      // lineHeight: "body",
+      marginY: "1.4em",
+      ":first-child": {
+        marginTop: 0,
+      },
+      ":last-child": {
+        marginBottom: 0,
+      },
+      "li &": {
+        marginY: "1em",
+      },
     },
     a: {
       color: "primary",
     },
     pre: {
       fontFamily: "monospace",
+      lineHeight: "pre",
       overflowX: "auto",
-      code: {
-        color: "inherit",
+      "li &": {
+        marginY: "1em",
       },
+      margin: "1em -1em",
+      padding: "0.8em 1em",
     },
     code: {
       fontFamily: "monospace",
       fontSize: "inherit",
+      backgroundColor: "#00000010",
+      padding: "0.05em 0.2em",
+      borderRadius: "0.3em",
+      "pre &": {
+        color: "inherit",
+        lineHeight: "inherit",
+        backgroundColor: "inherit",
+        padding: 0,
+        borderRadius: 0,
+      },
     },
     table: {
       width: "100%",
