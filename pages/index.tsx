@@ -21,7 +21,7 @@ type HomeProps = {
 }
 
 const Home: React.FC<HomeProps> = ({ introduction, features, posts }) => (
-  <div className="content">
+  <main>
     <Head>
       <title>Introducing Devii</title>
       <link rel="icon" href="/favicon.ico" />
@@ -107,7 +107,7 @@ const Home: React.FC<HomeProps> = ({ introduction, features, posts }) => (
         </Button>
       </Themed.a>
     </Container>
-  </div>
+  </main>
 )
 
 export default Home

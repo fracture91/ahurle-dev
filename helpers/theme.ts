@@ -96,6 +96,13 @@ export const theme = makeTheme({
       },
     },
   },
+  links: {
+    nav: {
+      color: "inherit",
+      padding: 3,
+      textDecoration: "none",
+    },
+  },
   styles: {
     root: {
       backgroundColor: "background",
@@ -204,6 +211,13 @@ export const theme = makeTheme({
     },
     img: {
       maxWidth: "100%",
+    },
+    hr: {
+      border: "none",
+      height: "1px",
+      color: "secondary",
+      backgroundColor: "secondary",
+      marginY: 2,
     },
   },
 })

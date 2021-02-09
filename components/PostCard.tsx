@@ -1,3 +1,4 @@
+/** @jsxImportSource theme-ui */
 import React from "react"
 import Link from "next/link"
 import { format } from "fecha"
@@ -23,7 +24,7 @@ export const PostCard: React.FC<{ post: PostData }> = ({ post }) => (
               ? format(new Date(post.datePublished), "MMMM Do, YYYY")
               : ""}
           </p>
-          <div className="flex-spacer"> </div>
+          <div sx={{ flex: 1 }} />
           {false && (
             <div className="tag-container">
               {post.tags && (post.tags || []).map((tag) => <Tag tag={tag} />)}
