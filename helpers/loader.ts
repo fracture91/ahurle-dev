@@ -1,6 +1,7 @@
 import matter from "gray-matter"
 import glob from "glob"
 import Path from "path"
+import sizeOf from "image-size"
 import { globals } from "./globals"
 
 export type PostData = {
@@ -21,6 +22,8 @@ export type PostData = {
   bannerPhoto?: string
   bannerPhotoAlt?: string
   bannerPhotoUnsplash?: string
+  bannerPhotoWidth?: number
+  bannerPhotoHeight?: number
   thumbnailPhoto?: string
 }
 
@@ -86,7 +89,7 @@ export const loadMarkdownFile = async (
   return { path, contents: mdFile.default }
 }
 
-export const mdToPost = (file: RawFile): PostData => {
+export const mdToPost = async (file: RawFile): Promise<PostData> => {
   const metadata = matter(file.contents)
   const path = file.path.blogPath
   const post = {
@@ -106,6 +109,8 @@ export const mdToPost = (file: RawFile): PostData => {
     bannerPhoto: metadata.data.bannerPhoto || null,
     bannerPhotoAlt: metadata.data.bannerPhotoAlt || null,
     bannerPhotoUnsplash: metadata.data.bannerPhotoUnsplash || null,
+    bannerPhotoWidth: metadata.data.bannerPhotoWidth || null,
+    bannerPhotoHeight: metadata.data.bannerPhotoHeight || null,
     thumbnailPhoto: metadata.data.thumbnailPhoto || null,
     content: metadata.content,
   }
@@ -123,6 +128,12 @@ export const mdToPost = (file: RawFile): PostData => {
   if (post.authorPhoto && !post.authorPhotoAlt)
     throw new Error("Missing required field: authorPhotoAlt.")
 
+  if (post.bannerPhoto && (!post.bannerPhotoWidth || !post.bannerPhotoHeight)) {
+    const dimensions = await sizeOf(`public/${post.bannerPhoto}`)
+    post.bannerPhotoWidth = dimensions.width
+    post.bannerPhotoHeight = dimensions.height
+  }
+
   return post as PostData
 }
 
@@ -137,7 +148,12 @@ export const loadPost = async (path: MarkdownFilePath): Promise<PostData> => {
 }
 
 export const loadBlogPosts = async (): Promise<PostData[]> =>
-  (await loadMarkdownFiles(MarkdownFilePath.fromBlogSlug("*").glob()))
-    .map(mdToPost)
+  (
+    await Promise.all(
+      (await loadMarkdownFiles(MarkdownFilePath.fromBlogSlug("*").glob())).map(
+        mdToPost
+      )
+    )
+  )
     .filter((p) => p.published)
     .sort((a, b) => (b.datePublished || 0) - (a.datePublished || 0))
