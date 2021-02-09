@@ -20,6 +20,7 @@ export type PostData = {
   tags?: string[]
   bannerPhoto?: string
   bannerPhotoAlt?: string
+  bannerPhotoUnsplash?: string
   thumbnailPhoto?: string
 }
 
@@ -104,6 +105,7 @@ export const mdToPost = (file: RawFile): PostData => {
     authorTwitter: metadata.data.authorTwitter || null,
     bannerPhoto: metadata.data.bannerPhoto || null,
     bannerPhotoAlt: metadata.data.bannerPhotoAlt || null,
+    bannerPhotoUnsplash: metadata.data.bannerPhotoUnsplash || null,
     thumbnailPhoto: metadata.data.thumbnailPhoto || null,
     content: metadata.content,
   }

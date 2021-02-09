@@ -33,6 +33,12 @@ export const CSSReset = (
         }
       }
 
+      @media (min-width: ${theme.breakpoints[3]}) {
+        html {
+          font-size: 130%;
+        }
+      }
+
       /* Box sizing rules */
       *,
       *::before,

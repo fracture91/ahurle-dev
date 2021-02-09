@@ -5,7 +5,6 @@ const withBundleAnalyzer = require("@next/bundle-analyzer")({
 
 module.exports = withBundleAnalyzer({
   reactStrictMode: true,
-  trailingSlash: true,
   webpack(config) {
     config.module.rules.push({
       test: /\.md$/,

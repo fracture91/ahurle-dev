@@ -13,9 +13,8 @@ tags:
 thumbnailPhoto: /img/pancakes_thumb.jpeg
 bannerPhoto: /img/pancakes.jpeg
 bannerPhotoAlt: A stack of delicious pancakes
+bannerPhotoUnsplash: "@unsplash"
 ---
-
-> Originally published at [https://colinhacks.com/essays/devii](https://colinhacks.com/essays/devii). Check out the HN <del>roast</del> discussion <a href="https://news.ycombinator.com/item?id=23309002">here</a>! 🤗
 
 I recently set out to build my personal website — the one you're reading now, as it happens!
 

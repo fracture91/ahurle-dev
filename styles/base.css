@@ -1,33 +1,4 @@
 /* page areas */
-.blog-post {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  margin: auto;
-}
-
-.blog-post-inner {
-  width: 100%;
-}
-
-.blog-post-image {
-  width: 100%;
-  max-width: 1600px;
-}
-
-.follow-button {
-  display: inline-block;
-  border: 1px solid turquoise;
-  border-radius: 4px;
-  padding: 2px 10px;
-  color: turquoise;
-  font-size: 10pt;
-  margin-bottom: 2px;
-  margin-left: 4px;
-}
-
 .tag {
   display: inline-block;
   padding: 3px 12px;

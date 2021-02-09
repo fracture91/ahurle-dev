@@ -24,7 +24,7 @@ export const theme = makeTheme({
       },
     },
   },
-  breakpoints: ["40rem", "60rem", "120rem"],
+  breakpoints: ["40rem", "60rem", "120rem", "180rem"],
   space: [0, 4, 8, 16, 32, 64, 128, 256, 512],
   fonts: {
     body: [
@@ -56,9 +56,9 @@ export const theme = makeTheme({
     "1.25rem",
     "1.5rem",
     "2rem",
+    "2.5rem",
     "3rem",
-    "4rem",
-    "6rem",
+    "3.5rem",
   ],
   lineHeights: {
     body: 1.6,
@@ -101,6 +101,19 @@ export const theme = makeTheme({
       color: "inherit",
       padding: 3,
       textDecoration: "none",
+      "&:visited": {
+        color: "inherit"
+      },
+      "&:hover": {
+        color: "secondary"
+      }
+    },
+  },
+  cards: {
+    primary: {
+      padding: 2,
+      borderRadius: 4,
+      boxShadow: "0 0 8px rgba(0, 0, 0, 0.125)",
     },
   },
   styles: {
@@ -117,12 +130,15 @@ export const theme = makeTheme({
     },
     h1: {
       variant: "text.heading",
-      fontSize: 7,
+      fontSize: [6, 7, 8],
       letterSpacing: "-0.03em",
     },
     h2: {
       variant: "text.heading",
       fontSize: 6,
+      paddingBottom: "0.15em",
+      borderBottom: "1px solid",
+      borderColor: "secondary",
     },
     h3: {
       variant: "text.heading",
@@ -151,6 +167,9 @@ export const theme = makeTheme({
       "li &": {
         marginY: "1em",
       },
+      "h1 + &, h2 + &, h3 + &, h4 + &, h5 + &, h6 + &" : {
+        marginTop: 0,
+      }
     },
     a: {
       color: "primary",
@@ -169,8 +188,10 @@ export const theme = makeTheme({
       "li &": {
         marginY: "1em",
       },
-      margin: "1em -1em",
+      marginY: "1em",
+      marginX: -3,
       padding: "0.8em 1em",
+      borderRadius: "5px",
     },
     code: {
       fontFamily: "monospace",
@@ -194,7 +215,8 @@ export const theme = makeTheme({
       padding: "0.5em",
       backgroundColor: "#00000010",
       borderRadius: "0 8px 8px 0",
-      margin: "1em",
+      marginY: "1em",
+      marginX: "0.5rem",
     },
     table: {
       width: "100%",
