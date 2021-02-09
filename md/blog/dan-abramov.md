@@ -2,14 +2,17 @@
 title: Dan Abramov knows about Devii
 published: true
 datePublished: 1594425078471
-author: Colin McDonnell
 tags:
   - Dan Abramov
-authorPhoto: /img/profile.jpg
-authorPhotoAlt: Closeup of Keanu Reeves
-bannerPhoto: /img/danabramov.png
-bannerPhotoAlt: Screenshot of Dan Abramov opening an issue on github
-thumbnailPhoto: /img/danabramov_thumb.png
+author:
+  name: Colin McDonnell
+  photo:
+    url: /img/profile.jpg
+    alt: Closeup of Keanu Reeves
+bannerPhoto:
+  url: /img/danabramov.png
+  alt: Screenshot of Dan Abramov opening an issue on github
+  thumbnailUrl: /img/danabramov_thumb.png
 ---
 
 Dan Abramov knows about Devii!

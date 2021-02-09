@@ -3,15 +3,18 @@ title: Devii's killer features
 subtitle: Bringing the power of React, TypeScript, and static generation to dev blogs everywhere
 published: true
 datePublished: 1589064522569
-author: Ben Bitdiddle
 tags:
   - Devii
   - Blogs
-authorPhoto: /img/profile.jpg
-authorPhotoAlt: Closeup of Keanu Reeves
-bannerPhoto: /img/brook.jpg
-bannerPhotoAlt: Long exposure of a brook flowing over rocks
-thumbnailPhoto: /img/brook.jpg
+author:
+  name: Ben Bitdiddle
+  photo:
+    url: /img/profile.jpg
+    alt: Closeup of Keanu Reeves
+bannerPhoto:
+  url: /img/brook.jpg
+  alt: Long exposure of a brook flowing over rocks
+  thumbnailUrl: /img/brook.jpg
 ---
 
 This page is built with Devii! Check out the source code for this under `/md/blog/test.md`.

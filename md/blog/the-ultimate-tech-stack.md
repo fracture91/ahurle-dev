@@ -2,18 +2,21 @@
 title: Choosing a tech stack for my personal dev blog in 2020
 published: true
 datePublished: 1590463136775
-author: Colin McDonnell
-authorTwitter: colinhacks
-authorPhoto: /img/profile.jpg
-authorPhotoAlt: Closeup of Keanu Reeves
+author:
+  name: Colin McDonnell
+  twitter: colinhacks
+  photo:
+    url: /img/profile.jpg
+    alt: Closeup of Keanu Reeves
 tags:
   - Static Site Generators
   - React
   - Next.js
-thumbnailPhoto: /img/pancakes_thumb.jpeg
-bannerPhoto: /img/pancakes.jpeg
-bannerPhotoAlt: A stack of delicious pancakes
-bannerPhotoUnsplash: "@unsplash"
+bannerPhoto:
+  url: /img/pancakes.jpeg
+  thumbnailUrl: /img/pancakes_thumb.jpeg
+  alt: A stack of delicious pancakes
+  unsplash: "@unsplash"
 ---
 
 I recently set out to build my personal website — the one you're reading now, as it happens!

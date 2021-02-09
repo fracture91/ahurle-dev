@@ -2,21 +2,17 @@
 import React from "react"
 import { Box, Container, Themed } from "theme-ui"
 import Image from "next/image"
-import { PostData } from "helpers/loader"
+import { BannerPhoto as BannerPhotoType, PostData } from "helpers/loader"
 import { Author } from "./Author"
 import { Markdown } from "./Markdown"
 import { PostMeta } from "./PostMeta"
 
-const BannerPhoto: React.FC<{
-  src: string
-  alt?: string
-  unsplash?: string
-  width?: number
-  height?: number
-}> = ({ src, alt, unsplash, width, height }) => (
+const BannerPhoto: React.FC<{ bannerPhoto: BannerPhotoType }> = ({
+  bannerPhoto: { url, alt, unsplash, width, height },
+}) => (
   <Box as="figure" mt={3} mx={-3}>
     <Image
-      src={src}
+      src={url}
       alt={alt}
       width={width || 0}
       height={height || 0}
@@ -95,15 +91,7 @@ export const BlogPost: React.FunctionComponent<{ post: PostData }> = ({
 
       <Container as="section" paddingX={3} marginY={4} mt={3}>
         <HeaderText post={post} />
-        {post.bannerPhoto && (
-          <BannerPhoto
-            src={post.bannerPhoto}
-            alt={post.bannerPhotoAlt}
-            unsplash={post.bannerPhotoUnsplash}
-            width={post.bannerPhotoWidth}
-            height={post.bannerPhotoHeight}
-          />
-        )}
+        {post.bannerPhoto && <BannerPhoto bannerPhoto={post.bannerPhoto} />}
       </Container>
 
       <Container as="section" paddingX={3} marginY={4}>
