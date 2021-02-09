@@ -45,6 +45,30 @@ export const BlogPost: React.FunctionComponent<{ post: PostData }> = ({
       <Container as="section" paddingX={3} marginY={4}>
         <Markdown source={post.content} />
       </Container>
+
+      <Container as="section" paddingX={3} marginY={4} marginTop={0}>
+        <Themed.hr />
+        <Themed.p
+          sx={{
+            textAlign: "center",
+            display: "block",
+            fontFamily: "cursive",
+          }}
+        >
+          🙏{" "}
+          <Themed.em
+            sx={{
+              textShadow:
+                "-4px -4px 5px yellow, 4px 0px 5px blue, -4px 4px 4px red",
+              marginX: 2,
+              fontWeight: "heading"
+            }}
+          >
+            Thank You For Reading My Blog
+          </Themed.em>{" "}
+          👋
+        </Themed.p>
+      </Container>
     </article>
   )
 }

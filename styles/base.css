@@ -1,29 +1,4 @@
 /* font sizing */
-blockquote {
-  border-left: 5px solid turquoise;
-  padding: 15px 0px 15px 15px;
-  background-color: #f4f4f4;
-  border-radius: 4px;
-  width: 100%;
-  max-width: 550px;
-  margin: 0.4em 0px;
-}
-
-blockquote p {
-  padding: 0px;
-}
-
-a {
-  color: turquoise;
-}
-
-a:hover {
-  color: #c00;
-}
-
-a:visited {
-  color: purple;
-}
 
 /* page sections */
 .container {
@@ -99,19 +74,6 @@ hr {
 }
 
 /* page areas */
-.fork-button {
-  background-color: turquoise;
-  border-radius: 10px;
-  border: none;
-  color: white;
-  font-size: 14pt;
-  padding: 10px 30px;
-  cursor: pointer;
-}
-.fork-button:hover {
-  background-color: mediumturquoise;
-}
-
 .blog-post {
   display: flex;
   flex-direction: column;

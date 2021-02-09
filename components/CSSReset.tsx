@@ -1,5 +1,6 @@
 /** @jsxImportSource theme-ui */
 import { Global, css } from "@emotion/react"
+import { theme } from "helpers/theme"
 
 // based on https://github.com/hankchizljaw/modern-css-reset with some tweaks
 
@@ -12,6 +13,24 @@ export const CSSReset = (
         min-height: 100%;
         padding: 0;
         margin: 0;
+      }
+
+      @media (min-width: 0px) {
+        html {
+          font-size: 89.4735%;
+        }
+      }
+
+      @media (min-width: ${theme.breakpoints[0]}) {
+        html {
+          font-size: 100%;
+        }
+      }
+
+      @media (min-width: ${theme.breakpoints[2]}) {
+        html {
+          font-size: 110%;
+        }
       }
 
       /* Box sizing rules */

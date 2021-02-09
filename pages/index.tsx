@@ -11,7 +11,7 @@ import {
   MarkdownFilePath,
 } from "helpers/loader"
 import { PostCard } from "components/PostCard"
-import { Themed, Container } from "theme-ui"
+import { Themed, Container, Button } from "theme-ui"
 
 type HomeProps = {
   introduction: string
@@ -102,9 +102,9 @@ const Home: React.FC<HomeProps> = ({ introduction, features, posts }) => (
     >
       <Themed.h2 sx={{ textAlign: "center" }}>Get started</Themed.h2>
       <Themed.a href="https://github.com/colinhacks/devii">
-        <button className="fork-button" type="button">
+        <Button>
           Go to README
-        </button>
+        </Button>
       </Themed.a>
     </Container>
   </div>

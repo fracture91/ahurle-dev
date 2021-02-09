@@ -132,13 +132,14 @@ To achieve this I implemented a custom `code` renderer (`/components/Code.tsx`) 
 
 <!-- I landed on this solution after wasting hours playing with other options. CodeMirror has bad React support (the only React wrapper for it is inauspiciously named `react-codemirror2`) and [bizarre selection issues](https://github.com/codemirror/CodeMirror/issues/1099) for `readonly` code blocks. The popular `highlight.js` project requires you to [initialize the library](https://github.com/highlightjs/highlight.js/issues/925) in `componentDidMount` like its 2015 :/  -->
 
-<pre>
+~~~
 ```ts
 // pretty neat huh?
 const test = (arg: string) => {
   return arg.length > 5;
 };
-```</pre>
+```
+~~~
 
 turns into this:
 

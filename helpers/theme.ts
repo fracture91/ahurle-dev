@@ -24,6 +24,7 @@ export const theme = makeTheme({
       },
     },
   },
+  breakpoints: ["40rem", "60rem", "120rem"],
   space: [0, 4, 8, 16, 32, 64, 128, 256, 512],
   fonts: {
     body: [
@@ -82,6 +83,19 @@ export const theme = makeTheme({
       },
     },
   },
+  buttons: {
+    primary: {
+      backgroundColor: "primary",
+      borderRadius: 10,
+      border: "none",
+      fontSize: 3,
+      padding: "1 3",
+      cursor: "pointer",
+      "&:hover": {
+        backgroundColor: "secondary",
+      },
+    },
+  },
   styles: {
     root: {
       backgroundColor: "background",
@@ -92,6 +106,7 @@ export const theme = makeTheme({
       fontSize: 3,
       MozOsxFontSmoothing: "grayscale",
       WebkitFontSmoothing: "antialiased",
+      overflowWrap: "anywhere",
     },
     h1: {
       variant: "text.heading",
@@ -132,9 +147,16 @@ export const theme = makeTheme({
     },
     a: {
       color: "primary",
+      "&:visited": {
+        color: "tertiary",
+      },
+      "&:hover": {
+        color: "secondary",
+      },
     },
     pre: {
       fontFamily: "monospace",
+      fontSize: 2,
       lineHeight: "pre",
       overflowX: "auto",
       "li &": {
@@ -156,6 +178,16 @@ export const theme = makeTheme({
         padding: 0,
         borderRadius: 0,
       },
+    },
+    blockquote: {
+      borderWidth: 0,
+      borderLeftWidth: "5px",
+      borderColor: "primary",
+      borderStyle: "solid",
+      padding: "0.5em",
+      backgroundColor: "#00000010",
+      borderRadius: "0 8px 8px 0",
+      margin: "1em",
     },
     table: {
       width: "100%",
