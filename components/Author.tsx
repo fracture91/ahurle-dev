@@ -5,14 +5,14 @@ import { PostData } from "helpers/loader"
 export const AuthorLines: React.FC<{ post: PostData }> = ({ post }) => (
   <div>
     <p className="author-line">
-      {post.author && <span>{post.author}</span>}
+      {post.author?.name && <span>{post.author?.name}</span>}
 
-      {post.authorTwitter && (
+      {post.author?.twitter && (
         <span>
           {" "}
           <a
-            href={`https://twitter.com/${post.authorTwitter}`}
-          >{`@${post.authorTwitter}`}</a>{" "}
+            href={`https://twitter.com/${post.author?.twitter}`}
+          >{`@${post.author?.twitter}`}</a>{" "}
         </span>
       )}
     </p>
@@ -27,10 +27,11 @@ export const AuthorLines: React.FC<{ post: PostData }> = ({ post }) => (
 export const Author: React.FC<{ post: PostData }> = ({ post }) => (
   <div className="author-container">
     <div className="author">
-      {post.authorPhoto && (
+      {post.author?.photo && (
+        // eslint-disable-next-line jsx-a11y/img-redundant-alt
         <img
-          src={post.authorPhoto}
-          alt={post.authorPhotoAlt}
+          src={post.author?.photo?.url}
+          alt={post.author?.photo?.alt}
           className="author-image"
         />
       )}

@@ -44,7 +44,7 @@ export const generateRSS = async (posts: PostData[]): Promise<void> => {
       description: html,
       url: `${globals.url}/${post.path}`,
       categories: post.tags || [],
-      author: post.author || "Andrew Hurle",
+      author: post.author?.name || "Andrew Hurle",
       date: new Date(post.datePublished || 0).toISOString(),
     })
   })

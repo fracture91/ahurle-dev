@@ -14,8 +14,8 @@ export const BlogPost: React.FunctionComponent<{ post: PostData }> = ({
       {post.bannerPhoto && (
         <img
           className="blog-post-image"
-          src={post.bannerPhoto}
-          alt={post.bannerPhotoAlt}
+          src={post.bannerPhoto?.url}
+          alt={post.bannerPhoto?.alt}
         />
       )}
 

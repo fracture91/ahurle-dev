@@ -9,10 +9,12 @@ export const PostCard: React.FC<{ post: PostData }> = ({ post }) => (
     {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
     <a className="post-card">
       <div className="post-card-inner">
-        {post.thumbnailPhoto && (
+        {post.bannerPhoto?.thumbnailUrl && (
           <div
             className="post-card-thumbnail"
-            style={{ backgroundImage: `url(${post.thumbnailPhoto})` }}
+            style={{
+              backgroundImage: `url(${post.bannerPhoto?.thumbnailUrl})`,
+            }}
           />
         )}
         <div className="post-card-title">
