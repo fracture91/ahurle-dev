@@ -11,17 +11,20 @@ const BannerPhoto: React.FC<{
   src: string
   alt?: string
   unsplash?: string
-}> = ({ src, alt, unsplash }) => (
+  width?: number
+  height?: number
+}> = ({ src, alt, unsplash, width, height }) => (
   <Box as="figure" mt={3} mx={-3}>
     <Image
       src={src}
       alt={alt}
-      width={900}
-      height={452}
+      width={width || 0}
+      height={height || 0}
       layout="responsive"
       objectFit="contain"
       loading="eager"
       sx={{ borderRadius: "5px" }}
+      // todo: pass "sizes" attribute so 4k monitors don't get 4k images
     />
     {unsplash && (
       <figcaption
@@ -97,6 +100,8 @@ export const BlogPost: React.FunctionComponent<{ post: PostData }> = ({
             src={post.bannerPhoto}
             alt={post.bannerPhotoAlt}
             unsplash={post.bannerPhotoUnsplash}
+            width={post.bannerPhotoWidth}
+            height={post.bannerPhotoHeight}
           />
         )}
       </Container>
