@@ -16,7 +16,6 @@ import { Themed, Container, Button } from "theme-ui"
 type HomeProps = {
   introduction: string
   features: string
-  // readme: string;
   posts: PostData[]
 }
 
@@ -74,26 +73,6 @@ const Home: React.FC<HomeProps> = ({ introduction, features, posts }) => (
       </Themed.p>
     </Container>
 
-    {/* <div className="section">
-        <h2>README.md</h2>
-        <Themed.p>
-          Below is the README.md for devii. It was imported and rendered using
-          Next.js dynamic imports. The rest of this page (including this
-          paragraph) are rendered with React. You can also read the README on
-          GitHub at{' '}
-          <Themed.a href="https://github.com/colinhacks/devii">
-            https://github.com/colinhacks/devii
-          </Themed.a>
-          .
-        </Themed.p>
-      </div> */}
-
-    {/* <div className="section alternate">
-        <div className="narrow">
-          <Markdown source={readme} />
-        </div>
-      </div> */}
-
     <Container
       as="section"
       padding={3}
@@ -121,8 +100,6 @@ export const getStaticProps: GetStaticProps<HomeProps> = async () => {
   const features = await loadMarkdownFile(
     MarkdownFilePath.relativeToMdDir("features.md")
   )
-  const readmeFile = await import(`../${"README.md"}`)
-  const readme = readmeFile.default
   const posts = await loadBlogPosts()
 
   // comment out to turn off RSS generation during build step.
@@ -131,7 +108,6 @@ export const getStaticProps: GetStaticProps<HomeProps> = async () => {
   const props = {
     introduction: introduction.contents,
     features: features.contents,
-    readme,
     posts,
   }
 
