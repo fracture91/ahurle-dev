@@ -20,7 +20,6 @@ const Centered = styled.h2`
 type HomeProps = {
   introduction: string
   features: string
-  // readme: string;
   posts: PostData[]
 }
 
@@ -80,26 +79,6 @@ const Home: React.FC<HomeProps> = ({ introduction, features, posts }) => (
       </blockquote>
     </div>
 
-    {/* <div className="section">
-        <h2>README.md</h2>
-        <p>
-          Below is the README.md for devii. It was imported and rendered using
-          Next.js dynamic imports. The rest of this page (including this
-          paragraph) are rendered with React. You can also read the README on
-          GitHub at{' '}
-          <a href="https://github.com/colinhacks/devii">
-            https://github.com/colinhacks/devii
-          </a>
-          .
-        </p>
-      </div> */}
-
-    {/* <div className="section alternate">
-        <div className="narrow">
-          <Markdown source={readme} />
-        </div>
-      </div> */}
-
     <div className="section alternate">
       <Centered>Get started</Centered>
       <a href="https://github.com/colinhacks/devii">
@@ -120,8 +99,6 @@ export const getStaticProps: GetStaticProps<HomeProps> = async () => {
   const features = await loadMarkdownFile(
     MarkdownFilePath.relativeToMdDir("features.md")
   )
-  const readmeFile = await import(`../${"README.md"}`)
-  const readme = readmeFile.default
   const posts = await loadBlogPosts()
 
   // comment out to turn off RSS generation during build step.
@@ -130,7 +107,6 @@ export const getStaticProps: GetStaticProps<HomeProps> = async () => {
   const props = {
     introduction: introduction.contents,
     features: features.contents,
-    readme,
     posts,
   }
 
