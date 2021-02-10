@@ -98,13 +98,15 @@ const Home: React.FC<HomeProps> = ({ introduction, features, posts }) => (
       as="section"
       padding={3}
       marginY={0}
-      sx={{ backgroundColor: "#00000010", maxWidth: "none", textAlign: "center" }}
+      sx={{
+        backgroundColor: "#00000010",
+        maxWidth: "none",
+        textAlign: "center",
+      }}
     >
       <Themed.h2 sx={{ textAlign: "center" }}>Get started</Themed.h2>
       <Themed.a href="https://github.com/colinhacks/devii">
-        <Button>
-          Go to README
-        </Button>
+        <Button>Go to README</Button>
       </Themed.a>
     </Container>
   </main>

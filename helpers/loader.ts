@@ -132,9 +132,12 @@ export const mdToPost = async (file: RawFile): Promise<PostData> => {
   if (post.author?.photo && !post.author.photo.alt)
     throw new Error("Missing required field: author.photo.alt.")
 
-  if (post.bannerPhoto && (!post.bannerPhoto.width || !post.bannerPhoto.height)) {
+  if (
+    post.bannerPhoto &&
+    (!post.bannerPhoto.width || !post.bannerPhoto.height)
+  ) {
     const dimensions = await sizeOf(`public/${post.bannerPhoto.url}`)
-    if(!dimensions.width || !dimensions.height) {
+    if (!dimensions.width || !dimensions.height) {
       throw new Error(`Could not get image size: ${post.bannerPhoto.url}`)
     }
     post.bannerPhoto.width = dimensions.width
@@ -155,7 +158,12 @@ export const loadPost = async (path: MarkdownFilePath): Promise<PostData> => {
 }
 
 export const loadBlogPosts = async (): Promise<PostData[]> =>
-  (await Promise.all((await loadMarkdownFiles(MarkdownFilePath.fromBlogSlug("*").glob()))
-    .map(mdToPost)))
+  (
+    await Promise.all(
+      (await loadMarkdownFiles(MarkdownFilePath.fromBlogSlug("*").glob())).map(
+        mdToPost
+      )
+    )
+  )
     .filter((p) => p.published)
     .sort((a, b) => (b.datePublished || 0) - (a.datePublished || 0))

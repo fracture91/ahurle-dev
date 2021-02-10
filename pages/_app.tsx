@@ -29,12 +29,6 @@ const DarkMediaStyle: React.FC = () => (
   />
 )
 
-const Thing: React.FC = () => {
-  // const ui = useThemeUI()
-  // console.log(ui)
-  return null
-}
-
 const App: React.FC<AppProps> = ({ Component, pageProps }) => (
   <CacheProvider value={cache}>
     {CSSReset}
@@ -61,7 +55,6 @@ const App: React.FC<AppProps> = ({ Component, pageProps }) => (
       )}
     </Head>
     <ThemeProvider theme={theme}>
-      <Thing />
       {/* important: prefers-color-scheme rules come after built-in theme-ui rules */}
       <DarkMediaStyle />
       {/* when JS enabled, blocks rendering until preferred scheme read from localstorage/media */}

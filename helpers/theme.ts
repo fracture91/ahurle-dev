@@ -102,11 +102,11 @@ export const theme = makeTheme({
       padding: 3,
       textDecoration: "none",
       "&:visited": {
-        color: "inherit"
+        color: "inherit",
       },
       "&:hover": {
-        color: "secondary"
-      }
+        color: "secondary",
+      },
     },
   },
   cards: {
@@ -167,9 +167,9 @@ export const theme = makeTheme({
       "li &": {
         marginY: "1em",
       },
-      "h1 + &, h2 + &, h3 + &, h4 + &, h5 + &, h6 + &" : {
+      "h1 + &, h2 + &, h3 + &, h4 + &, h5 + &, h6 + &": {
         marginTop: 0,
-      }
+      },
     },
     a: {
       color: "primary",

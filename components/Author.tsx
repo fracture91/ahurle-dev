@@ -8,7 +8,9 @@ import Image from "next/image"
 export const AuthorLines: React.FC<{ post: PostData }> = ({ post }) => (
   <div sx={{ lineHeight: 1.2 }}>
     <p sx={{ margin: "2px" }}>
-      {post.author?.name && <span sx={{ color: "primary" }}>{post.author?.name}</span>}
+      {post.author?.name && (
+        <span sx={{ color: "primary" }}>{post.author?.name}</span>
+      )}
 
       {post.author?.twitter && (
         <span>

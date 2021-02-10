@@ -13,7 +13,9 @@ export const PostCard: React.FC<{ post: PostData }> = ({ post }) => (
         {post.bannerPhoto?.thumbnailUrl && (
           <div
             className="post-card-thumbnail"
-            style={{ backgroundImage: `url(${post.bannerPhoto?.thumbnailUrl})` }}
+            style={{
+              backgroundImage: `url(${post.bannerPhoto?.thumbnailUrl})`,
+            }}
           />
         )}
         <div className="post-card-title">
