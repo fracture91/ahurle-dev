@@ -5,13 +5,15 @@ import style from "react-syntax-highlighter/dist/cjs/styles/prism/darcula"
 // Note that PrismAsyncLight will create one chunk for every language.
 // This is better than shipping every language together in one big chunk, but it would be even better if I could not
 // bother compiling anything besides the ~dozen languages I care about.
-// Not sure how to accomplish that without a lot of copypasta from react-syntax-highlighter.
-import { Prism, PrismAsyncLight } from "react-syntax-highlighter"
+// I've applied a patch to react-syntax-highlighter/dist/esm/async-languages/prism.js
+// to remove unwanted languages, which seems to achieve what I want.
+import { PrismLight, PrismAsyncLight } from "react-syntax-highlighter"
 import type { ThemeUICSSObject } from "theme-ui"
 import { useThemeUI } from "helpers/theme"
 
 const SyntaxHighlighter =
-  typeof window === "undefined" ? Prism : PrismAsyncLight
+  typeof window === "undefined" ? PrismLight : PrismAsyncLight
+
 
 const languageLongNames = {
   ts: "typescript",
