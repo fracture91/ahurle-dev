@@ -184,3 +184,9 @@ cd mysite
 yarn
 yarn dev
 ```
+
+Check out this picture:
+
+![A stack of delicious pancakes](/img/pancakes.jpeg)
+
+<img src="/img/pancakes.jpeg" width="900" height="452"/>
