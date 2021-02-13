@@ -1,8 +1,8 @@
 /* eslint-disable react/jsx-props-no-spreading */
 /** @jsxImportSource theme-ui */
-import React, { ImgHTMLAttributes, ReactElement } from "react"
-import ReactMarkdown from "react-markdown/with-html"
-import { Renderer, renderers as defaultRenderers } from "react-markdown"
+import React, { ImgHTMLAttributes } from "react"
+import ReactMarkdown from "react-markdown"
+import RemarkDirective from "remark-directive"
 import { Themed } from "theme-ui"
 import { Code } from "./Code"
 import { LazyImage } from "./LazyImage"
@@ -24,7 +24,12 @@ const ImageRenderer: React.FC<ImgHTMLAttributes<HTMLImageElement>> = ({
   const layout = height ? "responsive" : "fill"
   return (
     // this wrapping div is necessary when layout == "fill", does no harm for responsive
-    <div sx={{ position: "relative", height: height || "25rem" }}>
+    <div
+      sx={{
+        position: "relative",
+        height: layout === "fill" ? height || "25rem" : "auto",
+      }}
+    >
       {/* @ts-ignore  */}
       <LazyImage
         src={src || ""}
@@ -44,15 +49,19 @@ const UnwrapImages: React.FC<any> = ({ children, ...rest }) => {
   return hasImage ? children : <Themed.p {...rest}>{children}</Themed.p>
 }
 
-// @ts-ignore
-const ParsedHtml: React.FC<{ element: ReactElement }> = ({
-  element,
-  ...rest
-}) => {
-  if (element.type === "img") {
-    return <ImageRenderer {...element.props} />
+// not exhaustive
+interface Node {
+  attributes: { [k: string]: string } // { height: "452", ...}
+  children: any[] // also present next to Node?
+  name: string // "img"
+  type: string // "leafDirective"
+}
+
+const Directive: React.FC<{ node: Node }> = ({ node, children }) => {
+  if (node.name === "img") {
+    return <ImageRenderer {...node.attributes} />
   }
-  return (defaultRenderers.parsedHtml as Renderer<any>)({ element, ...rest })
+  return React.createElement(node.name, node.attributes, children)
 }
 
 const renderers = {
@@ -82,7 +91,10 @@ const renderers = {
   inlineCode: Themed.code,
   // html: VirtualHtml,
   // virtualHtml: VirtualHtml,
-  parsedHtml: ParsedHtml,
+  // parsedHtml: ParsedHtml,
+  leafDirective: Directive,
+  textDirective: Directive,
+  containerDirective: Directive,
 } as const
 
 export const Markdown: React.FC<{ source: string }> = ({ source }) => (
@@ -90,7 +102,6 @@ export const Markdown: React.FC<{ source: string }> = ({ source }) => (
     key="content"
     source={source}
     renderers={renderers}
-    allowDangerousHtml
-    disallowedTypes={[]}
+    plugins={[RemarkDirective]}
   />
 )
