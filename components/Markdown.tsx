@@ -30,9 +30,9 @@ const ImageRenderer: React.FC<ImgHTMLAttributes<HTMLImageElement>> = ({
         height: layout === "fill" ? height || "25rem" : "auto",
       }}
     >
-      {/* @ts-ignore  */}
       <LazyImage
-        src={src || ""}
+        // @ts-ignore
+        src={src}
         height={height}
         {...rest}
         layout={layout}
