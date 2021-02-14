@@ -142,10 +142,6 @@
         "maxSize": "10kb"
       },
       {
-        "path": "./.next/static/css/**/*.css",
-        "maxSize": "20kb"
-      },
-      {
         "path": "./.next/static/*/_buildManifest.js",
         "maxSize": "10kb"
       },

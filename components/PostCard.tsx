@@ -2,38 +2,80 @@
 import React from "react"
 import Link from "next/link"
 import { format } from "fecha"
+import styled from "@emotion/styled"
+import { Flex, Themed } from "theme-ui"
 import { PostData } from "helpers/loader"
-import { Tag } from "./Tag"
+import { LazyImage } from "./LazyImage"
+import { WrapFC } from "../helpers/WrapFC"
+
+const Outer = styled(Flex)`
+  text-decoration: inherit;
+  color: inherit;
+  flex-direction: row;
+  justify-content: center;
+  height: 300px;
+`
+
+const Inner = styled(Flex)`
+  opacity: 0.92;
+  box-shadow: 0px 2px 10px #00000040;
+  width: 100%;
+  max-width: 500px;
+  overflow: hidden;
+  border-radius: 8px;
+  flex-direction: column;
+  height: 100%;
+`
+
+const Thumbnail = styled.div`
+  width: 100%;
+  flex: 1;
+  position: relative;
+`
+
+const TextContainer: WrapFC<typeof Flex> = (props) => (
+  <Flex
+    px={1}
+    py={2}
+    {...props}
+    sx={{ flexDirection: "column", borderTop: "1px solid #00000020" }}
+  />
+)
+
+const Title: WrapFC<typeof Themed.h3> = (props) => (
+  <Themed.h3
+    {...props}
+    sx={{ m: 0, letterSpacing: "-1px", textAlign: "center" }}
+  />
+)
+
+const Subtitle: WrapFC<typeof Themed.p> = (props) => (
+  <Themed.p {...props} sx={{ p: 0, m: 0, textAlign: "center", fontSize: 1 }} />
+)
 
 export const PostCard: React.FC<{ post: PostData }> = ({ post }) => (
-  <Link href={`/${post.path}`}>
-    {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-    <a className="post-card">
-      <div className="post-card-inner">
+  <Link href={`/${post.path}`} passHref>
+    <Outer as="a">
+      <Inner>
         {post.bannerPhoto?.thumbnailUrl && (
-          <div
-            className="post-card-thumbnail"
-            style={{
-              backgroundImage: `url(${post.bannerPhoto?.thumbnailUrl})`,
-            }}
-          />
+          <Thumbnail>
+            <LazyImage
+              src={post.bannerPhoto.url}
+              layout="fill"
+              objectFit="cover"
+            />
+          </Thumbnail>
         )}
-        <div className="post-card-title">
-          {post.title && <h2>{post.title}</h2>}
-          {post.subtitle && <p>{post.subtitle}</p>}
-          <p>
+        <TextContainer>
+          {post.title && <Title as="h3">{post.title}</Title>}
+          {post.subtitle && <Subtitle>{post.subtitle}</Subtitle>}
+          <Subtitle>
             {post.datePublished
               ? format(new Date(post.datePublished), "MMMM Do, YYYY")
               : ""}
-          </p>
-          <div sx={{ flex: 1 }} />
-          {false && (
-            <div className="tag-container">
-              {post.tags && (post.tags || []).map((tag) => <Tag tag={tag} />)}
-            </div>
-          )}
-        </div>
-      </div>
-    </a>
+          </Subtitle>
+        </TextContainer>
+      </Inner>
+    </Outer>
   </Link>
 )

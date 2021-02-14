@@ -14,7 +14,6 @@ import { useThemeUI } from "helpers/theme"
 const SyntaxHighlighter =
   typeof window === "undefined" ? PrismLight : PrismAsyncLight
 
-
 const languageLongNames = {
   ts: "typescript",
   sh: "bash",

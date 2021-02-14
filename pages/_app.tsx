@@ -11,7 +11,6 @@ import { Footer } from "components/Footer"
 import { globals } from "helpers/globals"
 import { Header } from "components/Header"
 import { CSSReset } from "components/CSSReset"
-import "styles/base.css"
 
 // HACK: grab theme-ui's generated styles from non-exported function - see /patches
 // Use this to apply dark mode styles under a media query so they work without JS
