@@ -17,6 +17,5 @@ import Image, { ImageProps } from "next/image"
 export const LazyImage: React.FC<ImageProps> = (props) => (
   // loading="eager" tells next/image to disable its built-in lazy loading trickery
   // htmlLoading is a patched-in attr that gets passed to the <img> element as "loading"
-  // eslint-disable-next-line react/jsx-props-no-spreading
   <Image {...props} loading="eager" htmlLoading="lazy" />
 )

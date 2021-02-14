@@ -60,7 +60,6 @@ const App: React.FC<AppProps> = ({ Component, pageProps }) => (
       {/* when JS enabled, blocks rendering until preferred scheme read from localstorage/media */}
       <InitializeColorMode key="theme-ui-no-flash" />
       <Header />
-      {/* eslint-disable-next-line react/jsx-props-no-spreading */}
       <Component {...pageProps} />
       <Footer />
     </ThemeProvider>

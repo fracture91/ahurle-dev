@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-props-no-spreading */
 /** @jsxImportSource theme-ui */
 import React, { ImgHTMLAttributes } from "react"
 import ReactMarkdown from "react-markdown"
