@@ -1,3 +1,65 @@
+diff --git a/node_modules/react-syntax-highlighter/dist/cjs/highlight.js b/node_modules/react-syntax-highlighter/dist/cjs/highlight.js
+index 469ac76..484655e 100644
+--- a/node_modules/react-syntax-highlighter/dist/cjs/highlight.js
++++ b/node_modules/react-syntax-highlighter/dist/cjs/highlight.js
+@@ -213,18 +213,18 @@ function processLines(codeTree, wrapLines, lineProps, showLineNumbers, showInlin
+         } else if (i === splitValue.length - 1) {
+           var stringChild = tree[index + 1] && tree[index + 1].children && tree[index + 1].children[0];
+ 
++          var lastLineInPreviousSpan = {
++            type: 'text',
++            value: "".concat(text)
++          };
+           if (stringChild) {
+-            var lastLineInPreviousSpan = {
+-              type: 'text',
+-              value: "".concat(text)
+-            };
+             var newElem = createLineElement({
+               children: [lastLineInPreviousSpan],
+               className: node.properties.className
+             });
+             tree.splice(index + 1, 0, newElem);
+           } else {
+-            var _children2 = [newChild];
++            var _children2 = [lastLineInPreviousSpan];
+ 
+             var _line2 = createLine(_children2, lineNumber, node.properties.className);
+ 
+@@ -376,6 +376,16 @@ function _default(defaultAstGenerator, defaultStyle) {
+       style: Object.assign({}, customStyle)
+     });
+ 
++    if (wrapLongLines) {
++      codeTagProps.style = (0, _objectSpread2.default)({}, codeTagProps.style, {
++        whiteSpace: 'pre-wrap'
++      });
++    } else {
++      codeTagProps.style = (0, _objectSpread2.default)({}, codeTagProps.style, {
++        whiteSpace: 'pre'
++      });
++    }
++
+     if (!astGenerator) {
+       return _react.default.createElement(PreTag, preProps, allLineNumbers, _react.default.createElement(CodeTag, codeTagProps, code));
+     }
+@@ -406,16 +416,6 @@ function _default(defaultAstGenerator, defaultStyle) {
+     var largestLineNumber = codeTree.value.length + startingLineNumber;
+     var rows = processLines(codeTree, wrapLines, lineProps, showLineNumbers, showInlineLineNumbers, startingLineNumber, largestLineNumber, lineNumberStyle, wrapLongLines);
+ 
+-    if (wrapLongLines) {
+-      codeTagProps.style = (0, _objectSpread2.default)({}, codeTagProps.style, {
+-        whiteSpace: 'pre-wrap'
+-      });
+-    } else {
+-      codeTagProps.style = (0, _objectSpread2.default)({}, codeTagProps.style, {
+-        whiteSpace: 'pre'
+-      });
+-    }
+-
+     return _react.default.createElement(PreTag, preProps, _react.default.createElement(CodeTag, codeTagProps, !showInlineLineNumbers && allLineNumbers, renderer({
+       rows: rows,
+       stylesheet: style,
 diff --git a/node_modules/react-syntax-highlighter/dist/esm/async-languages/prism.js b/node_modules/react-syntax-highlighter/dist/esm/async-languages/prism.js
 index 459fce5..4b499b3 100644
 --- a/node_modules/react-syntax-highlighter/dist/esm/async-languages/prism.js
@@ -2147,3 +2209,65 @@ index 459fce5..4b499b3 100644
 +  // })
  };
 \ No newline at end of file
+diff --git a/node_modules/react-syntax-highlighter/dist/esm/highlight.js b/node_modules/react-syntax-highlighter/dist/esm/highlight.js
+index c09160a..2d4508c 100644
+--- a/node_modules/react-syntax-highlighter/dist/esm/highlight.js
++++ b/node_modules/react-syntax-highlighter/dist/esm/highlight.js
+@@ -199,18 +199,18 @@ function processLines(codeTree, wrapLines, lineProps, showLineNumbers, showInlin
+         } else if (i === splitValue.length - 1) {
+           var stringChild = tree[index + 1] && tree[index + 1].children && tree[index + 1].children[0];
+ 
++          var lastLineInPreviousSpan = {
++            type: 'text',
++            value: "".concat(text)
++          };
+           if (stringChild) {
+-            var lastLineInPreviousSpan = {
+-              type: 'text',
+-              value: "".concat(text)
+-            };
+             var newElem = createLineElement({
+               children: [lastLineInPreviousSpan],
+               className: node.properties.className
+             });
+             tree.splice(index + 1, 0, newElem);
+           } else {
+-            var _children2 = [newChild];
++            var _children2 = [lastLineInPreviousSpan];
+ 
+             var _line2 = createLine(_children2, lineNumber, node.properties.className);
+ 
+@@ -363,6 +363,16 @@ export default function (defaultAstGenerator, defaultStyle) {
+       style: Object.assign({}, customStyle)
+     });
+ 
++    if (wrapLongLines) {
++      codeTagProps.style = _objectSpread({}, codeTagProps.style, {
++        whiteSpace: 'pre-wrap'
++      });
++    } else {
++      codeTagProps.style = _objectSpread({}, codeTagProps.style, {
++        whiteSpace: 'pre'
++      });
++    }
++
+     if (!astGenerator) {
+       return React.createElement(PreTag, preProps, allLineNumbers, React.createElement(CodeTag, codeTagProps, code));
+     }
+@@ -393,16 +403,6 @@ export default function (defaultAstGenerator, defaultStyle) {
+     var largestLineNumber = codeTree.value.length + startingLineNumber;
+     var rows = processLines(codeTree, wrapLines, lineProps, showLineNumbers, showInlineLineNumbers, startingLineNumber, largestLineNumber, lineNumberStyle, wrapLongLines);
+ 
+-    if (wrapLongLines) {
+-      codeTagProps.style = _objectSpread({}, codeTagProps.style, {
+-        whiteSpace: 'pre-wrap'
+-      });
+-    } else {
+-      codeTagProps.style = _objectSpread({}, codeTagProps.style, {
+-        whiteSpace: 'pre'
+-      });
+-    }
+-
+     return React.createElement(PreTag, preProps, React.createElement(CodeTag, codeTagProps, !showInlineLineNumbers && allLineNumbers, renderer({
+       rows: rows,
+       stylesheet: style,
