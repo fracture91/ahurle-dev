@@ -5,8 +5,8 @@ import { format } from "fecha"
 import styled from "@emotion/styled"
 import { Flex, Themed } from "theme-ui"
 import { PostData } from "helpers/loader"
+import { WrapFC } from "helpers/WrapFC"
 import { LazyImage } from "./LazyImage"
-import { WrapFC } from "../helpers/WrapFC"
 
 const Outer = styled(Flex)`
   text-decoration: inherit;
