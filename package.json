@@ -96,9 +96,11 @@
     "typescript": "^4.1.3"
   },
   "bundlewatch": {
-    "trackBranches": [
-      "master"
-    ],
+    "ci": {
+      "trackBranches": [
+        "master"
+      ]
+    },
     "normalizeFilenames": "^.+?((\\.|-)[a-f0-9]{20})?\\.(?:js|css|html)$",
     "files": [
       {
