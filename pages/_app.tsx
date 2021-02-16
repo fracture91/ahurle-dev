@@ -4,7 +4,12 @@ import Head from "next/head"
 import { AppProps } from "next/app"
 import { Global, CacheProvider, css } from "@emotion/react"
 import { cache } from "@emotion/css"
-import { ThemeProvider, InitializeColorMode, CSSObject } from "theme-ui"
+import {
+  ThemeProvider,
+  InitializeColorMode,
+  CSSObject,
+  css as themeuicss,
+} from "theme-ui"
 import { createColorStyles } from "@theme-ui/color-modes"
 import { theme } from "helpers/theme"
 import { Footer } from "components/Footer"
@@ -20,12 +25,16 @@ const DarkMediaStyle: React.FC = () => (
   <Global
     styles={css`
       @media (prefers-color-scheme: dark) {
-        body {
-          ${(themeUIStyles.body as CSSObject)["&.theme-ui-dark"]}
+        html {
+          ${(themeUIStyles.html as CSSObject)["&.theme-ui-dark"]}
         }
       }
     `}
   />
+)
+
+const BodyStyle: React.FC = () => (
+  <Global styles={themeuicss((t) => ({ body: t?.styles?.body }))} />
 )
 
 const App: React.FC<AppProps> = ({ Component, pageProps }) => (
@@ -54,6 +63,7 @@ const App: React.FC<AppProps> = ({ Component, pageProps }) => (
       )}
     </Head>
     <ThemeProvider theme={theme}>
+      <BodyStyle />
       {/* important: prefers-color-scheme rules come after built-in theme-ui rules */}
       <DarkMediaStyle />
       {/* when JS enabled, blocks rendering until preferred scheme read from localstorage/media */}
