@@ -2,20 +2,22 @@
 title: Choosing a tech stack for my personal dev blog in 2020
 published: true
 datePublished: 1590463136775
-author: Colin McDonnell
-authorTwitter: colinhacks
-authorPhoto: /img/profile.jpg
-authorPhotoAlt: Closeup of Keanu Reeves
+author:
+  name: Colin McDonnell
+  twitter: colinhacks
+  photo:
+    url: /img/profile.jpg
+    alt: Closeup of Keanu Reeves
 tags:
   - Static Site Generators
   - React
   - Next.js
-thumbnailPhoto: /img/pancakes_thumb.jpeg
-bannerPhoto: /img/pancakes.jpeg
-bannerPhotoAlt: A stack of delicious pancakes
+bannerPhoto:
+  url: /img/pancakes.jpeg
+  thumbnailUrl: /img/pancakes_thumb.jpeg
+  alt: A stack of delicious pancakes
+  unsplash: "@unsplash"
 ---
-
-> Originally published at [https://colinhacks.com/essays/devii](https://colinhacks.com/essays/devii). Check out the HN <del>roast</del> discussion <a href="https://news.ycombinator.com/item?id=23309002">here</a>! 🤗
 
 I recently set out to build my personal website — the one you're reading now, as it happens!
 
@@ -86,8 +88,6 @@ Here's a quick breakdown of the project structure. No need to understand every p
 ├── .gitignore
 ```
 
-<!-- Check out the Next.js documentation [here](https://nextjs.org/docs) to make sure it's the right choice for your project. -->
-
 ### TypeScript + React
 
 Both React and TypeScript are baked into the DNA of Next.js, so you get these for free when you set up a Next.js project.
@@ -130,15 +130,14 @@ You can easily drop code blocks into your blog posts using triple-backtick synta
 
 To achieve this I implemented a custom `code` renderer (`/components/Code.tsx`) for `react-markdown` that uses [react-syntax-highlighter](https://github.com/conorhastings/react-syntax-highlighter#readme) to handle the highlighting. So this:
 
-<!-- I landed on this solution after wasting hours playing with other options. CodeMirror has bad React support (the only React wrapper for it is inauspiciously named `react-codemirror2`) and [bizarre selection issues](https://github.com/codemirror/CodeMirror/issues/1099) for `readonly` code blocks. The popular `highlight.js` project requires you to [initialize the library](https://github.com/highlightjs/highlight.js/issues/925) in `componentDidMount` like its 2015 :/  -->
-
-<pre>
+````
 ```ts
 // pretty neat huh?
 const test = (arg: string) => {
   return arg.length > 5;
 };
-```</pre>
+```
+````
 
 turns into this:
 
@@ -180,4 +179,24 @@ git clone git@github.com:colinhacks/devii.git mysite
 cd mysite
 yarn
 yarn dev
+```
+
+Check out this picture:
+
+![A stack of delicious pancakes](/img/pancakes.jpeg)
+
+<img src="/img/pancakes.jpeg" width="900" height="452"/>
+
+::img{src="/img/pancakes.jpeg" width="900" height="452" alt="A stack of delicious pancakes"}
+
+Here is some ~~deleted text~~
+
+:del[more deleted text]
+
+:::div
+this is a div
+:::
+
+```sql
+SELECT * FROM table WHERE column = 2 AND thing = 'hello';
 ```

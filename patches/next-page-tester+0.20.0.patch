@@ -1,0 +1,12 @@
+diff --git a/node_modules/next-page-tester/dist/utils.js b/node_modules/next-page-tester/dist/utils.js
+index 59e916c..172ade2 100644
+--- a/node_modules/next-page-tester/dist/utils.js
++++ b/node_modules/next-page-tester/dist/utils.js
+@@ -80,6 +80,7 @@ exports.useMountedState = useMountedState;
+ // @NOTE: This modules still need to preserve their identity between client and server
+ // because we import them within our code which serves both environments :(
+ const nonIsolatedModules = [
++    "react",
+     'react',
+     'next/dist/next-server/lib/head-manager-context',
+     'next/dist/next-server/lib/router-context',

@@ -44,6 +44,7 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           eslint: true
           eslint_extensions: js,jsx,ts,tsx
+          eslint_args: "--max-warnings 0"
           prettier: true
 
       - uses: mattallty/jest-github-action@v1

@@ -1,9 +1,28 @@
 import matter from "gray-matter"
 import glob from "glob"
 import Path from "path"
+import sizeOf from "image-size"
 import { globals } from "./globals"
 
-export type PostData = {
+export interface Photo {
+  url: string
+  alt: string
+}
+
+export interface BannerPhoto extends Photo {
+  unsplash?: string
+  width: number
+  height: number
+  thumbnailUrl?: string
+}
+
+export interface Author {
+  name: string
+  photo?: Photo
+  twitter?: string
+}
+
+export interface PostData {
   path: string
   slug: string
   title: string
@@ -13,14 +32,9 @@ export type PostData = {
   canonicalUrl?: string
   published: boolean
   datePublished: number
-  author?: string
-  authorPhoto?: string
-  authorPhotoAlt?: string
-  authorTwitter?: string
+  author?: Author
   tags?: string[]
-  bannerPhoto?: string
-  bannerPhotoAlt?: string
-  thumbnailPhoto?: string
+  bannerPhoto?: BannerPhoto
 }
 
 type RawFile = { path: MarkdownFilePath; contents: string }
@@ -85,10 +99,10 @@ export const loadMarkdownFile = async (
   return { path, contents: mdFile.default }
 }
 
-export const mdToPost = (file: RawFile): PostData => {
+export const mdToPost = async (file: RawFile): Promise<PostData> => {
   const metadata = matter(file.contents)
   const path = file.path.blogPath
-  const post = {
+  const post: PostData = {
     path,
     slug: file.path.blogSlug,
     title: metadata.data.title,
@@ -99,14 +113,11 @@ export const mdToPost = (file: RawFile): PostData => {
     description: metadata.data.description || metadata.data.subtitle || null,
     canonicalUrl: new URL(metadata.data.canonicalUrl || path, globals.url).href,
     author: metadata.data.author || null,
-    authorPhoto: metadata.data.authorPhoto || null,
-    authorPhotoAlt: metadata.data.authorPhotoAlt || null,
-    authorTwitter: metadata.data.authorTwitter || null,
     bannerPhoto: metadata.data.bannerPhoto || null,
-    bannerPhotoAlt: metadata.data.bannerPhotoAlt || null,
-    thumbnailPhoto: metadata.data.thumbnailPhoto || null,
     content: metadata.content,
   }
+
+  // todo: there's gotta be a better way to validate this schema
 
   if (!post.title) throw new Error("Missing required field: title.")
 
@@ -115,11 +126,23 @@ export const mdToPost = (file: RawFile): PostData => {
   if (!post.datePublished)
     throw new Error("Missing required field: datePublished.")
 
-  if (post.bannerPhoto && !post.bannerPhotoAlt)
-    throw new Error("Missing required field: bannerPhotoAlt.")
+  if (post.bannerPhoto && !post.bannerPhoto.alt)
+    throw new Error("Missing required field: bannerPhoto.alt.")
 
-  if (post.authorPhoto && !post.authorPhotoAlt)
-    throw new Error("Missing required field: authorPhotoAlt.")
+  if (post.author?.photo && !post.author.photo.alt)
+    throw new Error("Missing required field: author.photo.alt.")
+
+  if (
+    post.bannerPhoto &&
+    (!post.bannerPhoto.width || !post.bannerPhoto.height)
+  ) {
+    const dimensions = await sizeOf(`public/${post.bannerPhoto.url}`)
+    if (!dimensions.width || !dimensions.height) {
+      throw new Error(`Could not get image size: ${post.bannerPhoto.url}`)
+    }
+    post.bannerPhoto.width = dimensions.width
+    post.bannerPhoto.height = dimensions.height
+  }
 
   return post as PostData
 }
@@ -135,7 +158,12 @@ export const loadPost = async (path: MarkdownFilePath): Promise<PostData> => {
 }
 
 export const loadBlogPosts = async (): Promise<PostData[]> =>
-  (await loadMarkdownFiles(MarkdownFilePath.fromBlogSlug("*").glob()))
-    .map(mdToPost)
+  (
+    await Promise.all(
+      (await loadMarkdownFiles(MarkdownFilePath.fromBlogSlug("*").glob())).map(
+        mdToPost
+      )
+    )
+  )
     .filter((p) => p.published)
     .sort((a, b) => (b.datePublished || 0) - (a.datePublished || 0))
