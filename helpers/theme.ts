@@ -10,6 +10,7 @@ const makeTheme = <T extends GenericTheme>(t: T) => t
 export const theme = makeTheme({
   useColorSchemeMediaQuery: true, // default to the user's preferred mode
   initialColorModeName: "light",
+  useRootStyles: true,
   colors: {
     background: "#f6f7f6",
     text: "#222",
@@ -123,10 +124,16 @@ export const theme = makeTheme({
       fontFamily: "body",
       lineHeight: "body",
       fontWeight: "body",
-      fontSize: 3,
+      // make everything a little smaller on mobile, larger on big screens
+      // i.e. change the size of 1 rem
+      fontSize: ["89.4735%", "100%", null, "110%", "130%"],
       MozOsxFontSmoothing: "grayscale",
       WebkitFontSmoothing: "antialiased",
       overflowWrap: "anywhere",
+    },
+    // not standard, special handling by me
+    body: {
+      fontSize: 3,
     },
     h1: {
       variant: "text.heading",
