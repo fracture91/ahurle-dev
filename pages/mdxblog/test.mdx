@@ -1,4 +1,8 @@
+import { MDXBlogLayout } from "components/MDXBlogLayout"
+import { getBlogStaticProps } from "components/getBlogStaticProps"
+
 export const meta = {
+  // filePath: eval("_jsxFileName"), // doesn't work for prod build
   title: "Choosing a tech stack for my personal dev blog in 2020",
   published: true,
   datePublished: 1590463136775,
@@ -17,6 +21,9 @@ export const meta = {
     unsplash: "@unsplash",
   },
 }
+
+export const getStaticProps = (...args) => getBlogStaticProps(...args, meta) // , MDXContent)
+export default MDXBlogLayout
 
 I recently set out to build my personal website — the one you're reading now, as it happens!
 

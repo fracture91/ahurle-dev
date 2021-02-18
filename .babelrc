@@ -13,6 +13,7 @@
           "styles": "./styles"
         }
       }
-    ]
+    ],
+    ["./babel-plugin-nextjs-mdx-patch"]
   ]
 }
