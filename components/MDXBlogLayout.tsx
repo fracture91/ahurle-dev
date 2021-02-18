@@ -4,18 +4,12 @@ import { BlogPost } from "./BlogPost"
 
 export const MDXBlogLayout: React.FC<{
   meta: PostData
-  hello: string
   bannerPhotoAttrs: { width: number; height: number }
-}> = ({ meta, hello, bannerPhotoAttrs, children }) => {
+}> = ({ meta, bannerPhotoAttrs, children }) => {
   const newMeta: PostData = {
     ...meta,
     // @ts-ignore
     bannerPhoto: { ...meta.bannerPhoto, ...bannerPhotoAttrs },
   }
-  return (
-    <BlogPost post={newMeta}>
-      {hello}
-      {children}
-    </BlogPost>
-  )
+  return <BlogPost post={newMeta}>{children}</BlogPost>
 }

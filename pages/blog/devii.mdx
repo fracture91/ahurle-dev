@@ -1,21 +1,29 @@
----
-title: Devii's killer features
-subtitle: Bringing the power of React, TypeScript, and static generation to dev blogs everywhere
-published: true
-datePublished: 1589064522569
-tags:
-  - Devii
-  - Blogs
-author:
-  name: Ben Bitdiddle
-  photo:
-    url: /img/profile.jpg
-    alt: Closeup of Keanu Reeves
-bannerPhoto:
-  url: /img/brook.jpg
-  alt: Long exposure of a brook flowing over rocks
-  thumbnailUrl: /img/brook.jpg
----
+import { MDXBlogLayout } from "components/MDXBlogLayout"
+import { getBlogStaticProps } from "helpers/getBlogStaticProps"
+
+export const meta = {
+  // filePath: eval("_jsxFileName"), // doesn't work for prod build
+  title: "Devii's killer features",
+  subtitle:
+    "Bringing the power of React, TypeScript, and static generation to dev blogs everywhere",
+  published: true,
+  datePublished: 1589064522569,
+  author: {
+    name: "Ben Bitdiddle",
+    photo: {
+      url: "/img/profile.jpg",
+      alt: "Closeup of Keanu Reeves",
+    },
+  },
+  bannerPhoto: {
+    url: "/img/brook.jpg",
+    alt: "Long exposure of a brook flowing over rocks",
+    thumbnailUrl: "/img/brook.jpg",
+  },
+}
+
+export const getStaticProps = (...args) => getBlogStaticProps(...args, meta) // , MDXContent)
+export default MDXBlogLayout
 
 This page is built with Devii! Check out the source code for this under `/md/blog/test.md`.
 

@@ -3,23 +3,19 @@ import React from "react"
 import Head from "next/head"
 import { GetStaticProps } from "next"
 import { generateRSS } from "helpers/rssUtil"
-import { Markdown } from "components/Markdown"
-import {
-  PostData,
-  loadBlogPosts,
-  loadMarkdownFile,
-  MarkdownFilePath,
-} from "helpers/loader"
+import { PostData, loadBlogPosts } from "helpers/loader"
 import { PostCard } from "components/PostCard"
 import { Themed, Container, Button, Grid } from "theme-ui"
+// eslint-disable-next-line no-restricted-imports
+import Features from "../mdx/features.mdx"
+// eslint-disable-next-line no-restricted-imports
+import Introduction from "../mdx/introduction.mdx"
 
 type HomeProps = {
-  introduction: string
-  features: string
   posts: PostData[]
 }
 
-const Home: React.FC<HomeProps> = ({ introduction, features, posts }) => (
+const Home: React.FC<HomeProps> = ({ posts }) => (
   <main>
     <Head>
       <title>Introducing Devii</title>
@@ -28,12 +24,12 @@ const Home: React.FC<HomeProps> = ({ introduction, features, posts }) => (
 
     <Container as="section" paddingX={3} marginY={4}>
       <Themed.h1 sx={{ textAlign: "center" }}>Introduction to Devii</Themed.h1>
-      <Markdown source={introduction} />
+      <Introduction />
     </Container>
 
     <Container as="section" paddingX={3} marginY={4}>
       <Themed.h2 sx={{ textAlign: "center" }}>Features</Themed.h2>
-      <Markdown source={features} />
+      <Features />
     </Container>
 
     <Container as="section" paddingX={3} marginY={4}>
@@ -94,22 +90,10 @@ const Home: React.FC<HomeProps> = ({ introduction, features, posts }) => (
 export default Home
 
 export const getStaticProps: GetStaticProps<HomeProps> = async () => {
-  const introduction = await loadMarkdownFile(
-    MarkdownFilePath.relativeToMdDir("introduction.md")
-  )
-  const features = await loadMarkdownFile(
-    MarkdownFilePath.relativeToMdDir("features.md")
-  )
   const posts = await loadBlogPosts()
 
   // comment out to turn off RSS generation during build step.
   await generateRSS(posts)
 
-  const props = {
-    introduction: introduction.contents,
-    features: features.contents,
-    posts,
-  }
-
-  return { props }
+  return { props: { posts } }
 }

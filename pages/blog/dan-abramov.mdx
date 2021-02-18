@@ -1,0 +1,31 @@
+import { MDXBlogLayout } from "components/MDXBlogLayout"
+import { getBlogStaticProps } from "helpers/getBlogStaticProps"
+
+export const meta = {
+  // filePath: eval("_jsxFileName"), // doesn't work for prod build
+  title: "Dan Abramov knows about Devii",
+  published: true,
+  datePublished: 1594425078471,
+  author: {
+    name: "Colin McDonnell",
+    photo: {
+      url: "/img/profile.jpg",
+      alt: "Closeup of Keanu Reeves",
+    },
+  },
+  bannerPhoto: {
+    url: "/img/danabramov.png",
+    alt: "Screenshot of Dan Abramov opening an issue on github",
+    thumbnailUrl: "/img/danabramov_thumb.png",
+  },
+}
+
+export const getStaticProps = (...args) => getBlogStaticProps(...args, meta) // , MDXContent)
+export default MDXBlogLayout
+
+Dan Abramov knows about Devii!
+
+> Seems like it might be useful!
+> — Dan Abramov, taken entirely out of context
+
+I don't want to brag, but Devii is kind of a big deal.

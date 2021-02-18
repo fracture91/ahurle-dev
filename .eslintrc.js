@@ -17,8 +17,13 @@ module.exports = {
   ignorePatterns: ["node_modules/*", ".next/*", ".out/*"],
   overrides: [
     {
-      files: ".{ts,tsx}",
+      files: "*.{ts,tsx}",
       parser: "@typescript-eslint/parser",
+      rules: {
+        // the non-typescript rules are too dumb, false positives
+        "no-undef": "off",
+        "no-unused-vars": "off",
+      },
     },
   ],
   parserOptions: {

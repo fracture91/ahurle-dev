@@ -1,5 +1,5 @@
 import glob from "glob"
-import { getStaticPaths as getBlogPaths } from "pages/blog/[blog]"
+import { MarkdownFilePath } from "helpers/loader"
 import { globals } from "./globals"
 
 export const generateSitemap = async (): Promise<string> => {
@@ -11,7 +11,9 @@ export const generateSitemap = async (): Promise<string> => {
     .filter((path) => !path.includes("/_"))
     .map((path) => path.slice(1))
 
-  const blogPaths = (await getBlogPaths({})).paths
+  const blogPaths = await MarkdownFilePath.fromBlogSlug("*")
+    .glob()
+    .map((p) => p.blogPath)
 
   const sitemap = `
 <?xml version="1.0" encoding="UTF-8"?>

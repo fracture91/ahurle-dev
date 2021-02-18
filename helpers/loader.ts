@@ -1,4 +1,3 @@
-import matter from "gray-matter"
 import glob from "glob"
 import Path from "path"
 import sizeOf from "image-size"
@@ -26,22 +25,26 @@ export interface PostData {
   path: string
   slug: string
   title: string
-  subtitle?: string
-  content: string
-  description?: string
-  canonicalUrl?: string
+  subtitle: string | null
+  // content: MDXBlogModule["default"]
+  description: string | null
+  canonicalUrl: string | null
   published: boolean
-  datePublished: number
+  datePublished: number | null
   author?: Author
   tags?: string[]
   bannerPhoto?: BannerPhoto
 }
 
-type RawFile = { path: MarkdownFilePath; contents: string }
+interface MDXBlogModule {
+  meta: PostData
+  default(props: any): JSX.Element
+}
 
-const MD_EXT = ".md"
-const MD_DIR_FROM_ROOT = "./md"
-const MD_BLOG_DIR_FROM_ROOT = `${MD_DIR_FROM_ROOT}/blog`
+type RawFile = { path: MarkdownFilePath; contents: MDXBlogModule }
+
+const MD_EXT = ".mdx"
+const BLOG_DIR_FROM_ROOT = "./pages/blog"
 
 export class MarkdownFilePath {
   private pathFromRoot: string
@@ -53,8 +56,8 @@ export class MarkdownFilePath {
     }
   }
 
-  get pathFromMdDir(): string {
-    return this.pathFromRoot.replace(/^md\//, "")
+  get pathFromBlogDir(): string {
+    return this.pathFromRoot.replace(/^pages\/blog\//, "")
   }
 
   get blogPath(): string {
@@ -76,7 +79,7 @@ export class MarkdownFilePath {
 
   static fromBlogSlug(slug: string) {
     return new MarkdownFilePath({
-      pathFromRoot: `${MD_BLOG_DIR_FROM_ROOT}/${slug}`,
+      pathFromRoot: `${BLOG_DIR_FROM_ROOT}/${slug}`,
     })
   }
 
@@ -84,9 +87,9 @@ export class MarkdownFilePath {
     return new MarkdownFilePath({ pathFromRoot })
   }
 
-  static relativeToMdDir(pathFromMdDir: string) {
+  static relativeToBlogDir(pathFromBlogDir: string) {
     return new MarkdownFilePath({
-      pathFromRoot: `${MD_DIR_FROM_ROOT}/${pathFromMdDir}`,
+      pathFromRoot: `${BLOG_DIR_FROM_ROOT}/${pathFromBlogDir}`,
     })
   }
 }
@@ -94,34 +97,34 @@ export class MarkdownFilePath {
 export const loadMarkdownFile = async (
   path: MarkdownFilePath
 ): Promise<RawFile> => {
-  // important: need "../md" here explicitly to help out webpack
-  const mdFile = await import(`../md/${path.pathFromMdDir}`)
-  return { path, contents: mdFile.default }
+  // important: need "../pages/blog/" here explicitly to help out webpack
+  const mdFile = await import(`../pages/blog/${path.pathFromBlogDir}`)
+  return { path, contents: mdFile }
 }
 
 export const mdToPost = async (file: RawFile): Promise<PostData> => {
-  const metadata = matter(file.contents)
+  const { meta } = file.contents
   const path = file.path.blogPath
   const post: PostData = {
     path,
     slug: file.path.blogSlug,
-    title: metadata.data.title,
-    subtitle: metadata.data.subtitle || null,
-    published: metadata.data.published || false,
-    datePublished: metadata.data.datePublished || null,
-    tags: metadata.data.tags || null,
-    description: metadata.data.description || metadata.data.subtitle || null,
-    canonicalUrl: new URL(metadata.data.canonicalUrl || path, globals.url).href,
-    author: metadata.data.author || null,
-    bannerPhoto: metadata.data.bannerPhoto || null,
-    content: metadata.content,
+    title: meta.title,
+    subtitle: meta.subtitle || null,
+    published: meta.published || false,
+    datePublished: meta.datePublished || null,
+    tags: meta.tags || [],
+    description: meta.description || meta.subtitle || null,
+    canonicalUrl: new URL(meta.canonicalUrl || path, globals.url).href,
+    author: meta.author,
+    bannerPhoto: meta.bannerPhoto,
+    // content: file.contents.default,
   }
 
   // todo: there's gotta be a better way to validate this schema
 
   if (!post.title) throw new Error("Missing required field: title.")
 
-  if (!post.content) throw new Error("Missing required field: content.")
+  // if (!post.content) throw new Error("Missing required field: content.")
 
   if (!post.datePublished)
     throw new Error("Missing required field: datePublished.")
