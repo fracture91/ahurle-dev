@@ -11,10 +11,16 @@ module.exports = {
     "prettier/@typescript-eslint",
     "prettier/react",
     "plugin:eslint-comments/recommended",
+    "plugin:mdx/recommended",
   ],
   reportUnusedDisableDirectives: true, // pair with --max-warnings=0
   ignorePatterns: ["node_modules/*", ".next/*", ".out/*"],
-  parser: "@typescript-eslint/parser",
+  overrides: [
+    {
+      files: ".{ts,tsx}",
+      parser: "@typescript-eslint/parser",
+    },
+  ],
   parserOptions: {
     ecmaFeatures: {
       jsx: true,
@@ -40,7 +46,10 @@ module.exports = {
     "import/prefer-default-export": "off",
     "react/react-in-jsx-scope": "off", // next.js uses new JSX transform by default
     "react/prop-types": "off", // use types instead
-    "react/jsx-filename-extension": ["error", { extensions: [".jsx", ".tsx"] }],
+    "react/jsx-filename-extension": [
+      "error",
+      { extensions: [".jsx", ".tsx", ".mdx"] },
+    ],
     "react/jsx-pascal-case": "off", // does not like Themed.h1 from theme-ui
     "react/jsx-props-no-spreading": "off", // very annoying with recommended theme-ui props passing
     "react-hooks/rules-of-hooks": "error",
@@ -60,10 +69,10 @@ module.exports = {
           ["pages", "./pages"],
           ["styles", "./styles"],
         ],
-        extensions: [".js", ".jsx", ".ts", ".tsx"],
+        extensions: [".js", ".jsx", ".ts", ".tsx", ".mdx"],
       },
       node: {
-        extensions: [".js", ".jsx", ".ts", ".tsx"],
+        extensions: [".js", ".jsx", ".ts", ".tsx", ".mdx"],
       },
     },
   },

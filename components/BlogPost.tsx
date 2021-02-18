@@ -4,7 +4,6 @@ import { Box, Container, Themed } from "theme-ui"
 import Image from "next/image"
 import { PostData } from "helpers/loader"
 import { Author } from "./Author"
-import { Markdown } from "./Markdown"
 import { PostMeta } from "./PostMeta"
 
 const BannerPhoto: React.FC<{
@@ -88,6 +87,7 @@ const HeaderText: React.FC<{ post: PostData }> = ({ post }) => {
 
 export const BlogPost: React.FunctionComponent<{ post: PostData }> = ({
   post,
+  children,
 }) => (
   <main>
     <article>
@@ -107,7 +107,7 @@ export const BlogPost: React.FunctionComponent<{ post: PostData }> = ({
       </Container>
 
       <Container as="section" paddingX={3} marginY={4}>
-        <Markdown source={post.content} />
+        {children}
       </Container>
 
       <Container as="section" paddingX={3} marginY={4} marginTop={0}>

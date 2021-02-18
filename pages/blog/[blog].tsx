@@ -3,9 +3,12 @@ import React from "react"
 import { GetStaticPaths, GetStaticProps } from "next"
 import { BlogPost } from "components/BlogPost"
 import { loadPost, PostData, MarkdownFilePath } from "helpers/loader"
+import { Markdown } from "components/Markdown"
 
 const Post: React.FC<{ post: PostData }> = ({ post }) => (
-  <BlogPost post={post} />
+  <BlogPost post={post}>
+    <Markdown source={post.content} />
+  </BlogPost>
 )
 
 export const getStaticPaths: GetStaticPaths = async (_context) => {
