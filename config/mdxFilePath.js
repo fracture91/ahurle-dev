@@ -5,10 +5,13 @@ const path = require("path")
 
 module.exports = () =>
   /**
-   * @param {{ children: { type: "export"; value: string; }[]; }} tree
-   * @param {{ path: string; }} file
+   * @param {import("unist").Parent} tree
+   * @param {import("vfile").VFile} file
    */
   (tree, file) => {
+    if (!file.path) {
+      throw new Error("file.path is missing - not passing filepath to mdx() ?")
+    }
     const pathName = path.relative(process.cwd(), file.path)
     const exportNode = u(
       "export",
