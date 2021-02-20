@@ -1,16 +1,13 @@
+/* eslint-disable import/order */
 // eslint-disable-next-line import/no-extraneous-dependencies
 const withBundleAnalyzer = require("@next/bundle-analyzer")({
   enabled: process.env.ANALYZE === "true",
 })
 
-const mdxPrism = require("mdx-prism")
-const mdxFilePath = require("./helpers/mdx-file-path.js")
+const mdxOptions = require("./config/mdxOptions")
 
 const withMDX = require("@next/mdx")({
-  options: {
-    remarkPlugins: [mdxFilePath],
-    rehypePlugins: [mdxPrism],
-  },
+  options: mdxOptions,
 })
 
 module.exports = withBundleAnalyzer(

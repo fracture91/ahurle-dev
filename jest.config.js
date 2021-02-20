@@ -15,7 +15,10 @@ module.exports = {
     "^.+\\.(js|jsx|ts|tsx)$": "<rootDir>/node_modules/babel-jest",
     "^.+\\.css$": "<rootDir>/__tests__/config/cssTransform.js",
     "^.+\\.md$": "jest-raw-loader",
-    "^.+\\.mdx$": "jest-transformer-mdx",
+    "^.+\\.mdx$": [
+      "jest-transformer-mdx",
+      { mdxOptions: "./config/mdxOptions" },
+    ],
   },
   transformIgnorePatterns: [
     "/node_modules/",

@@ -103,7 +103,10 @@ export const loadMarkdownFile = async (
 ): Promise<ModuleAndPath> => {
   // important: need "../pages/blog/" here explicitly to help out webpack
   const module = await import(`../pages/blog/${path.pathFromBlogDir}`)
-  if(typeof module.path !== "string" || !MarkdownFilePath.relativeToRoot(module.path).equals(path)) {
+  if (
+    typeof module.path !== "string" ||
+    !MarkdownFilePath.relativeToRoot(module.path).equals(path)
+  ) {
     throw new Error("Path mismatch - a bug or missing remark plugin?")
   }
   return { path, module }
