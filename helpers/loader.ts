@@ -41,7 +41,7 @@ interface MDXBlogModule {
   default(props: any): JSX.Element
 }
 
-type RawFile = { path: MarkdownFilePath; contents: MDXBlogModule }
+type ModuleAndPath = { path: MarkdownFilePath; module: MDXBlogModule }
 
 const MD_EXT = ".mdx"
 const BLOG_DIR_FROM_ROOT = "./pages/blog"
@@ -73,6 +73,10 @@ export class MarkdownFilePath {
     return slug
   }
 
+  equals(other: MarkdownFilePath) {
+    return this.pathFromRoot === other.pathFromRoot
+  }
+
   glob() {
     return glob.sync(this.pathFromRoot).map(MarkdownFilePath.relativeToRoot)
   }
@@ -83,7 +87,7 @@ export class MarkdownFilePath {
     })
   }
 
-  private static relativeToRoot(pathFromRoot: string) {
+  static relativeToRoot(pathFromRoot: string) {
     return new MarkdownFilePath({ pathFromRoot })
   }
 
@@ -96,18 +100,21 @@ export class MarkdownFilePath {
 
 export const loadMarkdownFile = async (
   path: MarkdownFilePath
-): Promise<RawFile> => {
+): Promise<ModuleAndPath> => {
   // important: need "../pages/blog/" here explicitly to help out webpack
-  const mdFile = await import(`../pages/blog/${path.pathFromBlogDir}`)
-  return { path, contents: mdFile }
+  const module = await import(`../pages/blog/${path.pathFromBlogDir}`)
+  if(typeof module.path !== "string" || !MarkdownFilePath.relativeToRoot(module.path).equals(path)) {
+    throw new Error("Path mismatch - a bug or missing remark plugin?")
+  }
+  return { path, module }
 }
 
-export const mdToPost = async (file: RawFile): Promise<PostData> => {
-  const { meta } = file.contents
-  const path = file.path.blogPath
+export const mdToPost = async (mp: ModuleAndPath): Promise<PostData> => {
+  const { meta } = mp.module
+  const path = mp.path.blogPath
   const post: PostData = {
     path,
-    slug: file.path.blogSlug,
+    slug: mp.path.blogSlug,
     title: meta.title,
     subtitle: meta.subtitle || null,
     published: meta.published || false,
@@ -117,7 +124,7 @@ export const mdToPost = async (file: RawFile): Promise<PostData> => {
     canonicalUrl: new URL(meta.canonicalUrl || path, globals.url).href,
     author: meta.author,
     bannerPhoto: meta.bannerPhoto,
-    // content: file.contents.default,
+    // content: mp.contents.default,
   }
 
   // todo: there's gotta be a better way to validate this schema
@@ -152,7 +159,7 @@ export const mdToPost = async (file: RawFile): Promise<PostData> => {
 
 export const loadMarkdownFiles = async (
   paths: MarkdownFilePath[]
-): Promise<RawFile[]> =>
+): Promise<ModuleAndPath[]> =>
   Promise.all(paths.map((path) => loadMarkdownFile(path)))
 
 export const loadPost = async (path: MarkdownFilePath): Promise<PostData> => {

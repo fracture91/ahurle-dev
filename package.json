@@ -61,7 +61,8 @@
     "remark-directive": "^1.0.1",
     "rss": "^1.2.2",
     "showdown": "^1.9.1",
-    "theme-ui": "^0.6.0-alpha.6"
+    "theme-ui": "^0.6.0-alpha.6",
+    "unist-builder": "^2.0.3"
   },
   "devDependencies": {
     "@next/bundle-analyzer": "^10.0.5",

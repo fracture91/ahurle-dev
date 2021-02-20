@@ -4,10 +4,11 @@ const withBundleAnalyzer = require("@next/bundle-analyzer")({
 })
 
 const mdxPrism = require("mdx-prism")
+const mdxFilePath = require("./helpers/mdx-file-path.js")
 
 const withMDX = require("@next/mdx")({
   options: {
-    remarkPlugins: [],
+    remarkPlugins: [mdxFilePath],
     rehypePlugins: [mdxPrism],
   },
 })
