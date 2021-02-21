@@ -109,7 +109,8 @@
     "typescript": "^4.1.3"
   },
   "resolutions": {
-    "refractor": "^3.3.1"
+    "refractor": "^3.3.1",
+    "react": "^17.0.1"
   },
   "bundlewatch": {
     "ci": {
