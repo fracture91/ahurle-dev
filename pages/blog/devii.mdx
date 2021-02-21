@@ -1,8 +1,4 @@
-import { MDXBlogLayout } from "components/MDXBlogLayout"
-import { getBlogStaticProps } from "helpers/getBlogStaticProps"
-
 export const meta = {
-  // filePath: eval("_jsxFileName"), // doesn't work for prod build
   title: "Devii's killer features",
   subtitle:
     "Bringing the power of React, TypeScript, and static generation to dev blogs everywhere",
@@ -21,9 +17,6 @@ export const meta = {
     thumbnailUrl: "/img/brook.jpg",
   },
 }
-
-export const getStaticProps = (...args) => getBlogStaticProps(...args, meta) // , MDXContent)
-export default MDXBlogLayout
 
 This page is built with Devii! Check out the source code for this under `/md/blog/test.md`.
 

@@ -7,7 +7,8 @@ export const getBlogStaticProps: GetStaticProps<
   { hello: string; bannerPhotoAttrs: object },
   { blog: string }
   // @ts-ignore
-> = async ({ params: _params }, meta) => {
+> = async ({ params: _params }, layoutProps) => {
+  const { meta } = layoutProps
   if (!meta.published) {
     return { notFound: true }
   }

@@ -1,8 +1,4 @@
-import { MDXBlogLayout } from "components/MDXBlogLayout"
-import { getBlogStaticProps } from "helpers/getBlogStaticProps"
-
 export const meta = {
-  // filePath: eval("_jsxFileName"), // doesn't work for prod build
   title: "Dan Abramov knows about Devii",
   published: true,
   datePublished: 1594425078471,
@@ -19,9 +15,6 @@ export const meta = {
     thumbnailUrl: "/img/danabramov_thumb.png",
   },
 }
-
-export const getStaticProps = (...args) => getBlogStaticProps(...args, meta) // , MDXContent)
-export default MDXBlogLayout
 
 Dan Abramov knows about Devii!
 
