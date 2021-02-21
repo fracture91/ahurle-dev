@@ -8,11 +8,17 @@ export interface Photo {
   alt: string
 }
 
-export interface BannerPhoto extends Photo {
+export interface RawBannerPhoto extends Photo {
   unsplash?: string
+  width?: number
+  height?: number
+  thumbnailUrl?: string
+}
+
+export interface BannerPhoto extends RawBannerPhoto {
+  // now required
   width: number
   height: number
-  thumbnailUrl?: string
 }
 
 export interface Author {
@@ -21,32 +27,50 @@ export interface Author {
   twitter?: string
 }
 
-export interface PostData {
-  path: string
-  slug: string
+// what comes out of the MDX when you import it
+export interface RawBlogMeta {
   title: string
-  subtitle: string | null
-  // content: MDXBlogModule["default"]
-  description: string | null
-  canonicalUrl: string | null
-  published: boolean
-  datePublished: number | null
+  subtitle?: string
+  description?: string
+  canonicalUrl?: string
+  published?: boolean
+  datePublished?: number
   author?: Author
   tags?: string[]
-  bannerPhoto?: BannerPhoto
+  bannerPhoto?: RawBannerPhoto
 }
 
-interface MDXBlogModule {
-  meta: PostData
+// what RawBlogMeta looks like after processing at build-time
+export interface BlogMeta<Published extends boolean = boolean> {
+  urlPath: string
+  slug: string
+  title: string
+  subtitle?: string
+  // content: MDXBlogModule["default"]
+  description: string
+  canonicalUrl: string
+  published: Published
+  datePublished: number
+  author?: Author
+  tags: string[]
+  bannerPhoto: Published extends true ? BannerPhoto : BannerPhoto | undefined
+}
+
+export interface LayoutProps {
+  path: string
+  meta: RawBlogMeta
+}
+
+export interface MDXBlogModule extends LayoutProps {
   default(props: any): JSX.Element
 }
 
-type ModuleAndPath = { path: MarkdownFilePath; module: MDXBlogModule }
+type ModuleAndPath = { path: BlogPostPath; module: MDXBlogModule }
 
 const MD_EXT = ".mdx"
 const BLOG_DIR_FROM_ROOT = "./pages/blog"
 
-export class MarkdownFilePath {
+export class BlogPostPath {
   private pathFromRoot: string
 
   private constructor({ pathFromRoot }: { pathFromRoot: string }) {
@@ -60,11 +84,11 @@ export class MarkdownFilePath {
     return this.pathFromRoot.replace(/^pages\/blog\//, "")
   }
 
-  get blogPath(): string {
-    return `blog/${this.blogSlug}`
+  get urlPath(): string {
+    return `blog/${this.slug}`
   }
 
-  get blogSlug(): string {
+  get slug(): string {
     const slug = Path.basename(
       this.pathFromRoot,
       Path.extname(this.pathFromRoot)
@@ -73,110 +97,125 @@ export class MarkdownFilePath {
     return slug
   }
 
-  equals(other: MarkdownFilePath) {
+  equals(other: BlogPostPath) {
     return this.pathFromRoot === other.pathFromRoot
   }
 
   glob() {
-    return glob.sync(this.pathFromRoot).map(MarkdownFilePath.relativeToRoot)
+    return glob.sync(this.pathFromRoot).map(BlogPostPath.relativeToRoot)
   }
 
-  static fromBlogSlug(slug: string) {
-    return new MarkdownFilePath({
+  static fromSlug(slug: string) {
+    return new BlogPostPath({
       pathFromRoot: `${BLOG_DIR_FROM_ROOT}/${slug}`,
     })
   }
 
   static relativeToRoot(pathFromRoot: string) {
-    return new MarkdownFilePath({ pathFromRoot })
+    return new BlogPostPath({ pathFromRoot })
   }
 
   static relativeToBlogDir(pathFromBlogDir: string) {
-    return new MarkdownFilePath({
+    return new BlogPostPath({
       pathFromRoot: `${BLOG_DIR_FROM_ROOT}/${pathFromBlogDir}`,
     })
   }
 }
 
-export const loadMarkdownFile = async (
-  path: MarkdownFilePath
+export const loadRawBlogPost = async (
+  path: BlogPostPath
 ): Promise<ModuleAndPath> => {
   // important: need "../pages/blog/" here explicitly to help out webpack
   const module = await import(`../pages/blog/${path.pathFromBlogDir}`)
   if (
     typeof module.path !== "string" ||
-    !MarkdownFilePath.relativeToRoot(module.path).equals(path)
+    !BlogPostPath.relativeToRoot(module.path).equals(path)
   ) {
     throw new Error("Path mismatch - a bug or missing remark plugin?")
   }
   return { path, module }
 }
 
-export const mdToPost = async (mp: ModuleAndPath): Promise<PostData> => {
-  const { meta } = mp.module
-  const path = mp.path.blogPath
-  const post: PostData = {
-    path,
-    slug: mp.path.blogSlug,
-    title: meta.title,
-    subtitle: meta.subtitle || null,
-    published: meta.published || false,
-    datePublished: meta.datePublished || null,
-    tags: meta.tags || [],
-    description: meta.description || meta.subtitle || null,
-    canonicalUrl: new URL(meta.canonicalUrl || path, globals.url).href,
-    author: meta.author,
-    bannerPhoto: meta.bannerPhoto,
+export const processRawMeta = async ({
+  module,
+  path,
+}: {
+  module: LayoutProps
+  path: BlogPostPath
+}): Promise<BlogMeta> => {
+  const { meta: raw } = module
+  const { urlPath } = path
+
+  const description = raw.description || raw.subtitle
+  if (!description) {
+    throw new Error("Missing required field: description")
+  }
+
+  const published = raw.published || false
+  if (published) {
+    if (!raw.datePublished) {
+      throw new Error("Missing required field: datePublished.")
+    }
+    if (!raw.bannerPhoto) {
+      throw new Error("Missing required field: bannerPhoto.")
+    }
+  }
+
+  let bannerPhoto: BannerPhoto | undefined
+  if (raw.bannerPhoto && (!raw.bannerPhoto.width || !raw.bannerPhoto.height)) {
+    const { width, height } = await sizeOf(`public/${raw.bannerPhoto.url}`)
+    if (!width || !height) {
+      throw new Error(`Could not get image size: ${raw.bannerPhoto.url}`)
+    }
+    bannerPhoto = { ...raw.bannerPhoto, width, height }
+  }
+
+  const processed: BlogMeta<typeof published> = {
+    urlPath,
+    // fsPath: mp.path.pathFromRoot,
+    slug: path.slug,
+    title: raw.title,
+    subtitle: raw.subtitle,
+    published,
+    datePublished: raw.datePublished || new Date().getTime(),
+    tags: raw.tags || [],
+    description,
+    canonicalUrl: new URL(raw.canonicalUrl || urlPath, globals.url).href,
+    author: raw.author,
+    bannerPhoto: bannerPhoto || undefined,
     // content: mp.contents.default,
   }
 
-  // todo: there's gotta be a better way to validate this schema
+  // TODO: there's gotta be a better way to validate this schema
 
-  if (!post.title) throw new Error("Missing required field: title.")
+  if (!processed.title) throw new Error("Missing required field: title.")
 
   // if (!post.content) throw new Error("Missing required field: content.")
 
-  if (!post.datePublished)
-    throw new Error("Missing required field: datePublished.")
-
-  if (post.bannerPhoto && !post.bannerPhoto.alt)
+  if (processed.bannerPhoto && !processed.bannerPhoto.alt)
     throw new Error("Missing required field: bannerPhoto.alt.")
 
-  if (post.author?.photo && !post.author.photo.alt)
+  if (processed.author?.photo && !processed.author.photo.alt)
     throw new Error("Missing required field: author.photo.alt.")
 
-  if (
-    post.bannerPhoto &&
-    (!post.bannerPhoto.width || !post.bannerPhoto.height)
-  ) {
-    const dimensions = await sizeOf(`public/${post.bannerPhoto.url}`)
-    if (!dimensions.width || !dimensions.height) {
-      throw new Error(`Could not get image size: ${post.bannerPhoto.url}`)
-    }
-    post.bannerPhoto.width = dimensions.width
-    post.bannerPhoto.height = dimensions.height
-  }
-
-  return post as PostData
+  return processed
 }
 
-export const loadMarkdownFiles = async (
-  paths: MarkdownFilePath[]
-): Promise<ModuleAndPath[]> =>
-  Promise.all(paths.map((path) => loadMarkdownFile(path)))
+export const loadRawBlogPosts = (
+  paths: BlogPostPath[]
+): Promise<ModuleAndPath>[] => paths.map((path) => loadRawBlogPost(path))
 
-export const loadPost = async (path: MarkdownFilePath): Promise<PostData> => {
-  const file = await loadMarkdownFile(path)
-  return mdToPost(file)
+export const loadBlogMeta = async (path: BlogPostPath): Promise<BlogMeta> => {
+  const mp = await loadRawBlogPost(path)
+  return processRawMeta(mp)
 }
 
-export const loadBlogPosts = async (): Promise<PostData[]> =>
-  (
-    await Promise.all(
-      (await loadMarkdownFiles(MarkdownFilePath.fromBlogSlug("*").glob())).map(
-        mdToPost
-      )
-    )
-  )
-    .filter((p) => p.published)
+const isPublished = (meta: BlogMeta): meta is BlogMeta<true> => meta.published
+
+export const loadPublishedBlogMetas = async (): Promise<BlogMeta<true>[]> => {
+  const paths = BlogPostPath.fromSlug("*").glob()
+  const promises = loadRawBlogPosts(paths).map((p) => p.then(processRawMeta))
+  return (await Promise.all(promises))
+    .filter(isPublished)
     .sort((a, b) => (b.datePublished || 0) - (a.datePublished || 0))
+}

@@ -3,9 +3,9 @@ import RSS from "rss"
 import fs from "fs"
 import showdown from "showdown"
 import { globals } from "./globals"
-import { PostData } from "./loader"
+import { BlogMeta } from "./loader"
 
-export const generateRSS = async (posts: PostData[]): Promise<void> => {
+export const generateRSS = async (posts: BlogMeta<true>[]): Promise<void> => {
   posts.map((post) => {
     if (!post.canonicalUrl)
       throw new Error(
@@ -45,7 +45,7 @@ export const generateRSS = async (posts: PostData[]): Promise<void> => {
     feed.item({
       title: post.title,
       description: html,
-      url: `${globals.url}/${post.path}`,
+      url: `${globals.url}/${post.urlPath}`,
       categories: post.tags || [],
       author: post.author?.name || "Andrew Hurle",
       date: new Date(post.datePublished || 0).toISOString(),

@@ -4,7 +4,7 @@ import Link from "next/link"
 import { format } from "fecha"
 import styled from "@emotion/styled"
 import { Flex, Themed } from "theme-ui"
-import { PostData } from "helpers/loader"
+import { BlogMeta } from "helpers/loader"
 import { WrapFC } from "helpers/WrapFC"
 import { LazyImage } from "./LazyImage"
 
@@ -53,8 +53,8 @@ const Subtitle: WrapFC<typeof Themed.p> = (props) => (
   <Themed.p {...props} sx={{ p: 0, m: 0, textAlign: "center", fontSize: 1 }} />
 )
 
-export const PostCard: React.FC<{ post: PostData }> = ({ post }) => (
-  <Link href={`/${post.path}`} passHref>
+export const PostCard: React.FC<{ post: BlogMeta<true> }> = ({ post }) => (
+  <Link href={`/${post.urlPath}`} passHref>
     <Outer as="a">
       <Inner>
         {post.bannerPhoto?.thumbnailUrl && (

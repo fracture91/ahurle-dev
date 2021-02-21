@@ -1,21 +1,21 @@
 import { getPage } from "next-page-tester"
 import { screen } from "@testing-library/react"
-import { PostData, loadBlogPosts, MarkdownFilePath } from "helpers/loader"
+import { BlogMeta, loadPublishedBlogMetas, BlogPostPath } from "helpers/loader"
 
 describe("Blog pages", () => {
-  let posts: PostData[] | undefined
+  let posts: BlogMeta<true>[] | undefined
   beforeAll(async () => {
-    posts = await loadBlogPosts()
+    posts = await loadPublishedBlogMetas()
     if (!posts) throw new Error("no posts loaded")
   })
 
-  const paths = MarkdownFilePath.fromBlogSlug("*").glob()
+  const paths = BlogPostPath.fromSlug("*").glob()
   if (paths.length <= 0) throw new Error("no blog entries")
   paths.forEach((path) => {
-    it(`renders ${path.blogSlug} blog page`, async () => {
-      const post = posts?.filter((p) => p.slug === path.blogSlug)[0] as PostData
+    it(`renders ${path.slug} blog page`, async () => {
+      const post = posts?.filter((p) => p.slug === path.slug)[0] as BlogMeta
       const { render } = await getPage({
-        route: `/blog/${path.blogSlug}`,
+        route: `/${path.urlPath}`,
         useDocument: true,
       })
 

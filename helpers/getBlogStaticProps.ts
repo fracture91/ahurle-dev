@@ -1,27 +1,28 @@
 import { GetStaticProps } from "next"
-import sizeOf from "image-size"
-// import glob from "glob"
+import removeUndefined from "rundef"
+import {
+  BlogMeta,
+  BlogPostPath,
+  LayoutProps,
+  processRawMeta,
+} from "helpers/loader"
+import type { AddArgument } from "helpers/AddArgument"
 
-// @ts-ignore
-export const getBlogStaticProps: GetStaticProps<
-  { hello: string; bannerPhotoAttrs: object },
-  { blog: string }
-  // @ts-ignore
-> = async ({ params: _params }, layoutProps) => {
-  const { meta } = layoutProps
+export const getBlogStaticProps: AddArgument<
+  GetStaticProps<{ processedMeta: BlogMeta }>,
+  LayoutProps
+> = async (_context, layoutProps) => {
+  const { meta, path: rawPath } = layoutProps
   if (!meta.published) {
     return { notFound: true }
   }
-
-  // const allBlogs = glob.sync("pages/mdxblog/*").map(async (p) => {
-  //   return import(`../pages/mdxblog/${p.split("pages/mdxblog/")[1]}`)
-  // })
-
-  // console.log((await Promise.all(allBlogs)).map((b) => { debugger; return b.meta.author }))
-
-  const dimensions = await sizeOf(`public/${meta.bannerPhoto.url}`)
-  if (!dimensions.width || !dimensions.height) {
-    throw new Error(`Could not get image size: ${meta.bannerPhoto.url}`)
-  }
-  return { props: { hello: "world", bannerPhotoAttrs: dimensions } }
+  const path = BlogPostPath.relativeToRoot(rawPath)
+  return processRawMeta({ module: layoutProps, path }).then(
+    (processedMeta) => ({
+      props: {
+        // next doesn't like it when you have "undefined" because that can't serialize to JSON
+        processedMeta: removeUndefined(processedMeta, false, true),
+      },
+    })
+  )
 }

@@ -2,20 +2,20 @@
 import React from "react"
 import { Box, Container, Themed } from "theme-ui"
 import Image from "next/image"
-import { PostData } from "helpers/loader"
+import { BlogMeta } from "helpers/loader"
 import { Author } from "./Author"
 import { PostMeta } from "./PostMeta"
 
-const BannerPhoto: React.FC<{
-  src: string
-  alt?: string
-  unsplash?: string
-  width?: number
-  height?: number
-}> = ({ src, alt, unsplash, width, height }) => (
+const BannerPhoto: React.FC<BlogMeta["bannerPhoto"]> = ({
+  url,
+  alt,
+  unsplash,
+  width,
+  height,
+}) => (
   <Box as="figure" mt={3} mx={-3}>
     <Image
-      src={src}
+      src={url}
       alt={alt}
       width={width || 0}
       height={height || 0}
@@ -66,7 +66,7 @@ const Thanks: React.FC = () => (
   </Themed.p>
 )
 
-const HeaderText: React.FC<{ post: PostData }> = ({ post }) => {
+const HeaderText: React.FC<{ post: BlogMeta }> = ({ post }) => {
   const { title, subtitle } = post
   return (
     <>
@@ -85,7 +85,7 @@ const HeaderText: React.FC<{ post: PostData }> = ({ post }) => {
   )
 }
 
-export const BlogPost: React.FunctionComponent<{ post: PostData }> = ({
+export const BlogPost: React.FunctionComponent<{ post: BlogMeta }> = ({
   post,
   children,
 }) => (
@@ -95,15 +95,7 @@ export const BlogPost: React.FunctionComponent<{ post: PostData }> = ({
 
       <Container as="section" paddingX={3} marginY={4} mt={3}>
         <HeaderText post={post} />
-        {post.bannerPhoto && (
-          <BannerPhoto
-            src={post.bannerPhoto?.url}
-            alt={post.bannerPhoto?.alt}
-            unsplash={post.bannerPhoto?.unsplash}
-            width={post.bannerPhoto?.width}
-            height={post.bannerPhoto?.height}
-          />
-        )}
+        {post.bannerPhoto && <BannerPhoto {...post.bannerPhoto} />}
       </Container>
 
       <Container as="section" paddingX={3} marginY={4}>

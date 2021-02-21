@@ -2,8 +2,9 @@
 import React from "react"
 import Head from "next/head"
 import { GetStaticProps } from "next"
+import removeUndefined from "rundef"
 import { generateRSS } from "helpers/rssUtil"
-import { PostData, loadBlogPosts } from "helpers/loader"
+import { BlogMeta, loadPublishedBlogMetas } from "helpers/loader"
 import { PostCard } from "components/PostCard"
 import { Themed, Container, Button, Grid } from "theme-ui"
 // eslint-disable-next-line no-restricted-imports
@@ -12,7 +13,7 @@ import Features from "../mdx/features.mdx"
 import Introduction from "../mdx/introduction.mdx"
 
 type HomeProps = {
-  posts: PostData[]
+  posts: BlogMeta<true>[]
 }
 
 const Home: React.FC<HomeProps> = ({ posts }) => (
@@ -44,7 +45,7 @@ const Home: React.FC<HomeProps> = ({ posts }) => (
       </Themed.p>
       <Grid columns="repeat(auto-fit,minmax(300px, 1fr))" gap={2} py={2} px={3}>
         {posts.map((post) => (
-          <PostCard post={post} key={post.path} />
+          <PostCard post={post} key={post.urlPath} />
         ))}
       </Grid>
     </Container>
@@ -90,10 +91,10 @@ const Home: React.FC<HomeProps> = ({ posts }) => (
 export default Home
 
 export const getStaticProps: GetStaticProps<HomeProps> = async () => {
-  const posts = await loadBlogPosts()
+  const posts = await loadPublishedBlogMetas()
 
   // comment out to turn off RSS generation during build step.
   await generateRSS(posts)
 
-  return { props: { posts } }
+  return { props: { posts: posts.map((p) => removeUndefined(p, false, true)) } }
 }

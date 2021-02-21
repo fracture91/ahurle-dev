@@ -1,8 +1,8 @@
 import React from "react"
-import { PostData } from "helpers/loader"
+import { BlogMeta } from "helpers/loader"
 import { Meta } from "./Meta"
 
-export const PostMeta: React.FC<{ post: PostData }> = ({ post }) => (
+export const PostMeta: React.FC<{ post: BlogMeta }> = ({ post }) => (
   <Meta
     meta={{
       title: post.title,

@@ -1,5 +1,5 @@
 import glob from "glob"
-import { MarkdownFilePath } from "helpers/loader"
+// import { BlogPostPath } from "helpers/loader"
 import { globals } from "./globals"
 
 export const generateSitemap = async (): Promise<string> => {
@@ -11,9 +11,9 @@ export const generateSitemap = async (): Promise<string> => {
     .filter((path) => !path.includes("/_"))
     .map((path) => path.slice(1))
 
-  const blogPaths = await MarkdownFilePath.fromBlogSlug("*")
-    .glob()
-    .map((p) => p.blogPath)
+  // const blogPaths = await BlogPostPath.fromSlug("*")
+  //   .glob()
+  //   .map((p) => p.urlPath)
 
   const sitemap = `
 <?xml version="1.0" encoding="UTF-8"?>
@@ -22,7 +22,7 @@ export const generateSitemap = async (): Promise<string> => {
       <loc>${globals.url}</loc>
       <lastmod>2020-06-01</lastmod>
   </url>
-${[...pagePaths, ...blogPaths].map((path) => {
+${[...pagePaths].map((path) => {
   const item = ["<url>"]
   item.push(`  <loc>${globals.url}${path}</loc>`)
   item.push("  <lastmod>2020-06-01</lastmod>")
