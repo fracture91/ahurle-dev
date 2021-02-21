@@ -1,19 +1,13 @@
 /* eslint-disable no-console */
 import RSS from "rss"
 import fs from "fs"
-import showdown from "showdown"
+import ReactDOMServer from "react-dom/server"
 import { globals } from "./globals"
-import { BlogMeta } from "./loader"
+import { MetaAndContent } from "./loader"
 
-export const generateRSS = async (posts: BlogMeta<true>[]): Promise<void> => {
-  posts.map((post) => {
-    if (!post.canonicalUrl)
-      throw new Error(
-        "Missing canonicalUrl. A canonical URL is required for RSS feed generation. If you don't care about RSS, uncomment `generateRSS(posts)` at the bottom of index.tsx."
-      )
-    return post
-  })
-
+export const generateRSS = async (
+  posts: MetaAndContent<true>[]
+): Promise<void> => {
   const feed = new RSS({
     title: globals.siteName,
     description: globals.siteDescription,
@@ -24,35 +18,24 @@ export const generateRSS = async (posts: BlogMeta<true>[]): Promise<void> => {
     webMaster: globals.email,
     copyright: `${new Date().getFullYear()} ${globals.yourName}`,
     language: "en",
-    pubDate: globals.siteCreationDate,
+    pubDate: new Date(posts[0]?.meta.datePublished).toISOString(),
     ttl: 60,
   })
 
-  let isValid = true
-  posts.forEach((post) => {
-    return // TODO
-    // eslint-disable-next-line no-unreachable
-    const converter = new showdown.Converter()
-    // @ts-ignore
-    const html = converter.makeHtml(post.content)
-    if (!post.datePublished) {
-      isValid = false
-      console.error(
-        "All posts must have a publishedDate timestamp when generating RSS feed."
-      )
-      console.error("Not generating rss.xml.")
-    }
+  posts.forEach(({ meta: post, content }) => {
+    const html = ReactDOMServer.renderToStaticMarkup(
+      content({ processedMeta: post })
+    )
     feed.item({
       title: post.title,
-      description: html,
-      url: `${globals.url}/${post.urlPath}`,
-      categories: post.tags || [],
-      author: post.author?.name || "Andrew Hurle",
-      date: new Date(post.datePublished || 0).toISOString(),
+      description: post.description,
+      custom_elements: [{ "content:encoded": { _cdata: html } }],
+      url: post.canonicalUrl,
+      categories: post.tags,
+      author: post.author?.name,
+      date: new Date(post.datePublished).toISOString(),
     })
   })
-
-  if (!isValid) return
 
   // writes RSS.xml to public directory
   const path = `${process.cwd()}/public/rss.xml`

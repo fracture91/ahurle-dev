@@ -4,7 +4,7 @@ import Head from "next/head"
 import { GetStaticProps } from "next"
 import removeUndefined from "rundef"
 import { generateRSS } from "helpers/rssUtil"
-import { BlogMeta, loadPublishedBlogMetas } from "helpers/loader"
+import { BlogMeta, loadPublishedBlogs } from "helpers/loader"
 import { PostCard } from "components/PostCard"
 import { Themed, Container, Button, Grid } from "theme-ui"
 import Features from "mdx/features.mdx"
@@ -89,10 +89,14 @@ const Home: React.FC<HomeProps> = ({ posts }) => (
 export default Home
 
 export const getStaticProps: GetStaticProps<HomeProps> = async () => {
-  const posts = await loadPublishedBlogMetas()
+  const posts = await loadPublishedBlogs()
 
   // comment out to turn off RSS generation during build step.
   await generateRSS(posts)
 
-  return { props: { posts: posts.map((p) => removeUndefined(p, false, true)) } }
+  return {
+    props: {
+      posts: posts.map(({ meta }) => removeUndefined(meta, false, true)),
+    },
+  }
 }

@@ -46,7 +46,6 @@ export interface BlogMeta<Published extends boolean = boolean> {
   slug: string
   title: string
   subtitle?: string
-  // content: MDXBlogModule["default"]
   description: string
   canonicalUrl: string
   published: Published
@@ -210,12 +209,24 @@ export const loadBlogMeta = async (path: BlogPostPath): Promise<BlogMeta> => {
   return processRawMeta(mp)
 }
 
-const isPublished = (meta: BlogMeta): meta is BlogMeta<true> => meta.published
+export interface MetaAndContent<Published extends boolean = boolean> {
+  meta: BlogMeta<Published>
+  content: MDXBlogModule["default"]
+}
 
-export const loadPublishedBlogMetas = async (): Promise<BlogMeta<true>[]> => {
+const isPublished = (meta: BlogMeta): meta is BlogMeta<true> => meta.published
+const isMetaAndContentPublished = (
+  mc: MetaAndContent
+): mc is MetaAndContent<true> => isPublished(mc.meta)
+
+export const loadPublishedBlogs = async (): Promise<MetaAndContent<true>[]> => {
   const paths = BlogPostPath.fromSlug("*").glob()
-  const promises = loadRawBlogPosts(paths).map((p) => p.then(processRawMeta))
+  const promises = loadRawBlogPosts(paths).map((p) =>
+    p.then((mp) =>
+      processRawMeta(mp).then((meta) => ({ meta, content: mp.module.default }))
+    )
+  )
   return (await Promise.all(promises))
-    .filter(isPublished)
-    .sort((a, b) => (b.datePublished || 0) - (a.datePublished || 0))
+    .filter(isMetaAndContentPublished)
+    .sort(({ meta: a }, { meta: b }) => b.datePublished - a.datePublished)
 }
