@@ -111,7 +111,8 @@
   "resolutions": {
     "refractor": "^3.3.1",
     "react": "^17.0.1",
-    "rebass": "https://registry.yarnpkg.com/@favware/skip-dependency/-/skip-dependency-1.1.0.tgz"
+    "rebass": "https://registry.yarnpkg.com/@favware/skip-dependency/-/skip-dependency-1.1.0.tgz",
+    "@babel/core": "^7.12.16"
   },
   "bundlewatch": {
     "ci": {
