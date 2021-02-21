@@ -1,6 +1,5 @@
 /** @jsxImportSource theme-ui */
 import React, { useMemo } from "react"
-import style from "react-syntax-highlighter/dist/cjs/styles/prism/darcula"
 
 // Note that PrismAsyncLight will create one chunk for every language.
 // This is better than shipping every language together in one big chunk, but it would be even better if I could not
@@ -10,6 +9,7 @@ import style from "react-syntax-highlighter/dist/cjs/styles/prism/darcula"
 import { PrismLight, PrismAsyncLight } from "react-syntax-highlighter"
 import type { ThemeUICSSObject } from "theme-ui"
 import { useThemeUI } from "helpers/theme"
+import { fixedStyle, originalCodeSelector } from "helpers/prismStyle"
 
 const SyntaxHighlighter =
   typeof window === "undefined" ? PrismLight : PrismAsyncLight
@@ -20,34 +20,6 @@ const languageLongNames = {
 } as const
 
 const DEFAULT_LANGUAGE = "text"
-
-const originalPreSelector = 'pre[class*="language-"]'
-const originalCodeSelector = 'code[class*="language-"]'
-
-// The prism style object is *almost* the same shape as an emotion CSS object.
-// There are a couple weird things we have to fix:
-//   1. there are classname selectors missing their leading dot
-//   2. selectors for "pre[...]" refer to the current element, so should be replaced with "&"
-const fixedStyle = (() => {
-  let memo: ThemeUICSSObject
-  return () => {
-    if (memo) return memo
-    memo = { ...(style as { [key: string]: any }) }
-    Object.keys(memo).forEach((k) => {
-      if (/^[a-z]/i.test(k) && !/^(pre|code)\b/.test(k)) {
-        memo[`.${k}`] = memo[k]
-        delete memo[k]
-      } else {
-        const fixedKey = k.replace(originalPreSelector, "&")
-        if (fixedKey !== k) {
-          memo[fixedKey] = memo[k]
-          delete memo[k]
-        }
-      }
-    })
-    return memo
-  }
-})()
 
 export const Code: React.FC<{ language: string; value?: string }> = React.memo(
   ({ language, value }) => {

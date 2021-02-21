@@ -1,10 +1,11 @@
 /** @jsxImportSource theme-ui */
-import React, { ImgHTMLAttributes } from "react"
+import React from "react"
 import ReactMarkdown from "react-markdown"
 import RemarkDirective from "remark-directive"
 import { Themed } from "theme-ui"
 import { Code } from "./Code"
-import { LazyImage } from "./LazyImage"
+import { ImageRenderer } from "./ImageRenderer"
+import { UnwrapImages } from "./UnwrapImages"
 
 const Heading: React.FC<{ level: number; children: React.ReactChildren }> = ({
   level,
@@ -13,39 +14,6 @@ const Heading: React.FC<{ level: number; children: React.ReactChildren }> = ({
   const tagName = `h${level}` as keyof typeof Themed
   const Component = Themed[tagName]
   return <Component>{children}</Component>
-}
-
-const ImageRenderer: React.FC<ImgHTMLAttributes<HTMLImageElement>> = ({
-  src,
-  height,
-  ...rest
-}) => {
-  const layout = height ? "responsive" : "fill"
-  return (
-    // this wrapping div is necessary when layout == "fill", does no harm for responsive
-    <div
-      sx={{
-        position: "relative",
-        height: layout === "fill" ? height || "25rem" : "auto",
-      }}
-    >
-      <LazyImage
-        // @ts-ignore
-        src={src}
-        height={height}
-        {...rest}
-        layout={layout}
-        objectFit="contain"
-      />
-    </div>
-  )
-}
-
-const UnwrapImages: React.FC<any> = ({ children, ...rest }) => {
-  const hasImage = !!React.Children.toArray(children).find(
-    (child) => React.isValidElement(child) && child.type === ImageRenderer
-  )
-  return hasImage ? children : <Themed.p {...rest}>{children}</Themed.p>
 }
 
 // not exhaustive

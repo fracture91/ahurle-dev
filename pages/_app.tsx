@@ -9,6 +9,7 @@ import {
   InitializeColorMode,
   CSSObject,
   css as themeuicss,
+  Themed,
 } from "theme-ui"
 import { createColorStyles } from "@theme-ui/color-modes"
 import { theme } from "helpers/theme"
@@ -16,6 +17,19 @@ import { Footer } from "components/Footer"
 import { globals } from "helpers/globals"
 import { Header } from "components/Header"
 import { CSSReset } from "components/CSSReset"
+import { fixedStyle } from "helpers/prismStyle"
+import { ImageRenderer } from "components/ImageRenderer"
+import { UnwrapImages } from "components/UnwrapImages"
+
+const MDXPre: React.FC<any> = React.memo((props) => (
+  <Themed.pre {...props} sx={fixedStyle} />
+))
+
+const components = {
+  p: UnwrapImages,
+  pre: MDXPre,
+  img: ImageRenderer,
+}
 
 // HACK: grab theme-ui's generated styles from non-exported function - see /patches
 // Use this to apply dark mode styles under a media query so they work without JS
@@ -62,7 +76,7 @@ const App: React.FC<AppProps> = ({ Component, pageProps }) => (
         />
       )}
     </Head>
-    <ThemeProvider theme={theme}>
+    <ThemeProvider theme={theme} components={components}>
       <BodyStyle />
       {/* important: prefers-color-scheme rules come after built-in theme-ui rules */}
       <DarkMediaStyle />

@@ -1,11 +1,11 @@
 /** @jsxImportSource theme-ui */
 import React from "react"
 import { format } from "fecha"
-import { PostData } from "helpers/loader"
+import { BlogMeta } from "helpers/loader"
 import { Box, Flex } from "theme-ui"
 import Image from "next/image"
 
-export const AuthorLines: React.FC<{ post: PostData }> = ({ post }) => (
+export const AuthorLines: React.FC<{ post: BlogMeta }> = ({ post }) => (
   <div sx={{ lineHeight: 1.2 }}>
     <p sx={{ margin: "2px" }}>
       {post.author?.name && (
@@ -31,7 +31,7 @@ export const AuthorLines: React.FC<{ post: PostData }> = ({ post }) => (
 
 const imageWidthPx = 70
 
-export const Author: React.FC<{ post: PostData }> = ({ post }) => (
+export const Author: React.FC<{ post: BlogMeta }> = ({ post }) => (
   <Flex
     mt={2}
     sx={{
@@ -43,8 +43,8 @@ export const Author: React.FC<{ post: PostData }> = ({ post }) => (
     {post.author?.photo && (
       <Box mr={2} sx={{ lineHeight: 0, flexShrink: 0 }}>
         <Image
-          src={post.author?.photo?.url}
-          alt={post.author?.photo?.alt}
+          src={post.author.photo.url}
+          alt={post.author.photo.alt}
           width={imageWidthPx}
           height={imageWidthPx}
           layout="fixed"

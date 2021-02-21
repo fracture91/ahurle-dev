@@ -2,24 +2,19 @@
 import React from "react"
 import Head from "next/head"
 import { GetStaticProps } from "next"
+import removeUndefined from "rundef"
 import { generateRSS } from "helpers/rssUtil"
-import { Markdown } from "components/Markdown"
-import {
-  PostData,
-  loadBlogPosts,
-  loadMarkdownFile,
-  MarkdownFilePath,
-} from "helpers/loader"
+import { BlogMeta, loadPublishedBlogs } from "helpers/loader"
 import { PostCard } from "components/PostCard"
 import { Themed, Container, Button, Grid } from "theme-ui"
+import Features from "mdx/features.mdx"
+import Introduction from "mdx/introduction.mdx"
 
 type HomeProps = {
-  introduction: string
-  features: string
-  posts: PostData[]
+  posts: BlogMeta<true>[]
 }
 
-const Home: React.FC<HomeProps> = ({ introduction, features, posts }) => (
+const Home: React.FC<HomeProps> = ({ posts }) => (
   <main>
     <Head>
       <title>Introducing Devii</title>
@@ -28,12 +23,12 @@ const Home: React.FC<HomeProps> = ({ introduction, features, posts }) => (
 
     <Container as="section" paddingX={3} marginY={4}>
       <Themed.h1 sx={{ textAlign: "center" }}>Introduction to Devii</Themed.h1>
-      <Markdown source={introduction} />
+      <Introduction />
     </Container>
 
     <Container as="section" paddingX={3} marginY={4}>
       <Themed.h2 sx={{ textAlign: "center" }}>Features</Themed.h2>
-      <Markdown source={features} />
+      <Features />
     </Container>
 
     <Container as="section" paddingX={3} marginY={4}>
@@ -48,7 +43,7 @@ const Home: React.FC<HomeProps> = ({ introduction, features, posts }) => (
       </Themed.p>
       <Grid columns="repeat(auto-fit,minmax(300px, 1fr))" gap={2} py={2} px={3}>
         {posts.map((post) => (
-          <PostCard post={post} key={post.path} />
+          <PostCard post={post} key={post.urlPath} />
         ))}
       </Grid>
     </Container>
@@ -94,22 +89,14 @@ const Home: React.FC<HomeProps> = ({ introduction, features, posts }) => (
 export default Home
 
 export const getStaticProps: GetStaticProps<HomeProps> = async () => {
-  const introduction = await loadMarkdownFile(
-    MarkdownFilePath.relativeToMdDir("introduction.md")
-  )
-  const features = await loadMarkdownFile(
-    MarkdownFilePath.relativeToMdDir("features.md")
-  )
-  const posts = await loadBlogPosts()
+  const posts = await loadPublishedBlogs()
 
   // comment out to turn off RSS generation during build step.
   await generateRSS(posts)
 
-  const props = {
-    introduction: introduction.contents,
-    features: features.contents,
-    posts,
+  return {
+    props: {
+      posts: posts.map(({ meta }) => removeUndefined(meta, false, true)),
+    },
   }
-
-  return { props }
 }
