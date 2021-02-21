@@ -26,6 +26,9 @@
     "syntax highlighting",
     "static generation"
   ],
+  "engines": {
+    "node": "14.x"
+  },
   "scripts": {
     "postinstall": "patch-package",
     "dev": "next dev",
