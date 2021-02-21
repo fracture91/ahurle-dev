@@ -10,7 +10,8 @@
           "helpers": "./helpers",
           "components": "./components",
           "pages": "./pages",
-          "styles": "./styles"
+          "styles": "./styles",
+          "mdx": "./mdx"
         }
       }
     ],

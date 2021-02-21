@@ -6,8 +6,8 @@ export const PostMeta: React.FC<{ post: BlogMeta }> = ({ post }) => (
   <Meta
     meta={{
       title: post.title,
-      desc: post.description || undefined,
-      link: post.canonicalUrl || undefined,
+      desc: post.description,
+      link: post.canonicalUrl,
       image: post.bannerPhoto?.url,
     }}
   />

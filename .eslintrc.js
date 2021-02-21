@@ -73,6 +73,7 @@ module.exports = {
           ["components", "./components"],
           ["pages", "./pages"],
           ["styles", "./styles"],
+          ["mdx", "./mdx"],
         ],
         extensions: [".js", ".jsx", ".ts", ".tsx", ".mdx"],
       },

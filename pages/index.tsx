@@ -7,10 +7,8 @@ import { generateRSS } from "helpers/rssUtil"
 import { BlogMeta, loadPublishedBlogMetas } from "helpers/loader"
 import { PostCard } from "components/PostCard"
 import { Themed, Container, Button, Grid } from "theme-ui"
-// eslint-disable-next-line no-restricted-imports
-import Features from "../mdx/features.mdx"
-// eslint-disable-next-line no-restricted-imports
-import Introduction from "../mdx/introduction.mdx"
+import Features from "mdx/features.mdx"
+import Introduction from "mdx/introduction.mdx"
 
 type HomeProps = {
   posts: BlogMeta<true>[]
