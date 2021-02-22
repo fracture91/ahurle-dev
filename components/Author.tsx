@@ -1,7 +1,7 @@
 /** @jsxImportSource theme-ui */
 import React from "react"
 import { format } from "fecha"
-import { BlogMeta } from "helpers/loader"
+import { BlogMeta } from "helpers/schema"
 import { Box, Flex } from "theme-ui"
 import Image from "next/image"
 

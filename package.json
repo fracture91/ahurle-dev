@@ -66,7 +66,8 @@
     "rundef": "^1.2.6",
     "showdown": "^1.9.1",
     "theme-ui": "^0.6.0-alpha.6",
-    "unist-builder": "^2.0.3"
+    "unist-builder": "^2.0.3",
+    "zod": "^3.0.0-alpha.4"
   },
   "devDependencies": {
     "@next/bundle-analyzer": "^10.0.5",

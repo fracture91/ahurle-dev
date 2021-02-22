@@ -4,7 +4,7 @@ import Link from "next/link"
 import { format } from "fecha"
 import styled from "@emotion/styled"
 import { Flex, Themed } from "theme-ui"
-import { BlogMeta } from "helpers/loader"
+import { BlogMeta } from "helpers/schema"
 import { WrapFC } from "helpers/WrapFC"
 import { LazyImage } from "./LazyImage"
 
@@ -57,7 +57,7 @@ export const PostCard: React.FC<{ post: BlogMeta<true> }> = ({ post }) => (
   <Link href={`/${post.urlPath}`} passHref>
     <Outer as="a">
       <Inner>
-        {post.bannerPhoto?.thumbnailUrl && (
+        {post.bannerPhoto && (
           <Thumbnail>
             <LazyImage
               src={post.bannerPhoto.url}
