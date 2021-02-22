@@ -1,11 +1,8 @@
 import { getPage } from "next-page-tester"
 import { screen } from "@testing-library/react"
-import {
-  BlogMeta,
-  loadPublishedBlogs,
-  BlogPostPath,
-  MetaAndContent,
-} from "helpers/loader"
+import { loadPublishedBlogs, MetaAndContent } from "helpers/loader"
+import { BlogPostPath } from "helpers/BlogPostPath"
+import { BlogMeta } from "helpers/schema"
 
 describe("Blog pages", () => {
   let posts: MetaAndContent<true>[] | undefined

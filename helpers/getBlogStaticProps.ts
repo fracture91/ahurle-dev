@@ -1,11 +1,8 @@
 import { GetStaticProps } from "next"
 import removeUndefined from "rundef"
-import {
-  BlogMeta,
-  BlogPostPath,
-  LayoutProps,
-  processRawMeta,
-} from "helpers/loader"
+import { BlogMeta } from "helpers/schema"
+import { BlogPostPath } from "helpers/BlogPostPath"
+import { LayoutProps, processRawMeta } from "helpers/loader"
 import type { AddArgument } from "helpers/AddArgument"
 
 export const getBlogStaticProps: AddArgument<
