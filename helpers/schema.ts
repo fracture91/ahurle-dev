@@ -10,7 +10,6 @@ const RawBannerPhotoSchema = PhotoSchema.extend({
   unsplash: z.string().nonempty().optional(),
   width: z.number().int().positive().optional(),
   height: z.number().int().positive().optional(),
-  thumbnailUrl: z.string().nonempty().optional(),
 }).strict()
 export type RawBannerPhoto = z.infer<typeof RawBannerPhotoSchema>
 

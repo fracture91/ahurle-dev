@@ -57,7 +57,7 @@ export const PostCard: React.FC<{ post: BlogMeta<true> }> = ({ post }) => (
   <Link href={`/${post.urlPath}`} passHref>
     <Outer as="a">
       <Inner>
-        {post.bannerPhoto?.thumbnailUrl && (
+        {post.bannerPhoto && (
           <Thumbnail>
             <LazyImage
               src={post.bannerPhoto.url}
