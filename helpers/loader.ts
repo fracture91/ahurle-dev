@@ -11,6 +11,7 @@ import { BlogPostPath } from "./BlogPostPath"
 
 export interface LayoutProps {
   path: string
+  excerpt: string
   meta: RawBlogMetaInput
 }
 
@@ -60,6 +61,7 @@ export const processRawMeta = async ({
     return {
       ...raw,
       urlPath,
+      description: raw.description || module.excerpt,
       slug: path.slug,
       canonicalUrl: new URL(raw.canonicalUrl || urlPath, globals.url).href,
       bannerPhoto,

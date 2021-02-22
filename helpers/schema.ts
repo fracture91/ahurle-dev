@@ -58,11 +58,6 @@ export const RawBlogMetaSchema = z
     message: "bannerPhoto required when published is true",
     path: ["bannerPhoto"],
   })
-  .refine((r) => !r.published || r.description, {
-    message:
-      "description is required when published is true, or use subtitle as a fallback",
-    path: ["description"],
-  })
 export type RawBlogMetaOutput = z.output<typeof RawBlogMetaSchema>
 export type RawBlogMetaInput = z.input<typeof RawBlogMetaSchema>
 
