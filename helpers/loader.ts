@@ -1,44 +1,75 @@
 import glob from "glob"
 import Path from "path"
 import sizeOf from "image-size"
+import * as z from "zod"
 import { globals } from "./globals"
 
-export interface Photo {
-  url: string
-  alt: string
-}
+const PhotoSchema = z.object({
+  url: z.string().nonempty(),
+  alt: z.string().nonempty(),
+})
+export type Photo = z.infer<typeof PhotoSchema>
 
-export interface RawBannerPhoto extends Photo {
-  unsplash?: string
-  width?: number
-  height?: number
-  thumbnailUrl?: string
-}
+const RawBannerPhotoSchema = PhotoSchema.extend({
+  unsplash: z.string().nonempty().optional(),
+  width: z.number().int().positive().optional(),
+  height: z.number().int().positive().optional(),
+  thumbnailUrl: z.string().nonempty().optional(),
+}).strict()
+export type RawBannerPhoto = z.infer<typeof RawBannerPhotoSchema>
 
-export interface BannerPhoto extends RawBannerPhoto {
+const BannerPhotoSchema = RawBannerPhotoSchema.extend({
   // now required
-  width: number
-  height: number
-}
+  width: z.number().int().positive(),
+  height: z.number().int().positive(),
+}).strict()
+export type BannerPhoto = z.infer<typeof BannerPhotoSchema>
 
-export interface Author {
-  name: string
-  photo?: Photo
-  twitter?: string
-}
+const AuthorSchema = z
+  .object({
+    name: z.string().nonempty(),
+    photo: z.optional(PhotoSchema),
+    twitter: z.optional(z.string().nonempty()),
+  })
+  .strict()
+export type Author = z.infer<typeof AuthorSchema>
 
 // what comes out of the MDX when you import it
-export interface RawBlogMeta {
-  title: string
-  subtitle?: string
-  description?: string
-  canonicalUrl?: string
-  published?: boolean
-  datePublished?: number
-  author?: Author
-  tags?: string[]
-  bannerPhoto?: RawBannerPhoto
-}
+const RawBlogMetaSchema = z
+  .object({
+    title: z.string().nonempty(),
+    subtitle: z.string().nonempty().optional(),
+    description: z.string().nonempty().optional(),
+    canonicalUrl: z.string().nonempty().optional(),
+    published: z.boolean().optional(),
+    datePublished: z.number().int().positive().optional(),
+    author: AuthorSchema.optional(),
+    tags: z.string().nonempty().array().optional(),
+    bannerPhoto: RawBannerPhotoSchema.optional(),
+  })
+  .strict()
+  .refine((r) => !r.published || r.datePublished, {
+    message: "datePublished required when published is true",
+    path: ["datePublished"],
+  })
+  .transform((r) => ({
+    ...r,
+    published: !!r.published,
+    description: r.description || r.subtitle,
+    tags: r.tags || [],
+    datePublished: r.datePublished || new Date().getTime(),
+  }))
+  .refine((r) => !r.published || r.bannerPhoto, {
+    message: "bannerPhoto required when published is true",
+    path: ["bannerPhoto"],
+  })
+  .refine((r) => !r.published || r.description, {
+    message:
+      "description is required when published is true, or use subtitle as a fallback",
+    path: ["description"],
+  })
+export type RawBlogMetaOutput = z.output<typeof RawBlogMetaSchema>
+export type RawBlogMetaInput = z.input<typeof RawBlogMetaSchema>
 
 // what RawBlogMeta looks like after processing at build-time
 export interface BlogMeta<Published extends boolean = boolean> {
@@ -46,7 +77,7 @@ export interface BlogMeta<Published extends boolean = boolean> {
   slug: string
   title: string
   subtitle?: string
-  description: string
+  description: Published extends true ? string : string | undefined
   canonicalUrl: string
   published: Published
   datePublished: number
@@ -57,7 +88,7 @@ export interface BlogMeta<Published extends boolean = boolean> {
 
 export interface LayoutProps {
   path: string
-  meta: RawBlogMeta
+  meta: RawBlogMetaInput
 }
 
 export interface MDXBlogModule extends LayoutProps {
@@ -142,62 +173,34 @@ export const processRawMeta = async ({
   module: LayoutProps
   path: BlogPostPath
 }): Promise<BlogMeta> => {
-  const { meta: raw } = module
-  const { urlPath } = path
+  try {
+    const { urlPath } = path
+    const raw: RawBlogMetaOutput = RawBlogMetaSchema.parse(module.meta)
 
-  const description = raw.description || raw.subtitle
-  if (!description) {
-    throw new Error("Missing required field: description")
-  }
-
-  const published = raw.published || false
-  if (published) {
-    if (!raw.datePublished) {
-      throw new Error("Missing required field: datePublished.")
+    let bannerPhoto: BannerPhoto | undefined
+    if (
+      raw.bannerPhoto &&
+      (!raw.bannerPhoto.width || !raw.bannerPhoto.height)
+    ) {
+      const { width, height } = await sizeOf(`public/${raw.bannerPhoto.url}`)
+      if (!width || !height) {
+        throw new Error(`Could not get image size: ${raw.bannerPhoto.url}`)
+      }
+      bannerPhoto = { ...raw.bannerPhoto, width, height }
     }
-    if (!raw.bannerPhoto) {
-      throw new Error("Missing required field: bannerPhoto.")
+
+    return {
+      ...raw,
+      urlPath,
+      slug: path.slug,
+      canonicalUrl: new URL(raw.canonicalUrl || urlPath, globals.url).href,
+      bannerPhoto,
     }
+  } catch (e) {
+    throw new Error(
+      `Error parsing meta for blog post ${path.pathFromBlogDir}: ${e.message}`
+    )
   }
-
-  let bannerPhoto: BannerPhoto | undefined
-  if (raw.bannerPhoto && (!raw.bannerPhoto.width || !raw.bannerPhoto.height)) {
-    const { width, height } = await sizeOf(`public/${raw.bannerPhoto.url}`)
-    if (!width || !height) {
-      throw new Error(`Could not get image size: ${raw.bannerPhoto.url}`)
-    }
-    bannerPhoto = { ...raw.bannerPhoto, width, height }
-  }
-
-  const processed: BlogMeta<typeof published> = {
-    urlPath,
-    // fsPath: mp.path.pathFromRoot,
-    slug: path.slug,
-    title: raw.title,
-    subtitle: raw.subtitle,
-    published,
-    datePublished: raw.datePublished || new Date().getTime(),
-    tags: raw.tags || [],
-    description,
-    canonicalUrl: new URL(raw.canonicalUrl || urlPath, globals.url).href,
-    author: raw.author,
-    bannerPhoto: bannerPhoto || undefined,
-    // content: mp.contents.default,
-  }
-
-  // TODO: there's gotta be a better way to validate this schema
-
-  if (!processed.title) throw new Error("Missing required field: title.")
-
-  // if (!post.content) throw new Error("Missing required field: content.")
-
-  if (processed.bannerPhoto && !processed.bannerPhoto.alt)
-    throw new Error("Missing required field: bannerPhoto.alt.")
-
-  if (processed.author?.photo && !processed.author.photo.alt)
-    throw new Error("Missing required field: author.photo.alt.")
-
-  return processed
 }
 
 export const loadRawBlogPosts = (
