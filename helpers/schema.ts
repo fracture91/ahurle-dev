@@ -1,7 +1,7 @@
 import * as z from "zod"
 
 const PhotoSchema = z.object({
-  url: z.string().nonempty(),
+  src: z.string().nonempty(),
   alt: z.string().nonempty(),
 })
 export type Photo = z.infer<typeof PhotoSchema>

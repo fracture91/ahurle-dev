@@ -1,3 +1,6 @@
+import * as pancake from "public/img/pancakes.jpeg"
+import imgAttrs from "helpers/imgAttrs"
+
 export const meta = {
   title: "Choosing a tech stack for my personal dev blog in 2020",
   published: true,
@@ -6,12 +9,13 @@ export const meta = {
     name: "Colin McDonnell",
     twitter: "colinhacks",
     photo: {
-      url: "/img/profile.jpg",
+      src: "/img/profile.jpg",
       alt: "Closeup of Keanu Reeves",
     },
   },
   bannerPhoto: {
-    url: "/img/pancakes.jpeg",
+    ...imgAttrs(pancake),
+    // src: pancake,
     alt: "A stack of delicious pancakes",
     unsplash: "@unsplash",
   },
@@ -183,12 +187,7 @@ Check out this picture:
 
 ![A stack of delicious pancakes](/img/pancakes.jpeg)
 
-<img
-  src="/img/pancakes.jpeg"
-  width="900"
-  height="452"
-  alt="A stack of delicious pancakes"
-/>
+<img {...imgAttrs(pancake)} alt="A stack of delicious pancakes" />
 
 yeah
 

@@ -1,0 +1,11 @@
+diff --git a/node_modules/image-size/dist/index.d.ts b/node_modules/image-size/dist/index.d.ts
+index 82eff0d..341c1bd 100644
+--- a/node_modules/image-size/dist/index.d.ts
++++ b/node_modules/image-size/dist/index.d.ts
+@@ -1,5 +1,6 @@
+ /// <reference types="node" />
+ import { ISizeCalculationResult } from './types/interface';
++export { ISizeCalculationResult }
+ declare type CallbackFn = (e: Error | null, r?: ISizeCalculationResult) => void;
+ export default imageSize;
+ export declare function imageSize(input: Buffer | string): ISizeCalculationResult;

@@ -60,7 +60,7 @@ export const PostCard: React.FC<{ post: BlogMeta<true> }> = ({ post }) => (
         {post.bannerPhoto && (
           <Thumbnail>
             <LazyImage
-              src={post.bannerPhoto.url}
+              src={post.bannerPhoto.src}
               layout="fill"
               objectFit="cover"
             />

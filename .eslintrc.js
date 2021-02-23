@@ -74,6 +74,7 @@ module.exports = {
           ["pages", "./pages"],
           ["styles", "./styles"],
           ["mdx", "./mdx"],
+          ["public", "./public"],
         ],
         extensions: [".js", ".jsx", ".ts", ".tsx", ".mdx"],
       },

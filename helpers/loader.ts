@@ -6,6 +6,7 @@ import {
   RawBlogMetaOutput,
   RawBlogMetaSchema,
   BannerPhoto,
+  RawBannerPhoto,
 } from "./schema"
 import { BlogPostPath } from "./BlogPostPath"
 
@@ -35,6 +36,34 @@ export const loadRawBlogPost = async (
   return { path, module }
 }
 
+const hasSize = (raw: RawBannerPhoto): raw is BannerPhoto =>
+  !!(raw.width && raw.height)
+
+/**
+ * Supports three ways to specify the source:
+ *
+ * ```
+ * // using next-images webpack loader
+ * import pancake from "public/img/pancake.jpg"
+ *
+ * src = pancake // "/_next/static/images/pancakes-1234abcd.jpg"
+ * src = "img/pancake.jpg" // optional leading slash, below as well
+ * src = "public/img/pancake.jpg"
+ * ```
+ *
+ * Converts each case into a file path relative to project root.
+ */
+export const srcToFsPath = (src: string): string => {
+  let done = false
+  const result = src.replace(/^\//, "").replace(/^_next\//, () => {
+    done = true
+    return ".next/"
+  })
+  if (done) return result
+
+  return result.replace(/^public\/|^/, "public/")
+}
+
 export const processRawMeta = async ({
   module,
   path,
@@ -47,15 +76,17 @@ export const processRawMeta = async ({
     const raw: RawBlogMetaOutput = RawBlogMetaSchema.parse(module.meta)
 
     let bannerPhoto: BannerPhoto | undefined
-    if (
-      raw.bannerPhoto &&
-      (!raw.bannerPhoto.width || !raw.bannerPhoto.height)
-    ) {
-      const { width, height } = await sizeOf(`public/${raw.bannerPhoto.url}`)
-      if (!width || !height) {
-        throw new Error(`Could not get image size: ${raw.bannerPhoto.url}`)
+    if (raw.bannerPhoto) {
+      if (hasSize(raw.bannerPhoto)) {
+        bannerPhoto = raw.bannerPhoto
+      } else {
+        const src = srcToFsPath(raw.bannerPhoto.src)
+        const { width, height } = await sizeOf(src)
+        if (!width || !height) {
+          throw new Error(`Could not get image size: ${src}`)
+        }
+        bannerPhoto = { ...raw.bannerPhoto, width, height }
       }
-      bannerPhoto = { ...raw.bannerPhoto, width, height }
     }
 
     return {

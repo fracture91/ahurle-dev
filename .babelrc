@@ -11,7 +11,8 @@
           "components": "./components",
           "pages": "./pages",
           "styles": "./styles",
-          "mdx": "./mdx"
+          "mdx": "./mdx",
+          "public": "./public"
         }
       }
     ],
