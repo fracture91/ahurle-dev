@@ -2,6 +2,7 @@
 
 // @ts-ignore
 const mdxPrism = require("mdx-prism")
+const mdxImageMetadata = require("./mdxImageMetadata")
 const mdxFilePath = require("./mdxFilePath")
 const mdxExcerpt = require("./mdxExcerpt")
 const mdxDefaultLayout = require("./mdxDefaultLayout")
@@ -32,5 +33,5 @@ module.exports = {
     [mdxDefaultLayout, defaultLayoutOptions],
     [mdxDefaultGsp, defaultGspOptions],
   ],
-  rehypePlugins: [mdxPrism],
+  rehypePlugins: [mdxImageMetadata, mdxPrism],
 }
