@@ -2,6 +2,7 @@
 import React from "react"
 import Head from "next/head"
 import { AppProps } from "next/app"
+import Link from "next/link"
 import { Global, CacheProvider, css } from "@emotion/react"
 import { cache } from "@emotion/css"
 import {
@@ -25,10 +26,22 @@ const MDXPre: React.FC<any> = React.memo((props) => (
   <Themed.pre {...props} sx={fixedStyle} />
 ))
 
+const MDXLink: React.FC<any> = ({ children, ...props }) => {
+  // eslint-disable-next-line react/destructuring-assignment
+  if (props.href.startsWith("/") || props.href.startsWith("#"))
+    return (
+      <Link {...props} passHref>
+        <Themed.a>{children}</Themed.a>
+      </Link>
+    )
+  return <Themed.a {...props}>{children}</Themed.a>
+}
+
 const components = {
   p: UnwrapImages,
   pre: MDXPre,
   img: ImageRenderer,
+  a: MDXLink,
 }
 
 // HACK: grab theme-ui's generated styles from non-exported function - see /patches
