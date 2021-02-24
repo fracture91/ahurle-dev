@@ -19,6 +19,8 @@ module.exports = {
       "jest-transformer-mdx",
       { mdxOptions: "./config/mdxOptions" },
     ],
+    "^.+\\.(jpg|jpeg|png|svg|gif|ico|webp|jp2|avif)$":
+      "<rootDir>/__tests__/config/imageTransform.js",
   },
   transformIgnorePatterns: [
     "/node_modules/",

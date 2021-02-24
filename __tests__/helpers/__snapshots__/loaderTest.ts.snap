@@ -1,0 +1,431 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`loader mdx remark/rehype/webpack behavior highlights code blocks, adds sizes to images, and otherwise parses things correctly 1`] = `
+<MDXCreateElement
+  excerpt="Hello world! This is an example blog post. The excerpt should end after this paragraph."
+  frontMatter={Object {}}
+  mdxType="wrapper"
+  meta={
+    Object {
+      "title": "An Example Post",
+    }
+  }
+  originalType="wrapper"
+  path="__tests__/helpers/examplePost.mdx"
+>
+  <MDXCreateElement
+    mdxType="p"
+    originalType="p"
+  >
+    Hello world!
+  </MDXCreateElement>
+  <MDXCreateElement
+    mdxType="p"
+    originalType="p"
+  >
+    This is an example blog post.
+  </MDXCreateElement>
+  <MDXCreateElement
+    mdxType="p"
+    originalType="p"
+  >
+    The excerpt should end after this paragraph.
+  </MDXCreateElement>
+  <MDXCreateElement
+    mdxType="blockquote"
+    originalType="blockquote"
+  >
+    <MDXCreateElement
+      mdxType="p"
+      originalType="p"
+      parentName="blockquote"
+    >
+      a blockquote
+    </MDXCreateElement>
+  </MDXCreateElement>
+  <MDXCreateElement
+    mdxType="p"
+    originalType="p"
+  >
+    typescript code block:
+  </MDXCreateElement>
+  <MDXCreateElement
+    className="language-ts"
+    mdxType="pre"
+    originalType="pre"
+  >
+    <MDXCreateElement
+      className="language-ts"
+      mdxType="code"
+      originalType="code"
+      parentName="pre"
+    >
+      <MDXCreateElement
+        className="token keyword"
+        mdxType="span"
+        originalType="span"
+        parentName="code"
+      >
+        const
+      </MDXCreateElement>
+       a 
+      <MDXCreateElement
+        className="token operator"
+        mdxType="span"
+        originalType="span"
+        parentName="code"
+      >
+        =
+      </MDXCreateElement>
+       
+      <MDXCreateElement
+        className="token number"
+        mdxType="span"
+        originalType="span"
+        parentName="code"
+      >
+        1
+      </MDXCreateElement>
+      
+
+    </MDXCreateElement>
+  </MDXCreateElement>
+  <MDXCreateElement
+    mdxType="p"
+    originalType="p"
+  >
+    bash code block:
+  </MDXCreateElement>
+  <MDXCreateElement
+    className="language-bash"
+    mdxType="pre"
+    originalType="pre"
+  >
+    <MDXCreateElement
+      className="language-bash"
+      mdxType="code"
+      originalType="code"
+      parentName="pre"
+    >
+      <MDXCreateElement
+        className="token builtin class-name"
+        mdxType="span"
+        originalType="span"
+        parentName="code"
+      >
+        echo
+      </MDXCreateElement>
+       
+      <MDXCreateElement
+        className="token string"
+        mdxType="span"
+        originalType="span"
+        parentName="code"
+      >
+        "hello world"
+      </MDXCreateElement>
+      
+
+    </MDXCreateElement>
+  </MDXCreateElement>
+  <MDXCreateElement
+    mdxType="p"
+    originalType="p"
+  >
+    plaintext code block:
+  </MDXCreateElement>
+  <MDXCreateElement
+    mdxType="pre"
+    originalType="pre"
+  >
+    <MDXCreateElement
+      mdxType="code"
+      originalType="code"
+      parentName="pre"
+    >
+      const a = "hello world"
+
+    </MDXCreateElement>
+  </MDXCreateElement>
+  <MDXCreateElement
+    mdxType="p"
+    originalType="p"
+  >
+    Some text,
+
+    <MDXCreateElement
+      mdxType="inlineCode"
+      originalType="inlineCode"
+      parentName="p"
+    >
+      inline code
+    </MDXCreateElement>
+    ,
+
+    <MDXCreateElement
+      mdxType="strong"
+      originalType="strong"
+      parentName="p"
+    >
+      bold
+    </MDXCreateElement>
+    ,
+
+    <MDXCreateElement
+      mdxType="em"
+      originalType="em"
+      parentName="p"
+    >
+      italic
+    </MDXCreateElement>
+    ,
+
+    <MDXCreateElement
+      mdxType="del"
+      originalType="del"
+      parentName="p"
+    >
+      strikethrough
+    </MDXCreateElement>
+    ,
+
+    <MDXCreateElement
+      href="http://google.com"
+      mdxType="a"
+      originalType="a"
+      parentName="p"
+    >
+      a link
+    </MDXCreateElement>
+    ,
+
+    <MDXCreateElement
+      href="http://google.com"
+      mdxType="a"
+      originalType="a"
+      parentName="p"
+      title="a title"
+    >
+      a link with title
+    </MDXCreateElement>
+  </MDXCreateElement>
+  <MDXCreateElement
+    mdxType="ul"
+    originalType="ul"
+  >
+    <MDXCreateElement
+      mdxType="li"
+      originalType="li"
+      parentName="ul"
+    >
+      ul item 1
+    </MDXCreateElement>
+    <MDXCreateElement
+      mdxType="li"
+      originalType="li"
+      parentName="ul"
+    >
+      ul item 2
+    </MDXCreateElement>
+    <MDXCreateElement
+      mdxType="li"
+      originalType="li"
+      parentName="ul"
+    >
+      ul item 3
+    </MDXCreateElement>
+  </MDXCreateElement>
+  <MDXCreateElement
+    mdxType="ol"
+    originalType="ol"
+  >
+    <MDXCreateElement
+      mdxType="li"
+      originalType="li"
+      parentName="ol"
+    >
+      ol item 1
+    </MDXCreateElement>
+    <MDXCreateElement
+      mdxType="li"
+      originalType="li"
+      parentName="ol"
+    >
+      ol item 2
+    </MDXCreateElement>
+    <MDXCreateElement
+      mdxType="li"
+      originalType="li"
+      parentName="ol"
+    >
+      ol item 3
+    </MDXCreateElement>
+  </MDXCreateElement>
+  <MDXCreateElement
+    mdxType="h1"
+    originalType="h1"
+  >
+    Heading 1
+  </MDXCreateElement>
+  <MDXCreateElement
+    mdxType="h2"
+    originalType="h2"
+  >
+    Heading 2
+  </MDXCreateElement>
+  <MDXCreateElement
+    mdxType="h3"
+    originalType="h3"
+  >
+    Heading 3
+  </MDXCreateElement>
+  <MDXCreateElement
+    mdxType="h4"
+    originalType="h4"
+  >
+    Heading 4
+  </MDXCreateElement>
+  <MDXCreateElement
+    mdxType="h5"
+    originalType="h5"
+  >
+    Heading 5
+  </MDXCreateElement>
+  <MDXCreateElement
+    mdxType="h6"
+    originalType="h6"
+  >
+    Heading 6
+  </MDXCreateElement>
+  <MDXCreateElement
+    mdxType="hr"
+    originalType="hr"
+  />
+  <MDXCreateElement
+    mdxType="p"
+    originalType="p"
+  >
+    native markdown image with src relative to root:
+
+    <MDXCreateElement
+      alt="pancakes"
+      height={452}
+      mdxType="img"
+      originalType="img"
+      parentName="p"
+      src="/img/pancakes.jpeg"
+      width={900}
+    />
+  </MDXCreateElement>
+  <MDXCreateElement
+    mdxType="p"
+    originalType="p"
+  >
+    native markdown image with src relative to root, no leading slash:
+
+    <MDXCreateElement
+      alt="pancakes"
+      mdxType="img"
+      originalType="img"
+      parentName="p"
+      src="public/img/idontexist.jpeg"
+    />
+  </MDXCreateElement>
+  <MDXCreateElement
+    mdxType="p"
+    originalType="p"
+  >
+    native markdown image with src relative to public:
+
+    <MDXCreateElement
+      alt="pancakes"
+      height={452}
+      mdxType="img"
+      originalType="img"
+      parentName="p"
+      src="/img/pancakes.jpeg"
+      width={900}
+    />
+  </MDXCreateElement>
+  <MDXCreateElement
+    mdxType="p"
+    originalType="p"
+  >
+    native markdown image with src relative to public, no leading slash:
+
+    <MDXCreateElement
+      alt="pancakes"
+      mdxType="img"
+      originalType="img"
+      parentName="p"
+      src="img/idontexist.jpeg"
+    />
+  </MDXCreateElement>
+  <MDXCreateElement
+    mdxType="p"
+    originalType="p"
+  >
+    native markdown image with an absolute src:
+
+    <MDXCreateElement
+      alt="G logo"
+      mdxType="img"
+      originalType="img"
+      parentName="p"
+      src="https://www.google.com/favicon.ico"
+    />
+  </MDXCreateElement>
+  <MDXCreateElement
+    mdxType="p"
+    originalType="p"
+  >
+    JSX image with relative src and size via splatted attrs, others don't magically get sizes:
+  </MDXCreateElement>
+  <MDXCreateElement
+    alt="pancakes"
+    height={100}
+    mdxType="img"
+    originalType="img"
+    src="/pancakes.jpeg"
+    width={100}
+  />
+  <MDXCreateElement
+    mdxType="p"
+    originalType="p"
+  >
+    JSX image with a hardcoded relative src:
+  </MDXCreateElement>
+  <MDXCreateElement
+    alt="pancakes"
+    mdxType="img"
+    originalType="img"
+    src="/img/pancakes.jpeg"
+  />
+  <MDXCreateElement
+    mdxType="p"
+    originalType="p"
+  >
+    JSX image with a hardcoded relative src and size:
+  </MDXCreateElement>
+  <MDXCreateElement
+    alt="pancakes"
+    height={50}
+    mdxType="img"
+    originalType="img"
+    src="/img/pancakes.jpeg"
+    width={50}
+  />
+  <MDXCreateElement
+    mdxType="p"
+    originalType="p"
+  >
+    JSX image with an absolute src:
+  </MDXCreateElement>
+  <MDXCreateElement
+    alt="G logo"
+    mdxType="img"
+    originalType="img"
+    src="https://www.google.com/favicon.ico"
+  />
+</MDXCreateElement>
+`;

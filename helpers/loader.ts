@@ -1,4 +1,5 @@
 import sizeOf from "image-size"
+import type { MDXModule } from "types/mdx.d"
 import { globals } from "./globals"
 import {
   BlogMeta,
@@ -6,17 +7,18 @@ import {
   RawBlogMetaOutput,
   RawBlogMetaSchema,
   BannerPhoto,
+  RawBannerPhoto,
 } from "./schema"
 import { BlogPostPath } from "./BlogPostPath"
+import srcToFsPath from "./srcToFsPath"
 
 export interface LayoutProps {
   path: string
+  excerpt: string
   meta: RawBlogMetaInput
 }
 
-export interface MDXBlogModule extends LayoutProps {
-  default(props: any): JSX.Element
-}
+export type MDXBlogModule = LayoutProps & MDXModule
 
 type ModuleAndPath = { path: BlogPostPath; module: MDXBlogModule }
 
@@ -34,6 +36,9 @@ export const loadRawBlogPost = async (
   return { path, module }
 }
 
+const hasSize = (raw: RawBannerPhoto): raw is BannerPhoto =>
+  !!(raw.width && raw.height)
+
 export const processRawMeta = async ({
   module,
   path,
@@ -46,20 +51,23 @@ export const processRawMeta = async ({
     const raw: RawBlogMetaOutput = RawBlogMetaSchema.parse(module.meta)
 
     let bannerPhoto: BannerPhoto | undefined
-    if (
-      raw.bannerPhoto &&
-      (!raw.bannerPhoto.width || !raw.bannerPhoto.height)
-    ) {
-      const { width, height } = await sizeOf(`public/${raw.bannerPhoto.url}`)
-      if (!width || !height) {
-        throw new Error(`Could not get image size: ${raw.bannerPhoto.url}`)
+    if (raw.bannerPhoto) {
+      if (hasSize(raw.bannerPhoto)) {
+        bannerPhoto = raw.bannerPhoto
+      } else {
+        const src = srcToFsPath(raw.bannerPhoto.src)
+        const { width, height } = await sizeOf(src)
+        if (!width || !height) {
+          throw new Error(`Could not get image size: ${src}`)
+        }
+        bannerPhoto = { ...raw.bannerPhoto, width, height }
       }
-      bannerPhoto = { ...raw.bannerPhoto, width, height }
     }
 
     return {
       ...raw,
       urlPath,
+      description: raw.description || module.excerpt,
       slug: path.slug,
       canonicalUrl: new URL(raw.canonicalUrl || urlPath, globals.url).href,
       bannerPhoto,

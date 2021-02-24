@@ -7,7 +7,7 @@ import { Author } from "./Author"
 import { PostMeta } from "./PostMeta"
 
 const BannerPhoto: React.FC<BlogMeta["bannerPhoto"]> = ({
-  url,
+  src,
   alt,
   unsplash,
   width,
@@ -15,7 +15,7 @@ const BannerPhoto: React.FC<BlogMeta["bannerPhoto"]> = ({
 }) => (
   <Box as="figure" mt={3} mx={-3}>
     <Image
-      src={url}
+      src={src}
       alt={alt}
       width={width || 0}
       height={height || 0}

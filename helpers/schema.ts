@@ -1,7 +1,7 @@
 import * as z from "zod"
 
 const PhotoSchema = z.object({
-  url: z.string().nonempty(),
+  src: z.string().nonempty(),
   alt: z.string().nonempty(),
 })
 export type Photo = z.infer<typeof PhotoSchema>
@@ -57,11 +57,6 @@ export const RawBlogMetaSchema = z
   .refine((r) => !r.published || r.bannerPhoto, {
     message: "bannerPhoto required when published is true",
     path: ["bannerPhoto"],
-  })
-  .refine((r) => !r.published || r.description, {
-    message:
-      "description is required when published is true, or use subtitle as a fallback",
-    path: ["description"],
   })
 export type RawBlogMetaOutput = z.output<typeof RawBlogMetaSchema>
 export type RawBlogMetaInput = z.input<typeof RawBlogMetaSchema>

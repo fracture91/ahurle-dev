@@ -43,7 +43,7 @@ export const Author: React.FC<{ post: BlogMeta }> = ({ post }) => (
     {post.author?.photo && (
       <Box mr={2} sx={{ lineHeight: 0, flexShrink: 0 }}>
         <Image
-          src={post.author.photo.url}
+          src={post.author.photo.src}
           alt={post.author.photo.alt}
           width={imageWidthPx}
           height={imageWidthPx}

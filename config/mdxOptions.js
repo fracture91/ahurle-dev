@@ -2,7 +2,9 @@
 
 // @ts-ignore
 const mdxPrism = require("mdx-prism")
+const mdxImageMetadata = require("./mdxImageMetadata")
 const mdxFilePath = require("./mdxFilePath")
+const mdxExcerpt = require("./mdxExcerpt")
 const mdxDefaultLayout = require("./mdxDefaultLayout")
 const mdxDefaultGsp = require("./mdxDefaultGetStaticProps")
 
@@ -27,8 +29,9 @@ const defaultGspOptions = {
 module.exports = {
   remarkPlugins: [
     mdxFilePath,
+    mdxExcerpt,
     [mdxDefaultLayout, defaultLayoutOptions],
     [mdxDefaultGsp, defaultGspOptions],
   ],
-  rehypePlugins: [mdxPrism],
+  rehypePlugins: [mdxImageMetadata, mdxPrism],
 }
