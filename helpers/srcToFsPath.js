@@ -4,7 +4,7 @@
  *
  * ```
  * // using next-images webpack loader
- * import pancake from "public/img/pancake.jpg"
+ * import pancake from "@/public/img/pancake.jpg"
  *
  * src = pancake // "/_next/static/images/pancakes-1234abcd.jpg"
  * src = "img/pancake.jpg" // optional leading slash, below as well

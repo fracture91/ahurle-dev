@@ -1,5 +1,5 @@
 import sizeOf from "image-size"
-import type { MDXModule } from "types/mdx.d"
+import type { MDXModule } from "@/types/mdx.d"
 import { globals } from "./globals"
 import {
   BlogMeta,

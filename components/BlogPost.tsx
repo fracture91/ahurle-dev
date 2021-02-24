@@ -2,7 +2,7 @@
 import React from "react"
 import { Box, Container, Themed } from "theme-ui"
 import Image from "next/image"
-import { BlogMeta } from "helpers/schema"
+import { BlogMeta } from "@/helpers/schema"
 import { Author } from "./Author"
 import { PostMeta } from "./PostMeta"
 

@@ -68,15 +68,7 @@ module.exports = {
   settings: {
     "import/resolver": {
       alias: {
-        map: [
-          ["helpers", "./helpers"],
-          ["components", "./components"],
-          ["pages", "./pages"],
-          ["styles", "./styles"],
-          ["mdx", "./mdx"],
-          ["public", "./public"],
-          ["types", "./types"],
-        ],
+        map: [["@", "."]],
         extensions: [".js", ".jsx", ".ts", ".tsx", ".mdx"],
       },
       node: {

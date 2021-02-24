@@ -4,8 +4,8 @@ import Link from "next/link"
 import { format } from "fecha"
 import styled from "@emotion/styled"
 import { Flex, Themed } from "theme-ui"
-import { BlogMeta } from "helpers/schema"
-import { WrapFC } from "helpers/WrapFC"
+import { BlogMeta } from "@/helpers/schema"
+import { WrapFC } from "@/helpers/WrapFC"
 import { LazyImage } from "./LazyImage"
 
 const Outer = styled(Flex)`

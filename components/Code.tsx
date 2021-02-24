@@ -8,8 +8,8 @@ import React, { useMemo } from "react"
 // to remove unwanted languages, which seems to achieve what I want.
 import { PrismLight, PrismAsyncLight } from "react-syntax-highlighter"
 import type { ThemeUICSSObject } from "theme-ui"
-import { useThemeUI } from "helpers/theme"
-import { fixedStyle, originalCodeSelector } from "helpers/prismStyle"
+import { useThemeUI } from "@/helpers/theme"
+import { fixedStyle, originalCodeSelector } from "@/helpers/prismStyle"
 
 const SyntaxHighlighter =
   typeof window === "undefined" ? PrismLight : PrismAsyncLight

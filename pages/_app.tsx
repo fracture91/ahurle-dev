@@ -12,14 +12,14 @@ import {
   Themed,
 } from "theme-ui"
 import { createColorStyles } from "@theme-ui/color-modes"
-import { theme } from "helpers/theme"
-import { Footer } from "components/Footer"
-import { globals } from "helpers/globals"
-import { Header } from "components/Header"
-import { CSSReset } from "components/CSSReset"
-import { fixedStyle } from "helpers/prismStyle"
-import { ImageRenderer } from "components/ImageRenderer"
-import { UnwrapImages } from "components/UnwrapImages"
+import { theme } from "@/helpers/theme"
+import { Footer } from "@/components/Footer"
+import { globals } from "@/helpers/globals"
+import { Header } from "@/components/Header"
+import { CSSReset } from "@/components/CSSReset"
+import { fixedStyle } from "@/helpers/prismStyle"
+import { ImageRenderer } from "@/components/ImageRenderer"
+import { UnwrapImages } from "@/components/UnwrapImages"
 
 const MDXPre: React.FC<any> = React.memo((props) => (
   <Themed.pre {...props} sx={fixedStyle} />
