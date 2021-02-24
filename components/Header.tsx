@@ -1,7 +1,7 @@
 /** @jsxImportSource theme-ui */
 import React from "react"
 import Link from "next/link"
-import { globals } from "helpers/globals"
+import { globals } from "@/helpers/globals"
 import { Flex, NavLink } from "theme-ui"
 
 export const Header: React.FC = () => (

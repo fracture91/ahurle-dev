@@ -1,6 +1,6 @@
-import { BlogPostPath } from "helpers/BlogPostPath"
-import * as subject from "helpers/loader"
-import srcToFsPath from "helpers/srcToFsPath"
+import { BlogPostPath } from "@/helpers/BlogPostPath"
+import * as subject from "@/helpers/loader"
+import srcToFsPath from "@/helpers/srcToFsPath"
 import * as examplePost from "./examplePost.mdx"
 
 describe("loader", () => {

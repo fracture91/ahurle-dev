@@ -1,5 +1,5 @@
 import glob from "glob"
-// import { BlogPostPath } from "helpers/loader"
+// import { BlogPostPath } from "@/helpers/loader"
 import { globals } from "./globals"
 
 export const generateSitemap = async (): Promise<string> => {
