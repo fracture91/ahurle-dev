@@ -1,4 +1,5 @@
 import * as subject from "helpers/loader"
+import srcToFsPath from "helpers/srcToFsPath"
 
 describe("loader", () => {
   describe("srcToFsPath", () => {
@@ -16,7 +17,7 @@ describe("loader", () => {
       ["/_nextasdf/whatever", "public/_nextasdf/whatever"],
     ].forEach(([input, expected]) => {
       it(`transforms ${input} to ${expected}`, () => {
-        expect(subject.srcToFsPath(input)).toEqual(expected)
+        expect(srcToFsPath(input)).toEqual(expected)
       })
     })
   })

@@ -10,6 +10,7 @@ import {
   RawBannerPhoto,
 } from "./schema"
 import { BlogPostPath } from "./BlogPostPath"
+import srcToFsPath from "./srcToFsPath"
 
 export interface LayoutProps {
   path: string
@@ -37,31 +38,6 @@ export const loadRawBlogPost = async (
 
 const hasSize = (raw: RawBannerPhoto): raw is BannerPhoto =>
   !!(raw.width && raw.height)
-
-/**
- * Supports three ways to specify the source:
- *
- * ```
- * // using next-images webpack loader
- * import pancake from "public/img/pancake.jpg"
- *
- * src = pancake // "/_next/static/images/pancakes-1234abcd.jpg"
- * src = "img/pancake.jpg" // optional leading slash, below as well
- * src = "public/img/pancake.jpg"
- * ```
- *
- * Converts each case into a file path relative to project root.
- */
-export const srcToFsPath = (src: string): string => {
-  let done = false
-  const result = src.replace(/^\//, "").replace(/^_next\//, () => {
-    done = true
-    return ".next/"
-  })
-  if (done) return result
-
-  return result.replace(/^public\/|^/, "public/")
-}
 
 export const processRawMeta = async ({
   module,
