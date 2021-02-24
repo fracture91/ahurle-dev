@@ -1,0 +1,93 @@
+import * as pancake from "public/img/pancakes.jpeg"
+import imgAttrs from "helpers/imgAttrs"
+
+export const meta = {
+  title: "An Example Post",
+}
+
+Hello world!
+
+This is an example blog post.
+
+The excerpt should end after this paragraph.
+
+> a blockquote
+
+typescript code block:
+
+```ts
+const a = 1
+```
+
+bash code block:
+
+```bash
+echo "hello world"
+```
+
+plaintext code block:
+
+```
+const a = "hello world"
+```
+
+Some text,
+`inline code`,
+**bold**,
+_italic_,
+~~strikethrough~~,
+[a link](http://google.com),
+[a link with title](http://google.com "a title")
+
+- ul item 1
+- ul item 2
+- ul item 3
+
+1. ol item 1
+1. ol item 2
+1. ol item 3
+
+# Heading 1
+
+## Heading 2
+
+### Heading 3
+
+#### Heading 4
+
+##### Heading 5
+
+###### Heading 6
+
+---
+
+native markdown image with src relative to root:
+![pancakes](/public/img/pancakes.jpeg)
+
+native markdown image with src relative to root, no leading slash:
+![pancakes](public/img/idontexist.jpeg)
+
+native markdown image with src relative to public:
+![pancakes](/img/pancakes.jpeg)
+
+native markdown image with src relative to public, no leading slash:
+![pancakes](img/idontexist.jpeg)
+
+native markdown image with an absolute src:
+![G logo](https://www.google.com/favicon.ico)
+
+JSX image with relative src and size via splatted attrs, others don't magically get sizes:
+
+<img {...imgAttrs(pancake)} alt="pancakes" />
+
+JSX image with a hardcoded relative src:
+
+<img src="/img/pancakes.jpeg" alt="pancakes" />
+
+JSX image with a hardcoded relative src and size:
+
+<img src="/img/pancakes.jpeg" width={50} height={50} alt="pancakes" />
+
+JSX image with an absolute src:
+
+<img src="https://www.google.com/favicon.ico" alt="G logo" />
