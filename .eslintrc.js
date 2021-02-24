@@ -8,8 +8,6 @@ module.exports = {
     "plugin:react/recommended",
     "airbnb",
     "prettier",
-    "prettier/@typescript-eslint",
-    "prettier/react",
     "plugin:eslint-comments/recommended",
     "plugin:mdx/recommended",
   ],
