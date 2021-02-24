@@ -49,6 +49,7 @@ export const Author: React.FC<{ post: BlogMeta }> = ({ post }) => (
           height={imageWidthPx}
           layout="fixed"
           loading="eager"
+          priority
           sx={{ borderRadius: `${imageWidthPx / 2}px` }}
         />
       </Box>

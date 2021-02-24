@@ -22,6 +22,7 @@ const BannerPhoto: React.FC<BlogMeta["bannerPhoto"]> = ({
       layout="responsive"
       objectFit="contain"
       loading="eager"
+      priority
       sx={{ borderRadius: "5px" }}
       // todo: pass "sizes" attribute so 4k monitors don't get 4k images
     />
