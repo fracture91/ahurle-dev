@@ -1,5 +1,5 @@
-// types/mdx.d.ts
-declare module "*.mdx" {
-  const MDXComponent: (props: any) => JSX.Element
-  export default MDXComponent
+export type MDXComponent = (props: any) => JSX.Element
+
+export interface MDXModule {
+  default: MDXComponent
 }

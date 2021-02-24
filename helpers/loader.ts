@@ -1,4 +1,5 @@
 import sizeOf from "image-size"
+import type { MDXModule } from "types/mdx.d"
 import { globals } from "./globals"
 import {
   BlogMeta,
@@ -16,9 +17,7 @@ export interface LayoutProps {
   meta: RawBlogMetaInput
 }
 
-export interface MDXBlogModule extends LayoutProps {
-  default(props: any): JSX.Element
-}
+export type MDXBlogModule = LayoutProps & MDXModule
 
 type ModuleAndPath = { path: BlogPostPath; module: MDXBlogModule }
 
