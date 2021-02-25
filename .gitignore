@@ -31,3 +31,4 @@ firebase.json
 .firebase/*
 .nvmrc
 .vscode
+.history
