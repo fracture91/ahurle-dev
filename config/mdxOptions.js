@@ -1,6 +1,6 @@
 // @ts-check
 
-// @ts-ignore
+// @ts-ignore: no types for mdx-prism
 const mdxPrism = require("mdx-prism")
 const mdxImageMetadata = require("./mdxImageMetadata")
 const mdxFilePath = require("./mdxFilePath")

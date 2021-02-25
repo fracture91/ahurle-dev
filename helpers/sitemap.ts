@@ -1,6 +1,6 @@
 import glob from "glob"
 // import { BlogPostPath } from "@/helpers/loader"
-import { globals } from "./globals"
+import * as globals from "./globals"
 
 export const generateSitemap = async (): Promise<string> => {
   const pagesDir = "./pages/**/*.*"

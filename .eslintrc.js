@@ -7,6 +7,7 @@ module.exports = {
   extends: [
     "plugin:react/recommended",
     "airbnb",
+    "plugin:@typescript-eslint/recommended",
     "prettier",
     "plugin:eslint-comments/recommended",
     "plugin:mdx/recommended",
@@ -21,6 +22,14 @@ module.exports = {
         // the non-typescript rules are too dumb, false positives
         "no-undef": "off",
         "no-unused-vars": "off",
+        "no-shadow": "off",
+      },
+    },
+    {
+      files: "*.{js,jsx}",
+      rules: {
+        // If I'm using JS it's probably in a config file that doesn't support ES modules
+        "@typescript-eslint/no-var-requires": "off",
       },
     },
   ],
@@ -61,6 +70,10 @@ module.exports = {
     "no-unused-vars": ["error", { argsIgnorePattern: "^_" }],
     "@typescript-eslint/no-use-before-define": ["error"],
     "@typescript-eslint/no-unused-vars": ["error", { argsIgnorePattern: "^_" }],
+    "@typescript-eslint/ban-ts-comment": [
+      "error",
+      { "ts-ignore": "allow-with-description" },
+    ],
     "eslint-comments/disable-enable-pair": ["error", { allowWholeFile: true }],
   },
   settings: {

@@ -4,7 +4,7 @@ interface ImgAttrs {
   height: number
 }
 
-const imgAttrs = <T extends ImgAttrs>({ src, width, height }: T) => ({
+const imgAttrs = <T extends ImgAttrs>({ src, width, height }: T): ImgAttrs => ({
   src,
   width,
   height,

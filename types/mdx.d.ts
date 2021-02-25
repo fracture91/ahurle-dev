@@ -1,4 +1,4 @@
-export type MDXComponent = (props: any) => JSX.Element
+export type MDXComponent = (props: unknown) => JSX.Element
 
 export interface MDXModule {
   default: MDXComponent

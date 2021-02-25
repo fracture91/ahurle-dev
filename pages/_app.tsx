@@ -15,26 +15,33 @@ import {
 import { createColorStyles } from "@theme-ui/color-modes"
 import { theme } from "@/helpers/theme"
 import { Footer } from "@/components/Footer"
-import { globals } from "@/helpers/globals"
+import * as globals from "@/helpers/globals"
 import { Header } from "@/components/Header"
 import { CSSReset } from "@/components/CSSReset"
 import { fixedStyle } from "@/helpers/prismStyle"
 import { ImageRenderer } from "@/components/ImageRenderer"
 import { UnwrapImages } from "@/components/UnwrapImages"
 
-const MDXPre: React.FC<any> = React.memo((props) => (
-  <Themed.pre {...props} sx={fixedStyle} />
-))
+const MDXPre: React.FC<
+  React.ComponentPropsWithoutRef<"pre">
+> = React.memo((props) => <Themed.pre {...props} sx={fixedStyle} />)
 
-const MDXLink: React.FC<any> = ({ children, ...props }) => {
-  // eslint-disable-next-line react/destructuring-assignment
-  if (props.href.startsWith("/") || props.href.startsWith("#"))
+const MDXLink: React.FC<React.ComponentPropsWithoutRef<"a">> = ({
+  children,
+  href,
+  ...props
+}) => {
+  if (href?.startsWith("/") || href?.startsWith("#"))
     return (
-      <Link {...props} passHref>
+      <Link href={href} {...props} passHref>
         <Themed.a>{children}</Themed.a>
       </Link>
     )
-  return <Themed.a {...props}>{children}</Themed.a>
+  return (
+    <Themed.a href={href} {...props}>
+      {children}
+    </Themed.a>
+  )
 }
 
 const components = {

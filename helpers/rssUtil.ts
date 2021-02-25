@@ -2,7 +2,7 @@
 import RSS from "rss"
 import fs from "fs"
 import ReactDOMServer from "react-dom/server"
-import { globals } from "./globals"
+import * as globals from "./globals"
 import { MetaAndContent } from "./loader"
 
 export const generateRSS = async (

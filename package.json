@@ -38,7 +38,7 @@
     "lint": "yarn lint:eslint; yarn lint:prettier",
     "lint:eslint": "yarn run eslint . --ext .js,.ts,.jsx,.tsx,.mdx --max-warnings 0",
     "lint:prettier": "yarn run prettier --check .",
-    "test": "jest --watch",
+    "test": "jest --watchAll",
     "test:ci": "jest --ci"
   },
   "dependencies": {
@@ -75,6 +75,7 @@
     "theme-ui": "^0.6.0-alpha.6",
     "unist-builder": "^2.0.3",
     "unist-util-visit": "^2.0.3",
+    "utility-types": "^3.10.0",
     "zod": "^3.0.0-alpha.4"
   },
   "devDependencies": {

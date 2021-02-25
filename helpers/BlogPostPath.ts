@@ -31,25 +31,25 @@ export class BlogPostPath {
     return slug
   }
 
-  equals(other: BlogPostPath) {
+  equals(other: BlogPostPath): boolean {
     return this.pathFromRoot === other.pathFromRoot
   }
 
-  glob() {
+  glob(): BlogPostPath[] {
     return glob.sync(this.pathFromRoot).map(BlogPostPath.relativeToRoot)
   }
 
-  static fromSlug(slug: string) {
+  static fromSlug(slug: string): BlogPostPath {
     return new BlogPostPath({
       pathFromRoot: `${BLOG_DIR_FROM_ROOT}/${slug}`,
     })
   }
 
-  static relativeToRoot(pathFromRoot: string) {
+  static relativeToRoot(pathFromRoot: string): BlogPostPath {
     return new BlogPostPath({ pathFromRoot })
   }
 
-  static relativeToBlogDir(pathFromBlogDir: string) {
+  static relativeToBlogDir(pathFromBlogDir: string): BlogPostPath {
     return new BlogPostPath({
       pathFromRoot: `${BLOG_DIR_FROM_ROOT}/${pathFromBlogDir}`,
     })
