@@ -173,6 +173,12 @@ describe("loader", () => {
             "title": "An Example Post",
           },
           "path": "__tests__/helpers/examplePost.mdx",
+          "readingTime": Object {
+            "minutes": 0.815,
+            "text": "1 min read",
+            "time": 48900,
+            "words": 163,
+          },
         }
       `)
     })
