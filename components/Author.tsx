@@ -1,37 +1,78 @@
 /** @jsxImportSource theme-ui */
 import React from "react"
-import { format } from "fecha"
 import { BlogMeta } from "@/helpers/schema"
-import { Box, Flex } from "theme-ui"
+import { Box, Flex, Text } from "theme-ui"
 import Image from "next/image"
+import type * as readingTime from "reading-time"
+import { WrapFC } from "@/helpers/WrapFC"
 
-export const AuthorLines: React.FC<{ post: BlogMeta }> = ({ post }) => (
-  <div sx={{ lineHeight: 1.2 }}>
-    <p sx={{ margin: "2px" }}>
+const separatorSizeEms = 0.9
+
+const Separated: WrapFC<typeof Text> = (props) => (
+  <Text
+    {...props}
+    sx={{
+      ml: "-0.6em",
+      mr: `${separatorSizeEms}em`,
+      "&:before": { content: "'· '" },
+    }}
+  />
+)
+
+const containsSeparated = { mr: `${-separatorSizeEms}em` }
+
+const dateFormatter = new Intl.DateTimeFormat("en-US", {
+  year: "numeric",
+  month: "short",
+  day: "numeric",
+})
+
+export const AuthorLines: React.FC<{
+  post: BlogMeta
+  readingTime: ReturnType<typeof readingTime.default>
+}> = ({ post, readingTime }) => (
+  <div sx={{ lineHeight: 1.2, overflow: "hidden", flexGrow: 1 }}>
+    <p sx={{ m: "2px", ...containsSeparated }}>
       {post.author?.name && (
-        <span sx={{ color: "primary" }}>{post.author?.name}</span>
+        <Separated sx={{ color: "primary", whiteSpace: "nowrap" }}>
+          {post.author?.name}
+        </Separated>
       )}
 
       {post.author?.twitter && (
-        <span>
-          {" - "}
+        <Separated sx={{ display: "inline-block" }}>
           <a
             href={`https://twitter.com/${post.author?.twitter}`}
           >{`@${post.author?.twitter}`}</a>{" "}
-        </span>
+        </Separated>
       )}
     </p>
-    <p sx={{ color: "tertiary", opacity: 0.8, margin: "2px" }}>
-      {post.datePublished
-        ? format(new Date(post.datePublished), "MMMM Do, YYYY")
-        : ""}
+    <p
+      sx={{
+        color: "tertiary",
+        opacity: 0.8,
+        m: "2px",
+        ...containsSeparated,
+      }}
+    >
+      {post.datePublished && (
+        <>
+          <Separated sx={{ display: "inline-block" }}>
+            {dateFormatter.format(new Date(post.datePublished))}
+          </Separated>
+        </>
+      )}
+      <Separated sx={{ display: "inline-block" }}>{readingTime.text}</Separated>
     </p>
   </div>
 )
 
 const imageWidthPx = 70
 
-export const Author: React.FC<{ post: BlogMeta }> = ({ post }) => (
+export const Author: React.FC<{
+  post: BlogMeta
+  readingTime: ReturnType<typeof readingTime.default>
+}> = ({ post, readingTime }) => (
   <Flex
     mt={2}
     sx={{
@@ -54,6 +95,6 @@ export const Author: React.FC<{ post: BlogMeta }> = ({ post }) => (
         />
       </Box>
     )}
-    <AuthorLines post={post} />
+    <AuthorLines post={post} readingTime={readingTime} />
   </Flex>
 )

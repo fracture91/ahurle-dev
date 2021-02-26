@@ -5,8 +5,10 @@ import { BlogPostPath } from "@/helpers/BlogPostPath"
 import { LayoutProps, processRawMeta } from "@/helpers/loader"
 import type { AddArgument } from "@/helpers/AddArgument"
 
+export type BlogStaticProps = { processedMeta: BlogMeta }
+
 export const getBlogStaticProps: AddArgument<
-  GetStaticProps<{ processedMeta: BlogMeta }>,
+  GetStaticProps<BlogStaticProps>,
   LayoutProps
 > = async (_context, layoutProps) => {
   const { meta, path: rawPath } = layoutProps
