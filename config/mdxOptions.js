@@ -4,6 +4,7 @@
 const mdxPrism = require("mdx-prism")
 const rehypeSlug = require("rehype-slug")
 const rehypeAutolinkHeadings = require("rehype-autolink-headings")
+const rehypeDowngradeH1 = require("./rehypeDowngradeH1")
 const mdxImageMetadata = require("./mdxImageMetadata")
 const mdxFilePath = require("./mdxFilePath")
 const mdxExcerpt = require("./mdxExcerpt")
@@ -39,6 +40,7 @@ module.exports = {
   ],
   rehypePlugins: [
     mdxImageMetadata,
+    rehypeDowngradeH1,
     rehypeSlug,
     [rehypeAutolinkHeadings],
     mdxPrism,

@@ -4457,6 +4457,14 @@ hast-util-raw@6.0.1:
     xtend "^4.0.0"
     zwitch "^1.0.0"
 
+hast-util-shift-heading@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/hast-util-shift-heading/-/hast-util-shift-heading-2.0.1.tgz#8d825a9021244b8ac6124d58542a8108ebec9074"
+  integrity sha512-R+M0xzoSnXOG6cQaTbgv79L2MDHCL91RUKe8/h9XpTi3tQPqhFQIy8NhbhD0FwM2sZgHXPauic4ffu1Bs7UiDQ==
+  dependencies:
+    hast-util-heading-rank "^1.0.0"
+    unist-util-visit "^2.0.0"
+
 hast-util-to-html@^7.1.1:
   version "7.1.2"
   resolved "https://registry.yarnpkg.com/hast-util-to-html/-/hast-util-to-html-7.1.2.tgz#db677f0ee483658cea0eecc9dec30aba42b67111"
