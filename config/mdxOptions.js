@@ -2,6 +2,8 @@
 
 // @ts-ignore: no types for mdx-prism
 const mdxPrism = require("mdx-prism")
+const rehypeSlug = require("rehype-slug")
+const rehypeAutolinkHeadings = require("rehype-autolink-headings")
 const mdxImageMetadata = require("./mdxImageMetadata")
 const mdxFilePath = require("./mdxFilePath")
 const mdxExcerpt = require("./mdxExcerpt")
@@ -35,5 +37,10 @@ module.exports = {
     [mdxDefaultLayout, defaultLayoutOptions],
     [mdxDefaultGsp, defaultGspOptions],
   ],
-  rehypePlugins: [mdxImageMetadata, mdxPrism],
+  rehypePlugins: [
+    mdxImageMetadata,
+    rehypeSlug,
+    [rehypeAutolinkHeadings],
+    mdxPrism,
+  ],
 }

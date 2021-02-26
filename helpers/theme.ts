@@ -2,10 +2,18 @@ import {
   Theme as GenericTheme,
   ContextValue as GenericContextValue,
   useThemeUI as genericUseThemeUI,
+  ThemeUICSSObject,
 } from "theme-ui"
+import chainLink from "@/public/img/chain-link.svg"
 import * as globals from "./globals"
 
 const makeTheme = <T extends GenericTheme>(t: T) => t
+
+const linkInsideHeading: ThemeUICSSObject = {
+  "&:hover > a > .icon": {
+    visibility: "visible",
+  },
+}
 
 export const theme = makeTheme({
   useColorSchemeMediaQuery: true, // default to the user's preferred mode
@@ -139,6 +147,7 @@ export const theme = makeTheme({
       variant: "text.heading",
       fontSize: [6, 7, 8],
       letterSpacing: "-0.03em",
+      ...linkInsideHeading,
     },
     h2: {
       variant: "text.heading",
@@ -146,22 +155,27 @@ export const theme = makeTheme({
       paddingBottom: "0.15em",
       borderBottom: "1px solid",
       borderColor: "secondary",
+      ...linkInsideHeading,
     },
     h3: {
       variant: "text.heading",
       fontSize: 5,
+      ...linkInsideHeading,
     },
     h4: {
       variant: "text.heading",
       fontSize: 4,
+      ...linkInsideHeading,
     },
     h5: {
       variant: "text.heading",
       fontSize: 3,
+      ...linkInsideHeading,
     },
     h6: {
       variant: "text.heading",
       fontSize: 2,
+      ...linkInsideHeading,
     },
     p: {
       marginY: "1.4em",
@@ -185,6 +199,25 @@ export const theme = makeTheme({
       },
       "&:hover": {
         color: "secondary",
+      },
+      "h1 > &, h2 > &, h3 > &, h4 > &, h5 > &, h6 > &": {
+        float: "left",
+        ml: "-1.9em",
+        pr: "0.6em",
+        ".icon": {
+          display: "inline-block",
+          width: "1.3em",
+          height: "1.3em",
+          mt: "-0.075em",
+          // hack: currentColor doesn't work in SVGs via url()
+          // mask the backgroundColor instead
+          maskImage: `url(${chainLink})`,
+          backgroundColor: "currentColor",
+          maskImageRepeat: "no-repeat",
+          maskImageSize: "contain",
+          maskImagePosition: "center",
+          visibility: "hidden",
+        },
       },
     },
     pre: {
