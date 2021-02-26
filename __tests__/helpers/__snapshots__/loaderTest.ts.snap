@@ -12,6 +12,14 @@ exports[`loader mdx remark/rehype/webpack behavior highlights code blocks, adds 
   }
   originalType="wrapper"
   path="__tests__/helpers/examplePost.mdx"
+  readingTime={
+    Object {
+      "minutes": 0.815,
+      "text": "1 min read",
+      "time": 48900,
+      "words": 163,
+    }
+  }
 >
   <MDXCreateElement
     mdxType="p"

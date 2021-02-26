@@ -2,6 +2,7 @@
 import React from "react"
 import Head from "next/head"
 import { AppProps } from "next/app"
+import Link from "next/link"
 import { Global, CacheProvider, css } from "@emotion/react"
 import { cache } from "@emotion/css"
 import {
@@ -14,21 +15,40 @@ import {
 import { createColorStyles } from "@theme-ui/color-modes"
 import { theme } from "@/helpers/theme"
 import { Footer } from "@/components/Footer"
-import { globals } from "@/helpers/globals"
+import * as globals from "@/helpers/globals"
 import { Header } from "@/components/Header"
 import { CSSReset } from "@/components/CSSReset"
 import { fixedStyle } from "@/helpers/prismStyle"
 import { ImageRenderer } from "@/components/ImageRenderer"
 import { UnwrapImages } from "@/components/UnwrapImages"
 
-const MDXPre: React.FC<any> = React.memo((props) => (
-  <Themed.pre {...props} sx={fixedStyle} />
-))
+const MDXPre: React.FC<
+  React.ComponentPropsWithoutRef<"pre">
+> = React.memo((props) => <Themed.pre {...props} sx={fixedStyle} />)
+
+const MDXLink: React.FC<React.ComponentPropsWithoutRef<"a">> = ({
+  children,
+  href,
+  ...props
+}) => {
+  if (href?.startsWith("/") || href?.startsWith("#"))
+    return (
+      <Link href={href} {...props} passHref>
+        <Themed.a>{children}</Themed.a>
+      </Link>
+    )
+  return (
+    <Themed.a href={href} {...props}>
+      {children}
+    </Themed.a>
+  )
+}
 
 const components = {
   p: UnwrapImages,
   pre: MDXPre,
   img: ImageRenderer,
+  a: MDXLink,
 }
 
 // HACK: grab theme-ui's generated styles from non-exported function - see /patches

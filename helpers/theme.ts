@@ -3,7 +3,7 @@ import {
   ContextValue as GenericContextValue,
   useThemeUI as genericUseThemeUI,
 } from "theme-ui"
-import { globals } from "./globals"
+import * as globals from "./globals"
 
 const makeTheme = <T extends GenericTheme>(t: T) => t
 

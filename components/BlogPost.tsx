@@ -3,6 +3,8 @@ import React from "react"
 import { Box, Container, Themed } from "theme-ui"
 import Image from "next/image"
 import { BlogMeta } from "@/helpers/schema"
+import { LayoutProps } from "@/helpers/loader"
+import { BlogStaticProps } from "@/helpers/getBlogStaticProps"
 import { Author } from "./Author"
 import { PostMeta } from "./PostMeta"
 
@@ -22,6 +24,7 @@ const BannerPhoto: React.FC<BlogMeta["bannerPhoto"]> = ({
       layout="responsive"
       objectFit="contain"
       loading="eager"
+      priority
       sx={{ borderRadius: "5px" }}
       // todo: pass "sizes" attribute so 4k monitors don't get 4k images
     />
@@ -66,7 +69,7 @@ const Thanks: React.FC = () => (
   </Themed.p>
 )
 
-const HeaderText: React.FC<{ post: BlogMeta }> = ({ post }) => {
+const Title: React.FC<{ post: BlogMeta }> = ({ post }) => {
   const { title, subtitle } = post
   return (
     <>
@@ -80,21 +83,20 @@ const HeaderText: React.FC<{ post: BlogMeta }> = ({ post }) => {
           {subtitle}
         </Themed.h3>
       )}
-      <Author post={post} />
     </>
   )
 }
 
-export const BlogPost: React.FunctionComponent<{ post: BlogMeta }> = ({
-  post,
-  children,
-}) => (
+export const BlogPost: React.FunctionComponent<
+  LayoutProps & BlogStaticProps
+> = ({ processedMeta: post, readingTime, children }) => (
   <main>
     <article>
       <PostMeta post={post} />
 
       <Container as="section" paddingX={3} marginY={4} mt={3}>
-        <HeaderText post={post} />
+        <Title post={post} />
+        <Author post={post} readingTime={readingTime} />
         {post.bannerPhoto && <BannerPhoto {...post.bannerPhoto} />}
       </Container>
 

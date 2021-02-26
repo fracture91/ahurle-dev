@@ -34,7 +34,7 @@ const mdxDefaultGetStaticProps = (options = []) =>
       const existingGsp = tree.children.find(
         (node) =>
           node.type === "export" &&
-          // @ts-ignore
+          // @ts-ignore: node.value is of type `unknown` but no easy way to cast inline with jsdoc
           node.value.toString().includes("export const getStaticProps")
       )
 

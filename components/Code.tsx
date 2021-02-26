@@ -49,9 +49,12 @@ export const Code: React.FC<{ language: string; value?: string }> = React.memo(
       () => ({
         ...fixedStyle(),
         ...{
-          "&": { ...(fixedStyle()["&"] as object), ...theme.styles.pre },
+          "&": {
+            ...(fixedStyle()["&"] as Record<string, unknown>),
+            ...theme.styles.pre,
+          },
           [originalCodeSelector]: {
-            ...(fixedStyle()[originalCodeSelector] as object),
+            ...(fixedStyle()[originalCodeSelector] as Record<string, unknown>),
             ...theme.styles.code,
             ...theme.styles.code["pre &"],
           },

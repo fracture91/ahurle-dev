@@ -1,10 +1,11 @@
 // @ts-check
 
-// @ts-ignore
+// @ts-ignore: no types for mdx-prism
 const mdxPrism = require("mdx-prism")
 const mdxImageMetadata = require("./mdxImageMetadata")
 const mdxFilePath = require("./mdxFilePath")
 const mdxExcerpt = require("./mdxExcerpt")
+const mdxReadingTime = require("./mdxReadingTime")
 const mdxDefaultLayout = require("./mdxDefaultLayout")
 const mdxDefaultGsp = require("./mdxDefaultGetStaticProps")
 
@@ -30,6 +31,7 @@ module.exports = {
   remarkPlugins: [
     mdxFilePath,
     mdxExcerpt,
+    mdxReadingTime,
     [mdxDefaultLayout, defaultLayoutOptions],
     [mdxDefaultGsp, defaultGspOptions],
   ],

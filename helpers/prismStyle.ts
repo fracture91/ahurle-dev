@@ -12,7 +12,7 @@ export const fixedStyle = (() => {
   let memo: ThemeUICSSObject
   return () => {
     if (memo) return memo
-    memo = { ...(style as { [key: string]: any }) }
+    memo = { ...(style as ThemeUICSSObject) }
     Object.keys(memo).forEach((k) => {
       if (/^[a-z]/i.test(k) && !/^(pre|code)\b/.test(k)) {
         memo[`.${k}`] = memo[k]

@@ -1,37 +1,85 @@
 /** @jsxImportSource theme-ui */
 import React from "react"
-import { format } from "fecha"
 import { BlogMeta } from "@/helpers/schema"
-import { Box, Flex } from "theme-ui"
+import { Box, Flex, Text } from "theme-ui"
 import Image from "next/image"
+import type * as readingTime from "reading-time"
+import { WrapFC } from "@/helpers/WrapFC"
 
-export const AuthorLines: React.FC<{ post: BlogMeta }> = ({ post }) => (
-  <div sx={{ lineHeight: 1.2 }}>
-    <p sx={{ margin: "2px" }}>
+/**
+ * Takes advantage of whitespace collapsing to show separators only when two
+ * things are on the same line.
+ */
+const Separated: WrapFC<typeof Text> = (props) => (
+  <Text
+    {...props}
+    sx={{
+      whiteSpace: "nowrap",
+      display: "inline",
+      "&:after": {
+        content: "' '",
+        whiteSpace: "normal",
+        letterSpacing: "0.75em",
+        background: `radial-gradient(
+            circle at 50%,
+            currentColor 0.08em,
+            transparent 0.12em
+          )`,
+      },
+    }}
+  />
+)
+
+const groupSpacing = ["1em", "1.5em", "3em"]
+const negGroupSpacing = groupSpacing.map((s) => `-${s}`)
+
+const Group: WrapFC<"p"> = (props) => (
+  <p {...props} sx={{ m: "2px", mr: groupSpacing, display: "inline-block" }} />
+)
+
+const dateFormatter = new Intl.DateTimeFormat("en-US", {
+  year: "numeric",
+  month: "short",
+  day: "numeric",
+})
+
+export const AuthorLines: React.FC<{
+  post: BlogMeta
+  readingTime: ReturnType<typeof readingTime.default>
+}> = ({ post, readingTime }) => (
+  <div sx={{ lineHeight: 1.2, flexGrow: 1, mr: negGroupSpacing }}>
+    <Group>
       {post.author?.name && (
-        <span sx={{ color: "primary" }}>{post.author?.name}</span>
+        <Separated sx={{ color: "primary" }}>{post.author?.name}</Separated>
       )}
 
       {post.author?.twitter && (
-        <span>
-          {" - "}
-          <a
-            href={`https://twitter.com/${post.author?.twitter}`}
-          >{`@${post.author?.twitter}`}</a>{" "}
-        </span>
+        <Separated>
+          <a href={`https://twitter.com/${post.author?.twitter}`}>
+            {`@${post.author?.twitter}`}
+          </a>
+        </Separated>
       )}
-    </p>
-    <p sx={{ color: "tertiary", opacity: 0.8, margin: "2px" }}>
-      {post.datePublished
-        ? format(new Date(post.datePublished), "MMMM Do, YYYY")
-        : ""}
-    </p>
+    </Group>
+    <Group sx={{ color: "tertiary", opacity: 0.8 }}>
+      {post.datePublished && (
+        <>
+          <Separated>
+            {dateFormatter.format(new Date(post.datePublished))}
+          </Separated>
+        </>
+      )}
+      <Separated>{readingTime.text}</Separated>
+    </Group>
   </div>
 )
 
 const imageWidthPx = 70
 
-export const Author: React.FC<{ post: BlogMeta }> = ({ post }) => (
+export const Author: React.FC<{
+  post: BlogMeta
+  readingTime: ReturnType<typeof readingTime.default>
+}> = ({ post, readingTime }) => (
   <Flex
     mt={2}
     sx={{
@@ -41,7 +89,7 @@ export const Author: React.FC<{ post: BlogMeta }> = ({ post }) => (
     }}
   >
     {post.author?.photo && (
-      <Box mr={2} sx={{ lineHeight: 0, flexShrink: 0 }}>
+      <Box mr={[2, null, 3]} sx={{ lineHeight: 0, flexShrink: 0 }}>
         <Image
           src={post.author.photo.src}
           alt={post.author.photo.alt}
@@ -49,10 +97,11 @@ export const Author: React.FC<{ post: BlogMeta }> = ({ post }) => (
           height={imageWidthPx}
           layout="fixed"
           loading="eager"
+          priority
           sx={{ borderRadius: `${imageWidthPx / 2}px` }}
         />
       </Box>
     )}
-    <AuthorLines post={post} />
+    <AuthorLines post={post} readingTime={readingTime} />
   </Flex>
 )

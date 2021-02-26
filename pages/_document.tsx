@@ -4,11 +4,14 @@ import Document, {
   Main,
   NextScript,
   DocumentContext,
+  DocumentInitialProps,
 } from "next/document"
 import { extractCritical } from "@emotion/server"
 
 class MyDocument extends Document {
-  static async getInitialProps(ctx: DocumentContext) {
+  static async getInitialProps(
+    ctx: DocumentContext
+  ): Promise<DocumentInitialProps> {
     const initialProps = await Document.getInitialProps(ctx)
     const styles = extractCritical(initialProps.html)
 
@@ -27,7 +30,7 @@ class MyDocument extends Document {
     }
   }
 
-  render() {
+  render(): JSX.Element {
     return (
       <Html lang="en-US">
         <Head />

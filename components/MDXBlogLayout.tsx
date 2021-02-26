@@ -1,10 +1,8 @@
 import React from "react"
-import { BlogMeta, RawBlogMetaInput } from "@/helpers/schema"
+import type { LayoutProps } from "@/helpers/loader"
+import type { BlogStaticProps } from "@/helpers/getBlogStaticProps"
 import { BlogPost } from "./BlogPost"
 
-export const MDXBlogLayout: React.FC<{
-  meta: RawBlogMetaInput
-  processedMeta: BlogMeta
-}> = ({ processedMeta, children }) => (
-  <BlogPost post={processedMeta}>{children}</BlogPost>
-)
+export const MDXBlogLayout: React.FC<LayoutProps & BlogStaticProps> = ({
+  ...props
+}) => <BlogPost {...props} />

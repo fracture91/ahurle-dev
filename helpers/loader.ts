@@ -1,6 +1,7 @@
 import sizeOf from "image-size"
 import type { MDXModule } from "@/types/mdx.d"
-import { globals } from "./globals"
+import type * as readingTime from "reading-time"
+import * as globals from "./globals"
 import {
   BlogMeta,
   RawBlogMetaInput,
@@ -15,6 +16,7 @@ import srcToFsPath from "./srcToFsPath"
 export interface LayoutProps {
   path: string
   excerpt: string
+  readingTime: ReturnType<typeof readingTime.default>
   meta: RawBlogMetaInput
 }
 

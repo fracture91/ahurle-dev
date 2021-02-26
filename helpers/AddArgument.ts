@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 // https://stackoverflow.com/a/60324381
 
 // some utility types for working with tuples

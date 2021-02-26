@@ -19,7 +19,7 @@ const Heading: React.FC<{ level: number; children: React.ReactChildren }> = ({
 // not exhaustive
 interface Node {
   attributes: { [k: string]: string } // { height: "452", ...}
-  children: any[] // also present next to Node?
+  children: unknown[] // also present next to Node?
   name: string // "img"
   type: string // "leafDirective"
 }

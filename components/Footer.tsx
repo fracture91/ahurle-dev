@@ -1,6 +1,6 @@
 /** @jsxImportSource theme-ui */
 import React from "react"
-import { globals } from "@/helpers/globals"
+import * as globals from "@/helpers/globals"
 import { Flex, NavLink } from "theme-ui"
 
 export const Footer: React.FC = () => (

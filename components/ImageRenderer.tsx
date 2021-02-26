@@ -1,8 +1,8 @@
 /** @jsxImportSource theme-ui */
-import React, { ImgHTMLAttributes } from "react"
+import React from "react"
 import { LazyImage } from "./LazyImage"
 
-export const ImageRenderer: React.FC<ImgHTMLAttributes<HTMLImageElement>> = ({
+export const ImageRenderer: React.FC<React.ComponentPropsWithoutRef<"img">> = ({
   src,
   height,
   ...rest
@@ -16,8 +16,13 @@ export const ImageRenderer: React.FC<ImgHTMLAttributes<HTMLImageElement>> = ({
         height: layout === "fill" ? height || "25rem" : "auto",
       }}
     >
+      {/*
+        I'm passing props in from markdown so this is all inherently type-unsafe, hence the ts-ignores.
+        These situations seem to be handled reasonably at runtime.
+        @ts-ignore: doesn't like how width/height can come with layout=="fill"
+      */}
       <LazyImage
-        // @ts-ignore
+        // @ts-ignore: src is required here but optional above
         src={src}
         height={height}
         {...rest}
