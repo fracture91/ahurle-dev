@@ -9,6 +9,7 @@ const mdxImageMetadata = require("./mdxImageMetadata")
 const mdxFilePath = require("./mdxFilePath")
 const mdxExcerpt = require("./mdxExcerpt")
 const mdxReadingTime = require("./mdxReadingTime")
+const mdxOutline = require("./mdxOutline")
 const mdxDefaultLayout = require("./mdxDefaultLayout")
 const mdxDefaultGsp = require("./mdxDefaultGetStaticProps")
 
@@ -40,9 +41,10 @@ module.exports = {
   ],
   rehypePlugins: [
     mdxImageMetadata,
-    rehypeDowngradeH1,
     rehypeSlug,
-    [rehypeAutolinkHeadings],
+    rehypeAutolinkHeadings,
+    rehypeDowngradeH1,
+    mdxOutline,
     mdxPrism,
   ],
 }

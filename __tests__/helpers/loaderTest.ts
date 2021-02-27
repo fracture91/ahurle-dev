@@ -172,6 +172,51 @@ describe("loader", () => {
           "meta": Object {
             "title": "An Example Post",
           },
+          "outline": Object {
+            "children": Array [
+              Object {
+                "children": Array [
+                  Object {
+                    "children": Array [
+                      Object {
+                        "children": Array [
+                          Object {
+                            "children": Array [
+                              Object {
+                                "children": Array [],
+                                "id": "heading-5",
+                                "text": "Heading 5",
+                                "type": "heading",
+                              },
+                              Object {
+                                "children": Array [],
+                                "id": "heading-6",
+                                "text": "Heading 6",
+                                "type": "heading",
+                              },
+                            ],
+                            "id": "heading-4",
+                            "text": "Heading 4",
+                            "type": "heading",
+                          },
+                        ],
+                        "id": "heading-3",
+                        "text": "Heading 3",
+                        "type": "heading",
+                      },
+                    ],
+                    "id": "heading-2",
+                    "text": "Heading 2",
+                    "type": "heading",
+                  },
+                ],
+                "id": "heading-1",
+                "text": "Heading 1",
+                "type": "heading",
+              },
+            ],
+            "type": "root",
+          },
           "path": "__tests__/helpers/examplePost.mdx",
           "readingTime": Object {
             "minutes": 0.815,

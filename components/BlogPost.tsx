@@ -1,7 +1,9 @@
 /** @jsxImportSource theme-ui */
 import React from "react"
-import { Box, Container, Themed } from "theme-ui"
+import { Box, Card, Container, Themed } from "theme-ui"
 import Image from "next/image"
+import Link from "next/link"
+import type { Parent } from "unist"
 import { BlogMeta } from "@/helpers/schema"
 import { LayoutProps } from "@/helpers/loader"
 import { BlogStaticProps } from "@/helpers/getBlogStaticProps"
@@ -87,9 +89,40 @@ const Title: React.FC<{ post: BlogMeta }> = ({ post }) => {
   )
 }
 
+const TOCList: React.FC<{ node: Parent }> = ({ node }) => (
+  <Themed.ul as="ol" sx={{ listStyle: "none", pl: 0, "& &": { pl: 3 } }}>
+    {(node.children as Parent[]).map((child) => (
+      <Themed.li key={child.id as string}>
+        <Link href={`#${child.id}`} passHref>
+          <Themed.a>{child.text as string}</Themed.a>
+        </Link>
+        {child.children && <TOCList node={child} />}
+      </Themed.li>
+    ))}
+  </Themed.ul>
+)
+
+const TableOfContents: React.FC<{ outline: Parent }> = ({ outline }) => {
+  if (outline.children.length < 2) return null
+  return (
+    <Card as="details" bg="#00000010">
+      <summary
+        sx={{
+          textAlign: "center",
+          "&:hover": { bg: "tertiary", cursor: "pointer" },
+        }}
+      >
+        Show Table of Contents
+      </summary>
+      <Themed.h2>Table of Contents</Themed.h2>
+      <TOCList node={outline} />
+    </Card>
+  )
+}
+
 export const BlogPost: React.FunctionComponent<
   LayoutProps & BlogStaticProps
-> = ({ processedMeta: post, readingTime, children }) => (
+> = ({ processedMeta: post, readingTime, outline, children }) => (
   <main>
     <article>
       <PostMeta post={post} />
@@ -101,6 +134,7 @@ export const BlogPost: React.FunctionComponent<
       </Container>
 
       <Container as="section" paddingX={3} marginY={4}>
+        {readingTime.minutes >= 5 && <TableOfContents outline={outline} />}
         {children}
       </Container>
 
