@@ -77,6 +77,9 @@ module.exports = {
     "eslint-comments/disable-enable-pair": ["error", { allowWholeFile: true }],
   },
   settings: {
+    "import/parsers": {
+      "@typescript-eslint/parser": [".ts", ".tsx"],
+    },
     "import/resolver": {
       alias: {
         map: [["@", "."]],
@@ -85,6 +88,7 @@ module.exports = {
       node: {
         extensions: [".js", ".jsx", ".ts", ".tsx", ".mdx"],
       },
+      typescript: { alwaysTryTypes: true },
     },
   },
 }
