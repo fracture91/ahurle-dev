@@ -221,6 +221,7 @@ export const theme = makeTheme({
       },
     },
     pre: {
+      // TODO: these styles are blown away by the prism styles, fix that
       fontFamily: "monospace",
       fontSize: 2,
       lineHeight: "pre",
@@ -232,6 +233,12 @@ export const theme = makeTheme({
       marginX: -3,
       padding: "0.8em 1em",
       borderRadius: "5px",
+      " .mdx-marker": {
+        bg: "#fff1",
+        mx: "-1em",
+        px: "1em",
+        boxShadow: (t) => `3px 0 0 ${t.colors?.primary} inset`,
+      }
     },
     code: {
       fontFamily: "monospace",
@@ -245,6 +252,8 @@ export const theme = makeTheme({
         backgroundColor: "inherit",
         padding: 0,
         borderRadius: 0,
+        display: "inline-block",
+        minWidth: "100%",
       },
     },
     blockquote: {
