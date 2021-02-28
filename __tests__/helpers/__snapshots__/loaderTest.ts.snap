@@ -11,6 +11,53 @@ exports[`loader mdx remark/rehype/webpack behavior highlights code blocks, adds 
     }
   }
   originalType="wrapper"
+  outline={
+    Object {
+      "children": Array [
+        Object {
+          "children": Array [
+            Object {
+              "children": Array [
+                Object {
+                  "children": Array [
+                    Object {
+                      "children": Array [
+                        Object {
+                          "children": Array [],
+                          "id": "heading-5",
+                          "text": "Heading 5",
+                          "type": "heading",
+                        },
+                        Object {
+                          "children": Array [],
+                          "id": "heading-6",
+                          "text": "Heading 6",
+                          "type": "heading",
+                        },
+                      ],
+                      "id": "heading-4",
+                      "text": "Heading 4",
+                      "type": "heading",
+                    },
+                  ],
+                  "id": "heading-3",
+                  "text": "Heading 3",
+                  "type": "heading",
+                },
+              ],
+              "id": "heading-2",
+              "text": "Heading 2",
+              "type": "heading",
+            },
+          ],
+          "id": "heading-1",
+          "text": "Heading 1",
+          "type": "heading",
+        },
+      ],
+      "type": "root",
+    }
+  }
   path="__tests__/helpers/examplePost.mdx"
   readingTime={
     Object {
@@ -270,39 +317,135 @@ exports[`loader mdx remark/rehype/webpack behavior highlights code blocks, adds 
     </MDXCreateElement>
   </MDXCreateElement>
   <MDXCreateElement
-    mdxType="h1"
-    originalType="h1"
-  >
-    Heading 1
-  </MDXCreateElement>
-  <MDXCreateElement
+    id="heading-1"
     mdxType="h2"
     originalType="h2"
   >
-    Heading 2
+    <MDXCreateElement
+      aria-hidden="true"
+      href="#heading-1"
+      mdxType="a"
+      originalType="a"
+      parentName="h2"
+      tabIndex={-1}
+    >
+      <MDXCreateElement
+        className="icon icon-link"
+        mdxType="span"
+        originalType="span"
+        parentName="a"
+      />
+    </MDXCreateElement>
+    Heading 1
   </MDXCreateElement>
   <MDXCreateElement
+    id="heading-2"
     mdxType="h3"
     originalType="h3"
   >
-    Heading 3
+    <MDXCreateElement
+      aria-hidden="true"
+      href="#heading-2"
+      mdxType="a"
+      originalType="a"
+      parentName="h3"
+      tabIndex={-1}
+    >
+      <MDXCreateElement
+        className="icon icon-link"
+        mdxType="span"
+        originalType="span"
+        parentName="a"
+      />
+    </MDXCreateElement>
+    Heading 2
   </MDXCreateElement>
   <MDXCreateElement
+    id="heading-3"
     mdxType="h4"
     originalType="h4"
   >
-    Heading 4
+    <MDXCreateElement
+      aria-hidden="true"
+      href="#heading-3"
+      mdxType="a"
+      originalType="a"
+      parentName="h4"
+      tabIndex={-1}
+    >
+      <MDXCreateElement
+        className="icon icon-link"
+        mdxType="span"
+        originalType="span"
+        parentName="a"
+      />
+    </MDXCreateElement>
+    Heading 3
   </MDXCreateElement>
   <MDXCreateElement
+    id="heading-4"
     mdxType="h5"
     originalType="h5"
   >
-    Heading 5
+    <MDXCreateElement
+      aria-hidden="true"
+      href="#heading-4"
+      mdxType="a"
+      originalType="a"
+      parentName="h5"
+      tabIndex={-1}
+    >
+      <MDXCreateElement
+        className="icon icon-link"
+        mdxType="span"
+        originalType="span"
+        parentName="a"
+      />
+    </MDXCreateElement>
+    Heading 4
   </MDXCreateElement>
   <MDXCreateElement
+    id="heading-5"
     mdxType="h6"
     originalType="h6"
   >
+    <MDXCreateElement
+      aria-hidden="true"
+      href="#heading-5"
+      mdxType="a"
+      originalType="a"
+      parentName="h6"
+      tabIndex={-1}
+    >
+      <MDXCreateElement
+        className="icon icon-link"
+        mdxType="span"
+        originalType="span"
+        parentName="a"
+      />
+    </MDXCreateElement>
+    Heading 5
+  </MDXCreateElement>
+  <MDXCreateElement
+    id="heading-6"
+    mdxType="h6"
+    originalType="h6"
+  >
+    <MDXCreateElement
+      aria-hidden="true"
+      href="#heading-6"
+      mdxType="a"
+      originalType="a"
+      parentName="h6"
+      tabIndex={-1}
+    >
+      <MDXCreateElement
+        className="icon icon-link"
+        mdxType="span"
+        originalType="span"
+        parentName="a"
+      />
+    </MDXCreateElement>
     Heading 6
   </MDXCreateElement>
   <MDXCreateElement

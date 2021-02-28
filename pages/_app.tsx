@@ -33,8 +33,8 @@ const MDXLink: React.FC<React.ComponentPropsWithoutRef<"a">> = ({
 }) => {
   if (href?.startsWith("/") || href?.startsWith("#"))
     return (
-      <Link href={href} {...props} passHref>
-        <Themed.a>{children}</Themed.a>
+      <Link href={href} passHref>
+        <Themed.a {...props}>{children}</Themed.a>
       </Link>
     )
   return (

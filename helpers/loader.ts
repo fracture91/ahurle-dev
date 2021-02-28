@@ -1,6 +1,7 @@
 import sizeOf from "image-size"
 import type { MDXModule } from "@/types/mdx.d"
 import type * as readingTime from "reading-time"
+import type { Parent } from "unist"
 import * as globals from "./globals"
 import {
   BlogMeta,
@@ -17,6 +18,7 @@ export interface LayoutProps {
   path: string
   excerpt: string
   readingTime: ReturnType<typeof readingTime.default>
+  outline: Parent
   meta: RawBlogMetaInput
 }
 
