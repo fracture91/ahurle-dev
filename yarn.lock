@@ -6047,7 +6047,7 @@ mdurl@^1.0.0:
   integrity sha1-/oWy7HWlkDfyrf7BAP1sYBdhFS4=
 
 "mdx-prism@https://github.com/doamatto/mdx-prism/archive/v0.3.2.tar.gz":
-  version "0.3.1"
+  version "0.3.1+fork.0.1.0"
   resolved "https://github.com/doamatto/mdx-prism/archive/v0.3.2.tar.gz#cd4d6240dbd67031f3f8c56304d3dd034e447f25"
   dependencies:
     hast-util-to-string "^1.0.0"
