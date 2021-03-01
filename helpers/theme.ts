@@ -221,24 +221,27 @@ export const theme = makeTheme({
       },
     },
     pre: {
-      // TODO: these styles are blown away by the prism styles, fix that
       fontFamily: "monospace",
-      fontSize: 2,
-      lineHeight: "pre",
-      overflowX: "auto",
-      "li &": {
+      "&&": {
+        // make sure prism theme styles don't override these
+        fontSize: 2,
+        lineHeight: "pre",
+        overflowX: "auto",
+        "li &": {
+          marginY: "1em",
+        },
         marginY: "1em",
+        marginX: -3,
+        padding: "0.8em 1em",
+        borderRadius: "5px",
       },
-      marginY: "1em",
-      marginX: -3,
-      padding: "0.8em 1em",
-      borderRadius: "5px",
       " .mdx-marker": {
+        // highlighted lines from mdx-prism
         bg: "#fff1",
         mx: "-1em",
         px: "1em",
         boxShadow: (t) => `3px 0 0 ${t.colors?.primary} inset`,
-      }
+      },
     },
     code: {
       fontFamily: "monospace",
