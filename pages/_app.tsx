@@ -4,7 +4,8 @@ import Head from "next/head"
 import { AppProps } from "next/app"
 import Link from "next/link"
 import { Global, CacheProvider, css } from "@emotion/react"
-import { cache } from "@emotion/css"
+// import { cache as defaultCache } from "@emotion/css"
+import createCache from "@emotion/cache"
 import {
   ThemeProvider,
   InitializeColorMode,
@@ -71,8 +72,10 @@ const BodyStyle: React.FC = () => (
   <Global styles={themeuicss((t) => ({ body: t?.styles?.body }))} />
 )
 
-const App: React.FC<AppProps> = ({ Component, pageProps }) => (
-  <CacheProvider value={cache}>
+const defaultCache = createCache({ key: "css" })
+// @ts-ignore: todo
+const App: React.FC<AppProps> = ({ Component, pageProps, cache }) => (
+  <CacheProvider value={cache || defaultCache}>
     {CSSReset}
     <Head>
       {globals.googleAnalyticsId && (
