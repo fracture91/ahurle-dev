@@ -21,7 +21,7 @@ class MyDocument extends Document {
         <>
           {initialProps.styles}
           <style
-            data-emotion-css={styles.ids.join(" ")}
+            data-emotion={`css ${styles.ids.join(" ")}`}
             // eslint-disable-next-line react/no-danger
             dangerouslySetInnerHTML={{ __html: styles.css }}
           />
