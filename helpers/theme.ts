@@ -108,13 +108,16 @@ export const theme = makeTheme({
   links: {
     nav: {
       color: "inherit",
-      padding: 3,
+      paddingY: "0.5em",
+      paddingX: "1em",
       textDecoration: "none",
+      flexShrink: 0,
       "&:visited": {
         color: "inherit",
       },
       "&:hover": {
         color: "secondary",
+        bg: "#0001",
       },
     },
   },
