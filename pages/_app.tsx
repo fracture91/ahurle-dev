@@ -59,7 +59,8 @@ const DarkMediaStyle: React.FC = () => (
   <Global
     styles={css`
       @media (prefers-color-scheme: dark) {
-        html {
+        /* If there's a class on this element then JS is enabled */
+        html:not([class*="theme-ui-"]) {
           ${(themeUIStyles.html as CSSObject)["&.theme-ui-dark"]}
         }
       }

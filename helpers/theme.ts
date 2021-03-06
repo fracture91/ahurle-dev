@@ -2,6 +2,7 @@ import {
   Theme as GenericTheme,
   ContextValue as GenericContextValue,
   useThemeUI as genericUseThemeUI,
+  useColorMode as genericUseColorMode,
   ThemeUICSSObject,
 } from "theme-ui"
 import chainLink from "@/public/img/chain-link.svg"
@@ -17,7 +18,7 @@ const linkInsideHeading: ThemeUICSSObject = {
 
 export const theme = makeTheme({
   useColorSchemeMediaQuery: true, // default to the user's preferred mode
-  initialColorModeName: "light",
+  initialColorModeName: "light" as const,
   useRootStyles: true,
   colors: {
     background: "#f6f7f6",
@@ -304,8 +305,16 @@ export const theme = makeTheme({
 
 export type Theme = typeof theme
 
+export type ColorMode =
+  | keyof typeof theme.colors.modes
+  | typeof theme.initialColorModeName
+
 interface ContextValue extends Omit<GenericContextValue, "theme"> {
   theme: Theme
+  colorMode: ColorMode
 }
 
+
 export const useThemeUI = (genericUseThemeUI as unknown) as () => ContextValue
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+export const useColorMode = () => genericUseColorMode<ColorMode>()

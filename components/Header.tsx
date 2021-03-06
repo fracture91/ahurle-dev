@@ -2,9 +2,10 @@
 import React, { useEffect, useRef } from "react"
 import Link from "next/link"
 import * as globals from "@/helpers/globals"
-import { Flex, NavLink, Switch } from "theme-ui"
+import { Flex, NavLink } from "theme-ui"
 import { WrapFC } from "@/helpers/WrapFC"
 import { css, Global } from "@emotion/react"
+import { ThemeSwitcher } from "./ThemeSwitcher"
 
 const maxHamburgerWidth = "28em"
 const hideHamburger = `@media (min-width: ${maxHamburgerWidth})`
@@ -243,13 +244,7 @@ export const Header: React.FC = () => (
         </Link>
       </ExpandoLinks>
       <div>
-        <Switch
-          sx={{
-            width: "6.4em",
-            height: "1.7895em",
-            div: { width: "1.6em", height: "1.6em" },
-          }}
-        />
+        <ThemeSwitcher />
       </div>
     </Flex>
   </header>
