@@ -6046,9 +6046,10 @@ mdurl@^1.0.0:
   resolved "https://registry.yarnpkg.com/mdurl/-/mdurl-1.0.1.tgz#fe85b2ec75a59037f2adfec100fd6c601761152e"
   integrity sha1-/oWy7HWlkDfyrf7BAP1sYBdhFS4=
 
-"mdx-prism@https://github.com/doamatto/mdx-prism/archive/v0.3.2.tar.gz":
-  version "0.3.1+fork.0.1.0"
-  resolved "https://github.com/doamatto/mdx-prism/archive/v0.3.2.tar.gz#cd4d6240dbd67031f3f8c56304d3dd034e447f25"
+mdx-prism@0.3.3:
+  version "0.3.3"
+  resolved "https://registry.yarnpkg.com/mdx-prism/-/mdx-prism-0.3.3.tgz#cd8651f1fa0f82fe43715ef19571e2697aa74d70"
+  integrity sha512-1Q4eIb5lbmZx0NC4pdeJqUy79tEV1tX5X//pjouaoBJfzPelGpMxxd57+dU2TnRYzHsGa4IHTcsA40H2cTFyAg==
   dependencies:
     hast-util-to-string "^1.0.0"
     parse-numeric-range "^0.0.2"
