@@ -2,7 +2,7 @@
 // getPreferredColorScheme is not normally exported, but I patched that in
 import { getPreferredColorScheme } from "@theme-ui/color-modes"
 import { ColorMode, theme, useColorMode } from "@/helpers/theme"
-import { useCallback, useEffect, useState } from "react"
+import { ChangeEvent, useCallback, useEffect, useState } from "react"
 import { useLocalStorage } from "react-use"
 
 class MetaMode {
@@ -103,8 +103,8 @@ export const ThemeSwitcher: React.FC = () => {
   }, [onMediaChange])
 
   const onChange = useCallback(
-    (event) => {
-      if (event.target.value === "auto") {
+    (selectedMode: MetaMode, _event: ChangeEvent<HTMLInputElement>) => {
+      if (!selectedMode.themeUIColorMode) {
         setColorModeAndClass(
           getPreferredColorScheme() || theme.initialColorModeName,
           // note that by removing the class I'm relying on DarkMediaStyle here
@@ -112,8 +112,8 @@ export const ThemeSwitcher: React.FC = () => {
         )
         removePersistedMode()
       } else {
-        setColorModeAndClass(event.target.value)
-        setPersistedMode(event.target.value)
+        setColorModeAndClass(selectedMode.themeUIColorMode)
+        setPersistedMode(selectedMode.themeUIColorMode)
       }
     },
     [removePersistedMode, setColorModeAndClass, setPersistedMode]
@@ -137,7 +137,7 @@ export const ThemeSwitcher: React.FC = () => {
             // if JS is disabled, this should be disabled
             disabled={!onClient}
             checked={metaMode === mode}
-            onChange={onChange}
+            onChange={onChange.bind(null, mode)}
           />
           {mode.name[0].toUpperCase()}
         </label>
