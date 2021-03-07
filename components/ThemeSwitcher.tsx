@@ -2,7 +2,7 @@
 // getPreferredColorScheme is not normally exported, but I patched that in
 import { getPreferredColorScheme } from "@theme-ui/color-modes"
 import { ColorMode, theme, useColorMode } from "@/helpers/theme"
-import { useCallback, useEffect } from "react"
+import { useCallback, useEffect, useState } from "react"
 import { useLocalStorage } from "react-use"
 
 class MetaMode {
@@ -20,8 +20,10 @@ class MetaMode {
     this.id = `color-mode-${this.name}`
   }
 
+  static auto = new MetaMode(undefined, "auto")
+
   static all: MetaMode[] = [
-    new MetaMode(undefined, "auto"),
+    MetaMode.auto,
     new MetaMode("light"),
     new MetaMode("dark"),
   ]
@@ -71,11 +73,34 @@ export const ThemeSwitcher: React.FC = () => {
   )
   if (!metaMode) throw new Error("could not map state to a MetaMode")
 
+  const [onClient, setOnClient] = useState(false)
+
   useEffect(() => {
+    setOnClient(true) // forces a second render to correct disabled/check state
     if (persistedMode) setColorModeAndClass(persistedMode)
     // really only want this to run once
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+
+  const onMediaChange = useCallback(
+    (event) => {
+      if (metaMode !== MetaMode.auto) return
+      setColorModeAndClass(event.matches ? "dark" : "light", {
+        removeClass: true,
+      })
+    },
+    [metaMode, setColorModeAndClass]
+  )
+
+  useEffect(() => {
+    if (!window.matchMedia) return
+    const matchMedia = window.matchMedia("(prefers-color-scheme: dark)")
+    matchMedia.addEventListener("change", onMediaChange)
+    // eslint-disable-next-line consistent-return
+    return () => {
+      matchMedia.removeEventListener("change", onMediaChange)
+    }
+  }, [onMediaChange])
 
   const onChange = useCallback(
     (event) => {
@@ -109,8 +134,9 @@ export const ThemeSwitcher: React.FC = () => {
             id={mode.id}
             name="color-mode"
             value={mode.name}
-            // without this window check the browser seems to get confused about the current selection
-            checked={typeof window === "undefined" ? false : metaMode === mode}
+            // if JS is disabled, this should be disabled
+            disabled={!onClient}
+            checked={metaMode === mode}
             onChange={onChange}
           />
           {mode.name[0].toUpperCase()}

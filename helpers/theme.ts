@@ -315,7 +315,6 @@ interface ContextValue extends Omit<GenericContextValue, "theme"> {
   colorMode: ColorMode
 }
 
-
 export const useThemeUI = (genericUseThemeUI as unknown) as () => ContextValue
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export const useColorMode = () => genericUseColorMode<ColorMode>()
