@@ -1,5 +1,7 @@
 /** @jsxImportSource theme-ui */
-import { ColorMode, useColorMode } from "@/helpers/theme"
+// getPreferredColorScheme is not normally exported, but I patched that in
+import { getPreferredColorScheme } from "@theme-ui/color-modes"
+import { ColorMode, theme, useColorMode } from "@/helpers/theme"
 import { useCallback, useEffect } from "react"
 import { useLocalStorage } from "react-use"
 
@@ -25,7 +27,10 @@ class MetaMode {
   ]
 }
 
+// same key that theme-ui uses when useLocalStorage: true
 const STORAGE_KEY = "theme-ui-color-mode"
+// same prefix used by InitializeColorMode
+const CLASS_PREFIX = "theme-ui-"
 
 export const ThemeSwitcher: React.FC = () => {
   const [, setThemeUIColorMode] = useColorMode()
@@ -35,12 +40,20 @@ export const ThemeSwitcher: React.FC = () => {
       { removeClass }: { removeClass: boolean } = { removeClass: false }
     ) => {
       setThemeUIColorMode(mode)
+      // Theme-ui usually changes the value of CSS vars on the root element.
+      // However, it seems like this emotion bug prevents that from working
+      // since the new global styles are getting inserted *before* the SSR'd styles,
+      // so the SSR'd styles take precedence over the client-side overrides.
+      // https://github.com/emotion-js/emotion/issues/2158
+      // Get around this by using the classname-based overrides theme-ui includes,
+      // originally to avoid FOUC with localStorage.  This also helps our no-JS
+      // DarkMediaStyle avoid clashing with yes-JS behavior.
+      // Note that this is paired with a theme-ui patch to avoid removing class on startup.
       ;[document.documentElement, document.body].forEach((el) => {
-        // el.classList.remove(`theme-ui-${prevMode.current}`)
         el.classList.forEach((value, _key, parent) =>
-          value.startsWith("theme-ui-") ? parent.remove(value) : null
+          value.startsWith(CLASS_PREFIX) ? parent.remove(value) : null
         )
-        if (!removeClass) el.classList.add(`theme-ui-${mode}`)
+        if (!removeClass) el.classList.add(`${CLASS_PREFIX}${mode}`)
       })
     },
     [setThemeUIColorMode]
@@ -67,7 +80,11 @@ export const ThemeSwitcher: React.FC = () => {
   const onChange = useCallback(
     (event) => {
       if (event.target.value === "auto") {
-        setColorModeAndClass("light", { removeClass: true }) // TODO: follow system pref
+        setColorModeAndClass(
+          getPreferredColorScheme() || theme.initialColorModeName,
+          // note that by removing the class I'm relying on DarkMediaStyle here
+          { removeClass: true }
+        )
         removePersistedMode()
       } else {
         setColorModeAndClass(event.target.value)

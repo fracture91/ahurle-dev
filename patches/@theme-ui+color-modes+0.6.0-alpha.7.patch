@@ -1,14 +1,15 @@
 diff --git a/node_modules/@theme-ui/color-modes/dist/index.d.ts b/node_modules/@theme-ui/color-modes/dist/index.d.ts
-index 3373788..657fc92 100644
+index 3373788..6ab0a97 100644
 --- a/node_modules/@theme-ui/color-modes/dist/index.d.ts
 +++ b/node_modules/@theme-ui/color-modes/dist/index.d.ts
-@@ -16,3 +16,4 @@ export declare const InitializeColorMode: () => React.DetailedReactHTMLElement<{
+@@ -16,3 +16,5 @@ export declare const InitializeColorMode: () => React.DetailedReactHTMLElement<{
          __html: string;
      };
  }, HTMLElement>;
 +export declare const createColorStyles: (theme: any) => any;
++export declare const getPreferredColorScheme: () => "dark" | "light" | null
 diff --git a/node_modules/@theme-ui/color-modes/dist/index.esm.js b/node_modules/@theme-ui/color-modes/dist/index.esm.js
-index b495da0..e281bd2 100644
+index b495da0..fae6938 100644
 --- a/node_modules/@theme-ui/color-modes/dist/index.esm.js
 +++ b/node_modules/@theme-ui/color-modes/dist/index.esm.js
 @@ -190,8 +190,8 @@ var useColorModeState = function useColorModeState(theme) {
@@ -27,15 +28,16 @@ index b495da0..e281bd2 100644
  };
  
 -export { ColorModeProvider, InitializeColorMode, useColorMode };
-+export { ColorModeProvider, InitializeColorMode, useColorMode, createColorStyles };
++export { ColorModeProvider, InitializeColorMode, useColorMode, createColorStyles, getPreferredColorScheme };
  //# sourceMappingURL=index.esm.js.map
 diff --git a/node_modules/@theme-ui/color-modes/dist/index.js b/node_modules/@theme-ui/color-modes/dist/index.js
-index efc25c6..5bb76ed 100644
+index efc25c6..a7ffd2c 100644
 --- a/node_modules/@theme-ui/color-modes/dist/index.js
 +++ b/node_modules/@theme-ui/color-modes/dist/index.js
-@@ -290,4 +290,5 @@ var InitializeColorMode = function InitializeColorMode() {
+@@ -290,4 +290,6 @@ var InitializeColorMode = function InitializeColorMode() {
  exports.ColorModeProvider = ColorModeProvider;
  exports.InitializeColorMode = InitializeColorMode;
  exports.useColorMode = useColorMode;
 +exports.createColorStyles = createColorStyles;
++exports.getPreferredColorScheme = getPreferredColorScheme;
  //# sourceMappingURL=index.js.map
