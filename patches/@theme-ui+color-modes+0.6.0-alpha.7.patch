@@ -8,41 +8,21 @@ index 3373788..657fc92 100644
  }, HTMLElement>;
 +export declare const createColorStyles: (theme: any) => any;
 diff --git a/node_modules/@theme-ui/color-modes/dist/index.esm.js b/node_modules/@theme-ui/color-modes/dist/index.esm.js
-index b495da0..09ede9a 100644
+index b495da0..e281bd2 100644
 --- a/node_modules/@theme-ui/color-modes/dist/index.esm.js
 +++ b/node_modules/@theme-ui/color-modes/dist/index.esm.js
-@@ -186,21 +186,28 @@ var useColorModeState = function useColorModeState(theme) {
-   }),
-       mode = _React$useState[0],
-       setMode = _React$useState[1]; // read color mode from local storage
-+  const prevMode = React.useRef();
- 
+@@ -190,8 +190,8 @@ var useColorModeState = function useColorModeState(theme) {
  
    React.useEffect(function () {
      var stored = theme.useLocalStorage !== false && storage.get();
 -    document.documentElement.classList.remove('theme-ui-' + stored);
 -    document.body.classList.remove('theme-ui-' + stored);
++    // document.documentElement.classList.remove('theme-ui-' + stored);
++    // document.body.classList.remove('theme-ui-' + stored);
  
      if (stored && stored !== mode) {
        setMode(stored);
-     }
-   }, []);
-   React.useEffect(function () {
-+    if (mode && prevMode.current) {
-+      [document.documentElement, document.body].forEach((el) => {
-+        el.classList.remove(`theme-ui-${prevMode.current}`)
-+        // el.classList.forEach((value, _key, parent) => value.startsWith("theme-ui-") ? parent.remove(value) : null)
-+        el.classList.add(`theme-ui-${mode}`)
-+      });
-+    }
-     if (mode && theme.useLocalStorage !== false) {
-       storage.set(mode);
-     }
-+    prevMode.current = mode
-   }, [mode]);
- 
-   if (process.env.NODE_ENV !== 'production') {
-@@ -283,5 +290,5 @@ var InitializeColorMode = function InitializeColorMode() {
+@@ -283,5 +283,5 @@ var InitializeColorMode = function InitializeColorMode() {
    });
  };
  

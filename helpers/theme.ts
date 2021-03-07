@@ -17,6 +17,7 @@ const linkInsideHeading: ThemeUICSSObject = {
 }
 
 export const theme = makeTheme({
+  useLocalStorage: false, // persists prefers-color-scheme by default :(
   useColorSchemeMediaQuery: true, // default to the user's preferred mode
   initialColorModeName: "light" as const,
   useRootStyles: true,
