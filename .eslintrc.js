@@ -44,6 +44,11 @@ module.exports = {
   rules: {
     quotes: ["error", "double", { avoidEscape: true }],
     semi: ["error", "never"],
+    "lines-between-class-members": [
+      "error",
+      "always",
+      { exceptAfterSingleLine: true },
+    ],
     "no-restricted-imports": ["error", { patterns: ["../*"] }],
     "import/extensions": [
       "error",

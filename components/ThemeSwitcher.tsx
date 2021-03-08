@@ -7,9 +7,7 @@ import { useLocalStorage } from "react-use"
 
 class MetaMode {
   themeUIColorMode?: ColorMode
-
   name: string
-
   id: string
 
   constructor(themeUIColorMode?: ColorMode, name?: string) {
