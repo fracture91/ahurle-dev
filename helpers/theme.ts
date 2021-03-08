@@ -310,6 +310,11 @@ export type ColorMode =
   | keyof typeof theme.colors.modes
   | typeof theme.initialColorModeName
 
+export const colorModes: ColorMode[] = Object.keys(
+  theme.colors.modes
+) as ColorMode[]
+colorModes.unshift(theme.initialColorModeName)
+
 interface ContextValue extends Omit<GenericContextValue, "theme"> {
   theme: Theme
   colorMode: ColorMode

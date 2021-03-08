@@ -21,6 +21,7 @@ import { CSSReset } from "@/components/CSSReset"
 import { fixedStyle } from "@/helpers/prismStyle"
 import { ImageRenderer } from "@/components/ImageRenderer"
 import { UnwrapImages } from "@/components/UnwrapImages"
+import { ThemeMeta } from "@/components/ThemeMeta"
 
 const MDXPre: React.FC<
   React.ComponentPropsWithoutRef<"pre">
@@ -98,6 +99,7 @@ const App: React.FC<AppProps> = ({ Component, pageProps }) => (
       )}
     </Head>
     <ThemeProvider theme={theme} components={components}>
+      <ThemeMeta />
       <BodyStyle />
       {/* important: prefers-color-scheme rules come after built-in theme-ui rules */}
       <DarkMediaStyle />
