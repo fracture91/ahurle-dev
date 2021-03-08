@@ -2,15 +2,24 @@
 // getPreferredColorScheme is not normally exported, but I patched that in
 import { getPreferredColorScheme } from "@theme-ui/color-modes"
 import { ColorMode, theme, useColorMode } from "@/helpers/theme"
-import { ChangeEvent, useCallback, useEffect, useState } from "react"
+import { ChangeEvent, ReactNode, useCallback, useEffect, useState } from "react"
 import { useLocalStorage } from "react-use"
+import { WrapFC } from "@/helpers/WrapFC"
 
 class MetaMode {
   themeUIColorMode?: ColorMode
   name: string
   id: string
+  title: string
+  icon: ReactNode
 
-  constructor(themeUIColorMode?: ColorMode, name?: string) {
+  constructor(
+    { title, icon }: { title: string; icon: ReactNode },
+    themeUIColorMode?: ColorMode,
+    name?: string
+  ) {
+    this.title = title
+    this.icon = icon
     this.themeUIColorMode = themeUIColorMode
     const actualName = name || themeUIColorMode
     if (!actualName) throw new Error("name required")
@@ -18,14 +27,58 @@ class MetaMode {
     this.id = `color-mode-${this.name}`
   }
 
-  static auto = new MetaMode(undefined, "auto")
+  static auto = new MetaMode(
+    { title: "Use system default color scheme", icon: "◐" },
+    undefined,
+    "auto"
+  )
 
   static all: MetaMode[] = [
     MetaMode.auto,
-    new MetaMode("light"),
-    new MetaMode("dark"),
+    new MetaMode({ title: "Use light color scheme", icon: "🌞" }, "light"),
+    new MetaMode({ title: "Use dark color scheme", icon: "🌛" }, "dark"),
   ]
 }
+
+const ThemeButton: WrapFC<
+  "input",
+  {
+    mode: MetaMode
+    onChange: (
+      selectedMode: MetaMode,
+      _event: ChangeEvent<HTMLInputElement>
+    ) => void
+  },
+  "onChange"
+> = ({ mode, onChange, ...rest }) => (
+  <label
+    htmlFor={mode.id}
+    title={mode.title}
+    sx={{ cursor: "pointer", zIndex: 2, position: "relative", color: "text" }}
+  >
+    <input
+      type="radio"
+      id={mode.id}
+      name="color-mode"
+      value={mode.name}
+      onChange={onChange.bind(null, mode)}
+      {...rest}
+      sx={{ position: "absolute", opacity: 0, cursor: "pointer" }}
+    />
+    <div
+      sx={{
+        // width: "1.4em",
+        // height: "1.6em",
+        mx: "0.2em",
+        display: "inline-block",
+        textAlign: "center",
+        cursor: "pointer",
+      }}
+    >
+      <span sx={{ fontSize: 4, lineHeight: 1 }}>{mode.icon}</span>
+    </div>
+  </label>
+)
 
 // same key that theme-ui uses when useLocalStorage: true
 const STORAGE_KEY = "theme-ui-color-mode"
@@ -66,15 +119,16 @@ export const ThemeSwitcher: React.FC = () => {
     raw: true,
   })
 
+  const [firstRender, setFirstRender] = useState(true)
   const metaMode: MetaMode | undefined = MetaMode.all.find(
-    (m) => m.themeUIColorMode === persistedMode
+    // on server persistedMode is always undefined, so make sure first render matches
+    (m) => m.themeUIColorMode === (firstRender ? undefined : persistedMode)
   )
   if (!metaMode) throw new Error("could not map state to a MetaMode")
-
-  const [onClient, setOnClient] = useState(false)
+  const selectedIndex = MetaMode.all.indexOf(metaMode)
 
   useEffect(() => {
-    setOnClient(true) // forces a second render to correct disabled/check state
+    setFirstRender(false) // forces a second render to correct disabled/check state
     if (persistedMode) setColorModeAndClass(persistedMode)
     // really only want this to run once
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -120,25 +174,44 @@ export const ThemeSwitcher: React.FC = () => {
   return (
     <div
       sx={{
-        width: "6.4em",
-        height: "1.7895em",
-        div: { width: "1.6em", height: "1.6em" },
+        p: "0.1em 0.2em",
+        mr: "0.5em",
+        bg: selectedIndex > 0 ? "primary" : "#22002244",
+        borderRadius: "1em",
+        boxShadow: "1px 1px 2px #0003 inset",
+        flexShrink: 0,
+        display: "grid",
+        gridTemplateColumns: MetaMode.all.map(() => "1fr").join(" "),
       }}
     >
+      <div
+        sx={{
+          width: "1.35em",
+          height: "1.35em",
+          borderRadius: "50%",
+          bg: "background",
+          position: "absolute",
+          mt: "0.11em",
+          // ml: "-0.1em",
+          transform: `translateX(${selectedIndex * 112}%)`,
+          transition:
+            "transform 240ms cubic-bezier(0.165, 0.840, 0.440, 1.000)",
+          zIndex: 1,
+          boxShadow: "1px 1px 2px #0003",
+        }}
+      />
+      {/* Watch out for this emotion bug when using anonymous functions wrapping components using sx:
+       * https://github.com/emotion-js/emotion/issues/2134
+       */}
       {MetaMode.all.map((mode) => (
-        <label key={mode.id} htmlFor={mode.id}>
-          <input
-            type="radio"
-            id={mode.id}
-            name="color-mode"
-            value={mode.name}
-            // if JS is disabled, this should be disabled
-            disabled={!onClient}
-            checked={metaMode === mode}
-            onChange={onChange.bind(null, mode)}
-          />
-          {mode.name[0].toUpperCase()}
-        </label>
+        <ThemeButton
+          key={mode.id}
+          mode={mode}
+          // if JS is disabled, this should be disabled
+          disabled={firstRender}
+          checked={metaMode === mode}
+          onChange={onChange}
+        />
       ))}
     </div>
   )

@@ -243,9 +243,7 @@ export const Header: React.FC = () => (
           <NavLink>Extras &amp; Ringtones</NavLink>
         </Link>
       </ExpandoLinks>
-      <div>
-        <ThemeSwitcher />
-      </div>
+      <ThemeSwitcher />
     </Flex>
   </header>
 )
