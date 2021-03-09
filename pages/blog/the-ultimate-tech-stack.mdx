@@ -106,7 +106,7 @@ Using Next's special `getStaticProps` hook and glorious [dynamic imports](https:
 
 Every Markdown file can include a "frontmatter block" containing metadata. I implemented a simple utility function (`loadPost`) that loads a Markdown file, parses its contents, and returns a TypeScript object with the following signature:
 
-```ts
+```ts{2,5-7,10}
 type PostData = {
   path: string // the relative URL to this page, can be used as an href
   content: string // the body of the MD file

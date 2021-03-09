@@ -21,6 +21,8 @@ import { CSSReset } from "@/components/CSSReset"
 import { fixedStyle } from "@/helpers/prismStyle"
 import { ImageRenderer } from "@/components/ImageRenderer"
 import { UnwrapImages } from "@/components/UnwrapImages"
+import { ThemeMeta } from "@/components/ThemeMeta"
+import { RemovePreLoadClass } from "@/components/RemovePreLoadClass"
 
 const MDXPre: React.FC<
   React.ComponentPropsWithoutRef<"pre">
@@ -59,7 +61,8 @@ const DarkMediaStyle: React.FC = () => (
   <Global
     styles={css`
       @media (prefers-color-scheme: dark) {
-        html {
+        /* If there's a class on this element then JS is enabled */
+        html:not([class*="theme-ui-"]) {
           ${(themeUIStyles.html as CSSObject)["&.theme-ui-dark"]}
         }
       }
@@ -97,11 +100,13 @@ const App: React.FC<AppProps> = ({ Component, pageProps }) => (
       )}
     </Head>
     <ThemeProvider theme={theme} components={components}>
+      <ThemeMeta />
       <BodyStyle />
       {/* important: prefers-color-scheme rules come after built-in theme-ui rules */}
       <DarkMediaStyle />
       {/* when JS enabled, blocks rendering until preferred scheme read from localstorage/media */}
       <InitializeColorMode key="theme-ui-no-flash" />
+      <RemovePreLoadClass />
       <Header />
       <Component {...pageProps} />
       <Footer />

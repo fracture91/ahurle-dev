@@ -1,30 +1,101 @@
 diff --git a/node_modules/@theme-ui/color-modes/dist/index.d.ts b/node_modules/@theme-ui/color-modes/dist/index.d.ts
-index 3373788..657fc92 100644
+index 3373788..6ab0a97 100644
 --- a/node_modules/@theme-ui/color-modes/dist/index.d.ts
 +++ b/node_modules/@theme-ui/color-modes/dist/index.d.ts
-@@ -16,3 +16,4 @@ export declare const InitializeColorMode: () => React.DetailedReactHTMLElement<{
+@@ -16,3 +16,5 @@ export declare const InitializeColorMode: () => React.DetailedReactHTMLElement<{
          __html: string;
      };
  }, HTMLElement>;
 +export declare const createColorStyles: (theme: any) => any;
++export declare const getPreferredColorScheme: () => "dark" | "light" | null
 diff --git a/node_modules/@theme-ui/color-modes/dist/index.esm.js b/node_modules/@theme-ui/color-modes/dist/index.esm.js
-index b495da0..d943e67 100644
+index b495da0..cad33e0 100644
 --- a/node_modules/@theme-ui/color-modes/dist/index.esm.js
 +++ b/node_modules/@theme-ui/color-modes/dist/index.esm.js
+@@ -29,8 +29,8 @@ var toVarName = function toVarName(key) {
+   return "--theme-ui-" + stripKeyDefault(key);
+ };
+ 
+-var toVarValue = function toVarValue(key, value) {
+-  return "var(" + toVarName(key) + ", " + value + ")";
++var toVarValue = function toVarValue(key) {
++  return "var(" + toVarName(key) + ")";
+ };
+ 
+ var join = function join() {
+@@ -74,7 +74,7 @@ var toCustomProperties = function toCustomProperties(obj, parent, themeKey) {
+     }
+ 
+     var val = toPixel(themeKey || key, value);
+-    next[key] = toVarValue(name, val);
++    next[key] = toVarValue(name);
+   }
+ 
+   return next;
+@@ -134,7 +134,7 @@ var createColorStyles = function createColorStyles(theme) {
+   }
+ 
+   var colorToVarValue = function colorToVarValue(color) {
+-    return toVarValue("colors-" + color, get(theme, "colors." + color));
++    return toVarValue("colors-" + color);
+   };
+ 
+   return css((_css2 = {}, _css2[use.scope] = _extends({}, styles, {
+@@ -190,8 +190,8 @@ var useColorModeState = function useColorModeState(theme) {
+ 
+   React.useEffect(function () {
+     var stored = theme.useLocalStorage !== false && storage.get();
+-    document.documentElement.classList.remove('theme-ui-' + stored);
+-    document.body.classList.remove('theme-ui-' + stored);
++    // document.documentElement.classList.remove('theme-ui-' + stored);
++    // document.body.classList.remove('theme-ui-' + stored);
+ 
+     if (stored && stored !== mode) {
+       setMode(stored);
 @@ -283,5 +283,5 @@ var InitializeColorMode = function InitializeColorMode() {
    });
  };
  
 -export { ColorModeProvider, InitializeColorMode, useColorMode };
-+export { ColorModeProvider, InitializeColorMode, useColorMode, createColorStyles };
++export { ColorModeProvider, InitializeColorMode, useColorMode, createColorStyles, getPreferredColorScheme };
  //# sourceMappingURL=index.esm.js.map
 diff --git a/node_modules/@theme-ui/color-modes/dist/index.js b/node_modules/@theme-ui/color-modes/dist/index.js
-index efc25c6..5bb76ed 100644
+index efc25c6..2929ec3 100644
 --- a/node_modules/@theme-ui/color-modes/dist/index.js
 +++ b/node_modules/@theme-ui/color-modes/dist/index.js
-@@ -290,4 +290,5 @@ var InitializeColorMode = function InitializeColorMode() {
+@@ -33,8 +33,8 @@ var toVarName = function toVarName(key) {
+   return "--theme-ui-" + stripKeyDefault(key);
+ };
+ 
+-var toVarValue = function toVarValue(key, value) {
+-  return "var(" + toVarName(key) + ", " + value + ")";
++var toVarValue = function toVarValue(key) {
++  return "var(" + toVarName(key) + ")";
+ };
+ 
+ var join = function join() {
+@@ -78,7 +78,7 @@ var toCustomProperties = function toCustomProperties(obj, parent, themeKey) {
+     }
+ 
+     var val = toPixel(themeKey || key, value);
+-    next[key] = toVarValue(name, val);
++    next[key] = toVarValue(name);
+   }
+ 
+   return next;
+@@ -138,7 +138,7 @@ var createColorStyles = function createColorStyles(theme) {
+   }
+ 
+   var colorToVarValue = function colorToVarValue(color) {
+-    return toVarValue("colors-" + color, css.get(theme, "colors." + color));
++    return toVarValue("colors-" + color);
+   };
+ 
+   return css.css((_css2 = {}, _css2[use.scope] = _extends({}, styles, {
+@@ -290,4 +290,6 @@ var InitializeColorMode = function InitializeColorMode() {
  exports.ColorModeProvider = ColorModeProvider;
  exports.InitializeColorMode = InitializeColorMode;
  exports.useColorMode = useColorMode;
 +exports.createColorStyles = createColorStyles;
++exports.getPreferredColorScheme = getPreferredColorScheme;
  //# sourceMappingURL=index.js.map

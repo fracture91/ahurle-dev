@@ -2,9 +2,11 @@ import {
   Theme as GenericTheme,
   ContextValue as GenericContextValue,
   useThemeUI as genericUseThemeUI,
+  useColorMode as genericUseColorMode,
   ThemeUICSSObject,
 } from "theme-ui"
 import chainLink from "@/public/img/chain-link.svg"
+import { preLoadClass } from "@/components/RemovePreLoadClass"
 import * as globals from "./globals"
 
 const makeTheme = <T extends GenericTheme>(t: T) => t
@@ -16,8 +18,9 @@ const linkInsideHeading: ThemeUICSSObject = {
 }
 
 export const theme = makeTheme({
+  useLocalStorage: false, // persists prefers-color-scheme by default :(
   useColorSchemeMediaQuery: true, // default to the user's preferred mode
-  initialColorModeName: "light",
+  initialColorModeName: "light" as const,
   useRootStyles: true,
   colors: {
     background: "#f6f7f6",
@@ -108,13 +111,16 @@ export const theme = makeTheme({
   links: {
     nav: {
       color: "inherit",
-      padding: 3,
+      paddingY: "0.5em",
+      paddingX: "1em",
       textDecoration: "none",
+      flexShrink: 0,
       "&:visited": {
         color: "inherit",
       },
       "&:hover": {
         color: "secondary",
+        bg: "#0001",
       },
     },
   },
@@ -138,6 +144,11 @@ export const theme = makeTheme({
       MozOsxFontSmoothing: "grayscale",
       WebkitFontSmoothing: "antialiased",
       overflowWrap: "anywhere",
+      transition: "color 300ms ease, background 300ms ease",
+      [`&.${preLoadClass}`]: {
+        // without this, Firefox (at least) will flash back to white and transition to black on load :(
+        transition: "none",
+      },
     },
     // not standard, special handling by me
     body: {
@@ -222,16 +233,26 @@ export const theme = makeTheme({
     },
     pre: {
       fontFamily: "monospace",
-      fontSize: 2,
-      lineHeight: "pre",
-      overflowX: "auto",
-      "li &": {
+      "&&": {
+        // make sure prism theme styles don't override these
+        fontSize: 2,
+        lineHeight: "pre",
+        overflowX: "auto",
+        "li &": {
+          marginY: "1em",
+        },
         marginY: "1em",
+        marginX: -3,
+        padding: "0.8em 1em",
+        borderRadius: "5px",
       },
-      marginY: "1em",
-      marginX: -3,
-      padding: "0.8em 1em",
-      borderRadius: "5px",
+      " .mdx-marker": {
+        // highlighted lines from mdx-prism
+        bg: "#fff1",
+        mx: "-1em",
+        px: "1em",
+        boxShadow: (t) => `3px 0 0 ${t.colors?.primary} inset`,
+      },
     },
     code: {
       fontFamily: "monospace",
@@ -245,6 +266,8 @@ export const theme = makeTheme({
         backgroundColor: "inherit",
         padding: 0,
         borderRadius: 0,
+        display: "inline-block",
+        minWidth: "100%",
       },
     },
     blockquote: {
@@ -289,8 +312,20 @@ export const theme = makeTheme({
 
 export type Theme = typeof theme
 
+export type ColorMode =
+  | keyof typeof theme.colors.modes
+  | typeof theme.initialColorModeName
+
+export const colorModes: ColorMode[] = Object.keys(
+  theme.colors.modes
+) as ColorMode[]
+colorModes.unshift(theme.initialColorModeName)
+
 interface ContextValue extends Omit<GenericContextValue, "theme"> {
   theme: Theme
+  colorMode: ColorMode
 }
 
 export const useThemeUI = (genericUseThemeUI as unknown) as () => ContextValue
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+export const useColorMode = () => genericUseColorMode<ColorMode>()

@@ -12,6 +12,9 @@ export const CSSReset = (
         min-height: 100%;
         padding: 0;
         margin: 0;
+        /* Fix Safari automatically enlarging some text */
+        /* https://stackoverflow.com/a/3428477 */
+        -webkit-text-size-adjust: 100%;
       }
 
       /* Box sizing rules */
