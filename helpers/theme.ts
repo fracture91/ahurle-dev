@@ -6,6 +6,7 @@ import {
   ThemeUICSSObject,
 } from "theme-ui"
 import chainLink from "@/public/img/chain-link.svg"
+import { preLoadClass } from "@/components/RemovePreLoadClass"
 import * as globals from "./globals"
 
 const makeTheme = <T extends GenericTheme>(t: T) => t
@@ -143,6 +144,11 @@ export const theme = makeTheme({
       MozOsxFontSmoothing: "grayscale",
       WebkitFontSmoothing: "antialiased",
       overflowWrap: "anywhere",
+      transition: "color 300ms ease, background 300ms ease",
+      [`&.${preLoadClass}`]: {
+        // without this, Firefox (at least) will flash back to white and transition to black on load :(
+        transition: "none",
+      },
     },
     // not standard, special handling by me
     body: {

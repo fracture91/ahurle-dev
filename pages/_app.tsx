@@ -22,6 +22,7 @@ import { fixedStyle } from "@/helpers/prismStyle"
 import { ImageRenderer } from "@/components/ImageRenderer"
 import { UnwrapImages } from "@/components/UnwrapImages"
 import { ThemeMeta } from "@/components/ThemeMeta"
+import { RemovePreLoadClass } from "@/components/RemovePreLoadClass"
 
 const MDXPre: React.FC<
   React.ComponentPropsWithoutRef<"pre">
@@ -105,6 +106,7 @@ const App: React.FC<AppProps> = ({ Component, pageProps }) => (
       <DarkMediaStyle />
       {/* when JS enabled, blocks rendering until preferred scheme read from localstorage/media */}
       <InitializeColorMode key="theme-ui-no-flash" />
+      <RemovePreLoadClass />
       <Header />
       <Component {...pageProps} />
       <Footer />

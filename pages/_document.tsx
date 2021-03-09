@@ -7,6 +7,7 @@ import Document, {
   DocumentInitialProps,
 } from "next/document"
 import { extractCritical } from "@emotion/server"
+import { preLoadClass } from "@/components/RemovePreLoadClass"
 
 class MyDocument extends Document {
   static async getInitialProps(
@@ -32,7 +33,7 @@ class MyDocument extends Document {
 
   render(): JSX.Element {
     return (
-      <Html lang="en-US">
+      <Html lang="en-US" className={preLoadClass}>
         <Head />
         <body>
           <Main />

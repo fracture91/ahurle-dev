@@ -4,6 +4,7 @@ import Link from "next/link"
 import * as globals from "@/helpers/globals"
 import { Flex, NavLink } from "theme-ui"
 import { WrapFC } from "@/helpers/WrapFC"
+import { theme } from "@/helpers/theme"
 import { css, Global } from "@emotion/react"
 import { ThemeSwitcher } from "./ThemeSwitcher"
 
@@ -83,6 +84,7 @@ const Toggle: WrapFC<"div"> = React.forwardRef((props, ref) => (
       top: 0,
       paddingY: "0.5em",
       backgroundColor: "background",
+      transition: theme.styles.root.transition,
       pr: "1em",
       pl: "3em",
       cursor: "pointer",
@@ -164,6 +166,7 @@ const ExpandoLinks: WrapFC<"details"> = ({ children, ...props }) => {
             overflowX: "hidden",
             width: "100%",
             bg: "background",
+            transition: theme.styles.root.transition,
             "details[open] &": {
               display: "flex",
               position: "absolute",
@@ -193,6 +196,7 @@ export const Header: React.FC = () => (
       top: 0,
       zIndex: 100,
       ...shadow,
+      transition: theme.styles.root.transition,
     }}
   >
     <Global
