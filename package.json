@@ -172,8 +172,12 @@
         "maxSize": "20kb"
       },
       {
-        "path": "./.next/static/chunks/pages/_@(app|error)-*.js",
+        "path": "./.next/static/chunks/pages/_error-*.js",
         "maxSize": "10kb"
+      },
+      {
+        "path": "./.next/static/chunks/pages/_app-*.js",
+        "maxSize": "20kb"
       },
       {
         "path": "./.next/static/chunks/pages/index-*.js",

@@ -1,20 +1,30 @@
 /** @jsxImportSource theme-ui */
 // getPreferredColorScheme is not normally exported, but I patched that in
 import { getPreferredColorScheme } from "@theme-ui/color-modes"
+import { SxProp } from "theme-ui"
 import { ColorMode, theme, useColorMode } from "@/helpers/theme"
-import { ChangeEvent, ReactNode, useCallback, useEffect, useState } from "react"
+import {
+  ChangeEvent,
+  ComponentType,
+  useCallback,
+  useEffect,
+  useState,
+} from "react"
 import { useLocalStorage } from "react-use"
 import { WrapFC } from "@/helpers/WrapFC"
+import { Moon } from "./Moon"
+import { Sun } from "./Sun"
+import { SunAndMoon } from "./SunAndMoon"
 
-class MetaMode {
+class MetaMode<T = unknown> {
   themeUIColorMode?: ColorMode
   name: string
   id: string
   title: string
-  icon: ReactNode
+  icon: ComponentType<T & SxProp>
 
   constructor(
-    { title, icon }: { title: string; icon: ReactNode },
+    { title, icon }: { title: string; icon: ComponentType<T & SxProp> },
     themeUIColorMode?: ColorMode,
     name?: string
   ) {
@@ -28,15 +38,15 @@ class MetaMode {
   }
 
   static auto = new MetaMode(
-    { title: "Use system default color scheme", icon: "◐" },
+    { title: "Use system default color scheme", icon: SunAndMoon },
     undefined,
     "auto"
   )
 
   static all: MetaMode[] = [
     MetaMode.auto,
-    new MetaMode({ title: "Use light color scheme", icon: "🌞" }, "light"),
-    new MetaMode({ title: "Use dark color scheme", icon: "🌛" }, "dark"),
+    new MetaMode({ title: "Use light color scheme", icon: Sun }, "light"),
+    new MetaMode({ title: "Use dark color scheme", icon: Moon }, "dark"),
   ]
 }
 
@@ -65,18 +75,14 @@ const ThemeButton: WrapFC<
       {...rest}
       sx={{ position: "absolute", opacity: 0, cursor: "pointer" }}
     />
-    <div
+    <mode.icon
       sx={{
-        // width: "1.4em",
-        // height: "1.6em",
         mx: "0.2em",
-        display: "inline-block",
-        textAlign: "center",
         cursor: "pointer",
+        verticalAlign: "middle",
+        height: "1.2em",
       }}
-    >
-      <span sx={{ fontSize: 4, lineHeight: 1 }}>{mode.icon}</span>
-    </div>
+    />
   </label>
 )
 
@@ -186,14 +192,14 @@ export const ThemeSwitcher: React.FC = () => {
     >
       <div
         sx={{
-          width: "1.35em",
-          height: "1.35em",
+          width: "1.36em",
+          height: "1.36em",
           borderRadius: "50%",
           bg: "background",
           position: "absolute",
           mt: "0.11em",
-          // ml: "-0.1em",
-          transform: `translateX(${selectedIndex * 112}%)`,
+          ml: "0.05em",
+          transform: `translateX(${selectedIndex * 1.67}em)`,
           transition:
             "transform 240ms cubic-bezier(0.165, 0.840, 0.440, 1.000)",
           zIndex: 1,
