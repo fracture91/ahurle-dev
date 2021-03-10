@@ -12,6 +12,7 @@ export const Footer: React.FC = () => (
       flexDirection: "row",
       alignItems: "center",
       justifyContent: "space-between",
+      flexShrink: 0,
     }}
   >
     <p sx={{ padding: 3 }}>{`© ${

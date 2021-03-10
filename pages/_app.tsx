@@ -11,6 +11,7 @@ import {
   CSSObject,
   css as themeuicss,
   Themed,
+  Flex,
 } from "theme-ui"
 import { createColorStyles } from "@theme-ui/color-modes"
 import { theme } from "@/helpers/theme"
@@ -107,9 +108,13 @@ const App: React.FC<AppProps> = ({ Component, pageProps }) => (
       {/* when JS enabled, blocks rendering until preferred scheme read from localstorage/media */}
       <InitializeColorMode key="theme-ui-no-flash" />
       <RemovePreLoadClass />
-      <Header />
-      <Component {...pageProps} />
-      <Footer />
+      <Flex sx={{ flexDirection: "column", height: "100%" }}>
+        <Header />
+        <div sx={{ flexShrink: 0, flex: 1 }}>
+          <Component {...pageProps} />
+        </div>
+        <Footer />
+      </Flex>
     </ThemeProvider>
   </CacheProvider>
 )

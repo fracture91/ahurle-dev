@@ -197,6 +197,7 @@ export const Header: React.FC = () => (
       zIndex: 100,
       ...shadow,
       transition: theme.styles.root.transition,
+      flexShrink: 0,
     }}
   >
     <Global
