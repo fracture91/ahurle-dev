@@ -36,7 +36,10 @@ export class BlogPostPath {
   }
 
   glob(): BlogPostPath[] {
-    return glob.sync(this.pathFromRoot).map(BlogPostPath.relativeToRoot)
+    return glob
+      .sync(this.pathFromRoot)
+      .filter((p) => p !== "pages/blog/index.mdx")
+      .map(BlogPostPath.relativeToRoot)
   }
 
   static fromSlug(slug: string): BlogPostPath {

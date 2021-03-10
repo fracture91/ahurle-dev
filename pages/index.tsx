@@ -6,10 +6,10 @@ import removeUndefined from "rundef"
 import { generateRSS } from "@/helpers/rssUtil"
 import { BlogMeta } from "@/helpers/schema"
 import { loadPublishedBlogs } from "@/helpers/loader"
-import { PostCard } from "@/components/PostCard"
-import { Themed, Container, Button, Grid } from "theme-ui"
+import { Themed, Container, Button } from "theme-ui"
 import Features from "@/mdx/features.mdx"
 import Introduction from "@/mdx/introduction.mdx"
+import { PostCardGrid } from "@/components/PostCardGrid"
 
 type HomeProps = {
   posts: BlogMeta<true>[]
@@ -42,11 +42,7 @@ const Home: React.FC<HomeProps> = ({ posts }) => (
         &quot;cards&quot; are implemented in the
         <Themed.code>/components/PostCard.tsx</Themed.code> component.
       </Themed.p>
-      <Grid columns="repeat(auto-fit,minmax(300px, 1fr))" gap={2} py={2} px={3}>
-        {posts.map((post) => (
-          <PostCard post={post} key={post.urlPath} />
-        ))}
-      </Grid>
+      <PostCardGrid posts={posts} />
     </Container>
 
     <Container as="section" paddingX={3} marginY={4}>

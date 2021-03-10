@@ -15,7 +15,9 @@ const mdxDefaultGsp = require("./mdxDefaultGetStaticProps")
 
 /** @type {import("./mdxDefaultLayout").Layout["condition"]} */
 const blogCondition = (_tree, file) =>
-  file?.path?.startsWith(`${process.cwd()}/pages/blog`) || false
+  (file?.path?.startsWith(`${process.cwd()}/pages/blog`) &&
+    file?.path !== `${process.cwd()}/pages/blog/index.mdx`) ||
+  false
 
 /** @type {import("./mdxDefaultLayout").Layout} */
 const defaultLayoutOptions = {

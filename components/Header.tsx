@@ -234,11 +234,11 @@ export const Header: React.FC = () => (
         <Link href="/blog" passHref>
           <NavLink>Blog</NavLink>
         </Link>
-        <Link href="/recipes" passHref>
-          <NavLink>Recipes</NavLink>
-        </Link>
         <Link href="/links" passHref>
           <NavLink>Links</NavLink>
+        </Link>
+        <Link href="/recipes" passHref>
+          <NavLink>Recipes</NavLink>
         </Link>
         <Link href="/art" passHref>
           <NavLink>Art</NavLink>

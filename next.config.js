@@ -42,5 +42,14 @@ module.exports = withPlugins(
       })
       return config
     },
+    async redirects() {
+      return [
+        {
+          source: "/recipes/workflowy",
+          destination: "https://workflowy.com/s/known-recipes/ZAsUuIrpIiAvDKNG",
+          permanent: false,
+        },
+      ]
+    },
   }
 )

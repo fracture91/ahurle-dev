@@ -230,6 +230,11 @@ export const theme = makeTheme({
           visibility: "hidden",
         },
       },
+      '&[target="_blank"]:after': {
+        content:
+          "url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAQElEQVR42qXKwQkAIAxDUUdxtO6/RBQkQZvSi8I/pL4BoGw/XPkh4XigPmsUgh0626AjRsgxHTkUThsG2T/sIlzdTsp52kSS1wAAAABJRU5ErkJggg==)",
+        m: "0 0.2em 0 0.3em",
+      },
     },
     pre: {
       fontFamily: "monospace",
