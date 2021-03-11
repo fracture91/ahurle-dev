@@ -109,8 +109,8 @@ const App: React.FC<AppProps> = ({ Component, pageProps }) => (
       <InitializeColorMode key="theme-ui-no-flash" />
       <RemovePreLoadClass />
       <Flex sx={{ flexDirection: "column", height: "100%" }}>
-        <Header />
-        <div sx={{ flexShrink: 0, flex: 1 }}>
+        <div sx={{ flex: "1 0 0" }}>
+          <Header />
           <Component {...pageProps} />
         </div>
         <Footer />
