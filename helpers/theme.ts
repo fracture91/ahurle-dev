@@ -80,7 +80,7 @@ export const theme = makeTheme({
         higher: "#fff1",
         lower: "#0006",
         primary: { __default: "#90c290", background: "#3d603d" },
-        imgFilter: "brightness(.8) saturate(90%)",
+        imgFilter: "brightness(.9) saturate(80%)",
       },
     },
   },
