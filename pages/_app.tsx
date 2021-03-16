@@ -80,6 +80,7 @@ const App: React.FC<AppProps> = ({ Component, pageProps }) => (
   <CacheProvider value={cache}>
     {CSSReset}
     <Head>
+      <meta name="viewport" content="width=device-width, initial-scale=1" />
       {globals.googleAnalyticsId && (
         <script
           async
