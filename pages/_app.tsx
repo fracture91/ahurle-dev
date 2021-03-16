@@ -52,6 +52,7 @@ const components = {
   pre: MDXPre,
   img: ImageRenderer,
   a: MDXLink,
+  inlineCode: Themed.code,
 }
 
 // HACK: grab theme-ui's generated styles from non-exported function - see /patches
@@ -62,7 +63,7 @@ const DarkMediaStyle: React.FC = () => (
   <Global
     styles={css`
       @media (prefers-color-scheme: dark) {
-        /* If there's a class on this element then JS is enabled */
+        /* If there's a class on this element then JS has selected a particular mode */
         html:not([class*="theme-ui-"]) {
           ${(themeUIStyles.html as CSSObject)["&.theme-ui-dark"]}
         }

@@ -17,7 +17,6 @@ const Outer = styled(Flex)`
 `
 
 const Inner = styled(Flex)`
-  opacity: 0.92;
   box-shadow: 0px 2px 10px #00000040;
   width: 100%;
   max-width: 500px;
@@ -56,7 +55,7 @@ const Subtitle: WrapFC<typeof Themed.p> = (props) => (
 export const PostCard: React.FC<{ post: BlogMeta<true> }> = ({ post }) => (
   <Link href={`/${post.urlPath}`} passHref>
     <Outer as="a">
-      <Inner>
+      <Inner bg="background.header">
         {post.bannerPhoto && (
           <Thumbnail>
             <LazyImage

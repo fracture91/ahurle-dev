@@ -3,7 +3,10 @@
 import { WrapFC } from "@/helpers/WrapFC"
 
 // me being lazy and not wanting to set up a webpack loader
-export const Sun: WrapFC<"svg"> = (props) => (
+export const Sun: WrapFC<"svg", { secondaryColor: string }> = ({
+  secondaryColor: _,
+  ...props
+}) => (
   <svg
     viewBox="0 0 32 32"
     xmlns="http://www.w3.org/2000/svg"

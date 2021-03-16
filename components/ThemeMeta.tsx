@@ -6,7 +6,7 @@ export const ThemeMeta: React.FC = () => {
 
   return (
     <Head>
-      <meta name="theme-color" content={theme.colors.primary} />
+      <meta name="theme-color" content={theme.colors.background.header} />
       <meta name="color-scheme" content={colorModes.join(" ")} />
     </Head>
   )

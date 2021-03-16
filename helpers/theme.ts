@@ -7,7 +7,6 @@ import {
 } from "theme-ui"
 import chainLink from "@/public/img/chain-link.svg"
 import { preLoadClass } from "@/components/RemovePreLoadClass"
-import * as globals from "./globals"
 
 const makeTheme = <T extends GenericTheme>(t: T) => t
 
@@ -17,43 +16,104 @@ const linkInsideHeading: ThemeUICSSObject = {
   },
 }
 
+const emojiFonts = [
+  '"Apple Color Emoji"',
+  '"Segoe UI Emoji"',
+  '"Segoe UI Symbol"',
+]
+
+const fonts = (arr: string[]) => arr.concat(emojiFonts).join(", ")
+const bodyFonts = fonts([
+  "-apple-system",
+  "BlinkMacSystemFont",
+  '"Segoe UI"',
+  "Roboto",
+  "Oxygen",
+  "Ubuntu",
+  "Cantarell",
+  '"Fira Sans"',
+  '"Droid Sans"',
+  '"Helvetica Neue"',
+  // '"Bitstream Vera Sans"',
+  "sans-serif",
+])
+
+const darkBackground = "#29241e"
+
 export const theme = makeTheme({
   useLocalStorage: false, // persists prefers-color-scheme by default :(
   useColorSchemeMediaQuery: true, // default to the user's preferred mode
   initialColorModeName: "light" as const,
   useRootStyles: true,
   colors: {
-    background: "#f6f7f6",
-    text: "#222",
-    primary: globals.accentColor,
+    background: {
+      __default: "#fff5e9",
+      content: "#f7f3f0",
+      header: "#fefcf9",
+      switchSelected: "var(--theme-ui-colors-background-header)",
+      highlightText: "var(--theme-ui-colors-lower)",
+    },
+    text: {
+      __default: "#222",
+      subtle: "#555",
+      switchSelected: "var(--theme-ui-colors-text)",
+    },
+    higher: "#fff6",
+    lower: "#0001",
+    primary: { __default: "#1d521d", background: "#e0fae0" },
     secondary: "#938575",
-    tertiary: "#514e4f",
-    quaternary: "#31282c",
+    imgFilter: "none", // abusing this for non-color CSS vars
     modes: {
       dark: {
-        background: "#111",
-        text: "#f0f1f0",
+        background: {
+          __default: darkBackground,
+          content: "#191614",
+          header: "#3f3831",
+          switchSelected: "var(--theme-ui-colors-text)",
+          highlightText: "var(--theme-ui-colors-higher)",
+        },
+        text: {
+          __default: "#f0dfca",
+          subtle: "#b1a393",
+          switchSelected: "var(--theme-ui-colors-background-content)",
+        },
+        higher: "#fff1",
+        lower: "#0006",
+        primary: { __default: "#90c290", background: "#3d603d" },
+        imgFilter: "brightness(.8) saturate(90%)",
       },
     },
   },
   breakpoints: ["40rem", "60rem", "120rem", "180rem"],
   space: [0, 4, 8, 16, 32, 64, 128, 256, 512],
   fonts: {
-    body: [
-      "-apple-system",
-      "BlinkMacSystemFont",
-      '"Segoe UI"',
-      "Roboto",
-      "Oxygen",
-      "Ubuntu",
-      "Cantarell",
-      "Fira Sans",
-      "Droid Sans",
-      '"Helvetica Neue"',
-      "sans-serif",
-    ].join(", "),
-    heading: "inherit",
-    monospace: "Menlo, monospace",
+    body: bodyFonts,
+    heading: bodyFonts,
+    prose: fonts([
+      "Constantia",
+      '"Lucida Bright"',
+      "Lucidabright",
+      "Lucida Serif",
+      "Lucida",
+      '"DejaVu Serif"',
+      '"Bitstream Vera Serif"',
+      "Georgia",
+      '"Liberation Serif"',
+      "serif",
+    ]),
+    monospace: fonts([
+      "SFMono-Regular",
+      "Menlo",
+      "Consolas",
+      "Monaco",
+      '"Andale Mono"',
+      '"Lucida Console"',
+      '"DejaVu Sans Mono"',
+      '"Bitstream Vera Sans Mono"',
+      '"Liberation Mono"',
+      '"Courier New"',
+      "monospace",
+    ]),
   },
   fontWeights: {
     body: 400,
@@ -85,8 +145,8 @@ export const theme = makeTheme({
       fontFamily: "heading",
       lineHeight: "heading",
       fontWeight: "heading",
-      marginTop: "1.7em",
-      marginBottom: "1rem",
+      mt: "1.7em",
+      mb: "1rem",
       ":first-child": {
         marginTop: 0,
       },
@@ -97,19 +157,21 @@ export const theme = makeTheme({
   },
   buttons: {
     primary: {
-      backgroundColor: "primary",
+      color: "text",
+      backgroundColor: "primary.background",
       borderRadius: 10,
       border: "none",
       fontSize: 3,
       padding: "1 3",
       cursor: "pointer",
       "&:hover": {
-        backgroundColor: "secondary",
+        backgroundColor: "lower",
       },
     },
   },
   links: {
     nav: {
+      fontWeight: "body",
       color: "inherit",
       paddingY: "0.5em",
       paddingX: "1em",
@@ -119,8 +181,8 @@ export const theme = makeTheme({
         color: "inherit",
       },
       "&:hover": {
-        color: "secondary",
-        bg: "#0001",
+        color: "inherit",
+        bg: "lower",
       },
     },
   },
@@ -143,11 +205,16 @@ export const theme = makeTheme({
       fontSize: ["89.4735%", "100%", null, "110%", "130%"],
       MozOsxFontSmoothing: "grayscale",
       WebkitFontSmoothing: "antialiased",
+      wordBreak: "break-word", // because safari doesn't support overflow-wrap: anywhere
       overflowWrap: "anywhere",
       transition: "color 300ms ease, background 300ms ease",
       [`&.${preLoadClass}`]: {
         // without this, Firefox (at least) will flash back to white and transition to black on load :(
         transition: "none",
+      },
+      img: {
+        // want this to apply to all img tags (e.g. next/image), not just Themed.img
+        filter: (t) => t.colors?.imgFilter,
       },
     },
     // not standard, special handling by me
@@ -165,7 +232,7 @@ export const theme = makeTheme({
       fontSize: 6,
       paddingBottom: "0.15em",
       borderBottom: "1px solid",
-      borderColor: "secondary",
+      borderColor: "text.subtle",
       ...linkInsideHeading,
     },
     h3: {
@@ -189,6 +256,7 @@ export const theme = makeTheme({
       ...linkInsideHeading,
     },
     p: {
+      maxWidth: "65ch",
       marginY: "1.4em",
       ":first-child": {
         marginTop: 0,
@@ -206,7 +274,7 @@ export const theme = makeTheme({
     a: {
       color: "primary",
       "&:visited": {
-        color: "tertiary",
+        color: "text.subtle",
       },
       "&:hover": {
         color: "secondary",
@@ -237,9 +305,9 @@ export const theme = makeTheme({
       },
     },
     pre: {
-      fontFamily: "monospace",
       "&&": {
         // make sure prism theme styles don't override these
+        fontFamily: "monospace",
         fontSize: 2,
         lineHeight: "pre",
         overflowX: "auto",
@@ -250,6 +318,16 @@ export const theme = makeTheme({
         marginX: -3,
         padding: "0.8em 1em",
         borderRadius: "5px",
+        // match my theme better
+        bg: darkBackground,
+        color: "#d7c8b5",
+        // fix some a11y issues
+        ".comment": {
+          color: "#9b9b9b",
+        },
+        ".string, .char": {
+          color: "#7ea06a",
+        },
       },
       " .mdx-marker": {
         // highlighted lines from mdx-prism
@@ -261,11 +339,14 @@ export const theme = makeTheme({
     },
     code: {
       fontFamily: "monospace",
-      fontSize: "inherit",
-      backgroundColor: "#00000010",
+      fontSize: 2, // one smaller than body, looks too big otherwise
+      backgroundColor: "background.highlightText",
       padding: "0.05em 0.2em",
       borderRadius: "0.3em",
-      "pre &": {
+      "pre &&&": {
+        // make sure prism theme styles don't override these
+        fontFamily: "monospace",
+        fontSize: "inherit",
         color: "inherit",
         lineHeight: "inherit",
         backgroundColor: "inherit",
@@ -277,14 +358,17 @@ export const theme = makeTheme({
     },
     blockquote: {
       borderWidth: 0,
-      borderLeftWidth: "5px",
-      borderColor: "primary",
+      borderLeftWidth: "1px",
+      borderColor: "text.subtle",
       borderStyle: "solid",
-      padding: "0.5em",
-      backgroundColor: "#00000010",
+      p: "0.5em",
+      pl: "1.5em",
+      fontStyle: "italic",
       borderRadius: "0 8px 8px 0",
-      marginY: "1em",
-      marginX: "0.5rem",
+      my: "1em",
+      ml: 0,
+      mr: "1em",
+      color: "text.subtle",
     },
     table: {
       width: "100%",
@@ -301,6 +385,7 @@ export const theme = makeTheme({
     },
     img: {
       maxWidth: "100%",
+      filter: (t) => t.colors?.imgFilter,
     },
     hr: {
       border: "none",

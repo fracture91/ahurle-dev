@@ -7,8 +7,7 @@ export const Footer: React.FC = () => (
   <Flex
     as="footer"
     sx={{
-      backgroundColor: "primary",
-      color: "background",
+      backgroundColor: "background",
       flexDirection: "row",
       alignItems: "center",
       justifyContent: "space-between",
@@ -19,7 +18,7 @@ export const Footer: React.FC = () => (
       globals.yourName
     } ${new Date().getFullYear()}`}</p>
     <NavLink href="/rss.xml">
-      <img src="/img/rss-white.svg" alt="RSS Feed" height="30" width="30" />
+      <img src="/img/rss-current.svg" alt="RSS Feed" height="30" width="30" />
     </NavLink>
   </Flex>
 )

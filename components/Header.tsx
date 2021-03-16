@@ -5,13 +5,17 @@ import throttle from "lodash/throttle"
 import * as globals from "@/helpers/globals"
 import { Flex, NavLink } from "theme-ui"
 import { WrapFC } from "@/helpers/WrapFC"
-import { theme } from "@/helpers/theme"
+import { theme, Theme } from "@/helpers/theme"
 import { css, Global } from "@emotion/react"
 import { ThemeSwitcher } from "./ThemeSwitcher"
 
 const maxHamburgerWidth = "28em"
 const hideHamburger = `@media (min-width: ${maxHamburgerWidth})`
-const shadow = { boxShadow: "0 2px 6px #0002" }
+const border = {
+  border: "1px solid #0001",
+  borderWidth: 0,
+  borderBottomWidth: "1px",
+}
 
 const Hamburger: WrapFC<"svg"> = React.forwardRef((props, ref) => (
   <svg
@@ -84,13 +88,15 @@ const Toggle: WrapFC<"div"> = React.forwardRef((props, ref) => (
       right: 0,
       top: 0,
       paddingY: "0.5em",
-      backgroundColor: "background",
+      bg: "background.header",
       transition: theme.styles.root.transition,
       pr: "1em",
       pl: "3em",
       cursor: "pointer",
       background: (t) =>
-        `linear-gradient(to left, ${t.colors?.background} 50%, #ffffff00 100%)`,
+        `linear-gradient(to left, ${
+          (t as Theme).colors.background.header
+        } 50%, #ffffff00 100%)`,
     }}
   >
     <Triangle />
@@ -168,7 +174,7 @@ const ExpandoLinks: WrapFC<"details"> = React.forwardRef(
               flexWrap: "nowrap",
               overflowX: "hidden",
               width: "100%",
-              bg: "background",
+              bg: "background.header",
               transition: theme.styles.root.transition,
               "details[open] &": {
                 display: "flex",
@@ -177,7 +183,9 @@ const ExpandoLinks: WrapFC<"details"> = React.forwardRef(
                 flexDirection: "column",
                 overflowX: "visible",
                 minWidth: "8em",
-                ...shadow,
+                ...border,
+                borderLeftWidth: "1px",
+                borderRightWidth: "1px",
                 clipPath: "inset(0px -10px -10px -10px)",
               },
             }}
@@ -237,12 +245,12 @@ export const Header: React.FC = () => {
   return (
     <header
       sx={{
-        backgroundColor: "background",
-        color: "primary",
+        bg: "background.header",
+        color: "text",
         position: "sticky",
         top: 0,
         zIndex: 100,
-        ...shadow,
+        ...border,
         transition: [
           theme.styles.root.transition,
           "transform 300ms linear",
@@ -278,7 +286,16 @@ export const Header: React.FC = () => {
       >
         <Link href="/" passHref>
           <NavLink px="0.5em">
-            <span sx={{ bg: "gray", borderRadius: "50%", px: "0.2em" }}>A</span>{" "}
+            <span
+              sx={{
+                bg: "gray",
+                borderRadius: "50%",
+                px: "0.2em",
+                color: "primary",
+              }}
+            >
+              A
+            </span>{" "}
             {globals.siteName}
           </NavLink>
         </Link>

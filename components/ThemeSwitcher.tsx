@@ -16,15 +16,17 @@ import { Moon } from "./Moon"
 import { Sun } from "./Sun"
 import { SunAndMoon } from "./SunAndMoon"
 
+type RequiredIconProps = { secondaryColor: string } & SxProp
+
 class MetaMode<T = unknown> {
   themeUIColorMode?: ColorMode
   name: string
   id: string
   title: string
-  icon: ComponentType<T & SxProp>
+  icon: ComponentType<T & RequiredIconProps>
 
   constructor(
-    { title, icon }: { title: string; icon: ComponentType<T & SxProp> },
+    { title, icon }: Pick<MetaMode<T>, "title" | "icon">,
     themeUIColorMode?: ColorMode,
     name?: string
   ) {
@@ -60,7 +62,7 @@ const ThemeButton: WrapFC<
     ) => void
   },
   "onChange"
-> = ({ mode, onChange, ...rest }) => (
+> = ({ mode, onChange, checked, ...rest }) => (
   <label
     htmlFor={mode.id}
     title={mode.title}
@@ -72,15 +74,18 @@ const ThemeButton: WrapFC<
       name="color-mode"
       value={mode.name}
       onChange={onChange.bind(null, mode)}
+      checked={checked}
       {...rest}
       sx={{ position: "absolute", opacity: 0, cursor: "pointer" }}
     />
     <mode.icon
+      secondaryColor={checked ? "background.switchSelected" : "background"}
       sx={{
         mx: "0.2em",
         cursor: "pointer",
         verticalAlign: "middle",
         height: "1.2em",
+        color: checked ? "text.switchSelected" : "text",
       }}
     />
   </label>
@@ -182,12 +187,19 @@ export const ThemeSwitcher: React.FC = () => {
       sx={{
         p: "0.1em 0.2em",
         mr: "0.5em",
-        bg: selectedIndex > 0 ? "primary" : "#22002244",
+        bg: selectedIndex > 0 ? "primary.background" : "lower",
         borderRadius: "1em",
-        boxShadow: "1px 1px 2px #0003 inset",
+        boxShadow: (t) =>
+          [
+            `0px 2px 2px ${t.colors?.lower} inset`,
+            selectedIndex > 0 ? [`0 0 5px 2px ${t.colors?.higher} inset`] : [],
+          ]
+            .flat()
+            .join(","),
         flexShrink: 0,
         display: "grid",
         gridTemplateColumns: MetaMode.all.map(() => "1fr").join(" "),
+        transition: "background 300ms ease, box-shadow 300ms ease",
       }}
     >
       <div
@@ -195,7 +207,7 @@ export const ThemeSwitcher: React.FC = () => {
           width: "1.36em",
           height: "1.36em",
           borderRadius: "50%",
-          bg: "background",
+          bg: "background.switchSelected",
           position: "absolute",
           mt: "0.11em",
           ml: "0.05em",
@@ -203,7 +215,7 @@ export const ThemeSwitcher: React.FC = () => {
           transition:
             "transform 240ms cubic-bezier(0.165, 0.840, 0.440, 1.000)",
           zIndex: 1,
-          boxShadow: "1px 1px 2px #0003",
+          boxShadow: "0px 2px 2px #0004",
         }}
       />
       {/* Watch out for this emotion bug when using anonymous functions wrapping components using sx:
