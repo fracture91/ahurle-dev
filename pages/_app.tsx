@@ -111,10 +111,12 @@ const App: React.FC<AppProps> = ({ Component, pageProps }) => (
       <InitializeColorMode key="theme-ui-no-flash" />
       <RemovePreLoadClass />
       <Flex sx={{ flexDirection: "column", height: "100%" }}>
-        <div sx={{ flex: "1 0 0" }}>
+        <Flex sx={{ flexDirection: "column", flex: "1 0 0" }}>
           <Header />
-          <Component {...pageProps} />
-        </div>
+          <div sx={{ flex: "1 0 0" }}>
+            <Component {...pageProps} />
+          </div>
+        </Flex>
         <Footer />
       </Flex>
     </ThemeProvider>
