@@ -5,7 +5,7 @@ import Image from "next/image"
 import Link from "next/link"
 import type { Parent } from "unist"
 import { BlogMeta } from "@/helpers/schema"
-import { LayoutProps } from "@/helpers/loader"
+import { BlogLayoutProps } from "@/helpers/loader"
 import { BlogStaticProps } from "@/helpers/getBlogStaticProps"
 import { Author } from "./Author"
 import { PostMeta } from "./PostMeta"
@@ -122,7 +122,7 @@ const TableOfContents: React.FC<{ outline: Parent }> = ({ outline }) => {
 }
 
 export const BlogPost: React.FunctionComponent<
-  LayoutProps & BlogStaticProps
+  BlogLayoutProps & BlogStaticProps
 > = ({ processedMeta: post, readingTime, outline, children }) => (
   <main>
     <article>

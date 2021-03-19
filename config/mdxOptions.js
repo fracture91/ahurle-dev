@@ -19,19 +19,37 @@ const blogCondition = (_tree, file) =>
     file?.path !== `${process.cwd()}/pages/blog/index.mdx`) ||
   false
 
-/** @type {import("./mdxDefaultLayout").Layout} */
-const defaultLayoutOptions = {
-  name: "MDXBlogLayout",
-  condition: blogCondition,
-  path: require.resolve("../components/MDXBlogLayout.tsx"),
-}
+/** @type {import("./mdxDefaultLayout").Layout["condition"]} */
+const pageCondition = (_tree, file) =>
+  file?.path?.startsWith(`${process.cwd()}/pages`) || false
 
-/** @type {import("./mdxDefaultGetStaticProps").GSPConfig} */
-const defaultGspOptions = {
-  name: "getBlogStaticProps",
-  condition: blogCondition,
-  path: require.resolve("../helpers/getBlogStaticProps.ts"),
-}
+/** @type {import("./mdxDefaultLayout").Layout[]} */
+const defaultLayoutOptions = [
+  {
+    name: "MDXBlogLayout",
+    condition: blogCondition,
+    path: require.resolve("../components/MDXBlogLayout.tsx"),
+  },
+  {
+    name: "MDXPageLayout",
+    condition: pageCondition,
+    path: require.resolve("../components/MDXPageLayout.tsx"),
+  },
+]
+
+/** @type {import("./mdxDefaultGetStaticProps").GSPConfig[]} */
+const defaultGspOptions = [
+  {
+    name: "getBlogStaticProps",
+    condition: blogCondition,
+    path: require.resolve("../helpers/getBlogStaticProps.ts"),
+  },
+  {
+    name: "getPageStaticProps",
+    condition: pageCondition,
+    path: require.resolve("../helpers/getPageStaticProps.ts"),
+  },
+]
 
 module.exports = {
   remarkPlugins: [

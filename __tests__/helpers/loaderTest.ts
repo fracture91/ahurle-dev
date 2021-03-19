@@ -26,7 +26,7 @@ describe("loader", () => {
 
   describe("processRawMeta", () => {
     let path: BlogPostPath
-    let module: subject.LayoutProps
+    let module: subject.BlogLayoutProps
     beforeEach(() => {
       jest
         .useFakeTimers("modern")
@@ -37,6 +37,10 @@ describe("loader", () => {
         meta: { title: "A Title" },
         path: path.pathFromBlogDir,
         excerpt: "wee",
+        // @ts-ignore: unused
+        readingTime: {},
+        // @ts-ignore: unused
+        outline: {},
       }
     })
 
@@ -46,7 +50,7 @@ describe("loader", () => {
 
     it("works for example post", async () => {
       expect(
-        await subject.processRawMeta({
+        await subject.processRawBlogMeta({
           module: examplePost as subject.MDXBlogModule,
           path,
         })
@@ -66,7 +70,7 @@ describe("loader", () => {
     })
 
     it("works for the minimum required meta", async () => {
-      await expect(subject.processRawMeta({ module, path })).resolves
+      await expect(subject.processRawBlogMeta({ module, path })).resolves
         .toMatchInlineSnapshot(`
               Object {
                 "bannerPhoto": undefined,
@@ -85,14 +89,14 @@ describe("loader", () => {
     it("fails when title is missing", async () => {
       module.meta.title = ""
       await expect(
-        subject.processRawMeta({ module, path })
+        subject.processRawBlogMeta({ module, path })
       ).rejects.toBeInstanceOf(Error)
     })
 
     it("fails when published is true due to missing attrs", async () => {
       module.meta.published = true
       await expect(
-        subject.processRawMeta({ module, path })
+        subject.processRawBlogMeta({ module, path })
       ).rejects.toBeInstanceOf(Error)
     })
 
@@ -106,7 +110,7 @@ describe("loader", () => {
           alt: "alt",
         },
       }
-      await expect(subject.processRawMeta({ module, path })).resolves
+      await expect(subject.processRawBlogMeta({ module, path })).resolves
         .toMatchInlineSnapshot(`
               Object {
                 "bannerPhoto": Object {
@@ -131,14 +135,14 @@ describe("loader", () => {
       module.meta.subtitle = "whatever"
       module.meta.description = "my manual description"
       await expect(
-        subject.processRawMeta({ module, path }).then((m) => m.description)
+        subject.processRawBlogMeta({ module, path }).then((m) => m.description)
       ).resolves.toEqual(module.meta.description)
     })
 
     it("falls back to subtitle in place of the excerpt", async () => {
       module.meta.subtitle = "my subtitle"
       await expect(
-        subject.processRawMeta({ module, path }).then((m) => m.description)
+        subject.processRawBlogMeta({ module, path }).then((m) => m.description)
       ).resolves.toEqual(module.meta.subtitle)
     })
 
@@ -150,7 +154,7 @@ describe("loader", () => {
         alt: "alt",
       }
       await expect(
-        subject.processRawMeta({ module, path }).then((m) => m.bannerPhoto)
+        subject.processRawBlogMeta({ module, path }).then((m) => m.bannerPhoto)
       ).resolves.toMatchInlineSnapshot(`
               Object {
                 "alt": "alt",
