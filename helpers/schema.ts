@@ -29,9 +29,30 @@ const AuthorSchema = z
   .strict()
 export type Author = z.infer<typeof AuthorSchema>
 
-// what comes out of the MDX when you import it
-export const RawBlogMetaSchema = z
+const RawPageMetaSchemaNoTransform = z
   .object({
+    bare: z.boolean().optional(),
+    title: z.string().nonempty(),
+    description: z.string().nonempty().optional(),
+    canonicalUrl: z.string().nonempty().optional(),
+  })
+  .strict()
+export const RawPageMetaSchema = RawPageMetaSchemaNoTransform.transform(
+  (r) => ({ ...r, bare: !!r.bare })
+)
+export type RawPageMetaOutput = z.output<typeof RawPageMetaSchema>
+export type RawPageMetaInput = z.input<typeof RawPageMetaSchema>
+
+// what RawPageMetaOutput looks like after processing at build-time
+export interface PageMeta extends RawPageMetaOutput {
+  urlPath: string
+}
+
+// what comes out of the MDX when you import it
+export const RawBlogMetaSchema = RawPageMetaSchemaNoTransform.omit({
+  bare: true,
+})
+  .extend({
     title: z.string().nonempty(),
     subtitle: z.string().nonempty().optional(),
     description: z.string().nonempty().optional(),
@@ -42,7 +63,6 @@ export const RawBlogMetaSchema = z
     tags: z.string().nonempty().array().optional(),
     bannerPhoto: RawBannerPhotoSchema.optional(),
   })
-  .strict()
   .refine((r) => !r.published || r.datePublished, {
     message: "datePublished required when published is true",
     path: ["datePublished"],
@@ -61,17 +81,15 @@ export const RawBlogMetaSchema = z
 export type RawBlogMetaOutput = z.output<typeof RawBlogMetaSchema>
 export type RawBlogMetaInput = z.input<typeof RawBlogMetaSchema>
 
-// what RawBlogMeta looks like after processing at build-time
-export interface BlogMeta<Published extends boolean = boolean> {
+// what RawBlogMetaOutput looks like after processing at build-time
+export interface BlogMeta<Published extends boolean = boolean>
+  extends RawBlogMetaOutput {
+  // new fields
   urlPath: string
   slug: string
-  title: string
-  subtitle?: string
+  // same fields but stricter types
   description: Published extends true ? string : string | undefined
   canonicalUrl: string
   published: Published
-  datePublished: number
-  author?: Author
-  tags: string[]
   bannerPhoto: Published extends true ? BannerPhoto : BannerPhoto | undefined
 }

@@ -160,10 +160,6 @@
         "maxSize": "50kb"
       },
       {
-        "path": "./.next/static/chunks/commons.*.js",
-        "maxSize": "20kb"
-      },
-      {
         "path": "./.next/static/chunks/polyfills-*.js",
         "maxSize": "40kb"
       },

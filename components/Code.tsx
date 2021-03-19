@@ -56,7 +56,7 @@ export const Code: React.FC<{ language: string; value?: string }> = React.memo(
           [originalCodeSelector]: {
             ...(fixedStyle()[originalCodeSelector] as Record<string, unknown>),
             ...theme.styles.code,
-            ...theme.styles.code["pre &"],
+            ...theme.styles.code["pre &&&"],
           },
         },
       }),

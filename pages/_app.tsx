@@ -11,6 +11,7 @@ import {
   CSSObject,
   css as themeuicss,
   Themed,
+  Flex,
 } from "theme-ui"
 import { createColorStyles } from "@theme-ui/color-modes"
 import { theme } from "@/helpers/theme"
@@ -51,6 +52,7 @@ const components = {
   pre: MDXPre,
   img: ImageRenderer,
   a: MDXLink,
+  inlineCode: Themed.code,
 }
 
 // HACK: grab theme-ui's generated styles from non-exported function - see /patches
@@ -61,7 +63,7 @@ const DarkMediaStyle: React.FC = () => (
   <Global
     styles={css`
       @media (prefers-color-scheme: dark) {
-        /* If there's a class on this element then JS is enabled */
+        /* If there's a class on this element then JS has selected a particular mode */
         html:not([class*="theme-ui-"]) {
           ${(themeUIStyles.html as CSSObject)["&.theme-ui-dark"]}
         }
@@ -78,6 +80,8 @@ const App: React.FC<AppProps> = ({ Component, pageProps }) => (
   <CacheProvider value={cache}>
     {CSSReset}
     <Head>
+      <meta httpEquiv="status" content={pageProps.statusCode || "200"} />
+      <meta name="viewport" content="width=device-width, initial-scale=1" />
       {globals.googleAnalyticsId && (
         <script
           async
@@ -107,9 +111,15 @@ const App: React.FC<AppProps> = ({ Component, pageProps }) => (
       {/* when JS enabled, blocks rendering until preferred scheme read from localstorage/media */}
       <InitializeColorMode key="theme-ui-no-flash" />
       <RemovePreLoadClass />
-      <Header />
-      <Component {...pageProps} />
-      <Footer />
+      <Flex sx={{ flexDirection: "column", height: "100%" }}>
+        <Flex sx={{ flexDirection: "column", flex: "1 0 0" }}>
+          <Header />
+          <div sx={{ flex: "1 0 0" }}>
+            <Component {...pageProps} />
+          </div>
+        </Flex>
+        <Footer />
+      </Flex>
     </ThemeProvider>
   </CacheProvider>
 )

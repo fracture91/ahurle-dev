@@ -12,5 +12,11 @@ export const UnwrapImages: React.FC<React.ComponentPropsWithoutRef<"p">> = ({
       React.isValidElement(child) &&
       (child.props.mdxType === "img" || child.type === ImageRenderer)
   )
-  return hasImage ? <>{children}</> : <Themed.p {...rest}>{children}</Themed.p>
+  return hasImage ? (
+    <>{children}</>
+  ) : (
+    <Themed.p sx={{ fontFamily: "prose" }} {...rest}>
+      {children}
+    </Themed.p>
+  )
 }

@@ -22,6 +22,8 @@ class MyDocument extends Document {
         <>
           {initialProps.styles}
           <style
+            // because of this emotion bug: https://github.com/emotion-js/emotion/issues/2158
+            // it might be helpful to comment the next line when iterating on global styles
             data-emotion={`css ${styles.ids.join(" ")}`}
             // eslint-disable-next-line react/no-danger
             dangerouslySetInnerHTML={{ __html: styles.css }}

@@ -2,10 +2,13 @@
 
 import { WrapFC } from "@/helpers/WrapFC"
 
-export const SunAndMoon: WrapFC<"svg"> = (props) => (
+export const SunAndMoon: WrapFC<"svg", { secondaryColor: string }> = ({
+  secondaryColor,
+  ...props
+}) => (
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" {...props}>
     <path
-      sx={{ fill: "background" }}
+      sx={{ fill: secondaryColor || "background" }}
       d="m32 14.4c-15.6 0-23.4 18.9-12.4 29.9 11 11 29.9 3.2 29.9-12.4 0-9.7-7.8-17.5-17.5-17.5z"
     />
     <path

@@ -3,6 +3,7 @@ import { screen } from "@testing-library/react"
 import { loadPublishedBlogs, MetaAndContent } from "@/helpers/loader"
 import { BlogPostPath } from "@/helpers/BlogPostPath"
 import { BlogMeta } from "@/helpers/schema"
+import { expectStatusCode } from "@/__tests__/testUtils/assertions"
 
 describe("Blog pages", () => {
   let posts: MetaAndContent<true>[] | undefined
@@ -24,6 +25,7 @@ describe("Blog pages", () => {
       })
 
       render()
+      expectStatusCode(200)
       expect(screen.getByText("ahurle.dev")).toBeVisible()
       expect(screen.getByText(post?.title)).toBeVisible()
     })

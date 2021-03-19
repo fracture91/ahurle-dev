@@ -1,7 +1,7 @@
 /** @jsxImportSource theme-ui */
 import React from "react"
 import { BlogMeta } from "@/helpers/schema"
-import { Box, Flex, Text } from "theme-ui"
+import { Box, Flex, Text, Themed } from "theme-ui"
 import Image from "next/image"
 import type * as readingTime from "reading-time"
 import { WrapFC } from "@/helpers/WrapFC"
@@ -49,19 +49,17 @@ export const AuthorLines: React.FC<{
 }> = ({ post, readingTime }) => (
   <div sx={{ lineHeight: 1.2, flexGrow: 1, mr: negGroupSpacing }}>
     <Group>
-      {post.author?.name && (
-        <Separated sx={{ color: "primary" }}>{post.author?.name}</Separated>
-      )}
+      {post.author?.name && <Separated>{post.author?.name}</Separated>}
 
       {post.author?.twitter && (
         <Separated>
-          <a href={`https://twitter.com/${post.author?.twitter}`}>
+          <Themed.a href={`https://twitter.com/${post.author?.twitter}`}>
             {`@${post.author?.twitter}`}
-          </a>
+          </Themed.a>
         </Separated>
       )}
     </Group>
-    <Group sx={{ color: "tertiary", opacity: 0.8 }}>
+    <Group sx={{ color: "text.subtle" }}>
       {post.datePublished && (
         <>
           <Separated>

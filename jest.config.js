@@ -8,8 +8,10 @@ module.exports = {
   testPathIgnorePatterns: [
     "/node_modules/",
     "/.next/",
+    "/.history/",
     "/__tests__/.eslintrc.js",
     "/__tests__/config/",
+    "/__tests__/testUtils/",
   ],
   transform: {
     "^.+\\.(js|jsx|ts|tsx)$": "<rootDir>/node_modules/babel-jest",

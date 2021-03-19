@@ -5,10 +5,11 @@ import Image from "next/image"
 import Link from "next/link"
 import type { Parent } from "unist"
 import { BlogMeta } from "@/helpers/schema"
-import { LayoutProps } from "@/helpers/loader"
+import { BlogLayoutProps } from "@/helpers/loader"
 import { BlogStaticProps } from "@/helpers/getBlogStaticProps"
 import { Author } from "./Author"
 import { PostMeta } from "./PostMeta"
+import { Middle, Top } from "./PageSection"
 
 const BannerPhoto: React.FC<BlogMeta["bannerPhoto"]> = ({
   src,
@@ -35,7 +36,7 @@ const BannerPhoto: React.FC<BlogMeta["bannerPhoto"]> = ({
         sx={{
           textAlign: "center",
           fontSize: 1,
-          color: "tertiary",
+          color: "text.subtle",
           marginTop: "0.25em",
         }}
       >
@@ -78,7 +79,7 @@ const Title: React.FC<{ post: BlogMeta }> = ({ post }) => {
       {title && <Themed.h1>{title}</Themed.h1>}
       {subtitle && (
         <Themed.h3
-          sx={{ color: "tertiary", fontWeight: "body", marginY: 2 }}
+          sx={{ color: "text.subtle", fontWeight: "body", marginY: 2 }}
           as="p"
           role="doc-subtitle"
         >
@@ -105,11 +106,11 @@ const TOCList: React.FC<{ node: Parent }> = ({ node }) => (
 const TableOfContents: React.FC<{ outline: Parent }> = ({ outline }) => {
   if (outline.children.length < 2) return null
   return (
-    <Card as="details" bg="#00000010">
+    <Card as="details" bg="higher" sx={{ boxShadow: "none" }}>
       <summary
         sx={{
           textAlign: "center",
-          "&:hover": { bg: "tertiary", cursor: "pointer" },
+          "&:hover": { bg: "lower", cursor: "pointer" },
         }}
       >
         Show Table of Contents
@@ -121,25 +122,24 @@ const TableOfContents: React.FC<{ outline: Parent }> = ({ outline }) => {
 }
 
 export const BlogPost: React.FunctionComponent<
-  LayoutProps & BlogStaticProps
+  BlogLayoutProps & BlogStaticProps
 > = ({ processedMeta: post, readingTime, outline, children }) => (
   <main>
     <article>
       <PostMeta post={post} />
 
-      <Container as="section" paddingX={3} marginY={4} mt={3}>
+      <Top>
         <Title post={post} />
         <Author post={post} readingTime={readingTime} />
         {post.bannerPhoto && <BannerPhoto {...post.bannerPhoto} />}
-      </Container>
+      </Top>
 
-      <Container as="section" paddingX={3} marginY={4}>
+      <Middle>
         {readingTime.minutes >= 5 && <TableOfContents outline={outline} />}
         {children}
-      </Container>
+      </Middle>
 
       <Container as="section" paddingX={3} marginY={4} marginTop={0}>
-        <Themed.hr />
         <Thanks />
       </Container>
     </article>
