@@ -9,6 +9,7 @@ import { LayoutProps } from "@/helpers/loader"
 import { BlogStaticProps } from "@/helpers/getBlogStaticProps"
 import { Author } from "./Author"
 import { PostMeta } from "./PostMeta"
+import { Middle, Top } from "./PageSection"
 
 const BannerPhoto: React.FC<BlogMeta["bannerPhoto"]> = ({
   src,
@@ -127,20 +128,16 @@ export const BlogPost: React.FunctionComponent<
     <article>
       <PostMeta post={post} />
 
-      <Box>
-        <Container as="section" paddingX={3} marginY={4} mt={3}>
-          <Title post={post} />
-          <Author post={post} readingTime={readingTime} />
-          {post.bannerPhoto && <BannerPhoto {...post.bannerPhoto} />}
-        </Container>
-      </Box>
+      <Top>
+        <Title post={post} />
+        <Author post={post} readingTime={readingTime} />
+        {post.bannerPhoto && <BannerPhoto {...post.bannerPhoto} />}
+      </Top>
 
-      <Box bg="background.content">
-        <Container as="section" padding={3} marginY={4}>
-          {readingTime.minutes >= 5 && <TableOfContents outline={outline} />}
-          {children}
-        </Container>
-      </Box>
+      <Middle>
+        {readingTime.minutes >= 5 && <TableOfContents outline={outline} />}
+        {children}
+      </Middle>
 
       <Container as="section" paddingX={3} marginY={4} marginTop={0}>
         <Thanks />

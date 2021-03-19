@@ -1,20 +1,26 @@
 import removeUndefined from "rundef"
-import { Container, Themed } from "theme-ui"
+import { Themed } from "theme-ui"
 import { PostCardGrid } from "@/components/PostCardGrid"
 import { loadPublishedBlogs } from "@/helpers/loader"
 import { BlogMeta } from "@/helpers/schema"
 import { GetStaticProps } from "next"
+import { Top, Middle } from "@/components/PageSection"
+import { Meta } from "@/components/Meta"
 
 interface BlogIndexProps {
   posts: BlogMeta<true>[]
 }
 
 export const BlogIndex: React.FC<BlogIndexProps> = ({ posts }) => (
-  <Container as="section" paddingX={3} marginY={4}>
-    <Themed.h1>Blog Posts</Themed.h1>
-
-    <PostCardGrid posts={posts} />
-  </Container>
+  <>
+    <Meta meta={{ title: "Blog Posts" }} />
+    <Top>
+      <Themed.h1>Blog Posts</Themed.h1>
+    </Top>
+    <Middle>
+      <PostCardGrid posts={posts} />
+    </Middle>
+  </>
 )
 
 export default BlogIndex

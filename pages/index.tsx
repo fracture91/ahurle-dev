@@ -1,15 +1,16 @@
 /** @jsxImportSource theme-ui */
 import React from "react"
-import Head from "next/head"
 import { GetStaticProps } from "next"
 import removeUndefined from "rundef"
 import { generateRSS } from "@/helpers/rssUtil"
 import { BlogMeta } from "@/helpers/schema"
 import { loadPublishedBlogs } from "@/helpers/loader"
-import { Themed, Container, Button } from "theme-ui"
+import { Themed, Button } from "theme-ui"
 import Features from "@/mdx/features.mdx"
 import Introduction from "@/mdx/introduction.mdx"
 import { PostCardGrid } from "@/components/PostCardGrid"
+import { Middle, Section, Top } from "@/components/PageSection"
+import { Meta } from "@/components/Meta"
 
 type HomeProps = {
   posts: BlogMeta<true>[]
@@ -17,22 +18,24 @@ type HomeProps = {
 
 const Home: React.FC<HomeProps> = ({ posts }) => (
   <main>
-    <Head>
-      <title>Introducing Devii</title>
-      <link rel="icon" href="/favicon.ico" />
-    </Head>
+    <Meta
+      meta={{
+        title: "Andrew Hurle — Internet Lad",
+        description:
+          "Portfolio and writings from full-stack software engineer Andrew Hurle",
+      }}
+    />
 
-    <Container as="section" paddingX={3} marginY={4}>
+    <Top>
       <Themed.h1 sx={{ textAlign: "center" }}>Introduction to Devii</Themed.h1>
-      <Introduction />
-    </Container>
+    </Top>
 
-    <Container as="section" paddingX={3} marginY={4}>
+    <Middle>
+      <Introduction />
+
       <Themed.h2 sx={{ textAlign: "center" }}>Features</Themed.h2>
       <Features />
-    </Container>
 
-    <Container as="section" paddingX={3} marginY={4}>
       <Themed.h2 sx={{ textAlign: "center" }}>My blog posts</Themed.h2>
       <Themed.p>
         This section demonstrates the power of dynamic imports. Every Markdown
@@ -43,9 +46,7 @@ const Home: React.FC<HomeProps> = ({ posts }) => (
         <Themed.code>/components/PostCard.tsx</Themed.code> component.
       </Themed.p>
       <PostCardGrid posts={posts} />
-    </Container>
 
-    <Container as="section" paddingX={3} marginY={4}>
       <Themed.h2 sx={{ textAlign: "center" }}>Testimonials</Themed.h2>
       <Themed.blockquote>
         <Themed.p>
@@ -63,23 +64,14 @@ const Home: React.FC<HomeProps> = ({ posts }) => (
           utterly out of context
         </Themed.a>
       </Themed.p>
-    </Container>
+    </Middle>
 
-    <Container
-      as="section"
-      padding={3}
-      marginY={0}
-      sx={{
-        backgroundColor: "#00000010",
-        maxWidth: "none",
-        textAlign: "center",
-      }}
-    >
+    <Section p={3} sx={{ textAlign: "center" }}>
       <Themed.h2 sx={{ textAlign: "center" }}>Get started</Themed.h2>
       <Themed.a href="https://github.com/colinhacks/devii">
         <Button>Go to README</Button>
       </Themed.a>
-    </Container>
+    </Section>
   </main>
 )
 
