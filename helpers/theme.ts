@@ -1,6 +1,6 @@
 import {
   Theme as GenericTheme,
-  ContextValue as GenericContextValue,
+  ThemeUIContextValue as GenericContextValue,
   useThemeUI as genericUseThemeUI,
   useColorMode as genericUseColorMode,
   ThemeUICSSObject,

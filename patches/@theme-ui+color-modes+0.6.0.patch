@@ -1,0 +1,32 @@
+diff --git a/node_modules/@theme-ui/color-modes/dist/index.d.ts b/node_modules/@theme-ui/color-modes/dist/index.d.ts
+index 660c660..a623edf 100644
+--- a/node_modules/@theme-ui/color-modes/dist/index.d.ts
++++ b/node_modules/@theme-ui/color-modes/dist/index.d.ts
+@@ -16,3 +16,5 @@ export declare const InitializeColorMode: () => React.DetailedReactHTMLElement<{
+         __html: string;
+     };
+ }, HTMLElement>;
++export declare const createColorStyles: (theme?: Theme) => import("@theme-ui/css").CSSObject;
++export declare const getPreferredColorScheme: () => "dark" | "light" | null
+diff --git a/node_modules/@theme-ui/color-modes/dist/index.esm.js b/node_modules/@theme-ui/color-modes/dist/index.esm.js
+index 6eafc0a..c13e632 100644
+--- a/node_modules/@theme-ui/color-modes/dist/index.esm.js
++++ b/node_modules/@theme-ui/color-modes/dist/index.esm.js
+@@ -289,5 +289,5 @@ var InitializeColorMode = function InitializeColorMode() {
+   });
+ };
+ 
+-export { ColorModeProvider, InitializeColorMode, useColorMode };
++export { ColorModeProvider, InitializeColorMode, useColorMode, createColorStyles, getPreferredColorScheme };
+ //# sourceMappingURL=index.esm.js.map
+diff --git a/node_modules/@theme-ui/color-modes/dist/index.js b/node_modules/@theme-ui/color-modes/dist/index.js
+index ba32917..8cd9313 100644
+--- a/node_modules/@theme-ui/color-modes/dist/index.js
++++ b/node_modules/@theme-ui/color-modes/dist/index.js
+@@ -296,4 +296,6 @@ var InitializeColorMode = function InitializeColorMode() {
+ exports.ColorModeProvider = ColorModeProvider;
+ exports.InitializeColorMode = InitializeColorMode;
+ exports.useColorMode = useColorMode;
++exports.createColorStyles = createColorStyles;
++exports.getPreferredColorScheme = getPreferredColorScheme;
+ //# sourceMappingURL=index.js.map

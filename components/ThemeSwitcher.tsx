@@ -112,7 +112,6 @@ export const ThemeSwitcher: React.FC = () => {
       // Get around this by using the classname-based overrides theme-ui includes,
       // originally to avoid FOUC with localStorage.  This also helps our no-JS
       // DarkMediaStyle avoid clashing with yes-JS behavior.
-      // Note that this is paired with a theme-ui patch to avoid removing class on startup.
       ;[document.documentElement, document.body].forEach((el) => {
         el.classList.forEach((value, _key, parent) =>
           value.startsWith(CLASS_PREFIX) ? parent.remove(value) : null
