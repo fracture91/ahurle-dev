@@ -40,50 +40,52 @@ const bodyFonts = fonts([
 
 const darkBackground = "#29241e"
 
+const colors = {
+  background: {
+    __default: "#fff5e9",
+    content: "#f7f3f0",
+    header: "#fefcf9",
+    switchSelected: "var(--theme-ui-colors-background-header)",
+    highlightText: "var(--theme-ui-colors-lower)",
+  },
+  text: {
+    __default: "#222",
+    subtle: "#555",
+    switchSelected: "var(--theme-ui-colors-text)",
+  },
+  higher: "#fff6",
+  lower: "#0001",
+  primary: { __default: "#1d521d", background: "#e0fae0" },
+  secondary: "#938575",
+  imgFilter: "none", // abusing this for non-color CSS vars
+  modes: {
+    dark: {
+      background: {
+        __default: darkBackground,
+        content: "#191614",
+        header: "#3f3831",
+        switchSelected: "var(--theme-ui-colors-text)",
+        highlightText: "var(--theme-ui-colors-higher)",
+      },
+      text: {
+        __default: "#f0dfca",
+        subtle: "#b1a393",
+        switchSelected: "var(--theme-ui-colors-background-content)",
+      },
+      higher: "#fff1",
+      lower: "#0006",
+      primary: { __default: "#90c290", background: "#3d603d" },
+      imgFilter: "brightness(.9) saturate(80%)",
+    },
+  },
+} as const
+
 export const theme = makeTheme({
   useLocalStorage: false, // persists prefers-color-scheme by default :(
   useColorSchemeMediaQuery: true, // default to the user's preferred mode
   initialColorModeName: "light" as const,
   useRootStyles: true,
-  colors: {
-    background: {
-      __default: "#fff5e9",
-      content: "#f7f3f0",
-      header: "#fefcf9",
-      switchSelected: "var(--theme-ui-colors-background-header)",
-      highlightText: "var(--theme-ui-colors-lower)",
-    },
-    text: {
-      __default: "#222",
-      subtle: "#555",
-      switchSelected: "var(--theme-ui-colors-text)",
-    },
-    higher: "#fff6",
-    lower: "#0001",
-    primary: { __default: "#1d521d", background: "#e0fae0" },
-    secondary: "#938575",
-    imgFilter: "none", // abusing this for non-color CSS vars
-    modes: {
-      dark: {
-        background: {
-          __default: darkBackground,
-          content: "#191614",
-          header: "#3f3831",
-          switchSelected: "var(--theme-ui-colors-text)",
-          highlightText: "var(--theme-ui-colors-higher)",
-        },
-        text: {
-          __default: "#f0dfca",
-          subtle: "#b1a393",
-          switchSelected: "var(--theme-ui-colors-background-content)",
-        },
-        higher: "#fff1",
-        lower: "#0006",
-        primary: { __default: "#90c290", background: "#3d603d" },
-        imgFilter: "brightness(.9) saturate(80%)",
-      },
-    },
-  },
+  colors,
   breakpoints: ["40rem", "60rem", "120rem", "180rem"],
   space: [0, 4, 8, 16, 32, 64, 128, 256, 512],
   fonts: {
@@ -334,7 +336,8 @@ export const theme = makeTheme({
         bg: "#fff1",
         mx: "-1em",
         px: "1em",
-        boxShadow: (t) => `3px 0 0 ${t.colors?.primary} inset`,
+        // eslint-disable-next-line no-underscore-dangle
+        boxShadow: `3px 0 0 ${colors.modes.dark.primary.__default} inset`,
       },
     },
     code: {
