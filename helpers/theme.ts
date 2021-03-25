@@ -259,18 +259,35 @@ export const theme = makeTheme({
     },
     p: {
       maxWidth: "65ch",
-      marginY: "1.4em",
+      my: "1.4em",
       ":first-child": {
-        marginTop: 0,
+        mt: 0,
       },
       ":last-child": {
-        marginBottom: 0,
+        mb: 0,
       },
       "li &": {
-        marginY: "1em",
+        my: "0em",
+      },
+      "li & + &": {
+        mt: "0.2em",
+        color: "text.subtle",
+        fontSize: 1,
       },
       "h1 + &, h2 + &, h3 + &, h4 + &, h5 + &, h6 + &": {
-        marginTop: 0,
+        mt: 0,
+      },
+    },
+    ul: {
+      pl: "1.5em",
+    },
+    ol: {
+      pl: "1.5em",
+    },
+    li: {
+      my: "0.5em",
+      "li &": {
+        mt: "0.2em",
       },
     },
     a: {

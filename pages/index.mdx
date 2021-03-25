@@ -1,0 +1,218 @@
+import { PostCardGrid } from "@/components/PostCardGrid"
+import { getIndexStaticProps } from "@/helpers/getIndexStaticProps"
+
+export const meta = {
+  title: "Andrew Hurle — Internet Lad",
+  visibleTitle: "Hi, I'm Andrew Hurle",
+  description:
+    "Portfolio and writings from full-stack software engineer Andrew Hurle",
+}
+export const getStaticProps = (...args) =>
+  getIndexStaticProps(...args, layoutProps)
+
+Welcome to my internet website. I'm a full-stack software engineer who loves Ruby, TypeScript, React, and I guess Python is okay too. I also like videogames, dancing, music, and food. My blog posts are mostly technical, but I'll write about other stuff too.
+
+Here I am on
+[LinkedIn](https://www.linkedin.com/in/andrew-hurle/),
+[GitHub](https://github.com/fracture91/),
+and [Twitter](https://twitter.com/adhurle).
+You can also try emailing me at any string at this domain. I may not have time to reply but I appreciate hearing from you.
+
+# Recent blog posts
+
+<PostCardGrid posts={props.posts.slice(0, 2)} />
+
+[See all blog posts →](/blog)
+
+# Timeline
+
+## 2021
+
+- Started a learning sabbatical 🧙
+
+- Made this site along with some (minor) OSS contributions 🌐
+
+## 2020
+
+- Built an integration testing suite for Hopjump's hotel search backend 🧪
+
+  Learned a ton about Python's testing libraries and how they compare to Ruby/JS
+
+- Moved to Somerville, MA 🏠
+
+- Hopjump acquired SmarterTravel Media from TripAdvisor 📈
+
+  I was the tech lead for the transition into our infrastructure - 9 eng on the team over 8 weeks. That was intense! Kubernetes and Java knowledge ++
+
+- Survived a global pandemic 🦠
+
+- Had my first-ever fender-bender in midtown Manhattan 💥
+
+## 2019
+
+- Visited Tokyo, Kyoto, Osaka, and Seoul 🇯🇵🇰🇷
+
+  Riding a go-kart around Tokyo was a blast 🏎️
+
+- Converted hopjump.com to React with SSR, styled-components, TS ⚛️
+
+  No more class typo bugs! Happy to return to JS and learn a modern stack
+
+- Visited Seattle ☕
+
+## 2018
+
+- Cognius became Hopjump 🧳
+
+  Focus changed to the travel industry, more product-oriented
+
+- Built Hopjump's hotel booking website from scratch 🏨
+
+  Ruby on Rails plus good ol' HAML and SASS
+
+- Hired two more direct reports 🤝
+
+- Visited Lake Tahoe ⛷️
+
+- Visited London 🇬🇧
+
+  Went to
+  [this](https://ra.co/events/1171748),
+  [this](https://www.youtube.com/watch?v=tnhzPaURNeI),
+  and got my steps in
+
+- Visited Hawaii 🏖️
+
+  I recommend the Polynesian Cultural Center and Volcanoes National Park
+
+## 2017
+
+- Promoted (side-moted?) to Lead Software Engineer 🧑‍💻
+
+  Inherited one direct report
+
+- Became a Certified ScrumMaster™®© 📒
+
+  I am good at Jira
+
+- Visited Paris 🇫🇷
+
+  First time outside the US!
+
+- Visited DC 🏛️
+
+## 2016
+
+- Promoted to Senior, then Principal Software Engineer 👴
+
+- Built a Rails app backing 7 websites to secure a new revenue stream 💸
+
+## 2015
+
+- Made a type-safe Ruby DSL for building marketing decision trees 🌳
+
+  Thanks to the [Contracts](https://github.com/egonSchiele/contracts.ruby) library and a lot of wacky metaprogramming
+
+- [Became a halfway decent cook](/recipes) 🍲
+
+- Visited NYC 🗽
+
+## 2014
+
+- Built a 30MM req/day job search service w/ Scala and ElasticSearch 🔍
+
+  80% of the company's revenue passed through this system so that was quite a lot of responsibility!
+
+- Went to a lot of concerts/raves/festivals 🕺
+
+- [Built my first PC](https://pcpartpicker.com/user/Fracture91/saved/#view=kqLbt6)
+
+## 2013
+
+- Graduated from Worcester Polytechnic Institute with a BS in CS 🎓
+
+- Moved to Cambridge, MA 🏠
+
+- Started at Cognius as a Software Engineer 🏢
+
+  First eng hire! Job search slash email marketing (think Indeed, Monster).
+
+- Learned Ruby on Rails very intensely and fell in love with it ❤️
+
+## 2012
+
+- Interned at Mozilla for the summer in Mountain View, CA 🦊
+
+  Fun fact: If you used Firefox around 2013 then you've already seen [some of my work](https://bugzilla.mozilla.org/show_bug.cgi?id=587909)
+
+- Switched from Windows to Ubuntu 🐧
+
+  This made my classes more... _fun_, especially Computer Graphics. I also made [a nasty Python script to sync music to my phone from foobar2000](https://github.com/fracture91/fplsync) running under Wine off my Windows partition.
+
+## 2011
+
+- Created [Distillery](https://github.com/fracture91/Distillery) so I could enumerate shared Steam games ♨️
+
+  Since then, Steam implemented its own limited version of this and there are dedicated websites like [SteamCompanion](https://steamcompanion.com/compare). Looking back, this project was kind of neat because I invented my own janky MVC UI framework pre-React and before Angular was really a thing.
+
+## 2009
+
+- Began studying Computer Science at Worcester Polytechnic Institute 📚
+
+  I also worked at the IT Helpdesk and fixed people's computers
+
+- Learned JS to make lots of goofy [userscripts](https://en.wikipedia.org/wiki/Userscript) 📜
+
+- Created [IGN++](https://github.com/fracture91/ignpp) ✨
+
+  This was a Firefox/Chrome extension that added _\~Web 2.0 AJAX\~_ to a forum to improve its UX. It had like 400 users at its peak and I was very proud of it. Vanilla JS.
+
+## 2008
+
+- Started my first programming class in high school 🧑‍🏫
+
+  In C++, perhaps the worst language to start with
+
+- Implemented games like Conway's Game of Life, Snake, Pong 🕹️
+
+  I also ported pong to run on my hacked PSP 🤙
+
+- Did a few challenges on [Project Euler](https://projecteuler.net/archives) 🧩
+
+- Learned CSS so I could create dope [userstyles](https://en.wikipedia.org/wiki/Stylish) 💅
+
+- Also took some kind of Web Design class 🔗
+
+## 2007
+
+- Learned Flash in a high school class, and got good at Photoshop 📸
+
+  Maybe copy/pasting some ActionScript was my first exposure to code
+
+## ~1999-2004
+
+- Played a lot of StarCraft and Unreal (Tournament) 🖱️
+
+  I remember creating custom StarCraft maps and messing around in Unreal's dev console
+
+## ~1998
+
+- First home computer 🖥️
+
+  My favorite pastimes were [Kid Pix](https://www.youtube.com/watch?v=CJ4zH2if0kU) and printing out pages of [webdings](https://en.wikipedia.org/wiki/Webdings)
+
+## ~1997
+
+- First time on the internet thanks to [WebTV](https://en.wikipedia.org/wiki/MSN_TV) 📺
+
+  I used it to listen to the soundtrack from Back To The Future
+
+## ~1995
+
+- First gaming console - a Sony PlayStation 🎮
+
+  I remember playing on a NES, SNES, Genesis, and Macintosh, but this was the first one that my family owned.
+  [Ridge Racer](https://www.youtube.com/watch?v=kMTPYVWnTTU&list=PL5MAATZlrqOhGQ6trLJ-iFCg2_TrGuEOU&index=1),
+  [WipEout](https://www.youtube.com/watch?v=dUQxO8ZFU9g&list=PLsPMOz2-mpmPVQVxqhIU31jzmlD5-osq4&index=1),
+  and later [THPS](https://www.youtube.com/watch?v=S51HkasuvdQ&list=PLB3FnBA-48BED8VsTro4T0-emKTPWI7iK&index=1)
+  massively influenced my taste in music.
