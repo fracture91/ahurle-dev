@@ -32,6 +32,16 @@ module.exports = {
         "@typescript-eslint/no-var-requires": "off",
       },
     },
+    {
+      files: "*.mdx",
+      globals: {
+        layoutProps: "readonly",
+        props: "readonly",
+      },
+      rules: {
+        "@typescript-eslint/explicit-module-boundary-types": "off",
+      },
+    },
   ],
   parserOptions: {
     ecmaFeatures: {
