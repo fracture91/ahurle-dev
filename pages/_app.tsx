@@ -14,6 +14,7 @@ import {
   Flex,
 } from "theme-ui"
 import { createColorStyles } from "@theme-ui/color-modes"
+import type { MDXProviderComponents } from "@theme-ui/mdx"
 import { theme } from "@/helpers/theme"
 import { Footer } from "@/components/Footer"
 import * as globals from "@/helpers/globals"
@@ -47,8 +48,10 @@ const MDXLink: React.FC<React.ComponentPropsWithoutRef<"a">> = ({
   )
 }
 
-const components = {
+const components: MDXProviderComponents = {
   p: UnwrapImages,
+  ul: (props) => <Themed.ul {...props} sx={{ fontFamily: "prose" }} />,
+  ol: (props) => <Themed.ol {...props} sx={{ fontFamily: "prose" }} />,
   pre: MDXPre,
   img: ImageRenderer,
   a: MDXLink,
