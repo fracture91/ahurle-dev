@@ -92,6 +92,7 @@ module.exports = {
     "eslint-comments/disable-enable-pair": ["error", { allowWholeFile: true }],
   },
   settings: {
+    // "mdx/code-blocks": true,
     "import/parsers": {
       "@typescript-eslint/parser": [".ts", ".tsx"],
     },

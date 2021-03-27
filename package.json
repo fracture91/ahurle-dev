@@ -73,7 +73,6 @@
     "react-syntax-highlighter": "^15.4.3",
     "react-use": "^17.1.1",
     "reading-time": "^1.3.0",
-    "rebass": "https://registry.yarnpkg.com/@favware/skip-dependency/-/skip-dependency-1.1.0.tgz",
     "rehype": "^11.0.0",
     "rehype-autolink-headings": "^5.0.1",
     "rehype-slug": "^4.0.1",
@@ -134,7 +133,6 @@
   "resolutions": {
     "refractor": "^3.3.1",
     "react": "^17.0.1",
-    "rebass": "https://registry.yarnpkg.com/@favware/skip-dependency/-/skip-dependency-1.1.0.tgz",
     "@babel/core": "^7.12.16",
     "babel-preset-react-app": "https://registry.yarnpkg.com/@favware/skip-dependency/-/skip-dependency-1.1.0.tgz",
     "polished": "^4.1.1"
