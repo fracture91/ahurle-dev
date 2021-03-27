@@ -9,6 +9,6 @@ describe("Homepage", () => {
     })
     render()
     expect(screen.getByText("ahurle.dev")).toBeVisible()
-    expect(screen.getByText("Introduction to Devii")).toBeVisible()
+    expect(screen.getByText("Hi, I'm Andrew Hurle")).toBeVisible()
   })
 })

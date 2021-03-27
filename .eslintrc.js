@@ -32,6 +32,16 @@ module.exports = {
         "@typescript-eslint/no-var-requires": "off",
       },
     },
+    {
+      files: "*.mdx",
+      globals: {
+        layoutProps: "readonly",
+        props: "readonly",
+      },
+      rules: {
+        "@typescript-eslint/explicit-module-boundary-types": "off",
+      },
+    },
   ],
   parserOptions: {
     ecmaFeatures: {
@@ -82,6 +92,7 @@ module.exports = {
     "eslint-comments/disable-enable-pair": ["error", { allowWholeFile: true }],
   },
   settings: {
+    // "mdx/code-blocks": true,
     "import/parsers": {
       "@typescript-eslint/parser": [".ts", ".tsx"],
     },

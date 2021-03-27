@@ -1,10 +1,12 @@
+/* eslint-disable no-underscore-dangle */
 import {
   Theme as GenericTheme,
-  ContextValue as GenericContextValue,
+  ThemeUIContextValue as GenericContextValue,
   useThemeUI as genericUseThemeUI,
   useColorMode as genericUseColorMode,
   ThemeUICSSObject,
 } from "theme-ui"
+import { lighten } from "polished"
 import chainLink from "@/public/img/chain-link.svg"
 import { preLoadClass } from "@/components/RemovePreLoadClass"
 
@@ -40,50 +42,65 @@ const bodyFonts = fonts([
 
 const darkBackground = "#29241e"
 
+const colors = {
+  background: {
+    __default: "#fff5e9",
+    content: "#f7f3f0",
+    header: "#fefcf9",
+    switchSelected: "var(--theme-ui-colors-background-header)",
+    highlightText: "var(--theme-ui-colors-lower)",
+  },
+  text: {
+    __default: "#222",
+    subtle: "#555",
+    switchSelected: "var(--theme-ui-colors-text)",
+  },
+  higher: "#fff6",
+  lower: "#0001",
+  primary: {
+    __default: "#1d521d",
+    background: {
+      __default: "#e0fae0",
+      // babel-plugin-polished only works with literals :(
+      lighter: lighten(0.02, "#e0fae0"),
+    },
+  },
+  secondary: "#938575",
+  imgFilter: "none", // abusing this for non-color CSS vars
+  modes: {
+    dark: {
+      background: {
+        __default: darkBackground,
+        content: "#191614",
+        header: "#3f3831",
+        switchSelected: "var(--theme-ui-colors-text)",
+        highlightText: "var(--theme-ui-colors-higher)",
+      },
+      text: {
+        __default: "#f0dfca",
+        subtle: "#b1a393",
+        switchSelected: "var(--theme-ui-colors-background-content)",
+      },
+      higher: "#fff1",
+      lower: "#0006",
+      primary: {
+        __default: "#90c290",
+        background: {
+          __default: "#3d603d",
+          lighter: lighten(0.04, "#3d603d"),
+        },
+      },
+      imgFilter: "brightness(.9) saturate(80%)",
+    },
+  },
+} as const
+
 export const theme = makeTheme({
   useLocalStorage: false, // persists prefers-color-scheme by default :(
   useColorSchemeMediaQuery: true, // default to the user's preferred mode
   initialColorModeName: "light" as const,
   useRootStyles: true,
-  colors: {
-    background: {
-      __default: "#fff5e9",
-      content: "#f7f3f0",
-      header: "#fefcf9",
-      switchSelected: "var(--theme-ui-colors-background-header)",
-      highlightText: "var(--theme-ui-colors-lower)",
-    },
-    text: {
-      __default: "#222",
-      subtle: "#555",
-      switchSelected: "var(--theme-ui-colors-text)",
-    },
-    higher: "#fff6",
-    lower: "#0001",
-    primary: { __default: "#1d521d", background: "#e0fae0" },
-    secondary: "#938575",
-    imgFilter: "none", // abusing this for non-color CSS vars
-    modes: {
-      dark: {
-        background: {
-          __default: darkBackground,
-          content: "#191614",
-          header: "#3f3831",
-          switchSelected: "var(--theme-ui-colors-text)",
-          highlightText: "var(--theme-ui-colors-higher)",
-        },
-        text: {
-          __default: "#f0dfca",
-          subtle: "#b1a393",
-          switchSelected: "var(--theme-ui-colors-background-content)",
-        },
-        higher: "#fff1",
-        lower: "#0006",
-        primary: { __default: "#90c290", background: "#3d603d" },
-        imgFilter: "brightness(.9) saturate(80%)",
-      },
-    },
-  },
+  colors,
   breakpoints: ["40rem", "60rem", "120rem", "180rem"],
   space: [0, 4, 8, 16, 32, 64, 128, 256, 512],
   fonts: {
@@ -140,12 +157,16 @@ export const theme = makeTheme({
   sizes: {
     container: "40em",
   },
+  shadows: {
+    high: "0 4px 6px #3331, 0 1px 3px #00000007",
+    higher: "0 7px 14px #3331, 0 3px 6px #00000007",
+  },
   text: {
     heading: {
       fontFamily: "heading",
       lineHeight: "heading",
       fontWeight: "heading",
-      mt: "1.7em",
+      mt: "1em",
       mb: "1rem",
       ":first-child": {
         marginTop: 0,
@@ -160,12 +181,15 @@ export const theme = makeTheme({
       color: "text",
       backgroundColor: "primary.background",
       borderRadius: 10,
-      border: "none",
+      boxShadow: "high",
       fontSize: 3,
       padding: "1 3",
       cursor: "pointer",
-      "&:hover": {
-        backgroundColor: "lower",
+      transition: "background-color 100ms ease, box-shadow 100ms ease",
+      "&:hover, &:focus": {
+        transform: "translateY(-1px)",
+        backgroundColor: "primary.background.lighter",
+        boxShadow: "higher",
       },
     },
   },
@@ -190,7 +214,7 @@ export const theme = makeTheme({
     primary: {
       padding: 2,
       borderRadius: 4,
-      boxShadow: "0 0 8px rgba(0, 0, 0, 0.125)",
+      boxShadow: "high",
     },
   },
   styles: {
@@ -223,6 +247,7 @@ export const theme = makeTheme({
     },
     h1: {
       variant: "text.heading",
+      mt: "1.7em",
       fontSize: [6, 7, 8],
       letterSpacing: "-0.03em",
       ...linkInsideHeading,
@@ -257,18 +282,35 @@ export const theme = makeTheme({
     },
     p: {
       maxWidth: "65ch",
-      marginY: "1.4em",
+      my: "1.4em",
       ":first-child": {
-        marginTop: 0,
+        mt: 0,
       },
       ":last-child": {
-        marginBottom: 0,
+        mb: 0,
       },
       "li &": {
-        marginY: "1em",
+        my: "0em",
+      },
+      "li & + &": {
+        mt: "0.2em",
+        color: "text.subtle",
+        fontSize: 1,
       },
       "h1 + &, h2 + &, h3 + &, h4 + &, h5 + &, h6 + &": {
-        marginTop: 0,
+        mt: 0,
+      },
+    },
+    ul: {
+      pl: "1.5em",
+    },
+    ol: {
+      pl: "1.5em",
+    },
+    li: {
+      my: "0.5em",
+      "li &": {
+        mt: "0.2em",
       },
     },
     a: {
@@ -334,7 +376,7 @@ export const theme = makeTheme({
         bg: "#fff1",
         mx: "-1em",
         px: "1em",
-        boxShadow: (t) => `3px 0 0 ${t.colors?.primary} inset`,
+        boxShadow: `3px 0 0 ${colors.modes.dark.primary.__default} inset`,
       },
     },
     code: {

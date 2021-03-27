@@ -2,7 +2,7 @@ import { Container, Box } from "theme-ui"
 import { WrapFC } from "@/helpers/WrapFC"
 
 export const Section: WrapFC<typeof Container> = (props) => (
-  <Container as="section" px={3} my={3} {...props} />
+  <Container px={3} my={3} {...props} />
 )
 
 export const Top: WrapFC<typeof Section> = (props) => <Section {...props} />

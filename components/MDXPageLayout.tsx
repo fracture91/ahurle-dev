@@ -1,3 +1,4 @@
+/** @jsxImportSource theme-ui */
 import type { PageLayoutProps } from "@/helpers/loader"
 import { Themed } from "theme-ui"
 import { Middle, Top } from "@/components/PageSection"
@@ -19,18 +20,19 @@ export const MDXPageLayout: React.FC<PageLayoutProps & PageStaticProps> = ({
   processedMeta: meta,
   children,
 }) => {
-  if (meta.bare)
-    return (
-      <>
-        <ThisHead meta={meta} />
-        {children}
-      </>
-    )
+  const visibleTitle = meta.visibleTitle || meta.title
   return (
     <>
       <ThisHead meta={meta} />
-      <Top>{meta.title && <Themed.h1>{meta.title}</Themed.h1>}</Top>
-      <Middle>{children}</Middle>
+      <main sx={{ height: "100%" }}>
+        {!meta.bare && (
+          <>
+            <Top>{visibleTitle && <Themed.h1>{visibleTitle}</Themed.h1>}</Top>
+            <Middle>{children}</Middle>
+          </>
+        )}
+        {meta.bare && children}
+      </main>
     </>
   )
 }

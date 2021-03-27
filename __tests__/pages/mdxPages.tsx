@@ -36,7 +36,9 @@ describe("MDX pages", () => {
       expect(screen.getByText("ahurle.dev")).toBeVisible()
       if (!page.bare) {
         // eslint-disable-next-line jest/no-conditional-expect
-        expect(screen.getByText(page.title, { selector: "h1" })).toBeVisible()
+        expect(
+          screen.getByText(page.visibleTitle || page.title, { selector: "h1" })
+        ).toBeVisible()
       }
     })
   })

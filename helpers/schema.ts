@@ -33,6 +33,7 @@ const RawPageMetaSchemaNoTransform = z
   .object({
     bare: z.boolean().optional(),
     title: z.string().nonempty(),
+    visibleTitle: z.string().nonempty().optional(),
     description: z.string().nonempty().optional(),
     canonicalUrl: z.string().nonempty().optional(),
   })
