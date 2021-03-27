@@ -1,6 +1,7 @@
 /** @jsxImportSource theme-ui */
 import React, { useEffect, useRef, useState, useMemo } from "react"
 import Link from "next/link"
+import { useRouter } from "next/router"
 import throttle from "lodash/throttle"
 import * as globals from "@/helpers/globals"
 import { Flex, NavLink } from "theme-ui"
@@ -211,6 +212,7 @@ const necessaryPxPerThrottle = throttleMs * necessaryPxPerMs
 const keepVisibleAbovePx = 100
 
 export const Header: React.FC = () => {
+  const router = useRouter()
   const [visible, setVisible] = useState(true)
   const expandoRef = useRef<HTMLElement>(null)
   const lastScrollTop = useRef(scrollTop())
@@ -235,6 +237,15 @@ export const Header: React.FC = () => {
     []
   )
 
+  // for some reason the onScroll event doesn't get triggered in this case,
+  // even though I think it ought to be triggered because it's calling window.scrollTo
+  useEffect(() => {
+    router.events.on("routeChangeComplete", onScroll)
+    return () => {
+      router.events.off("routeChangeComplete", onScroll)
+    }
+  }, [router, onScroll])
+
   useEffect(() => {
     window.addEventListener("scroll", onScroll, true)
     return () => {
@@ -253,7 +264,7 @@ export const Header: React.FC = () => {
         ...border,
         transition: [
           theme.styles.root.transition,
-          "transform 300ms linear",
+          "transform 200ms linear",
         ].join(","),
         flexShrink: 0,
         transform: visible ? "translateY(0)" : "translateY(-120%)",
