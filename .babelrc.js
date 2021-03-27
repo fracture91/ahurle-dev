@@ -19,6 +19,7 @@ module.exports = {
     ],
   ],
   plugins: [
+    ["polished"],
     ["@emotion"],
     [
       "module-resolver",

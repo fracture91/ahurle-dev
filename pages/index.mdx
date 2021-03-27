@@ -1,3 +1,6 @@
+import Link from "next/link"
+import { Button } from "theme-ui"
+import { ShowMore } from "@/components/ShowMore"
 import { PostCardGrid } from "@/components/PostCardGrid"
 import { getIndexStaticProps } from "@/helpers/getIndexStaticProps"
 
@@ -22,9 +25,15 @@ You can also try emailing me at any string at this domain. I may not have time t
 
 <PostCardGrid posts={props.posts.slice(0, 2)} />
 
-[See all blog posts →](/blog)
+<Link href="/blog" passHref>
+  <Button as="a" sx={{ display: "block", mt: "1em", mb: "2.5em" }}>
+    See all blog posts →
+  </Button>
+</Link>
 
 # Timeline
+
+<ShowMore id="show-more-timeline">
 
 ## 2021
 
@@ -40,7 +49,7 @@ You can also try emailing me at any string at this domain. I may not have time t
 
 - Moved to Somerville, MA 🏠
 
-- Hopjump acquired SmarterTravel Media from TripAdvisor 📈
+- [Hopjump acquired SmarterTravel Media from TripAdvisor](https://www.wsj.com/articles/tripadvisor-sells-eight-travel-sites-to-startup-amid-reorganization-11594819604) 📈
 
   I was the tech lead for the transition into our infrastructure - 9 eng on the team over 8 weeks. That was intense! Kubernetes and Java knowledge ++
 
@@ -216,3 +225,5 @@ You can also try emailing me at any string at this domain. I may not have time t
   [WipEout](https://www.youtube.com/watch?v=dUQxO8ZFU9g&list=PLsPMOz2-mpmPVQVxqhIU31jzmlD5-osq4&index=1),
   and later [THPS](https://www.youtube.com/watch?v=S51HkasuvdQ&list=PLB3FnBA-48BED8VsTro4T0-emKTPWI7iK&index=1)
   massively influenced my taste in music.
+
+</ShowMore>

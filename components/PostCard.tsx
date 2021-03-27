@@ -4,6 +4,7 @@ import Link from "next/link"
 import { format } from "fecha"
 import styled from "@emotion/styled"
 import { Flex, Themed } from "theme-ui"
+import { theme } from "@/helpers/theme"
 import { BlogMeta } from "@/helpers/schema"
 import { WrapFC } from "@/helpers/WrapFC"
 import { LazyImage } from "./LazyImage"
@@ -17,13 +18,19 @@ const Outer = styled(Flex)`
 `
 
 const Inner = styled(Flex)`
-  box-shadow: 0px 2px 10px #00000040;
+  box-shadow: ${theme.shadows.high};
   width: 100%;
   max-width: 500px;
   overflow: hidden;
   border-radius: 8px;
   flex-direction: column;
   height: 100%;
+  transition: "background-color 100ms ease, box-shadow 100ms ease";
+  &:hover,
+  &:focus {
+    transform: translateY(-1px);
+    box-shadow: ${theme.shadows.higher};
+  }
 `
 
 const Thumbnail = styled.div`
