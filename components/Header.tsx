@@ -9,6 +9,7 @@ import { WrapFC } from "@/helpers/WrapFC"
 import { theme, Theme } from "@/helpers/theme"
 import { css, Global } from "@emotion/react"
 import { ThemeSwitcher } from "./ThemeSwitcher"
+import { DownCaret } from "./DownCaret"
 
 const maxHamburgerWidth = "28em"
 const hideHamburger = `@media (min-width: ${maxHamburgerWidth})`
@@ -37,7 +38,7 @@ const Hamburger: WrapFC<"svg"> = React.forwardRef((props, ref) => (
       cursor: "pointer",
       fill: "currentColor",
       ":hover": {
-        bg: "#0001",
+        bg: "lower",
       },
     }}
   >
@@ -47,24 +48,22 @@ const Hamburger: WrapFC<"svg"> = React.forwardRef((props, ref) => (
   </svg>
 ))
 
-const Triangle: React.FC = () => (
-  <svg
-    viewBox="0 0 1 1"
-    sx={{
-      fill: "currentColor",
-      width: "0.8em",
-      height: "0.8em",
-      transition: "transform 100ms",
-      "details[open] &": { transform: "rotate(-90deg)" },
-      "*:hover > &": {
-        filter: "drop-shadow(0px 0px 2px #0005)",
-      },
-    }}
-  >
-    <g>
-      <polygon points="0,0.5 1,1 1,0 0,0.5" />
-    </g>
-  </svg>
+const StyledDownCaret: React.FC = () => (
+  <div sx={{ px: "1em", py: "0.5em", "*:hover > &": { bg: "lower" } }}>
+    <DownCaret
+      sx={{
+        width: "1.1em",
+        height: "1.1em",
+        position: "relative",
+        top: "0.2em",
+        transition: "transform 100ms",
+        "details[open] &": { transform: "rotate(180deg)" },
+        "*:hover > &, *:hover > * > &": {
+          transform: "translateY(-1px)",
+        },
+      }}
+    />
+  </div>
 )
 
 const Toggle: WrapFC<"div"> = React.forwardRef((props, ref) => (
@@ -77,21 +76,17 @@ const Toggle: WrapFC<"div"> = React.forwardRef((props, ref) => (
         display: "unset",
       },
       "details:not([open]) &": {
-        "@media (min-width: 57em)": {
+        "@media (min-width: 51em)": {
           display: "none",
         },
-      },
-      ":hover": {
-        color: "secondary",
       },
       alignSelf: "center",
       position: "absolute",
       right: 0,
       top: 0,
-      paddingY: "0.5em",
       bg: "background.header",
       transition: theme.styles.root.transition,
-      pr: "1em",
+      pr: "0.1em",
       pl: "3em",
       cursor: "pointer",
       background: (t) =>
@@ -100,7 +95,7 @@ const Toggle: WrapFC<"div"> = React.forwardRef((props, ref) => (
         } 50%, #ffffff00 100%)`,
     }}
   >
-    <Triangle />
+    <StyledDownCaret />
   </div>
 ))
 
