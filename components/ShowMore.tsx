@@ -1,5 +1,6 @@
 /** @jsxImportSource theme-ui */
 import { Button } from "theme-ui"
+import { DownCaret } from "./DownCaret"
 
 const whenChecked = "input[type='checkbox']:checked ~ &"
 
@@ -25,11 +26,25 @@ export const ShowMore: React.FC<{ id: string }> = ({ id, children }) => (
         mt: "1em",
         display: "block",
         textAlign: "center",
-        "::after": { content: "' More ⮟'" },
-        [whenChecked]: { "::after": { content: "' Less ⮝'" } },
+        [whenChecked]: {
+          span: { display: "none" },
+          "span + span": { display: "inline" },
+          svg: { transform: "rotate(-180deg)" },
+        },
       }}
     >
-      Show
+      Show <span>More</span>
+      <span sx={{ display: "none" }}>Less</span>
+      <DownCaret
+        sx={{
+          ml: "0.5em",
+          verticalAlign: "middle",
+          width: "1em",
+          height: "1em",
+          display: "inline",
+          transition: "transform 200ms ease",
+        }}
+      />
     </Button>
   </div>
 )
