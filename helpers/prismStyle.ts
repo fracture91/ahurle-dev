@@ -8,22 +8,16 @@ import type { ThemeUICSSObject } from "theme-ui"
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 export const prismStyle: ThemeUICSSObject = {
   "&": {
-    color: "#a9b7c6",
-    fontFamily: "Consolas, Monaco, 'Andale Mono', monospace",
     direction: "ltr",
     textAlign: "left",
     whiteSpace: "pre",
     wordSpacing: "normal",
     wordBreak: "normal",
-    lineHeight: "1.5",
     MozTabSize: "4",
     OTabSize: "4",
     tabSize: "4",
     hyphens: "none",
-    padding: "1em",
-    margin: ".5em 0",
     overflow: "auto",
-    background: "#2b2b2b",
   },
   "&::selection, & ::selection": {
     color: "inherit",
