@@ -1,6 +1,7 @@
 /** @jsxImportSource theme-ui */
 import React, { useEffect, useRef, useState, useMemo } from "react"
 import Link from "next/link"
+import { useRouter } from "next/router"
 import throttle from "lodash/throttle"
 import * as globals from "@/helpers/globals"
 import { Flex, NavLink } from "theme-ui"
@@ -8,6 +9,7 @@ import { WrapFC } from "@/helpers/WrapFC"
 import { theme, Theme } from "@/helpers/theme"
 import { css, Global } from "@emotion/react"
 import { ThemeSwitcher } from "./ThemeSwitcher"
+import { DownCaret } from "./DownCaret"
 
 const maxHamburgerWidth = "28em"
 const hideHamburger = `@media (min-width: ${maxHamburgerWidth})`
@@ -36,7 +38,7 @@ const Hamburger: WrapFC<"svg"> = React.forwardRef((props, ref) => (
       cursor: "pointer",
       fill: "currentColor",
       ":hover": {
-        bg: "#0001",
+        bg: "lower",
       },
     }}
   >
@@ -46,24 +48,30 @@ const Hamburger: WrapFC<"svg"> = React.forwardRef((props, ref) => (
   </svg>
 ))
 
-const Triangle: React.FC = () => (
-  <svg
-    viewBox="0 0 1 1"
+const StyledDownCaret: React.FC = () => (
+  <div
     sx={{
-      fill: "currentColor",
-      width: "0.8em",
-      height: "0.8em",
-      transition: "transform 100ms",
-      "details[open] &": { transform: "rotate(-90deg)" },
-      "*:hover > &": {
-        filter: "drop-shadow(0px 0px 2px #0005)",
-      },
+      px: "1em",
+      py: "0.5em",
+      bg: "background.header",
+      transition: theme.styles.root.transition,
+      "*:hover > &": { bg: "lower" },
     }}
   >
-    <g>
-      <polygon points="0,0.5 1,1 1,0 0,0.5" />
-    </g>
-  </svg>
+    <DownCaret
+      sx={{
+        width: "1.1em",
+        height: "1.1em",
+        position: "relative",
+        top: "0.2em",
+        transition: "transform 100ms",
+        "details[open] &": { transform: "rotate(180deg)" },
+        "*:hover > &, *:hover > * > &": {
+          transform: "translateY(-1px)",
+        },
+      }}
+    />
+  </div>
 )
 
 const Toggle: WrapFC<"div"> = React.forwardRef((props, ref) => (
@@ -76,30 +84,24 @@ const Toggle: WrapFC<"div"> = React.forwardRef((props, ref) => (
         display: "unset",
       },
       "details:not([open]) &": {
-        "@media (min-width: 57em)": {
+        "@media (min-width: 51em)": {
           display: "none",
         },
-      },
-      ":hover": {
-        color: "secondary",
       },
       alignSelf: "center",
       position: "absolute",
       right: 0,
       top: 0,
-      paddingY: "0.5em",
       bg: "background.header",
-      transition: theme.styles.root.transition,
-      pr: "1em",
-      pl: "3em",
+      pl: "1em",
       cursor: "pointer",
       background: (t) =>
         `linear-gradient(to left, ${
           (t as Theme).colors.background.header
-        } 50%, #ffffff00 100%)`,
+        } 75%, #ffffff00 100%)`,
     }}
   >
-    <Triangle />
+    <StyledDownCaret />
   </div>
 ))
 
@@ -155,6 +157,7 @@ const ExpandoLinks: WrapFC<"details"> = React.forwardRef(
         ref={detailsRef}
         sx={{
           ml: [null, "0.5em", "2em"],
+          mr: "0.1em",
           flex: 1,
           alignSelf: "baseline",
           minWidth: "2em",
@@ -211,6 +214,7 @@ const necessaryPxPerThrottle = throttleMs * necessaryPxPerMs
 const keepVisibleAbovePx = 100
 
 export const Header: React.FC = () => {
+  const router = useRouter()
   const [visible, setVisible] = useState(true)
   const expandoRef = useRef<HTMLElement>(null)
   const lastScrollTop = useRef(scrollTop())
@@ -235,6 +239,15 @@ export const Header: React.FC = () => {
     []
   )
 
+  // for some reason the onScroll event doesn't get triggered in this case,
+  // even though I think it ought to be triggered because it's calling window.scrollTo
+  useEffect(() => {
+    router.events.on("routeChangeComplete", onScroll)
+    return () => {
+      router.events.off("routeChangeComplete", onScroll)
+    }
+  }, [router, onScroll])
+
   useEffect(() => {
     window.addEventListener("scroll", onScroll, true)
     return () => {
@@ -253,7 +266,7 @@ export const Header: React.FC = () => {
         ...border,
         transition: [
           theme.styles.root.transition,
-          "transform 300ms linear",
+          "transform 200ms linear",
         ].join(","),
         flexShrink: 0,
         transform: visible ? "translateY(0)" : "translateY(-120%)",

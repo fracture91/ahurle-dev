@@ -9,7 +9,7 @@ import React, { useMemo } from "react"
 import { PrismLight, PrismAsyncLight } from "react-syntax-highlighter"
 import type { ThemeUICSSObject } from "theme-ui"
 import { useThemeUI } from "@/helpers/theme"
-import { fixedStyle, originalCodeSelector } from "@/helpers/prismStyle"
+import { prismStyle } from "@/helpers/prismStyle"
 
 const SyntaxHighlighter =
   typeof window === "undefined" ? PrismLight : PrismAsyncLight
@@ -20,6 +20,8 @@ const languageLongNames = {
 } as const
 
 const DEFAULT_LANGUAGE = "text"
+
+const codeSelector = 'code[class*="language-"]'
 
 export const Code: React.FC<{ language: string; value?: string }> = React.memo(
   ({ language, value }) => {
@@ -47,16 +49,16 @@ export const Code: React.FC<{ language: string; value?: string }> = React.memo(
     // but none of them worked the way I wanted.
     const sx: ThemeUICSSObject = useMemo(
       () => ({
-        ...fixedStyle(),
+        ...prismStyle,
         ...{
           "&": {
-            ...(fixedStyle()["&"] as Record<string, unknown>),
+            ...(prismStyle["&"] as Record<string, unknown>),
             ...theme.styles.pre,
           },
-          [originalCodeSelector]: {
-            ...(fixedStyle()[originalCodeSelector] as Record<string, unknown>),
+          [codeSelector]: {
+            ...((prismStyle[codeSelector] as Record<string, unknown>) || {}),
             ...theme.styles.code,
-            ...theme.styles.code["pre &&&"],
+            ...theme.styles.code["pre &"],
           },
         },
       }),

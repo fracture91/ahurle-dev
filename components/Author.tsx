@@ -20,11 +20,8 @@ const Separated: WrapFC<typeof Text> = (props) => (
         content: "' '",
         whiteSpace: "normal",
         letterSpacing: "0.75em",
-        background: `radial-gradient(
-            circle at 50%,
-            currentColor 0.08em,
-            transparent 0.12em
-          )`,
+        background:
+          "radial-gradient(circle at 50%, currentColor 0.08em, transparent 0.12em)",
       },
     }}
   />

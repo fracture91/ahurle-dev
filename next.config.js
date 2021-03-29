@@ -19,7 +19,20 @@ const images = require("next-images")
 
 /** @type import("next/dist/next-server/server/config").NextConfig */
 module.exports = withPlugins(
-  [bundleAnalyzer, [images, { esModule: true, inlineImageLimit: false }], mdx],
+  [
+    bundleAnalyzer,
+    [
+      images,
+      {
+        esModule: true,
+        inlineImageLimit: false,
+        // default is 32 md5 hex chars - ~48 bits is plenty
+        // note that support for this option is patched-in
+        name: "[name].[hash:base64:8].[ext]",
+      },
+    ],
+    mdx,
+  ],
   {
     // esModule: true,
     // inlineImageLimit: false,

@@ -20,7 +20,7 @@ import { Footer } from "@/components/Footer"
 import * as globals from "@/helpers/globals"
 import { Header } from "@/components/Header"
 import { CSSReset } from "@/components/CSSReset"
-import { fixedStyle } from "@/helpers/prismStyle"
+import { prismStyle } from "@/helpers/prismStyle"
 import { ImageRenderer } from "@/components/ImageRenderer"
 import { UnwrapImages } from "@/components/UnwrapImages"
 import { ThemeMeta } from "@/components/ThemeMeta"
@@ -28,7 +28,7 @@ import { RemovePreLoadClass } from "@/components/RemovePreLoadClass"
 
 const MDXPre: React.FC<
   React.ComponentPropsWithoutRef<"pre">
-> = React.memo((props) => <Themed.pre {...props} sx={fixedStyle} />)
+> = React.memo((props) => <Themed.pre {...props} sx={prismStyle} />)
 
 const MDXLink: React.FC<React.ComponentPropsWithoutRef<"a">> = ({
   children,

@@ -8,6 +8,7 @@ import {
 } from "theme-ui"
 import { lighten } from "polished"
 import chainLink from "@/public/img/chain-link.svg"
+import externalLink from "@/public/img/external-link.svg"
 import { preLoadClass } from "@/components/RemovePreLoadClass"
 
 const makeTheme = <T extends GenericTheme>(t: T) => t
@@ -334,43 +335,35 @@ export const theme = makeTheme({
           // mask the backgroundColor instead
           maskImage: `url(${chainLink})`,
           backgroundColor: "currentColor",
-          maskImageRepeat: "no-repeat",
-          maskImageSize: "contain",
-          maskImagePosition: "center",
+          maskSize: "contain",
           visibility: "hidden",
         },
       },
       '&[target="_blank"]:after': {
-        content:
-          "url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAQElEQVR42qXKwQkAIAxDUUdxtO6/RBQkQZvSi8I/pL4BoGw/XPkh4XigPmsUgh0626AjRsgxHTkUThsG2T/sIlzdTsp52kSS1wAAAABJRU5ErkJggg==)",
+        display: "inline-block",
+        width: "0.8em",
+        height: "0.8em",
+        maskImage: `url(${externalLink})`,
+        backgroundColor: "currentColor",
+        maskSize: "contain",
+        content: "' '",
         m: "0 0.2em 0 0.3em",
       },
     },
     pre: {
-      "&&": {
-        // make sure prism theme styles don't override these
-        fontFamily: "monospace",
-        fontSize: 2,
-        lineHeight: "pre",
-        overflowX: "auto",
-        "li &": {
-          marginY: "1em",
-        },
+      fontFamily: "monospace",
+      fontSize: 2,
+      lineHeight: "pre",
+      overflowX: "auto",
+      "li &": {
         marginY: "1em",
-        marginX: -3,
-        padding: "0.8em 1em",
-        borderRadius: "5px",
-        // match my theme better
-        bg: darkBackground,
-        color: "#d7c8b5",
-        // fix some a11y issues
-        ".comment": {
-          color: "#9b9b9b",
-        },
-        ".string, .char": {
-          color: "#7ea06a",
-        },
       },
+      marginY: "1em",
+      marginX: -3,
+      padding: "0.8em 1em",
+      borderRadius: "5px",
+      bg: darkBackground,
+      color: "#d7c8b5",
       " .mdx-marker": {
         // highlighted lines from mdx-prism
         bg: "#fff1",
@@ -380,20 +373,15 @@ export const theme = makeTheme({
       },
     },
     code: {
-      fontFamily: "monospace",
-      fontSize: 2, // one smaller than body, looks too big otherwise
-      backgroundColor: "background.highlightText",
-      padding: "0.05em 0.2em",
-      borderRadius: "0.3em",
-      "pre &&&": {
-        // make sure prism theme styles don't override these
+      "*:not(pre) > &": {
         fontFamily: "monospace",
-        fontSize: "inherit",
-        color: "inherit",
-        lineHeight: "inherit",
-        backgroundColor: "inherit",
-        padding: 0,
-        borderRadius: 0,
+        fontSize: 2, // one smaller than body, looks too big otherwise
+        backgroundColor: "background.highlightText",
+        padding: "0.05em 0.2em",
+        borderRadius: "0.3em",
+      },
+      "pre &": {
+        // makes .mdx-marker stretch across entire scroll width
         display: "inline-block",
         minWidth: "100%",
       },
