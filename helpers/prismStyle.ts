@@ -1,7 +1,5 @@
 import type { ThemeUICSSObject } from "theme-ui"
 
-export const codeSelector = 'code[class*="language-"]'
-
 // darcula style copied from https://github.com/react-syntax-highlighter/react-syntax-highlighter/blob/efc3f7b7537d1729193b7a472067bcbe6cbecaf1/src/styles/prism/darcula.js
 // MIT License
 // Copyright (c) 2019 Conor Hastings
@@ -9,20 +7,6 @@ export const codeSelector = 'code[class*="language-"]'
 // The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 export const prismStyle: ThemeUICSSObject = {
-  [codeSelector]: {
-    color: "#a9b7c6",
-    fontFamily: "Consolas, Monaco, 'Andale Mono', monospace",
-    direction: "ltr",
-    textAlign: "left",
-    whiteSpace: "pre",
-    wordSpacing: "normal",
-    wordBreak: "normal",
-    lineHeight: "1.5",
-    MozTabSize: "4",
-    OTabSize: "4",
-    tabSize: "4",
-    hyphens: "none",
-  },
   "&": {
     color: "#a9b7c6",
     fontFamily: "Consolas, Monaco, 'Andale Mono', monospace",
@@ -41,14 +25,9 @@ export const prismStyle: ThemeUICSSObject = {
     overflow: "auto",
     background: "#2b2b2b",
   },
-  [`&::selection, & ::selection, ${codeSelector}::selection, ${codeSelector} ::selection`]: {
+  "&::selection, & ::selection": {
     color: "inherit",
     background: "rgba(33, 66, 131, .85)",
-  },
-  [`:not(pre) > ${codeSelector}`]: {
-    background: "#2b2b2b",
-    padding: ".1em",
-    borderRadius: ".3em",
   },
   ".comment, .prolog, .cdata": {
     color: "#808080",
