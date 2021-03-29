@@ -8,6 +8,7 @@ import {
 } from "theme-ui"
 import { lighten } from "polished"
 import chainLink from "@/public/img/chain-link.svg"
+import externalLink from "@/public/img/external-link.png"
 import { preLoadClass } from "@/components/RemovePreLoadClass"
 
 const makeTheme = <T extends GenericTheme>(t: T) => t
@@ -341,8 +342,14 @@ export const theme = makeTheme({
         },
       },
       '&[target="_blank"]:after': {
-        content:
-          "url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAQElEQVR42qXKwQkAIAxDUUdxtO6/RBQkQZvSi8I/pL4BoGw/XPkh4XigPmsUgh0626AjRsgxHTkUThsG2T/sIlzdTsp52kSS1wAAAABJRU5ErkJggg==)",
+        display: "inline-block",
+        width: "0.8em",
+        height: "0.8em",
+        maskImage: `url(${externalLink})`,
+        backgroundColor: "currentColor",
+        maskRepeat: "no-repeat",
+        maskSize: "contain",
+        content: "' '",
         m: "0 0.2em 0 0.3em",
       },
     },
