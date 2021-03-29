@@ -9,7 +9,7 @@ export const codeSelector = 'code[class*="language-"]'
 // The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 export const prismStyle: ThemeUICSSObject = {
-  'code[class*="language-"]': {
+  [codeSelector]: {
     color: "#a9b7c6",
     fontFamily: "Consolas, Monaco, 'Andale Mono', monospace",
     direction: "ltr",
@@ -47,35 +47,11 @@ export const prismStyle: ThemeUICSSObject = {
     overflow: "auto",
     background: "#2b2b2b",
   },
-  "&::-moz-selection": {
+  "&::selection, & ::selection": {
     color: "inherit",
     background: "rgba(33, 66, 131, .85)",
   },
-  "& ::-moz-selection": {
-    color: "inherit",
-    background: "rgba(33, 66, 131, .85)",
-  },
-  'code[class*="language-"]::-moz-selection': {
-    color: "inherit",
-    background: "rgba(33, 66, 131, .85)",
-  },
-  'code[class*="language-"] ::-moz-selection': {
-    color: "inherit",
-    background: "rgba(33, 66, 131, .85)",
-  },
-  "&::selection": {
-    color: "inherit",
-    background: "rgba(33, 66, 131, .85)",
-  },
-  "& ::selection": {
-    color: "inherit",
-    background: "rgba(33, 66, 131, .85)",
-  },
-  'code[class*="language-"]::selection': {
-    color: "inherit",
-    background: "rgba(33, 66, 131, .85)",
-  },
-  'code[class*="language-"] ::selection': {
+  [`${codeSelector}::selection, ${codeSelector} ::selection`]: {
     color: "inherit",
     background: "rgba(33, 66, 131, .85)",
   },
