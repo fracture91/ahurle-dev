@@ -49,7 +49,15 @@ const Hamburger: WrapFC<"svg"> = React.forwardRef((props, ref) => (
 ))
 
 const StyledDownCaret: React.FC = () => (
-  <div sx={{ px: "1em", py: "0.5em", "*:hover > &": { bg: "lower" } }}>
+  <div
+    sx={{
+      px: "1em",
+      py: "0.5em",
+      bg: "background.header",
+      transition: theme.styles.root.transition,
+      "*:hover > &": { bg: "lower" },
+    }}
+  >
     <DownCaret
       sx={{
         width: "1.1em",
@@ -85,14 +93,12 @@ const Toggle: WrapFC<"div"> = React.forwardRef((props, ref) => (
       right: 0,
       top: 0,
       bg: "background.header",
-      transition: theme.styles.root.transition,
-      pr: "0.1em",
-      pl: "3em",
+      pl: "1em",
       cursor: "pointer",
       background: (t) =>
         `linear-gradient(to left, ${
           (t as Theme).colors.background.header
-        } 50%, #ffffff00 100%)`,
+        } 75%, #ffffff00 100%)`,
     }}
   >
     <StyledDownCaret />
@@ -151,6 +157,7 @@ const ExpandoLinks: WrapFC<"details"> = React.forwardRef(
         ref={detailsRef}
         sx={{
           ml: [null, "0.5em", "2em"],
+          mr: "0.1em",
           flex: 1,
           alignSelf: "baseline",
           minWidth: "2em",
