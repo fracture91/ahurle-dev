@@ -8,7 +8,7 @@ import {
 } from "theme-ui"
 import { lighten } from "polished"
 import chainLink from "@/public/img/chain-link.svg"
-import externalLink from "@/public/img/external-link.png"
+import externalLink from "@/public/img/external-link.svg"
 import { preLoadClass } from "@/components/RemovePreLoadClass"
 
 const makeTheme = <T extends GenericTheme>(t: T) => t
