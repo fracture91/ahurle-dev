@@ -364,16 +364,8 @@ export const theme = makeTheme({
         marginX: -3,
         padding: "0.8em 1em",
         borderRadius: "5px",
-        // match my theme better
         bg: darkBackground,
         color: "#d7c8b5",
-        // fix some a11y issues
-        ".comment": {
-          color: "#9b9b9b",
-        },
-        ".string, .char": {
-          color: "#7ea06a",
-        },
       },
       " .mdx-marker": {
         // highlighted lines from mdx-prism

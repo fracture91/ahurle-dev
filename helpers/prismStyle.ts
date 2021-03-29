@@ -24,7 +24,7 @@ export const prismStyle: ThemeUICSSObject = {
     background: "rgba(33, 66, 131, .85)",
   },
   ".comment, .prolog, .cdata": {
-    color: "#808080",
+    color: "#9b9b9b",
   },
   ".delimiter, .boolean, .keyword, .selector, .important, .atrule": {
     color: "#cc7832",
@@ -42,7 +42,7 @@ export const prismStyle: ThemeUICSSObject = {
     color: "#9876aa",
   },
   ".string, .char": {
-    color: "#6a8759",
+    color: "#7ea06a",
   },
   ".attr-value, .attr-value.punctuation": {
     color: "#a5c261",
