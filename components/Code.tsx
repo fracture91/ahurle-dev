@@ -58,7 +58,7 @@ export const Code: React.FC<{ language: string; value?: string }> = React.memo(
           [codeSelector]: {
             ...((prismStyle[codeSelector] as Record<string, unknown>) || {}),
             ...theme.styles.code,
-            ...theme.styles.code["pre &&&"],
+            ...theme.styles.code["pre &"],
           },
         },
       }),

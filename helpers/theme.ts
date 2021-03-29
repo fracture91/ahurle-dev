@@ -351,22 +351,19 @@ export const theme = makeTheme({
       },
     },
     pre: {
-      "&&": {
-        // make sure prism theme styles don't override these
-        fontFamily: "monospace",
-        fontSize: 2,
-        lineHeight: "pre",
-        overflowX: "auto",
-        "li &": {
-          marginY: "1em",
-        },
+      fontFamily: "monospace",
+      fontSize: 2,
+      lineHeight: "pre",
+      overflowX: "auto",
+      "li &": {
         marginY: "1em",
-        marginX: -3,
-        padding: "0.8em 1em",
-        borderRadius: "5px",
-        bg: darkBackground,
-        color: "#d7c8b5",
       },
+      marginY: "1em",
+      marginX: -3,
+      padding: "0.8em 1em",
+      borderRadius: "5px",
+      bg: darkBackground,
+      color: "#d7c8b5",
       " .mdx-marker": {
         // highlighted lines from mdx-prism
         bg: "#fff1",
@@ -376,20 +373,15 @@ export const theme = makeTheme({
       },
     },
     code: {
-      fontFamily: "monospace",
-      fontSize: 2, // one smaller than body, looks too big otherwise
-      backgroundColor: "background.highlightText",
-      padding: "0.05em 0.2em",
-      borderRadius: "0.3em",
-      "pre &&&": {
-        // make sure prism theme styles don't override these
+      "*:not(pre) > &": {
         fontFamily: "monospace",
-        fontSize: "inherit",
-        color: "inherit",
-        lineHeight: "inherit",
-        backgroundColor: "inherit",
-        padding: 0,
-        borderRadius: 0,
+        fontSize: 2, // one smaller than body, looks too big otherwise
+        backgroundColor: "background.highlightText",
+        padding: "0.05em 0.2em",
+        borderRadius: "0.3em",
+      },
+      "pre &": {
+        // makes .mdx-marker stretch across entire scroll width
         display: "inline-block",
         minWidth: "100%",
       },
