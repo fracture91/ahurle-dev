@@ -335,9 +335,7 @@ export const theme = makeTheme({
           // mask the backgroundColor instead
           maskImage: `url(${chainLink})`,
           backgroundColor: "currentColor",
-          maskImageRepeat: "no-repeat",
-          maskImageSize: "contain",
-          maskImagePosition: "center",
+          maskSize: "contain",
           visibility: "hidden",
         },
       },
@@ -347,7 +345,6 @@ export const theme = makeTheme({
         height: "0.8em",
         maskImage: `url(${externalLink})`,
         backgroundColor: "currentColor",
-        maskRepeat: "no-repeat",
         maskSize: "contain",
         content: "' '",
         m: "0 0.2em 0 0.3em",
