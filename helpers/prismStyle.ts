@@ -47,95 +47,37 @@ export const prismStyle: ThemeUICSSObject = {
     overflow: "auto",
     background: "#2b2b2b",
   },
-  "&::selection, & ::selection": {
+  [`&::selection, & ::selection, ${codeSelector}::selection, ${codeSelector} ::selection`]: {
     color: "inherit",
     background: "rgba(33, 66, 131, .85)",
   },
-  [`${codeSelector}::selection, ${codeSelector} ::selection`]: {
-    color: "inherit",
-    background: "rgba(33, 66, 131, .85)",
-  },
-  ':not(pre) > code[class*="language-"]': {
+  [`:not(pre) > ${codeSelector}`]: {
     background: "#2b2b2b",
     padding: ".1em",
     borderRadius: ".3em",
   },
-  ".comment": {
+  ".comment, .prolog, .cdata": {
     color: "#808080",
   },
-  ".prolog": {
-    color: "#808080",
-  },
-  ".cdata": {
-    color: "#808080",
-  },
-  ".delimiter": {
+  ".delimiter, .boolean, .keyword, .selector, .important, .atrule": {
     color: "#cc7832",
   },
-  ".boolean": {
-    color: "#cc7832",
-  },
-  ".keyword": {
-    color: "#cc7832",
-  },
-  ".selector": {
-    color: "#cc7832",
-  },
-  ".important": {
-    color: "#cc7832",
-  },
-  ".atrule": {
-    color: "#cc7832",
-  },
-  ".operator": {
+  ".operator, .punctuation, .attr-name": {
     color: "#a9b7c6",
   },
-  ".punctuation": {
-    color: "#a9b7c6",
-  },
-  ".attr-name": {
-    color: "#a9b7c6",
-  },
-  ".tag": {
+  ".tag, .tag.punctuation, .doctype, .builtin": {
     color: "#e8bf6a",
   },
-  ".tag.punctuation": {
-    color: "#e8bf6a",
-  },
-  ".doctype": {
-    color: "#e8bf6a",
-  },
-  ".builtin": {
-    color: "#e8bf6a",
-  },
-  ".entity": {
+  ".entity, .number, .symbol": {
     color: "#6897bb",
   },
-  ".number": {
-    color: "#6897bb",
-  },
-  ".symbol": {
-    color: "#6897bb",
-  },
-  ".property": {
+  ".property, .constant, .variable": {
     color: "#9876aa",
   },
-  ".constant": {
-    color: "#9876aa",
-  },
-  ".variable": {
-    color: "#9876aa",
-  },
-  ".string": {
+  ".string, .char": {
     color: "#6a8759",
   },
-  ".char": {
-    color: "#6a8759",
-  },
-  ".attr-value": {
-    color: "#a5c261",
-  },
-  ".attr-value.punctuation": {
+  ".attr-value, .attr-value.punctuation": {
     color: "#a5c261",
   },
   ".attr-value.punctuation:first-child": {
@@ -163,25 +105,20 @@ export const prismStyle: ThemeUICSSObject = {
   ".deleted": {
     background: "#484a4a",
   },
-  "code.language-css .token.property": {
-    color: "#a9b7c6",
-  },
-  "code.language-css .token.property + .token.punctuation": {
-    color: "#a9b7c6",
-  },
-  "code.language-css .token.id": {
-    color: "#ffc66d",
-  },
-  "code.language-css .token.selector > .token.class": {
-    color: "#ffc66d",
-  },
-  "code.language-css .token.selector > .token.attribute": {
-    color: "#ffc66d",
-  },
-  "code.language-css .token.selector > .token.pseudo-class": {
-    color: "#ffc66d",
-  },
-  "code.language-css .token.selector > .token.pseudo-element": {
-    color: "#ffc66d",
+  "code.language-css": {
+    ".token.property": {
+      "+ .token.punctuation": {
+        color: "#a9b7c6",
+      },
+      color: "#a9b7c6",
+    },
+    ".token.id": {
+      color: "#ffc66d",
+    },
+    ".token.selector": {
+      "> .token.class, > .token.attribute, > .token.pseudo-class, > .token.pseudo-element": {
+        color: "#ffc66d",
+      },
+    },
   },
 }
