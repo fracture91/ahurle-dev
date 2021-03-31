@@ -1,10 +1,11 @@
 /** @jsxImportSource theme-ui */
 import React from "react"
-import { Box, Card, Container, Themed } from "theme-ui"
+import { Box, Button, Container, Themed } from "theme-ui"
 import Image from "next/image"
 import Link from "next/link"
 import type { Parent } from "unist"
 import { BlogMeta } from "@/helpers/schema"
+import { theme } from "@/helpers/theme"
 import { BlogLayoutProps } from "@/helpers/loader"
 import { BlogStaticProps } from "@/helpers/getBlogStaticProps"
 import { Author } from "./Author"
@@ -91,11 +92,26 @@ const Title: React.FC<{ post: BlogMeta }> = ({ post }) => {
 }
 
 const TOCList: React.FC<{ node: Parent }> = ({ node }) => (
-  <Themed.ul as="ol" sx={{ listStyle: "none", pl: 0, "& &": { pl: 3 } }}>
+  <Themed.ul
+    as="ol"
+    sx={{
+      listStyle: "none",
+      pl: 0,
+      "& &": { pl: "1.5em" },
+      "& & &": { fontSize: 2 },
+    }}
+  >
     {(node.children as Parent[]).map((child) => (
       <Themed.li key={child.id as string}>
         <Link href={`#${child.id}`} passHref>
-          <Themed.a>{child.text as string}</Themed.a>
+          <Themed.a
+            sx={{
+              fontWeight: "bold",
+              "ol ol &": { textDecoration: "none", fontWeight: "unset" },
+            }}
+          >
+            {child.text as string}
+          </Themed.a>
         </Link>
         {child.children && <TOCList node={child} />}
       </Themed.li>
@@ -105,19 +121,40 @@ const TOCList: React.FC<{ node: Parent }> = ({ node }) => (
 
 const TableOfContents: React.FC<{ outline: Parent }> = ({ outline }) => {
   if (outline.children.length < 2) return null
+  const padding = "1em"
+  const { borderRadius } = theme.buttons.primary
   return (
-    <Card as="details" bg="higher" sx={{ boxShadow: "none" }}>
-      <summary
+    <details
+      sx={{
+        mx: "-1em",
+        padding,
+        borderRadius,
+        position: "relative",
+        py: 0,
+        "&[open]": { pt: padding, pb: "4em", bg: "higher" },
+      }}
+    >
+      <Button
+        as="summary"
         sx={{
+          display: "block",
           textAlign: "center",
-          "&:hover": { bg: "lower", cursor: "pointer" },
+          "details[open] > &": {
+            // <details> does not respect putting <summary> at the bottom, nor display: flex + order
+            position: "absolute",
+            bottom: padding,
+            left: padding,
+            right: padding,
+          },
         }}
       >
         Show Table of Contents
-      </summary>
-      <Themed.h2>Table of Contents</Themed.h2>
+      </Button>
+      <Themed.h4 as="h2" sx={{ textTransform: "uppercase", mt: "0.5em" }}>
+        Table of Contents
+      </Themed.h4>
       <TOCList node={outline} />
-    </Card>
+    </details>
   )
 }
 
