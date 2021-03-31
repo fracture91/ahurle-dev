@@ -1,6 +1,6 @@
 /** @jsxImportSource theme-ui */
 import React from "react"
-import { Box, Button, Container, Themed } from "theme-ui"
+import { Box, Container, Themed } from "theme-ui"
 import Image from "next/image"
 import Link from "next/link"
 import type { Parent } from "unist"
@@ -11,6 +11,7 @@ import { BlogStaticProps } from "@/helpers/getBlogStaticProps"
 import { Author } from "./Author"
 import { PostMeta } from "./PostMeta"
 import { Middle, Top } from "./PageSection"
+import { ShowMoreButton } from "./ShowMore"
 
 const BannerPhoto: React.FC<BlogMeta["bannerPhoto"]> = ({
   src,
@@ -123,6 +124,7 @@ const TableOfContents: React.FC<{ outline: Parent }> = ({ outline }) => {
   if (outline.children.length < 2) return null
   const padding = "1em"
   const { borderRadius } = theme.buttons.primary
+  const moreVisibleSelector = "details[open] > &"
   return (
     <details
       sx={{
@@ -134,12 +136,14 @@ const TableOfContents: React.FC<{ outline: Parent }> = ({ outline }) => {
         "&[open]": { pt: padding, pb: "4em", bg: "higher" },
       }}
     >
-      <Button
+      <ShowMoreButton
         as="summary"
+        moreVisibleSelector={moreVisibleSelector}
         sx={{
           display: "block",
           textAlign: "center",
-          "details[open] > &": {
+          mt: 0,
+          [moreVisibleSelector]: {
             // <details> does not respect putting <summary> at the bottom, nor display: flex + order
             position: "absolute",
             bottom: padding,
@@ -148,8 +152,9 @@ const TableOfContents: React.FC<{ outline: Parent }> = ({ outline }) => {
           },
         }}
       >
-        Show Table of Contents
-      </Button>
+        <span>Show</span>
+        <span sx={{ display: "none" }}>Hide</span> Table of Contents
+      </ShowMoreButton>
       <Themed.h4 as="h2" sx={{ textTransform: "uppercase", mt: "0.5em" }}>
         Table of Contents
       </Themed.h4>
