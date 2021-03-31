@@ -373,8 +373,8 @@ export const theme = makeTheme({
       },
     },
     code: {
+      fontFamily: "monospace",
       "*:not(pre) > &": {
-        fontFamily: "monospace",
         fontSize: 2, // one smaller than body, looks too big otherwise
         backgroundColor: "background.highlightText",
         padding: "0.05em 0.2em",
