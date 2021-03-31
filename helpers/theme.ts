@@ -46,7 +46,7 @@ const darkBackground = "#29241e"
 const colors = {
   background: {
     __default: "#fff5e9",
-    content: "#f7f3f0",
+    content: "#fffbf3",
     header: "#fefcf9",
     switchSelected: "var(--theme-ui-colors-background-header)",
     highlightText: "var(--theme-ui-colors-lower)",
@@ -59,11 +59,11 @@ const colors = {
   higher: "#fff6",
   lower: "#0001",
   primary: {
-    __default: "#1d521d",
+    __default: "#3c601e",
     background: {
-      __default: "#e0fae0",
+      __default: "#dce8ac",
       // babel-plugin-polished only works with literals :(
-      lighter: lighten(0.02, "#e0fae0"),
+      lighter: lighten(0.02, "#dce8ac"),
     },
   },
   secondary: "#938575",
