@@ -7,7 +7,11 @@ const PhotoSchema = z.object({
 export type Photo = z.infer<typeof PhotoSchema>
 
 const RawBannerPhotoSchema = PhotoSchema.extend({
-  unsplash: z.string().nonempty().optional(),
+  caption: z
+    .string()
+    .nonempty()
+    .optional()
+    .or(z.object({ unsplash: z.string().nonempty() })),
   width: z.number().int().positive().optional(),
   height: z.number().int().positive().optional(),
 }).strict()

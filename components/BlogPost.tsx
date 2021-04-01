@@ -16,7 +16,7 @@ import { ShowMoreButton } from "./ShowMore"
 const BannerPhoto: React.FC<BlogMeta["bannerPhoto"]> = ({
   src,
   alt,
-  unsplash,
+  caption,
   width,
   height,
 }) => (
@@ -33,7 +33,7 @@ const BannerPhoto: React.FC<BlogMeta["bannerPhoto"]> = ({
       sx={{ borderRadius: "5px" }}
       // todo: pass "sizes" attribute so 4k monitors don't get 4k images
     />
-    {unsplash && (
+    {caption && (
       <figcaption
         sx={{
           textAlign: "center",
@@ -42,11 +42,17 @@ const BannerPhoto: React.FC<BlogMeta["bannerPhoto"]> = ({
           marginTop: "0.25em",
         }}
       >
-        Photo by{" "}
-        <Themed.a href={`https://unsplash.com/${unsplash}`}>
-          {unsplash}
-        </Themed.a>{" "}
-        on <Themed.a href="https://unsplash.com">Unsplash</Themed.a>
+        {typeof caption === "object" && caption.unsplash ? (
+          <>
+            Photo by{" "}
+            <Themed.a href={`https://unsplash.com/${caption.unsplash}`}>
+              {caption.unsplash}
+            </Themed.a>{" "}
+            on <Themed.a href="https://unsplash.com">Unsplash</Themed.a>
+          </>
+        ) : (
+          caption
+        )}
       </figcaption>
     )}
   </Box>
