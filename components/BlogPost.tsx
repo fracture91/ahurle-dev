@@ -96,19 +96,22 @@ const TOCList: React.FC<{ node: Parent }> = ({ node }) => (
   <Themed.ul
     as="ol"
     sx={{
+      fontSize: 2,
       listStyle: "none",
       pl: 0,
-      "& &": { pl: "1.5em" },
-      "& & &": { fontSize: 2 },
+      "& &": { pl: "1.5em", fontSize: 1 },
+      "& & &": { fontSize: 0 },
     }}
   >
     {(node.children as Parent[]).map((child) => (
-      <Themed.li key={child.id as string}>
+      <Themed.li
+        key={child.id as string}
+        sx={{ lineHeight: 1, "ol ol &": { mt: "0.5em", mb: "0.7em" } }}
+      >
         <Link href={`#${child.id}`} passHref>
           <Themed.a
             sx={{
-              fontWeight: "bold",
-              "ol ol &": { textDecoration: "none", fontWeight: "unset" },
+              "ol ol &": { textDecoration: "none" },
             }}
           >
             {child.text as string}
@@ -120,15 +123,60 @@ const TOCList: React.FC<{ node: Parent }> = ({ node }) => (
   </Themed.ul>
 )
 
-const TableOfContents: React.FC<{ outline: Parent }> = ({ outline }) => {
-  if (outline.children.length < 2) return null
+const TOCListAndHeader: React.FC<{ outline: Parent }> = ({ outline }) => (
+  <>
+    <Themed.h6 as="h2" sx={{ textTransform: "uppercase", mt: 0 }}>
+      Table of Contents
+    </Themed.h6>
+    <TOCList node={outline} />
+  </>
+)
+
+const sidebarVisibleWidth = "64em"
+
+const showToc = ({
+  readingTime,
+  outline,
+}: {
+  readingTime: BlogLayoutProps["readingTime"]
+  outline: Parent
+}): boolean => outline.children.length > 1 && readingTime.minutes > 4
+
+const TableOfContentsSidebar: React.FC<{ outline: Parent }> = ({ outline }) => {
+  const top = "4em"
+  const mb = "1em"
+  return (
+    <div
+      sx={{
+        position: "sticky",
+        ml: "2em",
+        mr: "1em",
+        mt: "2em",
+        mb,
+        top,
+        alignSelf: "flex-start",
+        display: "none",
+        [`@media(min-width: ${sidebarVisibleWidth})`]: { display: "block" },
+        maxHeight: `calc(100vh - ${top} - ${mb})`,
+        overflowY: "auto",
+      }}
+    >
+      <TOCListAndHeader outline={outline} />
+    </div>
+  )
+}
+
+const TableOfContentsDetails: React.FC<{ outline: Parent }> = ({ outline }) => {
   const padding = "1em"
   const { borderRadius } = theme.buttons.primary
   const moreVisibleSelector = "details[open] > &"
   return (
     <details
       sx={{
+        display: "block",
+        [`@media(min-width: ${sidebarVisibleWidth})`]: { display: "none" },
         mx: "-1em",
+        mb: "1.5em",
         padding,
         borderRadius,
         position: "relative",
@@ -155,10 +203,7 @@ const TableOfContents: React.FC<{ outline: Parent }> = ({ outline }) => {
         <span>Show</span>
         <span sx={{ display: "none" }}>Hide</span> Table of Contents
       </ShowMoreButton>
-      <Themed.h4 as="h2" sx={{ textTransform: "uppercase", mt: "0.5em" }}>
-        Table of Contents
-      </Themed.h4>
-      <TOCList node={outline} />
+      <TOCListAndHeader outline={outline} />
     </details>
   )
 }
@@ -176,9 +221,18 @@ export const BlogPost: React.FunctionComponent<
         {post.bannerPhoto && <BannerPhoto {...post.bannerPhoto} />}
       </Top>
 
-      <Middle>
-        {readingTime.minutes >= 5 && <TableOfContents outline={outline} />}
-        {children}
+      <Middle
+        sidebar={
+          showToc({ readingTime, outline }) && (
+            <TableOfContentsSidebar outline={outline} />
+          )
+        }
+        sx={{ position: "relative" }}
+      >
+        {showToc({ readingTime, outline }) && (
+          <TableOfContentsDetails outline={outline} />
+        )}
+        <div>{children}</div>
       </Middle>
 
       <Container as="section" paddingX={3} marginY={4} marginTop={0}>
