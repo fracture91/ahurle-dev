@@ -1,15 +1,17 @@
 /** @jsxImportSource theme-ui */
 import React from "react"
-import { Box, Card, Container, Themed } from "theme-ui"
+import { Box, Container, Themed } from "theme-ui"
 import Image from "next/image"
 import Link from "next/link"
 import type { Parent } from "unist"
 import { BlogMeta } from "@/helpers/schema"
+import { theme } from "@/helpers/theme"
 import { BlogLayoutProps } from "@/helpers/loader"
 import { BlogStaticProps } from "@/helpers/getBlogStaticProps"
 import { Author } from "./Author"
 import { PostMeta } from "./PostMeta"
 import { Middle, Top } from "./PageSection"
+import { ShowMoreButton } from "./ShowMore"
 
 const BannerPhoto: React.FC<BlogMeta["bannerPhoto"]> = ({
   src,
@@ -91,11 +93,29 @@ const Title: React.FC<{ post: BlogMeta }> = ({ post }) => {
 }
 
 const TOCList: React.FC<{ node: Parent }> = ({ node }) => (
-  <Themed.ul as="ol" sx={{ listStyle: "none", pl: 0, "& &": { pl: 3 } }}>
+  <Themed.ul
+    as="ol"
+    sx={{
+      fontSize: 2,
+      listStyle: "none",
+      pl: 0,
+      "& &": { pl: "1.5em", fontSize: 1 },
+      "& & &": { fontSize: 0 },
+    }}
+  >
     {(node.children as Parent[]).map((child) => (
-      <Themed.li key={child.id as string}>
+      <Themed.li
+        key={child.id as string}
+        sx={{ lineHeight: 1, "ol ol &": { mt: "0.5em", mb: "0.7em" } }}
+      >
         <Link href={`#${child.id}`} passHref>
-          <Themed.a>{child.text as string}</Themed.a>
+          <Themed.a
+            sx={{
+              "ol ol &": { textDecoration: "none" },
+            }}
+          >
+            {child.text as string}
+          </Themed.a>
         </Link>
         {child.children && <TOCList node={child} />}
       </Themed.li>
@@ -103,21 +123,90 @@ const TOCList: React.FC<{ node: Parent }> = ({ node }) => (
   </Themed.ul>
 )
 
-const TableOfContents: React.FC<{ outline: Parent }> = ({ outline }) => {
-  if (outline.children.length < 2) return null
+const TOCListAndHeader: React.FC<{ outline: Parent }> = ({ outline }) => (
+  <>
+    <Themed.h6 as="h2" sx={{ textTransform: "uppercase", mt: 0 }}>
+      Table of Contents
+    </Themed.h6>
+    <TOCList node={outline} />
+  </>
+)
+
+const sidebarVisibleWidth = "64em"
+
+const showToc = ({
+  readingTime,
+  outline,
+}: {
+  readingTime: BlogLayoutProps["readingTime"]
+  outline: Parent
+}): boolean => outline.children.length > 1 && readingTime.minutes > 4
+
+const TableOfContentsSidebar: React.FC<{ outline: Parent }> = ({ outline }) => {
+  const top = "4em"
+  const mb = "1em"
   return (
-    <Card as="details" bg="higher" sx={{ boxShadow: "none" }}>
-      <summary
+    <div
+      sx={{
+        position: "sticky",
+        ml: "2em",
+        mr: "1em",
+        mt: "2em",
+        mb,
+        top,
+        alignSelf: "flex-start",
+        display: "none",
+        [`@media(min-width: ${sidebarVisibleWidth})`]: { display: "block" },
+        maxHeight: `calc(100vh - ${top} - ${mb})`,
+        overflowY: "auto",
+      }}
+    >
+      <TOCListAndHeader outline={outline} />
+    </div>
+  )
+}
+
+const TableOfContentsDetails: React.FC<{ outline: Parent }> = ({ outline }) => {
+  const padding = "1em"
+  const { borderRadius } = theme.buttons.primary
+  const moreVisibleSelector = "details[open] > &"
+  return (
+    <details
+      sx={{
+        display: "block",
+        [`@media(min-width: ${sidebarVisibleWidth})`]: { display: "none" },
+        mx: "-1em",
+        mb: "1.5em",
+        padding,
+        borderRadius,
+        position: "relative",
+        py: 0,
+        "&[open]": { pt: padding, pb: "4em", bg: "higher" },
+      }}
+    >
+      <ShowMoreButton
+        as="summary"
+        moreVisibleSelector={moreVisibleSelector}
         sx={{
+          display: "block",
           textAlign: "center",
-          "&:hover": { bg: "lower", cursor: "pointer" },
+          mt: 0,
+          listStyle: "none",
+          "&::-webkit-details-marker": { display: "none" },
+          [moreVisibleSelector]: {
+            // <details> does not respect putting <summary> at the bottom, nor display: flex + order
+            position: "absolute",
+            bottom: padding,
+            left: padding,
+            right: padding,
+          },
         }}
       >
-        Show Table of Contents
-      </summary>
-      <Themed.h2>Table of Contents</Themed.h2>
-      <TOCList node={outline} />
-    </Card>
+        <span>Show</span>
+        <span sx={{ display: "none" }}>Hide</span> Table of Contents
+      </ShowMoreButton>
+      <TOCListAndHeader outline={outline} />
+    </details>
   )
 }
 
@@ -134,9 +223,18 @@ export const BlogPost: React.FunctionComponent<
         {post.bannerPhoto && <BannerPhoto {...post.bannerPhoto} />}
       </Top>
 
-      <Middle>
-        {readingTime.minutes >= 5 && <TableOfContents outline={outline} />}
-        {children}
+      <Middle
+        sidebar={
+          showToc({ readingTime, outline }) && (
+            <TableOfContentsSidebar outline={outline} />
+          )
+        }
+        sx={{ position: "relative" }}
+      >
+        {showToc({ readingTime, outline }) && (
+          <TableOfContentsDetails outline={outline} />
+        )}
+        <div>{children}</div>
       </Middle>
 
       <Container as="section" paddingX={3} marginY={4} marginTop={0}>
