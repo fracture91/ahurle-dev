@@ -191,6 +191,8 @@ const TableOfContentsDetails: React.FC<{ outline: Parent }> = ({ outline }) => {
           display: "block",
           textAlign: "center",
           mt: 0,
+          listStyle: "none",
+          "&::-webkit-details-marker": { display: "none" },
           [moreVisibleSelector]: {
             // <details> does not respect putting <summary> at the bottom, nor display: flex + order
             position: "absolute",
