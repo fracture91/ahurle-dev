@@ -8,6 +8,7 @@ import { Flex, NavLink } from "theme-ui"
 import { WrapFC } from "@/helpers/WrapFC"
 import { theme, Theme } from "@/helpers/theme"
 import { css, Global } from "@emotion/react"
+import { Logo } from "./Logo"
 import { ThemeSwitcher } from "./ThemeSwitcher"
 import { DownCaret } from "./DownCaret"
 
@@ -298,17 +299,27 @@ export const Header: React.FC = () => {
         }}
       >
         <Link href="/" passHref>
-          <NavLink px="0.5em">
-            <span
+          <NavLink px="0.5em" sx={{ display: "flex", alignItems: "center" }}>
+            <Logo
               sx={{
-                bg: "gray",
+                width: "1.6em",
+                height: "1.6em",
+                bg: "primary.background",
                 borderRadius: "50%",
                 px: "0.2em",
+                mr: "0.4em",
                 color: "primary",
+                transition: theme.styles.root.transition,
+                "@keyframes wiggle": {
+                  "25%": { transform: "rotate(-10deg)" },
+                  "50%": { transform: "rotate(0deg)" },
+                  "75%": { transform: "rotate(10deg)" },
+                },
+                "&:hover, a:hover &": {
+                  animation: "150ms ease-in-out 0s 2 wiggle",
+                },
               }}
-            >
-              A
-            </span>{" "}
+            />
             {globals.siteName}
           </NavLink>
         </Link>
