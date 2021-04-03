@@ -184,6 +184,7 @@ export const theme = makeTheme({
       borderRadius: 10,
       boxShadow: "high",
       fontSize: 3,
+      fontWeight: "bold",
       padding: "1 3",
       cursor: "pointer",
       transition: "background-color 100ms ease, box-shadow 100ms ease",
@@ -213,9 +214,14 @@ export const theme = makeTheme({
   },
   cards: {
     primary: {
-      padding: 2,
-      borderRadius: 4,
+      padding: "1em",
+      borderRadius: "8px",
       boxShadow: "high",
+      transition: "box-shadow 100ms ease",
+      "&:hover, &:focus": {
+        transform: "translateY(-1px)",
+        boxShadow: "higher",
+      },
     },
   },
   styles: {
