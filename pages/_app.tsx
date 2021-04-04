@@ -17,7 +17,6 @@ import { createColorStyles } from "@theme-ui/color-modes"
 import type { MDXProviderComponents } from "@theme-ui/mdx"
 import { theme } from "@/helpers/theme"
 import { Footer } from "@/components/Footer"
-import * as globals from "@/helpers/globals"
 import { Header } from "@/components/Header"
 import { CSSReset } from "@/components/CSSReset"
 import { prismStyle } from "@/helpers/prismStyle"
@@ -25,6 +24,7 @@ import { ImageRenderer } from "@/components/ImageRenderer"
 import { UnwrapImages } from "@/components/UnwrapImages"
 import { ThemeMeta } from "@/components/ThemeMeta"
 import { RemovePreLoadClass } from "@/components/RemovePreLoadClass"
+import { GoatCounterScript, GoatCounterPixel } from "@/components/GoatCounter"
 
 const MDXPre: React.FC<
   React.ComponentPropsWithoutRef<"pre">
@@ -85,26 +85,6 @@ const App: React.FC<AppProps> = ({ Component, pageProps }) => (
     <Head>
       <meta httpEquiv="status" content={pageProps.statusCode || "200"} />
       <meta name="viewport" content="width=device-width, initial-scale=1" />
-      {globals.googleAnalyticsId && (
-        <script
-          async
-          src={`https://www.googletagmanager.com/gtag/js?id=${globals.googleAnalyticsId}`}
-        />
-      )}
-      {globals.googleAnalyticsId && (
-        <script
-          // eslint-disable-next-line react/no-danger
-          dangerouslySetInnerHTML={{
-            __html: `
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-
-            gtag('globals', '${globals.googleAnalyticsId}');
-            `,
-          }}
-        />
-      )}
     </Head>
     <ThemeProvider theme={theme} components={components}>
       <ThemeMeta />
@@ -123,6 +103,8 @@ const App: React.FC<AppProps> = ({ Component, pageProps }) => (
         </Flex>
         <Footer />
       </Flex>
+      <GoatCounterScript />
+      <GoatCounterPixel />
     </ThemeProvider>
   </CacheProvider>
 )
