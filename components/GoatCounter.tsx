@@ -1,15 +1,22 @@
-import React from "react"
+import React, { useCallback, useEffect } from "react"
 import * as globals from "@/helpers/globals"
 import { useRouter } from "next/router"
 
+declare global {
+  interface Window {
+    goatcounter: {
+      // incomplete definition
+      count: (vars?: Record<string, unknown>) => void
+      // eslint-disable-next-line camelcase
+      no_unload: boolean
+    }
+  }
+}
+
 const endpoint = `https://${globals.goatCounterId}.goatcounter.com/count`
 
-/**
- * Fallback for when JS is turned off
- */
-export const GoatCounterPixel: React.FC = () => {
+const RealPixel: React.FC = () => {
   const router = useRouter()
-  if (!globals.goatCounterId) return null
   const params = new URLSearchParams()
   const query = new URLSearchParams(router.query as Record<string, string>)
   params.set("p", router.pathname)
@@ -35,8 +42,32 @@ export const GoatCounterPixel: React.FC = () => {
   )
 }
 
-export const GoatCounterScript: React.FC = () => {
-  if (!globals.goatCounterId) return null
+/**
+ * Fallback for when JS is turned off
+ */
+export const GoatCounterPixel: React.FC = globals.goatCounterId
+  ? RealPixel
+  : () => null
+
+const RealScript: React.FC = () => {
+  const router = useRouter()
+
+  const onRouteChange = useCallback(() => {
+    // just in case the goatcounter script blew up
+    if (!window.goatcounter) return
+    // honor the prod check
+    if (window.goatcounter.no_unload) return
+    // goatcounter does not track pushState changes automatically - do it myself
+    window.goatcounter.count()
+  }, [])
+
+  useEffect(() => {
+    router.events.on("routeChangeComplete", onRouteChange)
+    return () => {
+      router.events.off("routeChangeComplete", onRouteChange)
+    }
+  }, [router, onRouteChange])
+
   return (
     <>
       <script
@@ -62,3 +93,7 @@ export const GoatCounterScript: React.FC = () => {
     </>
   )
 }
+
+export const GoatCounterScript: React.FC = globals.goatCounterId
+  ? RealScript
+  : () => null
