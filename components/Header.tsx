@@ -28,6 +28,7 @@ const Hamburger: WrapFC<"svg"> = React.forwardRef((props, ref) => (
       [hideHamburger]: {
         display: "none",
       },
+      display: "block",
       boxSizing: "content-box",
       width: "1.6em",
       height: "1.6em",
