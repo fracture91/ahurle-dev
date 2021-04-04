@@ -1,7 +1,7 @@
 import Link from "next/link"
 import { Button } from "theme-ui"
 import { ShowMore } from "@/components/ShowMore"
-import { PostCardGrid } from "@/components/PostCardGrid"
+import { PostCardList } from "@/components/PostCardList"
 import { getIndexStaticProps } from "@/helpers/getIndexStaticProps"
 
 export const meta = {
@@ -23,7 +23,7 @@ You can also try emailing me at any string at this domain. I may not have time t
 
 # Recent blog posts
 
-<PostCardGrid posts={props.posts.slice(0, 2)} />
+<PostCardList posts={props.posts.slice(0, 2)} sx={{ my: "1.5em" }} />
 
 <Link href="/blog" passHref>
   <Button as="a" sx={{ display: "block", mt: "1em", mb: "2.5em" }}>

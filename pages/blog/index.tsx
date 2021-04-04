@@ -1,6 +1,6 @@
 import removeUndefined from "rundef"
 import { Themed } from "theme-ui"
-import { PostCardGrid } from "@/components/PostCardGrid"
+import { PostCardList } from "@/components/PostCardList"
 import { loadPublishedBlogs } from "@/helpers/loader"
 import { BlogMeta } from "@/helpers/schema"
 import { GetStaticProps } from "next"
@@ -18,7 +18,7 @@ export const BlogIndex: React.FC<BlogIndexProps> = ({ posts }) => (
       <Themed.h1>Blog Posts</Themed.h1>
     </Top>
     <Middle>
-      <PostCardGrid posts={posts} />
+      <PostCardList posts={posts} />
     </Middle>
   </>
 )

@@ -8,6 +8,7 @@ import { Flex, NavLink } from "theme-ui"
 import { WrapFC } from "@/helpers/WrapFC"
 import { theme, Theme } from "@/helpers/theme"
 import { css, Global } from "@emotion/react"
+import { Logo } from "./Logo"
 import { ThemeSwitcher } from "./ThemeSwitcher"
 import { DownCaret } from "./DownCaret"
 
@@ -22,19 +23,21 @@ const border = {
 const Hamburger: WrapFC<"svg"> = React.forwardRef((props, ref) => (
   <svg
     {...{ ...props, ref }}
-    viewBox="0 0 120 120"
+    viewBox="0 0 100 100"
     sx={{
       [hideHamburger]: {
         display: "none",
       },
+      display: "block",
       boxSizing: "content-box",
       width: "1.6em",
       height: "1.6em",
       flexBasis: "100%",
-      marginX: "auto",
+      mx: "auto",
       flexShrink: 0,
-      paddingY: "0.5em",
-      paddingX: "0.5em",
+      pt: "0.6em",
+      pb: "0.4em",
+      px: "0.5em",
       cursor: "pointer",
       fill: "currentColor",
       ":hover": {
@@ -42,9 +45,9 @@ const Hamburger: WrapFC<"svg"> = React.forwardRef((props, ref) => (
       },
     }}
   >
-    <rect width="120" height="20" />
-    <rect y="40" width="120" height="20" />
-    <rect y="80" width="120" height="20" />
+    <rect width="100" height="13" rx="10" />
+    <rect y="35" width="100" height="13" rx="10" />
+    <rect y="70" width="100" height="13" rx="10" />
   </svg>
 ))
 
@@ -269,7 +272,7 @@ export const Header: React.FC = () => {
           "transform 200ms linear",
         ].join(","),
         flexShrink: 0,
-        transform: visible ? "translateY(0)" : "translateY(-120%)",
+        ...(visible ? {} : { transform: "translateY(-120%)" }),
       }}
     >
       <Global
@@ -298,17 +301,27 @@ export const Header: React.FC = () => {
         }}
       >
         <Link href="/" passHref>
-          <NavLink px="0.5em">
-            <span
+          <NavLink px="0.5em" sx={{ display: "flex", alignItems: "center" }}>
+            <Logo
               sx={{
-                bg: "gray",
+                width: "1.6em",
+                height: "1.6em",
+                bg: "primary.background",
                 borderRadius: "50%",
                 px: "0.2em",
+                mr: "0.4em",
                 color: "primary",
+                transition: theme.styles.root.transition,
+                "@keyframes wiggle": {
+                  "25%": { transform: "rotate(-10deg)" },
+                  "50%": { transform: "rotate(0deg)" },
+                  "75%": { transform: "rotate(10deg)" },
+                },
+                "&:hover, a:hover &": {
+                  animation: "150ms ease-in-out 0s 2 wiggle",
+                },
               }}
-            >
-              A
-            </span>{" "}
+            />
             {globals.siteName}
           </NavLink>
         </Link>

@@ -1,87 +1,63 @@
 /** @jsxImportSource theme-ui */
-import React from "react"
 import Link from "next/link"
-import { format } from "fecha"
-import styled from "@emotion/styled"
-import { Flex, Themed } from "theme-ui"
-import { theme } from "@/helpers/theme"
+import { Themed, Card, ThemeUICSSObject } from "theme-ui"
 import { BlogMeta } from "@/helpers/schema"
 import { WrapFC } from "@/helpers/WrapFC"
-import { LazyImage } from "./LazyImage"
 
-const Outer = styled(Flex)`
-  text-decoration: inherit;
-  color: inherit;
-  flex-direction: row;
-  justify-content: center;
-  height: 300px;
-`
+const dateFormatter = new Intl.DateTimeFormat("en-US", {
+  year: "numeric",
+  month: "long",
+  day: "numeric",
+})
 
-const Inner = styled(Flex)`
-  box-shadow: ${theme.shadows.high};
-  width: 100%;
-  max-width: 500px;
-  overflow: hidden;
-  border-radius: 8px;
-  flex-direction: column;
-  height: 100%;
-  transition: "background-color 100ms ease, box-shadow 100ms ease";
-  &:hover,
-  &:focus {
-    transform: translateY(-1px);
-    box-shadow: ${theme.shadows.higher};
-  }
-`
-
-const Thumbnail = styled.div`
-  width: 100%;
-  flex: 1;
-  position: relative;
-`
-
-const TextContainer: WrapFC<typeof Flex> = (props) => (
-  <Flex
-    px={1}
-    py={2}
-    {...props}
-    sx={{ flexDirection: "column", borderTop: "1px solid #00000020" }}
-  />
-)
+const colorOnHover: ThemeUICSSObject = {
+  "a:hover &, a:focus &": { color: "primary" },
+}
 
 const Title: WrapFC<typeof Themed.h3> = (props) => (
   <Themed.h3
     {...props}
-    sx={{ m: 0, letterSpacing: "-1px", textAlign: "center" }}
+    sx={{ m: 0, letterSpacing: "-0.03em", ...colorOnHover }}
   />
 )
 
-const Subtitle: WrapFC<typeof Themed.p> = (props) => (
-  <Themed.p {...props} sx={{ p: 0, m: 0, textAlign: "center", fontSize: 1 }} />
+const Subtitle: WrapFC<"p"> = (props) => (
+  <p {...props} sx={{ p: 0, m: 0, fontSize: 1, color: "text.subtle" }} />
 )
 
-export const PostCard: React.FC<{ post: BlogMeta<true> }> = ({ post }) => (
+export const PostCard: WrapFC<typeof Card, { post: BlogMeta<true> }> = ({
+  post,
+  ...props
+}) => (
   <Link href={`/${post.urlPath}`} passHref>
-    <Outer as="a">
-      <Inner bg="background.header">
-        {post.bannerPhoto && (
-          <Thumbnail>
-            <LazyImage
-              src={post.bannerPhoto.src}
-              layout="fill"
-              objectFit="cover"
-            />
-          </Thumbnail>
+    <Card
+      as="a"
+      bg="higher"
+      {...props}
+      sx={{ textDecoration: "inherit", color: "inherit", display: "block" }}
+    >
+      <li sx={{ listStyleType: "none" }}>
+        {post.title && <Title as="h3">{post.title}</Title>}
+        {post.subtitle && <Subtitle>{post.subtitle}</Subtitle>}
+        <Subtitle sx={{ mb: "1em" }}>
+          {dateFormatter.format(new Date(post.datePublished))}
+        </Subtitle>
+        {post.description !== post.subtitle && (
+          <Themed.p sx={{ fontSize: 1, fontFamily: "prose" }}>
+            {post.description}
+          </Themed.p>
         )}
-        <TextContainer>
-          {post.title && <Title as="h3">{post.title}</Title>}
-          {post.subtitle && <Subtitle>{post.subtitle}</Subtitle>}
-          <Subtitle>
-            {post.datePublished
-              ? format(new Date(post.datePublished), "MMMM Do, YYYY")
-              : ""}
-          </Subtitle>
-        </TextContainer>
-      </Inner>
-    </Outer>
+        <p
+          sx={{
+            mt: "0.5em",
+            fontSize: 2,
+            fontWeight: "bold",
+            ...colorOnHover,
+          }}
+        >
+          Read More →
+        </p>
+      </li>
+    </Card>
   </Link>
 )

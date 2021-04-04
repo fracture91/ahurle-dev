@@ -13,7 +13,7 @@ export const generateRSS = async (
     description: globals.siteDescription,
     feed_url: `${globals.url}/rss.xml`,
     site_url: globals.url,
-    image_url: `${globals.url}/icon.png`,
+    image_url: `${globals.url}/img/logo.png`,
     managingEditor: globals.email,
     webMaster: globals.email,
     copyright: `${new Date().getFullYear()} ${globals.yourName}`,

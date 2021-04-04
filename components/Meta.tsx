@@ -20,6 +20,7 @@ export const Meta: React.FC<{
         {meta.title} | {globals.siteName}
       </title>
       <link rel="icon" href="/favicon.ico" />
+      <link rel="icon" href="/img/logo.svg" type="image/svg+xml" />
       <meta name="copyright" content="Andrew Hurle" />
       {url && <link rel="canonical" href={url} />}
       {meta.description && (
