@@ -17,7 +17,6 @@ import { createColorStyles } from "@theme-ui/color-modes"
 import type { MDXProviderComponents } from "@theme-ui/mdx"
 import { theme } from "@/helpers/theme"
 import { Footer } from "@/components/Footer"
-import * as globals from "@/helpers/globals"
 import { Header } from "@/components/Header"
 import { CSSReset } from "@/components/CSSReset"
 import { prismStyle } from "@/helpers/prismStyle"
@@ -25,7 +24,7 @@ import { ImageRenderer } from "@/components/ImageRenderer"
 import { UnwrapImages } from "@/components/UnwrapImages"
 import { ThemeMeta } from "@/components/ThemeMeta"
 import { RemovePreLoadClass } from "@/components/RemovePreLoadClass"
-import { useRouter } from "next/router"
+import { GoatCounterScript, GoatCounterPixel } from "@/components/GoatCounter"
 
 const MDXPre: React.FC<
   React.ComponentPropsWithoutRef<"pre">
@@ -79,45 +78,6 @@ const DarkMediaStyle: React.FC = () => (
 const BodyStyle: React.FC = () => (
   <Global styles={themeuicss((t) => ({ body: t?.styles?.body }))} />
 )
-
-/**
- * Fallback for when JS is turned off
- */
-const GoatCounterPixel: React.FC = () => {
-  const router = useRouter()
-  if (!globals.goatCounterId) return null
-  const params = new URLSearchParams()
-  const query = new URLSearchParams(router.query as Record<string, string>)
-  params.set("p", router.pathname)
-  params.set("q", query.toString())
-  // normally "r" is used for referrer, but since I can't grab that with SSG I'll use it
-  // to help distinguish pixel pageviews from JS ones in case they're botty
-  params.set("r", "gcpixel")
-  // there are more params available but I'd need SSR for that
-  return (
-    <noscript>
-      <img
-        src={`https://${
-          globals.goatCounterId
-        }.goatcounter.com/count?${params.toString()}`}
-        alt=""
-      />
-    </noscript>
-  )
-}
-
-const GoatCounterScript: React.FC = () => {
-  if (!globals.goatCounterId) return null
-  return (
-    <script
-      data-goatcounter={`https://${globals.goatCounterId}.goatcounter.com/count`}
-      // uncomment for testing out on localhost
-      // data-goatcounter-settings='{"allow_local": true}'
-      async
-      src="//gc.zgo.at/count.js"
-    />
-  )
-}
 
 const App: React.FC<AppProps> = ({ Component, pageProps }) => (
   <CacheProvider value={cache}>
