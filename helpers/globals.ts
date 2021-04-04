@@ -15,4 +15,4 @@ export const url =
     : process.env.NODE_ENV === "production"
     ? prodUrl
     : "http://localhost:3000"
-export const googleAnalyticsId = "" // e.g. 'UA-999999999-1'
+export const goatCounterId = "ahurle-dev"
