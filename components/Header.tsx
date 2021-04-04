@@ -272,7 +272,7 @@ export const Header: React.FC = () => {
           "transform 200ms linear",
         ].join(","),
         flexShrink: 0,
-        transform: visible ? "translateY(0)" : "translateY(-120%)",
+        ...(visible ? {} : { transform: "translateY(-120%)" }),
       }}
     >
       <Global
