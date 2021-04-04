@@ -23,7 +23,7 @@ const border = {
 const Hamburger: WrapFC<"svg"> = React.forwardRef((props, ref) => (
   <svg
     {...{ ...props, ref }}
-    viewBox="0 0 120 120"
+    viewBox="0 0 100 100"
     sx={{
       [hideHamburger]: {
         display: "none",
@@ -32,10 +32,11 @@ const Hamburger: WrapFC<"svg"> = React.forwardRef((props, ref) => (
       width: "1.6em",
       height: "1.6em",
       flexBasis: "100%",
-      marginX: "auto",
+      mx: "auto",
       flexShrink: 0,
-      paddingY: "0.5em",
-      paddingX: "0.5em",
+      pt: "0.6em",
+      pb: "0.4em",
+      px: "0.5em",
       cursor: "pointer",
       fill: "currentColor",
       ":hover": {
@@ -43,9 +44,9 @@ const Hamburger: WrapFC<"svg"> = React.forwardRef((props, ref) => (
       },
     }}
   >
-    <rect width="120" height="20" />
-    <rect y="40" width="120" height="20" />
-    <rect y="80" width="120" height="20" />
+    <rect width="100" height="13" rx="10" />
+    <rect y="35" width="100" height="13" rx="10" />
+    <rect y="70" width="100" height="13" rx="10" />
   </svg>
 ))
 
