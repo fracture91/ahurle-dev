@@ -62,7 +62,7 @@ const Form: WrapFC<"form"> = (props) => {
   )
 }
 
-export const NewsletterForm: WrapFC<typeof Form, SxProp> = ({
+const RealForm: WrapFC<typeof Form, SxProp> = ({
   children = "Want to hear about new articles right away?",
   sx,
   ...props
@@ -86,3 +86,7 @@ export const NewsletterForm: WrapFC<typeof Form, SxProp> = ({
     </p>
   </Form>
 )
+
+export const NewsletterForm: React.FC = tinyLetterUsername
+  ? RealForm
+  : () => null
