@@ -14,7 +14,6 @@ export const Footer: React.FC = () => (
   <Flex
     as="footer"
     sx={{
-      backgroundColor: "background",
       alignItems: "center",
       justifyContent: "space-between",
       flexShrink: 0,

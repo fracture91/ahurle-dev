@@ -12,6 +12,7 @@ import { Author } from "./Author"
 import { PostMeta } from "./PostMeta"
 import { Middle, Top } from "./PageSection"
 import { ShowMoreButton } from "./ShowMore"
+import { NewsletterForm } from "./NewsletterForm"
 
 const BannerPhoto: React.FC<BlogMeta["bannerPhoto"]> = ({
   src,
@@ -64,6 +65,7 @@ const Thanks: React.FC = () => (
       textAlign: "center",
       display: "block",
       fontFamily: "cursive",
+      mx: "auto",
     }}
   >
     🙏{" "}
@@ -243,8 +245,14 @@ export const BlogPost: React.FunctionComponent<
         <div>{children}</div>
       </Middle>
 
-      <Container as="section" paddingX={3} marginY={4} marginTop={0}>
+      <Container pb="3em">
         <Thanks />
+        <NewsletterForm>Enjoy the article? Want to hear more?</NewsletterForm>
+        <p sx={{ textAlign: "center", mx: "auto" }}>
+          <Link href="/blog" passHref>
+            <Themed.a>← Read a different article</Themed.a>
+          </Link>
+        </p>
       </Container>
     </article>
   </main>

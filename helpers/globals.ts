@@ -16,3 +16,4 @@ export const url =
     ? prodUrl
     : "http://localhost:3000"
 export const goatCounterId = "ahurle-dev"
+export const tinyLetterUsername = "ahurle"
