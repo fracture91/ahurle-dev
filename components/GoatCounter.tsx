@@ -22,7 +22,7 @@ declare global {
       // eslint-disable-next-line camelcase
       bind_events(): void
       // eslint-disable-next-line camelcase
-      no_unload: boolean
+      no_onload: boolean
       // eslint-disable-next-line camelcase
       no_events: boolean
     }
@@ -78,7 +78,7 @@ const RealScript: React.FC = () => {
     if (!window.goatcounter) return
     // goatcounter does not track pushState changes automatically - do it myself
     // @ts-ignore: count() param is not actually required, but all other calls should have {event: true}
-    if (!window.goatcounter.no_unload) window.goatcounter.count()
+    if (!window.goatcounter.no_onload) window.goatcounter.count()
     // goatcounter only adds event listeners on load e.g. for tracking data-goatcounter-click
     // re-add them after the page changes, when a bunch of stuff has definitely re-rendered
     if (!window.goatcounter.no_events) window.goatcounter.bind_events()
