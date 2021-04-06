@@ -79,8 +79,11 @@ const RealScript: React.FC = () => {
     // goatcounter does not track pushState changes automatically - do it myself
     // @ts-ignore: count() param is not actually required, but all other calls should have {event: true}
     if (!window.goatcounter.no_onload) window.goatcounter.count()
-    // goatcounter only adds event listeners on load e.g. for tracking data-goatcounter-click
-    // re-add them after the page changes, when a bunch of stuff has definitely re-rendered
+    // Goatcounter only adds event listeners on load e.g. for tracking data-goatcounter-click.
+    // Re-add them after the page changes, when a bunch of stuff has definitely re-rendered.
+    // Goatcounter is smart enough to avoid adding duplicate listeners.
+    // Note that if a component using data-goatcounter-click re-renders at a different time,
+    // it will need to call this itself since the original DOM node could have been removed.
     if (!window.goatcounter.no_events) window.goatcounter.bind_events()
   }, [])
 
