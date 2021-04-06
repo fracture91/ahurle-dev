@@ -233,7 +233,7 @@ export const theme = makeTheme({
       fontWeight: "body",
       // make everything a little smaller on mobile, larger on big screens
       // i.e. change the size of 1 rem
-      fontSize: ["89.4735%", "100%", null, "110%", "130%"],
+      fontSize: ["89.47345%", "100%", null, "110.52645%", "121.0529%"],
       MozOsxFontSmoothing: "grayscale",
       WebkitFontSmoothing: "antialiased",
       wordBreak: "break-word", // because safari doesn't support overflow-wrap: anywhere

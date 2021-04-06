@@ -10,13 +10,17 @@ export const Section: WrapFC<typeof Container> = ({ ...props }) => (
 
 export const Top: WrapFC<typeof Section> = (props) => <Section {...props} />
 
-export const Middle: WrapFC<typeof Section, { sidebar?: ReactNode }> = ({
+export const Middle: WrapFC<typeof Box, { sidebar?: ReactNode }> = ({
   sidebar,
+  children,
   ...props
 }) => (
   <Box
     bg="background.content"
+    mb="3em"
+    pb="1em"
     sx={{ transition: theme.styles.root.transition }}
+    {...props}
   >
     <div
       sx={{
@@ -27,7 +31,7 @@ export const Middle: WrapFC<typeof Section, { sidebar?: ReactNode }> = ({
         position: "relative",
       }}
     >
-      <Section p={3} {...props} />
+      <Section p={3}>{children}</Section>
       {sidebar}
     </div>
   </Box>

@@ -62,6 +62,11 @@ module.exports = withPlugins(
           destination: "https://workflowy.com/s/known-recipes/ZAsUuIrpIiAvDKNG",
           permanent: false,
         },
+        {
+          source: "/newsletter",
+          destination: "https://tinyletter.com/ahurle",
+          permanent: false,
+        },
       ]
     },
   }
