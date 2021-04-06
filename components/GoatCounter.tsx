@@ -2,13 +2,29 @@ import React, { useCallback, useEffect } from "react"
 import * as globals from "@/helpers/globals"
 import { useRouter } from "next/router"
 
+type StringOrCallback = string | ((def: string) => string)
+
+// https://ahurle-dev.goatcounter.com/code/js#data-parameters-9
+// technically null/undefined are allowed but would probably indicate a bug in my code
+interface CountVars {
+  path: StringOrCallback
+  title?: StringOrCallback
+  referrer?: StringOrCallback
+  // technically optional, but I'm requiring it here because I should pass event: true 99% of the time
+  event: boolean
+}
+
 declare global {
   interface Window {
+    // incomplete definition
     goatcounter: {
-      // incomplete definition
-      count: (vars?: Record<string, unknown>) => void
+      count(vars: CountVars): void
+      // eslint-disable-next-line camelcase
+      bind_events(): void
       // eslint-disable-next-line camelcase
       no_unload: boolean
+      // eslint-disable-next-line camelcase
+      no_events: boolean
     }
   }
 }
@@ -49,16 +65,23 @@ export const GoatCounterPixel: React.FC = globals.goatCounterId
   ? RealPixel
   : () => null
 
+// always include this JS inline so that I can call these functions without errors
+// in the event that the gc script doesn't load, or I want to quickly disable it
+const fallbackJs =
+  "window.goatcounter = window.goatcounter || { count: function(){}, bind_events: function(){} }"
+
 const RealScript: React.FC = () => {
   const router = useRouter()
 
   const onRouteChange = useCallback(() => {
     // just in case the goatcounter script blew up
     if (!window.goatcounter) return
-    // honor the prod check
-    if (window.goatcounter.no_unload) return
     // goatcounter does not track pushState changes automatically - do it myself
-    window.goatcounter.count()
+    // @ts-ignore: count() param is not actually required, but all other calls should have {event: true}
+    if (!window.goatcounter.no_unload) window.goatcounter.count()
+    // goatcounter only adds event listeners on load e.g. for tracking data-goatcounter-click
+    // re-add them after the page changes, when a bunch of stuff has definitely re-rendered
+    if (!window.goatcounter.no_events) window.goatcounter.bind_events()
   }, [])
 
   useEffect(() => {
@@ -78,8 +101,11 @@ const RealScript: React.FC = () => {
         // eslint-disable-next-line react/no-danger
         dangerouslySetInnerHTML={{
           __html: `
-            if (window.location.host !== 'ahurle.dev')
-              window.goatcounter = {no_onload: true}
+            ${fallbackJs}
+            if (window.location.host !== 'ahurle.dev') {
+              window.goatcounter.no_onload = true
+              window.goatcounter.no_events = true
+            }
           `,
         }}
       />
@@ -94,6 +120,11 @@ const RealScript: React.FC = () => {
   )
 }
 
+const FallbackScript: React.FC = () => (
+  // eslint-disable-next-line react/no-danger
+  <script dangerouslySetInnerHTML={{ __html: fallbackJs }} />
+)
+
 export const GoatCounterScript: React.FC = globals.goatCounterId
   ? RealScript
-  : () => null
+  : FallbackScript

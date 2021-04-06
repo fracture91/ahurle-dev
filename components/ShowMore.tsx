@@ -61,6 +61,11 @@ export const ShowMore: React.FC<{ id: string }> = ({ id, children }) => (
     >
       {children}
     </div>
-    <ShowMoreButton moreVisibleSelector={whenChecked} as="label" htmlFor={id} />
+    <ShowMoreButton
+      moreVisibleSelector={whenChecked}
+      as="label"
+      htmlFor={id}
+      data-goatcounter-click={id}
+    />
   </div>
 )

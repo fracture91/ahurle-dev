@@ -40,7 +40,11 @@ export const Footer: React.FC = () => (
         GitHub Repo
       </NavLink>
 
-      <NavLink href="/rss.xml" sx={paddingY}>
+      <NavLink
+        href="/rss.xml"
+        sx={paddingY}
+        data-goatcounter-click="rss-footer"
+      >
         RSS Feed <RSS height="1em" width="1em" />
       </NavLink>
     </Flex>

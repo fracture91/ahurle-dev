@@ -14,6 +14,7 @@ const EmailInput: WrapFC<"input"> = (props) => (
     name="email"
     placeholder="you@example.com"
     required
+    data-goatcounter-click="email-input"
     sx={{
       mx: "0.5em",
       mt: "1em",
@@ -38,6 +39,10 @@ const Form: WrapFC<"form"> = (props) => {
   const handleSubmit = useCallback<React.FormEventHandler<HTMLFormElement>>(
     (_event: React.FormEvent<HTMLFormElement>) => {
       window.open(url, target, "scrollbars=yes,width=800,height=600")
+      window.goatcounter.count({
+        path: (p) => `email-submit-${p}`,
+        event: true,
+      })
       return true
     },
     [url]
@@ -79,7 +84,11 @@ const RealForm: WrapFC<typeof Form, SxProp> = ({
     </Button>
     <p sx={{ color: "text.subtle", fontSize: 1, mt: "1em" }}>
       Don&apos;t like emails? Try the{" "}
-      <Themed.a href="/rss.xml" sx={{ whiteSpace: "nowrap" }}>
+      <Themed.a
+        data-goatcounter-click="rss-newsletter"
+        href="/rss.xml"
+        sx={{ whiteSpace: "nowrap" }}
+      >
         RSS Feed
         <RSS height="0.9em" width="0.9em" sx={{ ml: "0.4em" }} />
       </Themed.a>
