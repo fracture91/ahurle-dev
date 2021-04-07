@@ -34,7 +34,7 @@ declare global {
   }
 }
 
-const endpoint = `https://${globals.goatCounterId}.goatcounter.com/count`
+export const endpoint = `https://${globals.goatCounterId}.goatcounter.com/count`
 
 const RealGoatCounterPixel: React.FC = () => {
   const router = useRouter()
@@ -49,6 +49,7 @@ const RealGoatCounterPixel: React.FC = () => {
 
   // safeguard against people forking my repo and poisoning my data, like below
   if (
+    process.env.NODE_ENV !== "test" &&
     globals.goatCounterId === "ahurle-dev" &&
     (globals.siteName !== "ahurle.dev" ||
       // Skip analytics for all the staging vercel.app domains and localhost
@@ -81,14 +82,14 @@ const countStub: typeof window.goatcounter.count = function countStub(
   if (!this.disabled) this.queue.push(vars)
 }
 
-// always run this block in the browser so that I can call these functions without errors
-// in the event that the gc script doesn't load, or if I want to quickly disable it
-if (typeof window !== "undefined") {
-  const gc = window.goatcounter || {
-    count: countStub,
-    filter: noop,
-    bind_events: noop,
-  }
+export const initWindowGoatcounter = (force?: boolean): void => {
+  const gc =
+    (!force && window.goatcounter) ||
+    ({
+      count: countStub,
+      filter: noop,
+      bind_events: noop,
+    } as typeof window.goatcounter)
   window.goatcounter = gc
   gc.queue = []
   // the no_* stuff is because I need to trigger that stuff manually to get around a next.js bug
@@ -99,7 +100,14 @@ if (typeof window !== "undefined") {
   // Also, the prod domain is hardcoded here as a safeguard against someone forking my repo
   // and accidentally dumping their data into my account.
   // If I'm talking about you: please change `globals.goatCounterId` before altering the host below!
-  gc.disabled = window.location.host !== "ahurle.dev"
+  gc.disabled =
+    window.location.host !== "ahurle.dev" && process.env.NODE_ENV !== "test"
+}
+
+// always run this block in the browser so that I can call these functions without errors
+// in the event that the gc script doesn't load, or if I want to quickly disable it
+if (typeof window !== "undefined") {
+  initWindowGoatcounter()
 }
 
 // when the script loads successfully, it should overwrite my stub function
