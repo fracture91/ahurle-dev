@@ -5,6 +5,8 @@ import { renderToStaticMarkup } from "react-dom/server"
 import * as globals from "./globals"
 import { MetaAndContent } from "./loader"
 
+export const rssFilePath = `${process.cwd()}/public/rss.xml`
+
 export const generateRSS = async (
   posts: MetaAndContent<true>[]
 ): Promise<void> => {
@@ -41,7 +43,8 @@ export const generateRSS = async (
   })
 
   // writes RSS.xml to public directory
-  const path = `${process.cwd()}/public/rss.xml`
-  fs.writeFileSync(path, feed.xml(), "utf8")
-  console.log("generated RSS feed")
+  fs.writeFileSync(rssFilePath, feed.xml(), "utf8")
+  // annoying output in tests, but helpful elsewhere since when this happens it can make
+  // dev mode behave strangely, e.g. preventing navigation
+  if (process.env.NODE_ENV !== "test") console.log("generated RSS feed")
 }
