@@ -110,6 +110,21 @@ if (typeof window !== "undefined") {
   initWindowGoatcounter()
 }
 
+// once we know the state of the script, there's no reason to keep around the UTM params
+// clear them in case somebody copy/pastes the URL from their browser
+const cleanUtmParams = () => {
+  const params = window.location.search.slice(1).split("&")
+  // keep in sync with "campaign parameters" setting
+  // https://ahurle-dev.goatcounter.com/settings/main
+  const newParams = params.filter((p) => !p.match(/^(utm_.*|ref)=/))
+  if (newParams.length === params.length) return
+  const search = newParams.length ? `?${newParams.join("&")}` : ""
+  const url = window.location.pathname + search + window.location.hash
+  // note that I could use next/router here, but I choose not to to avoid re-renders
+  // I think this is safe as long as I never reference these params in my components
+  window.history.replaceState(null, "", url)
+}
+
 // when the script loads successfully, it should overwrite my stub function
 const isScriptLoaded = (): boolean =>
   ![countStub, noop].includes(window.goatcounter.count)
@@ -124,16 +139,17 @@ const handleScriptLoad = () => {
   }
 
   // if the count stub hasn't been replaced, the loop below might go infinitely?
-  if (!isScriptLoaded()) return
-
-  // if `count` was called before the script could load, queue will contain events to send
-  const { queue } = window.goatcounter
-  while (queue.length > 0) {
-    window.goatcounter.count(queue.pop() as CountVars)
+  if (isScriptLoaded()) {
+    // if `count` was called before the script could load, queue will contain events to send
+    const { queue } = window.goatcounter
+    while (queue.length > 0) {
+      window.goatcounter.count(queue.shift() as CountVars)
+    }
   }
 
   // call bind_events like would usually happen onload
   if (!window.goatcounter.disabled) window.goatcounter.bind_events()
+  cleanUtmParams()
 }
 
 const handleScriptError = () => {
@@ -143,6 +159,7 @@ const handleScriptError = () => {
     window.goatcounter.count = noop
     window.goatcounter.queue = []
   }
+  cleanUtmParams()
 }
 
 const appendScript = () => {

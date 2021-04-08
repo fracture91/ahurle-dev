@@ -27,7 +27,10 @@ describe("Homepage", () => {
   })
 
   const renderAndAct = async (url?: string) => {
-    const page = await getPage({ route: url || "/", useDocument: true })
+    const route = url || "/"
+    // next-page-tester doesn't set window.location for us
+    window.location.href = `${window.location.origin}${route}`
+    const page = await getPage({ route, useDocument: true })
     act(() => {
       page.render()
     })
@@ -109,6 +112,19 @@ describe("Homepage", () => {
     expect(html.match(regex)?.[0]).toMatchInlineSnapshot(
       '"<noscript><img src=\\"https://ahurle-dev.goatcounter.com/count?p=%2Findex&amp;q=utm_source%3Dtest&amp;r=gcpixel\\" alt=\\"\\"/></noscript>"'
     )
+  })
+  ;(["load", "error"] as const).forEach((action) => {
+    it("removes utm params from URL once script loads", async () => {
+      await renderAndAct("/?utm_source=test&hello=1&ref=test#anchor")
+      const script = document.querySelector("script[data-goatcounter]")
+      fireEvent[action](script as Element)
+
+      await waitFor(() =>
+        expect(window.location.href).toEqual(
+          "https://localhost/?hello=1#anchor"
+        )
+      )
+    })
   })
 
   // unfortunately I'm not sure if these tests can actually reproduce the problem
