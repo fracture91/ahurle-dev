@@ -25,9 +25,22 @@ const withinHtmlTag = (regex: RegExp): RegExp => {
   return new RegExp(original.source.replace("sentinel", regex.source), "g")
 }
 
+export const cleanHtml = (html: string): string => {
+  let cleaned = html
+  // because this is simpler than breaking out an HTML parser,
+  // remove any class="..." or style="...". RSS readers will generally ignore them anyway.
+  cleaned = cleaned.replace(withinHtmlTag(/ (class|style)="[^"]*"/), "")
+  // replace relative URLs with absolute ones
+  cleaned = cleaned.replace(withinHtmlTag(/ (src|href)="(\/[^"]*)"/), (match) =>
+    match.replace("/", `${globals.url}/`)
+  )
+  return cleaned
+}
+
 export const generateRSS = async (
-  posts: MetaAndContent<true>[]
-): Promise<void> => {
+  posts: MetaAndContent<true>[],
+  pretty = false
+): Promise<string> => {
   const feed = new RSS({
     title: globals.siteName,
     description: globals.siteDescription,
@@ -56,14 +69,7 @@ export const generateRSS = async (
         </CacheProvider>
       )
     }
-    // and because this is simpler than breaking out an HTML parser,
-    // remove any class="..." or style="...". RSS readers will generally ignore them anyway.
-    html = html.replace(withinHtmlTag(/ (class|style)="[^"]*"/), "")
-    // replace relative URLs with absolute ones
-    html = html.replace(
-      withinHtmlTag(/ (src|href)="(\/[^"]*)"/),
-      (match) => match.replace("/", `${globals.url}/`)
-    )
+    html = cleanHtml(html)
     feed.item({
       title: post.title,
       description: post.description,
@@ -75,9 +81,11 @@ export const generateRSS = async (
     })
   })
 
+  const xml = feed.xml({ indent: pretty ? "  " : false })
   // writes RSS.xml to public directory
-  fs.writeFileSync(rssFilePath, feed.xml(), "utf8")
+  fs.writeFileSync(rssFilePath, xml, "utf8")
   // annoying output in tests, but helpful elsewhere since when this happens it can make
   // dev mode behave strangely, e.g. preventing navigation
   if (process.env.NODE_ENV !== "test") console.log("generated RSS feed")
+  return xml
 }
