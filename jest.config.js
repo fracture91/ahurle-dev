@@ -31,4 +31,5 @@ module.exports = {
   moduleNameMapper: {
     "^.+\\.module\\.(css|sass|scss)$": "identity-obj-proxy",
   },
+  testURL: "https://localhost/",
 }

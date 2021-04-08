@@ -66,6 +66,7 @@ export const ShowMore: React.FC<{ id: string }> = ({ id, children }) => (
       as="label"
       htmlFor={id}
       data-goatcounter-click={id}
+      data-goatcounter-title={id}
     />
   </div>
 )
