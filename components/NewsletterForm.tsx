@@ -87,7 +87,10 @@ const RealForm: WrapFC<typeof Form, SxProp> = ({
       <Themed.a
         data-goatcounter-click="rss-newsletter"
         href="/rss.xml"
-        sx={{ whiteSpace: "nowrap" }}
+        // hide the external link icon here
+        sx={{ whiteSpace: "nowrap", "&&:after": { content: "none" } }}
+        target="_blank"
+        rel="noopener noreferrer"
       >
         RSS Feed
         <RSS height="0.9em" width="0.9em" sx={{ ml: "0.4em" }} />
