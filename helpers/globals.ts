@@ -5,7 +5,8 @@ export const siteName = "ahurle.dev"
 export const siteDescription = "Dev Blog"
 export const siteCreationDate = "January 15, 2021 20:00:00 GMT"
 // export const twitterHandle = '@';
-export const email = "me@ahurle.dev"
+// intentionally left blank in an effort to avoid bots seeing it
+// export const email = ""
 export const url =
   // eslint-disable-next-line no-nested-ternary
   process.env.VERCEL_ENV &&

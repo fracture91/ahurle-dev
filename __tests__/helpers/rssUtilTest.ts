@@ -65,8 +65,6 @@ describe("rssUtil", () => {
             <pubDate>Wed, 01 Jan 2020 00:00:00 GMT</pubDate>
             <copyright><![CDATA[2020 Andrew Hurle]]></copyright>
             <language><![CDATA[en]]></language>
-            <managingEditor><![CDATA[me@ahurle.dev]]></managingEditor>
-            <webMaster><![CDATA[me@ahurle.dev]]></webMaster>
             <ttl>60</ttl>
             <item>
               <title><![CDATA[Cool Blog Post]]></title>
