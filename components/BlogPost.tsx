@@ -226,7 +226,7 @@ const TableOfContentsDetails: React.FC<{ outline: Parent }> = ({ outline }) => {
 export const BlogPost: React.FunctionComponent<
   BlogLayoutProps & BlogStaticProps
 > = ({ processedMeta: post, readingTime, outline, children }) => {
-  const { forcedTocVisibility } = post
+  const { forcedTocVisibility, noForms } = post
   const tocVisible = showToc({ readingTime, outline, forcedTocVisibility })
   return (
     <main>
@@ -249,7 +249,9 @@ export const BlogPost: React.FunctionComponent<
 
         <Container pb="3em">
           <Thanks />
-          <NewsletterForm>Enjoy the article? Want to hear more?</NewsletterForm>
+          <NewsletterForm noForms={noForms}>
+            Enjoy the article? Want to hear more?
+          </NewsletterForm>
           <p sx={{ textAlign: "center", mx: "auto" }}>
             <Link href="/blog" passHref>
               <Themed.a>← Read a different article</Themed.a>

@@ -65,7 +65,13 @@ export const generateRSS = async (
       html = renderToStaticMarkup(
         <CacheProvider value={NoopEmotionCache}>
           {/* @ts-ignore: don't want to bother typing this correctly */}
-          <Content processedMeta={{ ...post, forcedTocVisibility: false }} />
+          <Content
+            processedMeta={{
+              ...post,
+              forcedTocVisibility: false,
+              noForms: true,
+            }}
+          />
         </CacheProvider>
       )
     }

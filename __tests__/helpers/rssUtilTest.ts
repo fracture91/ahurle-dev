@@ -44,6 +44,7 @@ describe("rssUtil", () => {
             bannerPhoto: null as never,
             tags: ["a tag"],
             datePublished: new Date("2020-01-01").getTime(),
+            noForms: false,
           },
           content: null as never,
         },
