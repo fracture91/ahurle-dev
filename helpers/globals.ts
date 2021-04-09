@@ -2,7 +2,8 @@ const prodUrl = "https://ahurle.dev"
 
 export const yourName = "Andrew Hurle"
 export const siteName = "ahurle.dev"
-export const siteDescription = "Dev Blog"
+export const siteDescription =
+  "Portfolio and writings from full-stack software engineer Andrew Hurle"
 export const siteCreationDate = "January 15, 2021 20:00:00 GMT"
 // export const twitterHandle = '@';
 // intentionally left blank in an effort to avoid bots seeing it
