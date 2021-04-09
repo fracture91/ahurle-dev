@@ -145,10 +145,15 @@ const sidebarVisibleWidth = "64em"
 const showToc = ({
   readingTime,
   outline,
+  forcedTocVisibility,
 }: {
   readingTime: BlogLayoutProps["readingTime"]
   outline: Parent
-}): boolean => outline.children.length > 1 && readingTime.minutes > 4
+  forcedTocVisibility: boolean | undefined
+}): boolean => {
+  if (forcedTocVisibility !== undefined) return forcedTocVisibility
+  return outline.children.length > 1 && readingTime.minutes > 4
+}
 
 const TableOfContentsSidebar: React.FC<{ outline: Parent }> = ({ outline }) => {
   const top = "4em"
@@ -220,40 +225,40 @@ const TableOfContentsDetails: React.FC<{ outline: Parent }> = ({ outline }) => {
 
 export const BlogPost: React.FunctionComponent<
   BlogLayoutProps & BlogStaticProps
-> = ({ processedMeta: post, readingTime, outline, children }) => (
-  <main>
-    <article>
-      <PostMeta post={post} />
+> = ({ processedMeta: post, readingTime, outline, children }) => {
+  const { forcedTocVisibility, noForms } = post
+  const tocVisible = showToc({ readingTime, outline, forcedTocVisibility })
+  return (
+    <main>
+      <article>
+        <PostMeta post={post} />
 
-      <Top>
-        <Title post={post} />
-        <Author post={post} readingTime={readingTime} />
-        {post.bannerPhoto && <BannerPhoto {...post.bannerPhoto} />}
-      </Top>
+        <Top>
+          <Title post={post} />
+          <Author post={post} readingTime={readingTime} />
+          {post.bannerPhoto && <BannerPhoto {...post.bannerPhoto} />}
+        </Top>
 
-      <Middle
-        sidebar={
-          showToc({ readingTime, outline }) && (
-            <TableOfContentsSidebar outline={outline} />
-          )
-        }
-        sx={{ position: "relative" }}
-      >
-        {showToc({ readingTime, outline }) && (
-          <TableOfContentsDetails outline={outline} />
-        )}
-        <div>{children}</div>
-      </Middle>
+        <Middle
+          sidebar={tocVisible && <TableOfContentsSidebar outline={outline} />}
+          sx={{ position: "relative" }}
+        >
+          {tocVisible && <TableOfContentsDetails outline={outline} />}
+          <div>{children}</div>
+        </Middle>
 
-      <Container pb="3em">
-        <Thanks />
-        <NewsletterForm>Enjoy the article? Want to hear more?</NewsletterForm>
-        <p sx={{ textAlign: "center", mx: "auto" }}>
-          <Link href="/blog" passHref>
-            <Themed.a>← Read a different article</Themed.a>
-          </Link>
-        </p>
-      </Container>
-    </article>
-  </main>
-)
+        <Container pb="3em">
+          <Thanks />
+          <NewsletterForm noForms={noForms}>
+            Enjoy the article? Want to hear more?
+          </NewsletterForm>
+          <p sx={{ textAlign: "center", mx: "auto" }}>
+            <Link href="/blog" passHref>
+              <Themed.a>← Read a different article</Themed.a>
+            </Link>
+          </p>
+        </Container>
+      </article>
+    </main>
+  )
+}

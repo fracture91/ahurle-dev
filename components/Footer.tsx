@@ -44,6 +44,8 @@ export const Footer: React.FC = () => (
         href="/rss.xml"
         sx={paddingY}
         data-goatcounter-click="rss-footer"
+        target="_blank"
+        rel="noopener noreferrer"
       >
         RSS Feed <RSS height="1em" width="1em" />
       </NavLink>

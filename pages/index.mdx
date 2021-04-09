@@ -4,12 +4,12 @@ import { ShowMore } from "@/components/ShowMore"
 import { PostCardList } from "@/components/PostCardList"
 import { NewsletterForm } from "@/components/NewsletterForm"
 import { getIndexStaticProps } from "@/helpers/getIndexStaticProps"
+import { siteDescription as description } from "@/helpers/globals"
 
 export const meta = {
   title: "Andrew Hurle — Internet Lad",
   visibleTitle: "Hi, I'm Andrew Hurle",
-  description:
-    "Portfolio and writings from full-stack software engineer Andrew Hurle",
+  description,
 }
 export const getStaticProps = (...args) =>
   getIndexStaticProps(...args, layoutProps)
