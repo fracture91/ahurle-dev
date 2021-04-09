@@ -12,8 +12,11 @@ describe("rssUtil", () => {
         <article>
           <div class="hello" aria-role="whatever">
             <p tabIndex="-1" style="color: red">some text</p>
+            <a href="https://google.com/whatever">google</a>
             <a href="/somewhere/cool">wee</a>
+            <a href="http://localhost:3000/?blah">asdf</a>
             <img src="/somewhere/else"/>
+            <img src="https://google.com/favicon.ico"/>
           </div>
         </article>
       `)
@@ -21,8 +24,11 @@ describe("rssUtil", () => {
         "<article>
           <div aria-role=\\"whatever\\">
             <p tabIndex=\\"-1\\">some text</p>
-            <a href=\\"http://localhost:3000/somewhere/cool\\">wee</a>
+            <a href=\\"https://google.com/whatever\\">google</a>
+            <a href=\\"http://localhost:3000/somewhere/cool?utm_source=rss\\">wee</a>
+            <a href=\\"http://localhost:3000/?blah=&utm_source=rss\\">asdf</a>
             <img src=\\"http://localhost:3000/somewhere/else\\"/>
+            <img src=\\"https://google.com/favicon.ico\\"/>
           </div>
         </article>"
       `)
@@ -54,11 +60,11 @@ describe("rssUtil", () => {
           <channel>
             <title><![CDATA[ahurle.dev]]></title>
             <description><![CDATA[Portfolio and writings from full-stack software engineer Andrew Hurle]]></description>
-            <link>http://localhost:3000</link>
+            <link>http://localhost:3000/?utm_source=rss</link>
             <image>
               <url>http://localhost:3000/img/logo.png</url>
               <title>ahurle.dev</title>
-              <link>http://localhost:3000</link>
+              <link>http://localhost:3000/?utm_source=rss</link>
             </image>
             <generator>RSS for Node</generator>
             <lastBuildDate>Thu, 02 Jan 2020 00:00:00 GMT</lastBuildDate>
@@ -70,8 +76,8 @@ describe("rssUtil", () => {
             <item>
               <title><![CDATA[Cool Blog Post]]></title>
               <description><![CDATA[this article is cool]]></description>
-              <link>http://localhost:3000/blog/somewhere</link>
-              <guid isPermaLink=\\"true\\">http://localhost:3000/blog/somewhere</guid>
+              <link>http://localhost:3000/blog/somewhere?utm_source=rss</link>
+              <guid isPermaLink=\\"false\\">somewhere</guid>
               <category><![CDATA[a tag]]></category>
               <pubDate>Wed, 01 Jan 2020 00:00:00 GMT</pubDate>
               <content:encoded/>

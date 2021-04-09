@@ -26,14 +26,29 @@ const withinHtmlTag = (regex: RegExp): RegExp => {
   return new RegExp(original.source.replace("sentinel", regex.source), "g")
 }
 
+const myOrigin = new URL(globals.url).origin
+
+const addUtmSource = (urlString: string): string => {
+  // relative URLs are resolved relative to globals.url and changed to absolute
+  const url = new URL(urlString, globals.url)
+  // leave external links untouched
+  if (url.origin !== myOrigin) return urlString
+  url.searchParams.append("utm_source", "rss")
+  return url.toString()
+}
+
 export const cleanHtml = (html: string): string => {
   let cleaned = html
   // because this is simpler than breaking out an HTML parser,
   // remove any class="..." or style="...". RSS readers will generally ignore them anyway.
   cleaned = cleaned.replace(withinHtmlTag(/ (class|style)="[^"]*"/), "")
   // replace relative URLs with absolute ones
-  cleaned = cleaned.replace(withinHtmlTag(/ (src|href)="(\/[^"]*)"/), (match) =>
-    match.replace("/", `${globals.url}/`)
+  cleaned = cleaned.replace(
+    withinHtmlTag(/ (src|href)="([^"]*)"/),
+    (_match, attrName, url) =>
+      attrName === "src" // no extra params needed for images
+        ? ` ${attrName}="${url[0] === "/" ? globals.url : ""}${url}"`
+        : ` ${attrName}="${addUtmSource(url)}"`
   )
   return cleaned
 }
@@ -46,7 +61,7 @@ export const generateRSS = async (
     title: globals.siteName,
     description: globals.siteDescription,
     feed_url: `${globals.url}${rssUrlPath}`,
-    site_url: globals.url,
+    site_url: addUtmSource(globals.url),
     image_url: `${globals.url}/img/logo.png`,
     // managingEditor: globals.email,
     // webMaster: globals.email,
@@ -80,7 +95,8 @@ export const generateRSS = async (
       title: post.title,
       description: post.description,
       custom_elements: [{ "content:encoded": { _cdata: html } }],
-      url: post.canonicalUrl,
+      guid: post.slug,
+      url: addUtmSource(post.canonicalUrl),
       categories: post.tags,
       author: post.author?.name,
       date: new Date(post.datePublished).toISOString(),
