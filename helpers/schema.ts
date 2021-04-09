@@ -67,6 +67,7 @@ export const RawBlogMetaSchema = RawPageMetaSchemaNoTransform.omit({
     author: AuthorSchema.optional(),
     tags: z.string().nonempty().array().optional(),
     bannerPhoto: RawBannerPhotoSchema.optional(),
+    forcedTocVisibility: z.boolean().optional(),
   })
   .refine((r) => !r.published || r.datePublished, {
     message: "datePublished required when published is true",

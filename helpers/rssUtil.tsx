@@ -3,6 +3,7 @@ import RSS from "rss"
 import fs from "fs"
 import { renderToStaticMarkup } from "react-dom/server"
 import { CacheProvider, EmotionCache } from "@emotion/react"
+import type { MDXBlogLayout } from "@/components/MDXBlogLayout"
 import * as globals from "./globals"
 import { MetaAndContent } from "./loader"
 
@@ -55,17 +56,16 @@ export const generateRSS = async (
     ttl: 60,
   })
 
-  posts.forEach(({ meta: post, content: Content }) => {
+  posts.forEach(({ meta: post, content }) => {
+    const Content = content as typeof MDXBlogLayout
     let html = ""
     // sigh... next-page-tester 0.24.1 makes this raise an exception
     // I tried and failed to make a minimum reproducible test case
     if (process.env.NODE_ENV !== "test") {
       html = renderToStaticMarkup(
         <CacheProvider value={NoopEmotionCache}>
-          <Content
-            // @ts-ignore: don't want to bother typing this correctly
-            processedMeta={post}
-          />
+          {/* @ts-ignore: don't want to bother typing this correctly */}
+          <Content processedMeta={{ ...post, forcedTocVisibility: false }} />
         </CacheProvider>
       )
     }
