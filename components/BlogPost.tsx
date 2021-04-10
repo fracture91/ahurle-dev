@@ -5,7 +5,7 @@ import Image from "next/image"
 import Link from "next/link"
 import type { Parent } from "unist"
 import { BlogMeta } from "@/helpers/schema"
-import { theme } from "@/helpers/theme"
+import { mainImageSizes, theme } from "@/helpers/theme"
 import { BlogLayoutProps } from "@/helpers/loader"
 import { BlogStaticProps } from "@/helpers/getBlogStaticProps"
 import { Author } from "./Author"
@@ -13,6 +13,7 @@ import { PostMeta } from "./PostMeta"
 import { Middle, Top } from "./PageSection"
 import { ShowMoreButton } from "./ShowMore"
 import { NewsletterForm } from "./NewsletterForm"
+import { Figcaption } from "./Figcaption"
 
 const BannerPhoto: React.FC<BlogMeta["bannerPhoto"]> = ({
   src,
@@ -31,18 +32,12 @@ const BannerPhoto: React.FC<BlogMeta["bannerPhoto"]> = ({
       objectFit="contain"
       loading="eager"
       priority
+      sizes={mainImageSizes}
       sx={{ borderRadius: "5px" }}
       // todo: pass "sizes" attribute so 4k monitors don't get 4k images
     />
     {caption && (
-      <figcaption
-        sx={{
-          textAlign: "center",
-          fontSize: 1,
-          color: "text.subtle",
-          marginTop: "0.25em",
-        }}
-      >
+      <Figcaption>
         {typeof caption === "object" && caption.unsplash ? (
           <>
             Photo by{" "}
@@ -54,7 +49,7 @@ const BannerPhoto: React.FC<BlogMeta["bannerPhoto"]> = ({
         ) : (
           caption
         )}
-      </figcaption>
+      </Figcaption>
     )}
   </Box>
 )

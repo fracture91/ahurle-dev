@@ -246,6 +246,9 @@ export const theme = makeTheme({
       img: {
         // want this to apply to all img tags (e.g. next/image), not just Themed.img
         filter: (t) => t.colors?.imgFilter,
+        // style the alt text nicely
+        backgroundColor: "background.highlightText",
+        color: "primary",
       },
     },
     // not standard, special handling by me
@@ -428,10 +431,13 @@ export const theme = makeTheme({
       height: "1px",
       color: "secondary",
       backgroundColor: "secondary",
-      marginY: 2,
+      marginY: "3em",
     },
   },
 })
+
+// based on maxwidth of main page container, plus a nudge towards higher res
+export const mainImageSizes: HTMLImageElement["sizes"] = `min(${theme.sizes.container} + 32px, 100vw)`
 
 // we also want to re-export more narrowly typed things
 // https://github.com/system-ui/theme-ui/blob/v0.6.0-alpha.6/packages/docs/src/pages/guides/typescript.mdx#exact-theme-type

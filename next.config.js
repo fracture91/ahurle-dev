@@ -38,6 +38,23 @@ module.exports = withPlugins(
     // inlineImageLimit: false,
     pageExtensions: ["js", "jsx", "ts", "tsx", "mdx"],
     reactStrictMode: true,
+    images: {
+      // https://nextjs.org/docs/basic-features/image-optimization#device-sizes
+      // more accurate to think of this as "widths largest optimized images will be shown at"
+      // these numbers have been tweaked from default because my main page area can only be 42em wide
+      deviceSizes: [
+        640, // iphone 5 (320 logical px) * 2x DPR
+        760, // main content width at 1x DPR
+        948, // midpoint
+        1136, // iphone 5 landscape (568 logical px) * 2x DPR
+        1328, // midpoint
+        1520, // main content width at 2x DPR
+        // 1680, // main content width on 2k screen * 2x DPR (base font size increases)
+        1920, // max out at 1080p arbitrarily, but probably no way to reach it
+        // 2760, // main content width at 4k * 3x max DPR
+        // this is an upper bound but I don't know if 4k * 3x DPR even exists, so not worth it
+      ],
+    },
     /** @param {import("webpack").Configuration} config */
     webpack(config) {
       config.module?.rules.push({
