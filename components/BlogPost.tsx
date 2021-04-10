@@ -13,6 +13,7 @@ import { PostMeta } from "./PostMeta"
 import { Middle, Top } from "./PageSection"
 import { ShowMoreButton } from "./ShowMore"
 import { NewsletterForm } from "./NewsletterForm"
+import { Figcaption } from "./Figcaption"
 
 const BannerPhoto: React.FC<BlogMeta["bannerPhoto"]> = ({
   src,
@@ -35,14 +36,7 @@ const BannerPhoto: React.FC<BlogMeta["bannerPhoto"]> = ({
       // todo: pass "sizes" attribute so 4k monitors don't get 4k images
     />
     {caption && (
-      <figcaption
-        sx={{
-          textAlign: "center",
-          fontSize: 1,
-          color: "text.subtle",
-          marginTop: "0.25em",
-        }}
-      >
+      <Figcaption>
         {typeof caption === "object" && caption.unsplash ? (
           <>
             Photo by{" "}
@@ -54,7 +48,7 @@ const BannerPhoto: React.FC<BlogMeta["bannerPhoto"]> = ({
         ) : (
           caption
         )}
-      </figcaption>
+      </Figcaption>
     )}
   </Box>
 )

@@ -246,6 +246,9 @@ export const theme = makeTheme({
       img: {
         // want this to apply to all img tags (e.g. next/image), not just Themed.img
         filter: (t) => t.colors?.imgFilter,
+        // style the alt text nicely
+        backgroundColor: "background.highlightText",
+        color: "primary",
       },
     },
     // not standard, special handling by me

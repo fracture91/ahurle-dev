@@ -25,6 +25,7 @@ import { UnwrapImages } from "@/components/UnwrapImages"
 import { ThemeMeta } from "@/components/ThemeMeta"
 import { RemovePreLoadClass } from "@/components/RemovePreLoadClass"
 import { GoatCounterScript, GoatCounterPixel } from "@/components/GoatCounter"
+import { Figcaption } from "@/components/Figcaption"
 
 const MDXPre: React.FC<
   React.ComponentPropsWithoutRef<"pre">
@@ -56,6 +57,8 @@ const components: MDXProviderComponents = {
   img: ImageRenderer,
   a: MDXLink,
   inlineCode: Themed.code,
+  figcaption: Figcaption,
+  figure: (props) => <figure {...props} sx={{ my: 3 }} />,
 }
 
 // HACK: grab theme-ui's generated styles from non-exported function - see /patches
