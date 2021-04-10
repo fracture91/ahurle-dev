@@ -1,5 +1,6 @@
 /** @jsxImportSource theme-ui */
 import React from "react"
+import { mainImageSizes } from "@/helpers/theme"
 import { LazyImage } from "./LazyImage"
 
 export const ImageRenderer: React.FC<React.ComponentPropsWithoutRef<"img">> = ({
@@ -32,6 +33,7 @@ export const ImageRenderer: React.FC<React.ComponentPropsWithoutRef<"img">> = ({
           {...rest}
           layout={layout}
           objectFit="contain"
+          sizes={mainImageSizes}
           sx={{ borderRadius: "5px" }}
         />
       </div>

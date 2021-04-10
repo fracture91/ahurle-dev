@@ -5,7 +5,7 @@ import Image from "next/image"
 import Link from "next/link"
 import type { Parent } from "unist"
 import { BlogMeta } from "@/helpers/schema"
-import { theme } from "@/helpers/theme"
+import { mainImageSizes, theme } from "@/helpers/theme"
 import { BlogLayoutProps } from "@/helpers/loader"
 import { BlogStaticProps } from "@/helpers/getBlogStaticProps"
 import { Author } from "./Author"
@@ -32,6 +32,7 @@ const BannerPhoto: React.FC<BlogMeta["bannerPhoto"]> = ({
       objectFit="contain"
       loading="eager"
       priority
+      sizes={mainImageSizes}
       sx={{ borderRadius: "5px" }}
       // todo: pass "sizes" attribute so 4k monitors don't get 4k images
     />
