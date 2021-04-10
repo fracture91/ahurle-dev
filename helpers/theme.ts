@@ -428,7 +428,7 @@ export const theme = makeTheme({
       height: "1px",
       color: "secondary",
       backgroundColor: "secondary",
-      marginY: 2,
+      marginY: "3em",
     },
   },
 })
