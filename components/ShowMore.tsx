@@ -103,3 +103,17 @@ export const ShowMore: React.FC<{ id: string }> = ({ id, children }) => (
     />
   </div>
 )
+
+export const HideInitially: WrapFC<"div"> = ({ children, ...props }) => (
+  <div
+    {...props}
+    sx={{
+      display: "none",
+      [whenChecked.replace("&", "div > &")]: { display: "unset" },
+    }}
+  >
+    {/* hidden p tag because some elements have a :first-child rule that disables top margin */}
+    <p hidden />
+    {children}
+  </div>
+)
