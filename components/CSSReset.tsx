@@ -1,4 +1,3 @@
-/** @jsxImportSource theme-ui */
 import { Global, css } from "@emotion/react"
 
 // based on https://github.com/hankchizljaw/modern-css-reset with some tweaks

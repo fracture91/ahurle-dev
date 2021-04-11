@@ -1,4 +1,3 @@
-/** @jsxImportSource theme-ui */
 import React from "react"
 import { BlogMeta } from "@/helpers/schema"
 import { Box, Flex, Text, Themed } from "theme-ui"

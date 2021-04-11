@@ -1,4 +1,3 @@
-/** @jsxImportSource theme-ui */
 import React from "react"
 import { Themed } from "theme-ui"
 import { ImageRenderer } from "./ImageRenderer"

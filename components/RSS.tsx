@@ -1,4 +1,3 @@
-/** @jsxImportSource theme-ui */
 import { WrapFC } from "@/helpers/WrapFC"
 
 export const RSS: WrapFC<"svg"> = (props) => (

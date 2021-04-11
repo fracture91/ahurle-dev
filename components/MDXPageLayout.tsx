@@ -1,4 +1,3 @@
-/** @jsxImportSource theme-ui */
 import type { PageLayoutProps } from "@/helpers/loader"
 import { Themed } from "theme-ui"
 import { Middle, Top } from "@/components/PageSection"

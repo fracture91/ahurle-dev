@@ -1,4 +1,3 @@
-/** @jsxImportSource theme-ui */
 import { WrapFC } from "@/helpers/WrapFC"
 import { Button } from "theme-ui"
 import { DownCaret } from "./DownCaret"

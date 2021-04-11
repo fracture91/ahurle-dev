@@ -1,4 +1,3 @@
-/** @jsxImportSource theme-ui */
 import React, { useMemo } from "react"
 
 // Note that PrismAsyncLight will create one chunk for every language.

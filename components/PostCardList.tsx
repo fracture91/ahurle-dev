@@ -1,4 +1,3 @@
-/** @jsxImportSource theme-ui */
 import { SxProp, Themed } from "theme-ui"
 import { WrapFC } from "@/helpers/WrapFC"
 import { BlogMeta } from "@/helpers/schema"

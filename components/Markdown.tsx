@@ -1,4 +1,3 @@
-/** @jsxImportSource theme-ui */
 import React from "react"
 import ReactMarkdown from "react-markdown"
 import RemarkDirective from "remark-directive"

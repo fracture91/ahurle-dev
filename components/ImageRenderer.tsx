@@ -1,4 +1,3 @@
-/** @jsxImportSource theme-ui */
 import React from "react"
 import { mainImageSizes } from "@/helpers/theme"
 import { LazyImage } from "./LazyImage"

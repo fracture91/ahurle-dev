@@ -1,4 +1,3 @@
-/** @jsxImportSource theme-ui */
 // getPreferredColorScheme is not normally exported, but I patched that in
 import { getPreferredColorScheme } from "@theme-ui/color-modes"
 import { SxProp } from "theme-ui"
