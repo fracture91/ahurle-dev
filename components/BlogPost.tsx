@@ -1,11 +1,12 @@
 /** @jsxImportSource theme-ui */
+/* eslint-disable no-underscore-dangle */
 import React from "react"
 import { Box, Container, Themed } from "theme-ui"
 import Image from "next/image"
 import Link from "next/link"
 import type { Parent } from "unist"
 import { BlogMeta } from "@/helpers/schema"
-import { mainImageSizes, theme } from "@/helpers/theme"
+import { mainImageSizes, Theme, theme } from "@/helpers/theme"
 import { BlogLayoutProps } from "@/helpers/loader"
 import { BlogStaticProps } from "@/helpers/getBlogStaticProps"
 import { Author } from "./Author"
@@ -64,15 +65,27 @@ const Thanks: React.FC = () => (
     }}
   >
     🙏{" "}
-    <Themed.em
-      sx={{
-        textShadow: "-4px -4px 5px yellow, 4px 0px 5px blue, -4px 4px 4px red",
-        marginX: 2,
-        fontWeight: "heading",
-      }}
+    <a
+      href="/files/ahurle-dev-participation-certificate.pdf"
+      target="_blank"
+      rel="noopener noreferrer"
+      sx={{ color: "text" }}
     >
-      Thank You For Reading My Blog
-    </Themed.em>{" "}
+      <Themed.em
+        sx={{
+          textShadow: (t) =>
+            `-4px -4px 5px ${
+              (t as Theme).colors.primary.background.__default
+            }, 4px 0px 5px ${
+              (t as Theme).colors.primary.background.lighter
+            }, -4px 4px 4px ${(t as Theme).colors.primary.__default}`,
+          marginX: 2,
+          fontWeight: "heading",
+        }}
+      >
+        Thank You For Reading My Blog
+      </Themed.em>
+    </a>{" "}
     👋
   </Themed.p>
 )
