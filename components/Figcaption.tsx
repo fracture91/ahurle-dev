@@ -1,5 +1,3 @@
-/** @jsxImportSource theme-ui */
-
 import { WrapFC } from "@/helpers/WrapFC"
 
 export const Figcaption: WrapFC<"figcaption"> = (props) => (

@@ -6,18 +6,25 @@ const browsersList = readFileSync(
   "utf8"
 ).split("\n")
 
-module.exports = {
-  presets: [
-    [
-      "next/babel",
-      {
-        "preset-react": { runtime: "automatic" },
-        "preset-env": {
-          targets: browsersList,
-        },
+const presets = [
+  [
+    "next/babel",
+    {
+      "preset-react": { runtime: "automatic", importSource: "theme-ui" },
+      "preset-env": {
+        targets: browsersList,
       },
-    ],
+    },
   ],
+]
+
+const mdxPresets = JSON.parse(JSON.stringify(presets))
+// https://github.com/mdx-js/mdx/issues/1441
+// MDX v1 uses the classic runtime and will complain about importSource
+delete mdxPresets[0][1]["preset-react"].importSource
+
+module.exports = {
+  presets,
   plugins: [
     ["polished"],
     ["@emotion"],
@@ -31,5 +38,11 @@ module.exports = {
       },
     ],
     ["./babel-plugin-nextjs-mdx-patch"],
+  ],
+  overrides: [
+    {
+      test: /^.*\.mdx$/,
+      presets: mdxPresets,
+    },
   ],
 }

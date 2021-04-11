@@ -1,5 +1,3 @@
-/** @jsxImportSource theme-ui */
-
 import { WrapFC } from "@/helpers/WrapFC"
 
 // me being lazy and not wanting to set up a webpack loader

@@ -1,4 +1,3 @@
-/** @jsxImportSource theme-ui */
 import React from "react"
 import * as globals from "@/helpers/globals"
 import { Flex, NavLink, Themed, ThemeUICSSObject } from "theme-ui"

@@ -12,6 +12,7 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "preserve",
+    "jsxImportSource": "theme-ui",
     "strict": true,
     "noImplicitAny": true,
     "noImplicitThis": true,

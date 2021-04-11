@@ -1,4 +1,3 @@
-/** @jsxImportSource theme-ui */
 import { Container, Box } from "theme-ui"
 import { WrapFC } from "@/helpers/WrapFC"
 import { theme } from "@/helpers/theme"

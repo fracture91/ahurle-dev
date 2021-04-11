@@ -1,5 +1,3 @@
-/** @jsxImportSource theme-ui */
-
 import { WrapFC } from "@/helpers/WrapFC"
 import { useCallback } from "react"
 import { Button, SxProp, Themed, ThemeUICSSObject } from "theme-ui"

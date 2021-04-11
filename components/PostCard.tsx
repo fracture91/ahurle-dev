@@ -1,4 +1,3 @@
-/** @jsxImportSource theme-ui */
 import Link from "next/link"
 import { Themed, Card, ThemeUICSSObject } from "theme-ui"
 import { BlogMeta } from "@/helpers/schema"

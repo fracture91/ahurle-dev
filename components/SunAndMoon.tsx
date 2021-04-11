@@ -1,5 +1,3 @@
-/** @jsxImportSource theme-ui */
-
 import { WrapFC } from "@/helpers/WrapFC"
 
 export const SunAndMoon: WrapFC<"svg", { secondaryColor: string }> = ({

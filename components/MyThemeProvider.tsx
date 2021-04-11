@@ -1,4 +1,3 @@
-/** @jsxImportSource theme-ui */
 import { ThemeProvider, Themed } from "theme-ui"
 import Link from "next/link"
 import { theme } from "@/helpers/theme"

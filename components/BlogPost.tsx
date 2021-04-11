@@ -1,4 +1,3 @@
-/** @jsxImportSource theme-ui */
 /* eslint-disable no-underscore-dangle */
 import React from "react"
 import { Box, Container, Themed } from "theme-ui"
