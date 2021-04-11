@@ -4,6 +4,7 @@ import fs from "fs"
 import { renderToStaticMarkup } from "react-dom/server"
 import { CacheProvider, EmotionCache } from "@emotion/react"
 import type { MDXBlogLayout } from "@/components/MDXBlogLayout"
+import { MyThemeProvider } from "@/components/MyThemeProvider"
 import * as globals from "./globals"
 import { MetaAndContent } from "./loader"
 
@@ -14,7 +15,15 @@ export const rssFilePath = `${process.cwd()}/public${rssUrlPath}`
 // This is a stub that will omit <style> tags when I renderToStaticMarkup
 const NoopEmotionCache: EmotionCache = {
   inserted: {},
-  sheet: null as never,
+  sheet: {
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
+    insert(..._args) {},
+    container: (null as unknown) as HTMLElement,
+    key: "",
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
+    flush(..._args) {},
+    tags: [],
+  },
   key: "",
   registered: {},
   // eslint-disable-next-line @typescript-eslint/no-empty-function
@@ -50,6 +59,8 @@ export const cleanHtml = (html: string): string => {
         ? ` ${attrName}="${url[0] === "/" ? globals.url : ""}${url}"`
         : ` ${attrName}="${addUtmSource(url)}"`
   )
+  // for some reason, these global style tags are still making it into the HTML despite my best efforts
+  cleaned = cleaned.replace(/<style\s+data-emotion="[^"]*"><\/style>/g, "")
   return cleaned
 }
 
@@ -79,14 +90,16 @@ export const generateRSS = async (
     if (process.env.NODE_ENV !== "test") {
       html = renderToStaticMarkup(
         <CacheProvider value={NoopEmotionCache}>
-          {/* @ts-ignore: don't want to bother typing this correctly */}
-          <Content
-            processedMeta={{
-              ...post,
-              forcedTocVisibility: false,
-              noForms: true,
-            }}
-          />
+          <MyThemeProvider>
+            {/* @ts-ignore: don't want to bother typing this correctly */}
+            <Content
+              processedMeta={{
+                ...post,
+                forcedTocVisibility: false,
+                noForms: true,
+              }}
+            />
+          </MyThemeProvider>
         </CacheProvider>
       )
     }

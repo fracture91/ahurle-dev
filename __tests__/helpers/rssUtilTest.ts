@@ -9,6 +9,8 @@ describe("rssUtil", () => {
     it("removes style/class tags, makes urls absolute", () => {
       expect(
         cleanHtml(dedent`
+        <style data-emotion="-global asdf"></style>
+        <style data-emotion="-global asdf"></style>
         <article>
           <div class="hello" aria-role="whatever">
             <p tabIndex="-1" style="color: red">some text</p>
@@ -21,7 +23,9 @@ describe("rssUtil", () => {
         </article>
       `)
       ).toMatchInlineSnapshot(`
-        "<article>
+        "
+
+        <article>
           <div aria-role=\\"whatever\\">
             <p tabIndex=\\"-1\\">some text</p>
             <a href=\\"https://google.com/whatever\\">google</a>
