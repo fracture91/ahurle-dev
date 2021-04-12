@@ -5,7 +5,7 @@ import throttle from "lodash/throttle"
 import * as globals from "@/helpers/globals"
 import { Flex, NavLink } from "theme-ui"
 import { WrapFC } from "@/helpers/WrapFC"
-import { theme, Theme } from "@/helpers/theme"
+import { browserKbFocusStyles, theme, Theme } from "@/helpers/theme"
 import { css, Global } from "@emotion/react"
 import { Logo } from "./Logo"
 import { ThemeSwitcher } from "./ThemeSwitcher"
@@ -57,7 +57,8 @@ const StyledDownCaret: React.FC = () => (
       py: "0.5em",
       bg: "background.header",
       transition: theme.styles.root.transition,
-      "*:hover > &": { bg: "lower" },
+      "*:hover > &, summary:focus-visible &": { bg: "lower" },
+      "details[open] > summary:focus-visible &": browserKbFocusStyles,
     }}
   >
     <DownCaret
@@ -85,7 +86,7 @@ const Toggle: WrapFC<"div"> = React.forwardRef((props, ref) => (
       [hideHamburger]: {
         display: "unset",
       },
-      "details:not([open]) &": {
+      "details:not([open]) summary:not(:focus) &": {
         "@media (min-width: 51em)": {
           display: "none",
         },
@@ -110,48 +111,45 @@ const Toggle: WrapFC<"div"> = React.forwardRef((props, ref) => (
 const Summary: WrapFC<"summary"> = React.forwardRef((props, ref) => (
   <summary
     {...{ ...props, ref }}
+    aria-label="Navigation links toggle"
     sx={{
       display: "flex",
       flexDirection: "column",
       listStyle: "none",
       "&::-webkit-details-marker": { display: "none" },
       outline: "none",
+      ":focus-visible": browserKbFocusStyles,
     }}
   />
 ))
+
+const isLink = (target: EventTarget | null): boolean =>
+  target instanceof Element && target.tagName === "A"
 
 const ExpandoLinks: WrapFC<"details"> = React.forwardRef(
   ({ children, ...props }, ref) => {
     const localRef = useRef<HTMLDetailsElement>(null)
     const detailsRef = (ref as React.RefObject<HTMLDetailsElement>) || localRef
-    const hamburgerRef = useRef<SVGSVGElement>(null)
-    const toggleRef = useRef<HTMLDivElement>(null)
-    const summaryRef = useRef<HTMLElement>(null)
 
     // The default behavior of the details element is to toggle `open=""` when summary is clicked.
-    // We also want it to close when you click anywhere else on the page.
-    // Before removing, we must check if any of the default toggling elements were clicked,
-    // otherwise their effects cancel each other out.
-    const handleOutsideClick = (event: MouseEvent) => {
+    // We also want it to close when you click anywhere else on the page or move keyboard focus away.
+    const handleBlur = (event: React.FocusEvent) => {
+      // relatedTarget is where the focus is moving *to*
       if (
-        detailsRef.current &&
-        hamburgerRef.current &&
-        toggleRef.current &&
-        summaryRef.current &&
-        event.target instanceof Node &&
-        !hamburgerRef.current.contains(event.target) &&
-        !toggleRef.current.contains(event.target) &&
-        event.target !== summaryRef.current
-      ) {
-        detailsRef.current.removeAttribute("open")
-      }
+        !(event.relatedTarget instanceof Node) ||
+        // avoid closing if focus is moving between elements contained by <details>
+        !detailsRef.current?.contains(event.relatedTarget) ||
+        // If we close the <details> after clicking a contained link, the link doesn't seem to work,
+        // so avoid closing in this situation as well
+        !isLink(event.relatedTarget)
+      )
+        detailsRef.current?.removeAttribute("open")
     }
-    useEffect(() => {
-      document.addEventListener("click", handleOutsideClick, true)
-      return () => {
-        document.removeEventListener("click", handleOutsideClick, true)
-      }
-    })
+
+    const handleClick = (event: React.MouseEvent) => {
+      // special case from above: we want clicks on nav links to close the <details>
+      if (isLink(event.target)) detailsRef.current?.removeAttribute("open")
+    }
 
     return (
       <details
@@ -166,10 +164,12 @@ const ExpandoLinks: WrapFC<"details"> = React.forwardRef(
           position: "relative",
         }}
       >
-        <Summary ref={summaryRef}>
-          <Hamburger ref={hamburgerRef} />
+        <Summary onBlur={handleBlur} onClick={handleClick}>
+          <Hamburger />
           <Flex
+            tabIndex={-1}
             sx={{
+              outline: "none",
               display: "none",
               top: "2.5em",
               [hideHamburger]: {
@@ -196,7 +196,7 @@ const ExpandoLinks: WrapFC<"details"> = React.forwardRef(
             }}
           >
             {children}
-            <Toggle ref={toggleRef} />
+            <Toggle />
           </Flex>
         </Summary>
       </details>

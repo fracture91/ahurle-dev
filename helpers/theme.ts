@@ -206,7 +206,7 @@ export const theme = makeTheme({
       "&:visited": {
         color: "inherit",
       },
-      "&:hover": {
+      "&:focus, &:hover": {
         color: "inherit",
         bg: "lower",
       },
@@ -438,6 +438,13 @@ export const theme = makeTheme({
 
 // based on maxwidth of main page container, plus a nudge towards higher res
 export const mainImageSizes: HTMLImageElement["sizes"] = `min(${theme.sizes.container} + 32px, 100vw)`
+
+// https://css-tricks.com/copy-the-browsers-native-focus-styles/
+export const browserKbFocusStyles: ThemeUICSSObject = {
+  outline: "5px auto Highlight", // moz-specific
+  // I really want the same prop twice, hence the leading space
+  " outline": "5px auto -webkit-focus-ring-color", // chrome/safari
+}
 
 // we also want to re-export more narrowly typed things
 // https://github.com/system-ui/theme-ui/blob/v0.6.0-alpha.6/packages/docs/src/pages/guides/typescript.mdx#exact-theme-type

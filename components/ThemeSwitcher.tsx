@@ -1,7 +1,12 @@
 // getPreferredColorScheme is not normally exported, but I patched that in
 import { getPreferredColorScheme } from "@theme-ui/color-modes"
 import { SxProp } from "theme-ui"
-import { ColorMode, theme, useColorMode } from "@/helpers/theme"
+import {
+  browserKbFocusStyles,
+  ColorMode,
+  theme,
+  useColorMode,
+} from "@/helpers/theme"
 import {
   ChangeEvent,
   ComponentType,
@@ -74,6 +79,7 @@ const ThemeButton: WrapFC<
       value={mode.name}
       onChange={onChange.bind(null, mode)}
       checked={checked}
+      aria-label={mode.title}
       {...rest}
       sx={{ position: "absolute", opacity: 0, cursor: "pointer" }}
     />
@@ -85,6 +91,7 @@ const ThemeButton: WrapFC<
         verticalAlign: "middle",
         height: "1.2em",
         color: checked ? "text.switchSelected" : "text",
+        "input:focus-visible ~ &": browserKbFocusStyles,
       }}
     />
   </label>
