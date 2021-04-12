@@ -74,6 +74,7 @@ const ThemeButton: WrapFC<
       value={mode.name}
       onChange={onChange.bind(null, mode)}
       checked={checked}
+      title={mode.title}
       {...rest}
       sx={{ position: "absolute", opacity: 0, cursor: "pointer" }}
     />
