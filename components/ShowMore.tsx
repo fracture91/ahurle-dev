@@ -1,4 +1,4 @@
-import { theme } from "@/helpers/theme"
+import { browserKbFocusStyles, theme } from "@/helpers/theme"
 import { WrapFC } from "@/helpers/WrapFC"
 import { Button } from "theme-ui"
 import { DownCaret } from "./DownCaret"
@@ -37,11 +37,7 @@ export const ShowMoreButton: WrapFC<
             [`${focusBasisSelector}:focus ~ &, ${focusBasisSelector}:hover ~ &`]: {
               ...theme.buttons.primary["&:hover, &:focus"],
             },
-            [`${focusBasisSelector}:focus-visible ~ &`]: {
-              outline: "5px auto Highlight", // moz-specific
-              // I really want the same prop twice, hence the leading space
-              " outline": "5px auto -webkit-focus-ring-color", // chrome/safari
-            },
+            [`${focusBasisSelector}:focus-visible ~ &`]: browserKbFocusStyles,
           }
         : {}),
     }}
