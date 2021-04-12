@@ -206,7 +206,7 @@ export const theme = makeTheme({
       "&:visited": {
         color: "inherit",
       },
-      "&:hover": {
+      "&:focus, &:hover": {
         color: "inherit",
         bg: "lower",
       },

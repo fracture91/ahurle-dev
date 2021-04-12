@@ -5,7 +5,7 @@ import throttle from "lodash/throttle"
 import * as globals from "@/helpers/globals"
 import { Flex, NavLink } from "theme-ui"
 import { WrapFC } from "@/helpers/WrapFC"
-import { theme, Theme } from "@/helpers/theme"
+import { browserKbFocusStyles, theme, Theme } from "@/helpers/theme"
 import { css, Global } from "@emotion/react"
 import { Logo } from "./Logo"
 import { ThemeSwitcher } from "./ThemeSwitcher"
@@ -57,7 +57,8 @@ const StyledDownCaret: React.FC = () => (
       py: "0.5em",
       bg: "background.header",
       transition: theme.styles.root.transition,
-      "*:hover > &": { bg: "lower" },
+      "*:hover > &, summary:focus-visible &": { bg: "lower" },
+      "details[open] > summary:focus-visible &": browserKbFocusStyles,
     }}
   >
     <DownCaret
@@ -85,7 +86,7 @@ const Toggle: WrapFC<"div"> = React.forwardRef((props, ref) => (
       [hideHamburger]: {
         display: "unset",
       },
-      "details:not([open]) &": {
+      "details:not([open]) summary:not(:focus) &": {
         "@media (min-width: 51em)": {
           display: "none",
         },
@@ -110,12 +111,14 @@ const Toggle: WrapFC<"div"> = React.forwardRef((props, ref) => (
 const Summary: WrapFC<"summary"> = React.forwardRef((props, ref) => (
   <summary
     {...{ ...props, ref }}
+    aria-label="Navigation links toggle"
     sx={{
       display: "flex",
       flexDirection: "column",
       listStyle: "none",
       "&::-webkit-details-marker": { display: "none" },
       outline: "none",
+      ":focus-visible": browserKbFocusStyles,
     }}
   />
 ))
@@ -169,7 +172,9 @@ const ExpandoLinks: WrapFC<"details"> = React.forwardRef(
         <Summary ref={summaryRef}>
           <Hamburger ref={hamburgerRef} />
           <Flex
+            tabIndex={-1}
             sx={{
+              outline: "none",
               display: "none",
               top: "2.5em",
               [hideHamburger]: {
