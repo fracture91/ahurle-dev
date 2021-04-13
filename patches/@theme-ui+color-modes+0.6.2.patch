@@ -1,5 +1,5 @@
 diff --git a/node_modules/@theme-ui/color-modes/dist/index.d.ts b/node_modules/@theme-ui/color-modes/dist/index.d.ts
-index 660c660..a623edf 100644
+index 660c660..1c43b01 100644
 --- a/node_modules/@theme-ui/color-modes/dist/index.d.ts
 +++ b/node_modules/@theme-ui/color-modes/dist/index.d.ts
 @@ -16,3 +16,5 @@ export declare const InitializeColorMode: () => React.DetailedReactHTMLElement<{
