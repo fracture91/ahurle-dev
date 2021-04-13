@@ -994,9 +994,9 @@
     "@styled-system/css" "^5.1.5"
 
 "@testing-library/dom@^7.28.1":
-  version "7.30.1"
-  resolved "https://registry.yarnpkg.com/@testing-library/dom/-/dom-7.30.1.tgz#07b6f3ccd7f1f1e34ab0406932073e2971817f3d"
-  integrity sha512-RQUvqqq2lxTCOffhSNxpX/9fCoR+nwuQPmG5uhuuEH5KBAzNf2bK3OzBoWjm5zKM78SLjnGRAKt8hRjQA4E46A==
+  version "7.30.3"
+  resolved "https://registry.yarnpkg.com/@testing-library/dom/-/dom-7.30.3.tgz#779ea9bbb92d63302461800a388a5a890ac22519"
+  integrity sha512-7JhIg2MW6WPwyikH2iL3o7z+FTVgSOd2jqCwTAHqK7Qal2gRRYiUQyURAxtbK9VXm/UTyG9bRihv8C5Tznr2zw==
   dependencies:
     "@babel/code-frame" "^7.10.4"
     "@babel/runtime" "^7.12.5"
@@ -1022,9 +1022,9 @@
     redent "^3.0.0"
 
 "@testing-library/react@^11.2.3":
-  version "11.2.5"
-  resolved "https://registry.yarnpkg.com/@testing-library/react/-/react-11.2.5.tgz#ae1c36a66c7790ddb6662c416c27863d87818eb9"
-  integrity sha512-yEx7oIa/UWLe2F2dqK0FtMF9sJWNXD+2PPtp39BvE0Kh9MJ9Kl0HrZAgEuhUJR+Lx8Di6Xz+rKwSdEPY2UV8ZQ==
+  version "11.2.6"
+  resolved "https://registry.yarnpkg.com/@testing-library/react/-/react-11.2.6.tgz#586a23adc63615985d85be0c903f374dab19200b"
+  integrity sha512-TXMCg0jT8xmuU8BkKMtp8l7Z50Ykew5WNX8UoIKTaLFwKkP2+1YDhOLA2Ga3wY4x29jyntk7EWfum0kjlYiSjQ==
   dependencies:
     "@babel/runtime" "^7.12.5"
     "@testing-library/dom" "^7.28.1"
@@ -2471,9 +2471,9 @@ copy-to-clipboard@^3.3.1:
     toggle-selection "^1.0.6"
 
 core-js-pure@^3.0.0:
-  version "3.9.1"
-  resolved "https://registry.yarnpkg.com/core-js-pure/-/core-js-pure-3.9.1.tgz#677b322267172bd490e4464696f790cbc355bec5"
-  integrity sha512-laz3Zx0avrw9a4QEIdmIblnVuJz8W51leY9iLThatCsFawWxC3sE4guASC78JbCin+DkwMpCdp1AVAuzL/GN7A==
+  version "3.10.1"
+  resolved "https://registry.yarnpkg.com/core-js-pure/-/core-js-pure-3.10.1.tgz#28642697dfcf02e0fd9f4d9891bd03a22df28ecf"
+  integrity sha512-PeyJH2SE0KuxY5eCGNWA+W+CeDpB6M1PN3S7Am7jSv/Ttuxz2SnWbIiVQOn/TDaGaGtxo8CRWHkXwJscbUHtVw==
 
 core-util-is@1.0.2, core-util-is@~1.0.0:
   version "1.0.2"
@@ -4701,9 +4701,9 @@ jest-environment-node@^26.6.2:
     jest-util "^26.6.2"
 
 jest-fail-on-console@^2.0.3:
-  version "2.0.3"
-  resolved "https://registry.yarnpkg.com/jest-fail-on-console/-/jest-fail-on-console-2.0.3.tgz#5a45417d54258d77c4420486a823f0cbe76d82df"
-  integrity sha512-5lxf4car6hp8gGAOhvnwYV/qSMUq8LGPqklYV0SUojXVpjgNgtq0wZH/Pib33MnS0xqmjda5KvePTaL0ClXw8g==
+  version "2.0.4"
+  resolved "https://registry.yarnpkg.com/jest-fail-on-console/-/jest-fail-on-console-2.0.4.tgz#31f91ca2c72844f7ed4cad5a9ac36aab44f7bf45"
+  integrity sha512-Hzw0zDgR1HUDXPWwhNquyyoKOi6zdzXeXNAB91t5FApnUzbyS55kZQNIvU2BdWBV7a/pc+SDqhRtic1Q0Yi9Dw==
   dependencies:
     chalk "^4.1.0"
 
