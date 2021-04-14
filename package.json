@@ -51,7 +51,7 @@
     "hast-util-heading-rank": "^1.0.1",
     "hast-util-shift-heading": "^2.0.1",
     "hast-util-to-string": "^1.0.4",
-    "image-size": "^0.9.3",
+    "image-size": "^1.0.0",
     "loader-utils": "^2.0.0",
     "lodash": "^4.17.21",
     "mdx-prism": "0.3.3",
