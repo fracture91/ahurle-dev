@@ -108,7 +108,6 @@ export const theme = makeTheme({
     body: bodyFonts,
     heading: bodyFonts,
     prose: fonts([
-      "Constantia",
       '"Lucida Bright"',
       "Lucidabright",
       "Lucida Serif",
