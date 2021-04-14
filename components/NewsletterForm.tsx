@@ -53,6 +53,7 @@ const Form: WrapFC<"form", { noForms?: boolean }> = ({
 
   const sx: ThemeUICSSObject = {
     mx: "auto",
+    my: "1em",
     textAlign: "center",
     bg: "background",
     p: "1em",

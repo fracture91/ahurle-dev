@@ -240,13 +240,14 @@ export const BlogPost: React.FunctionComponent<
       <article>
         <PostMeta post={post} />
 
-        <Top>
+        <Top mb="1.5em">
           <Title post={post} />
           <Author post={post} readingTime={readingTime} />
           {post.bannerPhoto && <BannerPhoto {...post.bannerPhoto} />}
         </Top>
 
         <Middle
+          pb="2em"
           sidebar={tocVisible && <TableOfContentsSidebar outline={outline} />}
           sx={{ position: "relative" }}
         >

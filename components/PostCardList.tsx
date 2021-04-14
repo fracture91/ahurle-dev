@@ -16,7 +16,11 @@ export const PostCardList: WrapFC<
       <PostCard
         post={post}
         key={post.urlPath}
-        sx={{ my: "1em", ":first-child": { mt: 0 }, ":last-child": { mb: 0 } }}
+        sx={{
+          my: "1.5em",
+          ":first-child": { mt: 0 },
+          ":last-child": { mb: 0 },
+        }}
       />
     ))}
   </Themed.ol>
