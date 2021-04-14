@@ -108,7 +108,6 @@ export const theme = makeTheme({
     body: bodyFonts,
     heading: bodyFonts,
     prose: fonts([
-      "Constantia",
       '"Lucida Bright"',
       "Lucidabright",
       "Lucida Serif",
@@ -167,8 +166,8 @@ export const theme = makeTheme({
       fontFamily: "heading",
       lineHeight: "heading",
       fontWeight: "heading",
-      mt: "1em",
-      mb: "1rem",
+      mt: "1.7em",
+      mb: "1.2rem",
       ":first-child": {
         marginTop: 0,
       },
@@ -257,7 +256,7 @@ export const theme = makeTheme({
     },
     h1: {
       variant: "text.heading",
-      mt: "1.7em",
+      mt: "2em",
       fontSize: [6, 7, 8],
       letterSpacing: "-0.03em",
       ...linkInsideHeading,
@@ -292,7 +291,7 @@ export const theme = makeTheme({
     },
     p: {
       maxWidth: "65ch",
-      my: "1.4em",
+      my: "1.5em",
       ":first-child": {
         mt: 0,
       },

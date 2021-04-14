@@ -70,7 +70,14 @@ const ThemeButton: WrapFC<
   <label
     htmlFor={mode.id}
     title={mode.title}
-    sx={{ cursor: "pointer", zIndex: 2, position: "relative", color: "text" }}
+    sx={{
+      cursor: "pointer",
+      zIndex: 2,
+      position: "relative",
+      color: "text",
+      display: "flex",
+      alignItems: "center",
+    }}
   >
     <input
       type="radio"
@@ -81,12 +88,13 @@ const ThemeButton: WrapFC<
       checked={checked}
       aria-label={mode.title}
       {...rest}
-      sx={{ position: "absolute", opacity: 0, cursor: "pointer" }}
+      sx={{ position: "absolute", opacity: 0.00001, cursor: "pointer" }}
     />
     <mode.icon
       secondaryColor={checked ? "background.switchSelected" : "background"}
       sx={{
         mx: "0.2em",
+        my: "0.2em",
         cursor: "pointer",
         verticalAlign: "middle",
         height: "1.2em",
@@ -190,7 +198,7 @@ export const ThemeSwitcher: React.FC = () => {
   return (
     <div
       sx={{
-        p: "0.1em 0.2em",
+        p: "0.05em 0.1em",
         mr: "0.5em",
         bg: selectedIndex > 0 ? "primary.background" : "lower",
         borderRadius: "1em",
@@ -215,8 +223,8 @@ export const ThemeSwitcher: React.FC = () => {
           bg: "background.switchSelected",
           position: "absolute",
           mt: "0.11em",
-          ml: "0.05em",
-          transform: `translateX(${selectedIndex * 1.67}em)`,
+          ml: "0.1em",
+          transform: `translateX(${selectedIndex * 1.62}em)`,
           transition:
             "transform 240ms cubic-bezier(0.165, 0.840, 0.440, 1.000)",
           zIndex: 1,

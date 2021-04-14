@@ -24,7 +24,7 @@ export const Middle: WrapFC<typeof Box, { sidebar?: ReactNode }> = ({
     <div
       sx={{
         width: "100%",
-        maxWidth: "60em",
+        maxWidth: "65em",
         mx: "auto",
         display: "flex",
         position: "relative",
