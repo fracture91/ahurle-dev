@@ -1,10 +1,12 @@
 import * as doubleLaptop from "@/public/img/double-laptop.jpg"
 import imgAttrs from "@/helpers/imgAttrs"
+import { IncrementButton } from "@/components/IncrementButton"
+import { Box } from "theme-ui"
 
 export const meta = {
-  title: "Overengineering a Next.js developer blog for 2021",
+  title: "Overengineering a Next.js developer blog in 2021",
   published: true,
-  datePublished: 1614964800000,
+  datePublished: 1618848000000,
   author: {
     name: "Andrew Hurle",
     twitter: "adhurle",
@@ -21,12 +23,244 @@ export const meta = {
   },
 }
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Id faucibus nisl tincidunt eget nullam non nisi. Nisi quis eleifend quam adipiscing vitae proin sagittis nisl rhoncus. Platea dictumst vestibulum rhoncus est pellentesque elit ullamcorper dignissim. At tempor commodo ullamcorper a lacus. Tellus orci ac auctor augue mauris augue neque gravida. Venenatis urna cursus eget nunc scelerisque viverra. Facilisis volutpat est velit egestas dui id. Morbi tristique senectus et netus et malesuada. Integer vitae justo eget magna. Quis imperdiet massa tincidunt nunc pulvinar sapien. Enim nulla aliquet porttitor lacus luctus accumsan tortor posuere ac.
+I've always wanted a website. They're fun! I've made lots of them, but never one _just for me_ and my long-winded opinions. After a couple of months of on-and-off work, it's live and
+[open source](https://github.com/fracture91/ahurle-dev)!
+Here's how I built it.
 
-Non curabitur gravida arcu ac tortor dignissim convallis. Tortor aliquam nulla facilisi cras. A cras semper auctor neque vitae tempus quam. Congue mauris rhoncus aenean vel. Rhoncus mattis rhoncus urna neque viverra justo nec. Volutpat blandit aliquam etiam erat. A pellentesque sit amet porttitor eget dolor. Est velit egestas dui id ornare arcu odio ut. Neque volutpat ac tincidunt vitae semper quis lectus nulla. Tortor aliquam nulla facilisi cras fermentum odio eu feugiat pretium. Nisi quis eleifend quam adipiscing vitae proin sagittis nisl rhoncus. Amet nisl suscipit adipiscing bibendum est ultricies. Elit eget gravida cum sociis natoque penatibus et magnis dis. Pellentesque nec nam aliquam sem et.
+# Requirements
 
-Dignissim suspendisse in est ante in. Sagittis aliquam malesuada bibendum arcu vitae elementum. Morbi tincidunt ornare massa eget egestas purus viverra accumsan in. Amet tellus cras adipiscing enim eu turpis. Vivamus at augue eget arcu dictum varius. Id venenatis a condimentum vitae. Morbi tristique senectus et netus et malesuada. Mauris commodo quis imperdiet massa tincidunt nunc. Auctor neque vitae tempus quam. Nunc aliquet bibendum enim facilisis gravida neque convallis a cras. Egestas egestas fringilla phasellus faucibus scelerisque eleifend donec pretium. Eleifend quam adipiscing vitae proin sagittis nisl rhoncus. At erat pellentesque adipiscing commodo elit at imperdiet.
+At first, I entertained the idea of sticking HTML and CSS files onto my Raspberry Pi, running a web server, and calling it a day. Immediately, there were too many cons with this method: I don't want my website to go down if someone trips over a wire in my apartment, and I would miss the CSS-in-JS niceties I've grown accustomed to in React. Who wants to worry about className typos in this day and age?
 
-Tellus pellentesque eu tincidunt tortor aliquam nulla facilisi. Commodo viverra maecenas accumsan lacus vel facilisis volutpat est velit. Arcu risus quis varius quam quisque. Quis imperdiet massa tincidunt nunc pulvinar sapien et. Condimentum lacinia quis vel eros. Volutpat est velit egestas dui id ornare arcu odio. Ullamcorper dignissim cras tincidunt lobortis. Id diam maecenas ultricies mi. Amet massa vitae tortor condimentum lacinia. Sagittis id consectetur purus ut faucibus pulvinar elementum integer enim. Pharetra convallis posuere morbi leo urna. Id nibh tortor id aliquet lectus.
+Next I considered pre-built platforms like Medium, Substack, or Ghost. These would get me up and running with zero effort, but I have some time on my hands. I'd rather have total control over what my website looks like, and anyway, building something on my own as a learning exercise would be fun.
 
-Proin gravida hendrerit lectus a. Sed viverra ipsum nunc aliquet bibendum. Nam aliquam sem et tortor consequat. Integer vitae justo eget magna fermentum. Ornare massa eget egestas purus viverra accumsan. Lectus nulla at volutpat diam ut venenatis tellus in. Adipiscing enim eu turpis egestas pretium. Sit amet facilisis magna etiam tempor. Elementum eu facilisis sed odio morbi. Mi tempus imperdiet nulla malesuada pellentesque. Sagittis id consectetur purus ut.
+I did a little research and decided that
+[Devii](https://devii.dev/)
+would be a good starting point. Devii is a developer blog starter kit built on a stack that I'm comfortable with: Next.js, React, and TypeScript. Colin McDonnell, the creator of Devii, wrote about
+[his design rationale in this essay](https://colinhacks.com/essays/devii),
+and I highly recommend reading it as context for the rest of my post. In addition to his requirements, I wanted my site to be:
+
+- **Functional with JavaScript disabled**. In the end I'm just trying to show you some text and images, so you should be able to read and navigate the site without JS.
+
+- **Fast and light**. Not only is page speed important for SEO, it is morally wrong to make someone wait around for 2MB of JS to execute in order to show them some text.
+  ([Proverbs 3:27-28](https://bible.usccb.org/bible/proverbs/3#24003027))
+
+- **Themeable**. Dark mode is cool, and I have some fun novelty theme ideas 💅
+
+- **Testable**. Detecting problems like
+  [SSR mismatches](https://www.joshwcomeau.com/react/the-perils-of-rehydration/)
+  or uncaught exceptions ought to be trivial and automated.
+
+# Trimming the Fat
+
+After a quick fork of Devii and some dependency upgrades, the first thing I looked into was page speed; If Devii needed some kind of massive dependency in order to function, then I could bail out early and find some other codebase to fork.
+
+The initial results were not terrible, but not great either.
+
+![Build output from Next.js indicating a large bundle size](/img/ahurle-dev-build-output-5a34fdc.png)
+
+![PageSpeed Insights showing a mobile score of 69. Nice.](/img/ahurle-dev-pagespeed-5a34fdc.png)
+
+That's a whopping 357KB of gzipped JS (1 meg uncompressed) just to render a blog post. The PageSpeed score was 69 on mobile and low 70s on desktop, so it was slower than necessary even when the CPU wasn't artificially throttled. I should do something about how slow this is.
+
+I installed
+[`@next/bundle-analyzer`](https://www.npmjs.com/package/@next/bundle-analyzer)
+and looked around for easy wins. Luckily, there were a few!
+
+First of all, I found out that Devii's `<Code>` component imports `react-syntax-highlighter` in a wasteful manner:
+
+```ts
+import { Prism as SyntaxHighlighter } from "react-syntax-highlighter"
+```
+
+Importing it like this will include syntaxes for
+[_all 237 supported languages_](https://github.com/wooorm/refractor/tree/main/lang)
+in the client bundle (~500KB uncompressed), including unquestioned industry powerhouses like
+[SQF](https://community.bistudio.com/wiki/SQF_Syntax)
+and
+[MEL](https://en.wikipedia.org/wiki/Maya_Embedded_Language). I'm not planning on making an Arma 3 mod anytime soon, so these can be safely removed from my bundle.
+
+The solution was to import the `PrismAsyncLight` component instead of `Prism`, since it only loads the languages you use on the page - nice! Unfortunately, switching over to it makes our SSR output lack syntax highlighting, which goes against the "no JS necessary" requirement. I was able to get around that problem with this little trick:
+
+```ts
+import { PrismLight, PrismAsyncLight } from "react-syntax-highlighter"
+const SyntaxHighlighter =
+  typeof window === "undefined" // window is undefined during server render
+    ? PrismLight
+    : PrismAsyncLight
+```
+
+This will make the _server_ output highlighted code sections, without sacrificing the _client_ bundle size wins from `PrismAsyncLight`. As a bonus, I ended up discovering a couple of SSR mismatch issues in `react-syntax-highlighter` and have a couple PRs up to fix them:
+[[1]](https://github.com/react-syntax-highlighter/react-syntax-highlighter/pull/361)
+[[2]](https://github.com/react-syntax-highlighter/react-syntax-highlighter/pull/362)
+([patched into my repo here](https://github.com/fracture91/ahurle-dev/pull/10/commits/94bfb8d0a30bc08ea1119d97f8999ab0ec244166)).
+
+Another silly problem was this import statement:
+
+```ts
+import { darcula } from "react-syntax-highlighter/dist/cjs/styles/prism"
+```
+
+This causes the bundling of
+[all 37 available prism styles](https://github.com/react-syntax-highlighter/react-syntax-highlighter/tree/master/src/styles/prism)
+(~100KB uncompressed). We only need the one, so we can fix it like so:
+
+```ts
+import darcula from "react-syntax-highlighter/dist/cjs/styles/prism/darcula"
+```
+
+After this first cut of optimizations, the final JS weight came out to 178KB gzipped and 519KB uncompressed, or about a 50% reduction. I could stomach those numbers. And they get even better later on!
+
+# Testing
+
+The next thing I looked into was how I could write automated tests for my pages. And I really mean _entire pages_ - In Rails I'm used to calling `get "/some/page"` and then inspecting the HTML or HTTP status code.
+
+I was really bummed out to see the Next.js documentation has
+[no advice for testing your application](https://github.com/vercel/next.js/issues/10967).
+You can use
+[`react-testing-library`](https://github.com/testing-library/react-testing-library)
+to call something like `render(<SomePage someProp={1}>)`, but that does nothing to assert that routes map to the right React components, or that your
+[getStaticProps](https://nextjs.org/docs/basic-features/data-fetching#getstaticprops-static-generation)
+function is correctly wired up.
+
+Luckily for me,
+[Andrea Carraro had the same concerns](https://dev.to/toomuchdesign/dom-testing-next-js-applications-46ke)
+and addressed them with a library called
+[`next-page-tester`](https://github.com/toomuchdesign/next-page-tester).
+You can give it a path to "visit", and it will behave just like Next.js behaves. It will render the page on the "server", hydrate that page on the "client", and then you make assertions against either the server or client representations of the DOM.
+
+You can find an example of [next-page-tester usage in my codebase](https://github.com/fracture91/ahurle-dev/blob/1e98f208c8d3d33c7f9791f348b9a21f6ae46210/__tests__/pages/index.tsx#L102-L115),
+where I make sure the server-rendered HTML includes an analytics pixel `<noscript>` fallback. Combined with
+[`jest-fail-on-console`](https://www.npmjs.com/package/jest-fail-on-console)
+I can easily catch SSR mismatches, since they result in `console.error` calls.
+
+Getting `next-page-tester` to work with CSS-in-JS libraries was a little tricky. I was getting weird exceptions in the test environment, and then I spent quite a while stepping through the debugger trying to figure out why.
+[I provided a minimal reproduction of the problem and a janky patch to the team](https://github.com/toomuchdesign/next-page-tester/issues/147#issuecomment-780079515),
+[which quickly led to a proper fix in v0.21.0](https://github.com/toomuchdesign/next-page-tester/pull/162).
+So if you end up using `next-page-tester` in such a way, you're welcome 😘 Hats off to the maintainers for fixing problems so quickly!
+
+# Switching to MDX
+
+Devii has an awesome feature where you can author blog posts in
+[markdown](https://en.wikipedia.org/wiki/Markdown) -
+this a major reason why I chose it. However, there were a couple of awkward things about how it all worked:
+
+- Devii sends your raw markdown content to the browser, alongside a full-blown markdown parser. Since Devii's flavor of markdown allows HTML, it also includes an HTML parser. This adds up to a hefty ~40KB gzipped.
+
+- `react-syntax-highlighter` has to be included in the client bundle, as you saw above. I cut it down in size quite a bit, but it still took up ~20KB gzipped on my example blog post.
+
+- When React hydrates the DOM, it has to first parse the markdown into JSX, and then parse out the code blocks for syntax highlighting. This can take hundreds (or thousands!) of milliseconds of CPU time on mobile.
+
+- Markdown is rendered with a component like so: `<Markdown source="[a link](google.com)..." />`. If you want to interleave arbitrary React components inside that markdown, you'd need to break out of Devii's blog post abstraction or use
+  [a remark plugin](https://github.com/remarkjs/remark-directive).
+
+- Metadata for a blog post (title, publish date, etc.) comes in the form of
+  [front-matter](https://github.com/jonschlinkert/gray-matter),
+  which I don't really like since it doesn't have the full expressive power of writing JS.
+
+There's a good solution for all of these problems called [MDX](https://mdxjs.com/). Rather than shipping all the parsers we need to the browser, we can do all the parsing at build time and ship pure JSX to the browser. This lets you go crazy with parser plugins without worrying about bundle size.
+
+Another benefit is that you can basically write JS wherever you want. You can export variables instead of using front-matter. You can import arbitrary React components and render them inline with your markdown, or just write JSX in place of HTML. That's very powerful!
+[For example](#todo), here's a component that increments a number when you click on it:
+
+<IncrementButton startingNumber={0} />
+
+I was a little scared of using MDX since
+[it has neither TypeScript](https://github.com/microsoft/TypeScript/issues/36440)
+[nor Intellisense support](https://github.com/mdx-js/vscode-mdx/issues/165).
+However, it _does_ have an
+[eslint plugin](https://github.com/mdx-js/eslint-mdx)
+and
+[a VSCode extension](https://marketplace.visualstudio.com/items?itemName=JounQin.vscode-mdx)
+which can catch a lot of problems:
+
+<figure>
+
+![Screenshot of VSCode that shows eslint highlighting an import error, a stylistic problem, and an image accessibility issue](/img/mdx-linting-errors.png)
+
+<figcaption>
+
+[I updated the documentation for the VSCode extension](https://github.com/mdx-js/vscode-mdx/pull/163)
+to help you see red squigglies too!
+
+</figcaption>
+</figure>
+
+After the switch to MDX, here's what the PageSpeed score looked like on my example blog post:
+
+![PageSpeed Insights showing a mobile score of 98](/img/ahurle-dev-pagespeed-9790773.png)
+
+Not bad! Now we're down to 116KB of JS gzipped, 326KB uncompressed - nearly a 70% reduction from where we started.
+
+# Styling
+
+[Devii uses a plain old CSS file](https://github.com/colinhacks/devii/blob/b72e369decbae46579fb10e1cf6670226a8fc8e4/styles/base.css)
+out of the box, but my styling was going to be a bit more complex, especially considering my desire for multiple themes. Also, traditional CSS carries the risk of className typos.
+
+My first thought was to use
+[`styled-components`](https://styled-components.com/) -
+it's super popular and I've used it before. But then I realized that implementing
+[the perfect dark mode](https://www.joshwcomeau.com/react/dark-mode/)
+is a bit complicated. Also,
+[the CSS-in-JS market is much more crowded now than it was 2-3 years ago](https://2020.stateofcss.com/en-US/technologies/css-in-js/#css_in_js_experience_ranking)
+when I started using styled-components.
+
+After lots of research, I ended up choosing
+[`theme-ui`](https://theme-ui.com/home/),
+which uses
+[`emotion`](https://emotion.sh/docs/introduction).
+The big reason I chose it was because it has
+[first-class support for "color modes"](https://theme-ui.com/color-modes)
+via CSS custom properties, including respect for the system default color scheme and avoiding light mode flashes. The less code I have to write, the better!
+[Built-in MDX support](https://theme-ui.com/styling-mdx)
+and the
+[terse styling syntax](https://theme-ui.com/sx-prop)
+looked good, too.
+
+Unfortunately, I ran into a few problems with `theme-ui` once I was already committed:
+
+- When JS is disabled, `theme-ui` does not respect the default system color mode,
+  [even though it's possible with CSS alone for basic themes](https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-color-scheme)
+
+- TypeScript can't protect you against certain typos, but
+  [this problem is actively being worked on](https://github.com/system-ui/theme-ui/pull/1090)
+
+- [There's no way for a user to return to the system default color scheme once they select a specific theme](https://github.com/system-ui/theme-ui/issues/1372)
+
+- I'm pretty sure that [`theme-ui` regressed my PageSpeed score](https://github.com/system-ui/theme-ui/issues/980)
+
+- I ran into [a bug in `emotion` that sometimes breaks fast refresh](https://github.com/emotion-js/emotion/issues/2158)
+
+I'm in too deep now, so I hacked around some of these problems. If I could go back in time, however, I'd look into using `styled-components` instead and find something else to handle color modes. That's what I get for using `0.x` versions of libraries!
+
+Anyway, as a
+[back-of-the-front-end](https://bradfrost.com/blog/post/front-of-the-front-end-and-back-of-the-front-end-web-development/)
+guy, I'm rather proud that I got everything styled nicely, even with JS disabled. For example, the mobile header opens and closes because it's just a
+[`details` element](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/details),
+so I can use the `details[open]` CSS selector to style it differently when expanded. Similarly, the "Show More" button on the [homepage](/) is actually
+[a hidden checkbox](https://developer.mozilla.org/en-US/docs/Web/CSS/:checked#toggling_elements_with_a_hidden_checkbox).
+Sara Soueidan has [an excellent article about this technique](https://www.sarasoueidan.com/blog/inclusively-hiding-and-styling-checkboxes-and-radio-buttons/#hiding-the-checkboxes-inclusively).
+
+# Other Neat Features
+
+- Free analytics from [GoatCounter](https://www.goatcounter.com/)
+- Free hosting from [Vercel](https://vercel.com) so I can see each commit in a staging environment
+- ESLint, Prettier, Jest, and a CI config for [Github Actions](https://github.com/features/actions) - Free!
+- Newsletter signup with [TinyLetter](https://tinyletter.com/)
+- Non-blog-post pages can be written in MDX and get automatically tested by `next-page-tester`
+- MDX image size data is automatically provided to `next/image` for lazy loading
+- Excerpt, Table of Contents, and Reading Time get extracted from each blog post
+- MDX "front-matter" is just a JS object export, validated by [zod](https://github.com/colinhacks/zod/tree/v3)
+- I took the time to use the site via keyboard/VoiceOver, so hopefully I did a good job with accessibility
+- Handcrafted, artisanal SVGs
+
+Even though it's not perfect and it took a while, I'm really happy with how my site has turned out and I learned a lot along the way. If you'd also like a fun website,
+[fork my repo on github](https://github.com/fracture91/ahurle-dev)!
+All I ask is that you style it a little differently - make it "yours". It would also be nice if you linked back to me, but it's all MIT licensed so... 🤷‍♂️
+
+Want to hear about how to integrate GoatCounter with Next.js, the details of my MDX setup, or how my little theme switcher works? Subscribe to my newsletter below!
+
+<Box sx={{fontSize: 1, color: "text.subtle"}}>
+
+Edited by [Danielle Nguyễn](https://github.com/daniellenguyen)
+
+</Box>
