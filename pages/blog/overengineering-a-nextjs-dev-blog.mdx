@@ -1,3 +1,4 @@
+import { yourName, twitterHandle } from "@/helpers/globals"
 import * as doubleLaptop from "@/public/img/double-laptop.jpg"
 import imgAttrs from "@/helpers/imgAttrs"
 import { IncrementButton } from "@/components/IncrementButton"
@@ -8,11 +9,11 @@ export const meta = {
   published: true,
   datePublished: 1618848000000,
   author: {
-    name: "Andrew Hurle",
-    twitter: "adhurle",
+    name: yourName,
+    twitter: twitterHandle,
     photo: {
       src: "/img/me.jpg",
-      alt: "Closeup of Andrew Hurle, smiling",
+      alt: `Closeup of ${yourName}, smiling`,
     },
   },
   bannerPhoto: {

@@ -2,10 +2,11 @@ const prodUrl = "https://ahurle.dev"
 
 export const yourName = "Andrew Hurle"
 export const siteName = "ahurle.dev"
-export const siteDescription =
-  "Portfolio and writings from full-stack software engineer Andrew Hurle"
-export const siteCreationDate = "January 15, 2021 20:00:00 GMT"
-// export const twitterHandle = '@';
+export const siteDescription = `Portfolio and writings from full-stack software engineer ${yourName}`
+export const siteCreationDate = "April 19, 2021 20:00:00 GMT"
+export const twitterHandle = "@adhurle"
+export const goatCounterId = "ahurle-dev"
+export const tinyLetterUsername = "ahurle"
 // intentionally left blank in an effort to avoid bots seeing it
 // export const email = ""
 export const url =
@@ -17,5 +18,3 @@ export const url =
     : process.env.NODE_ENV === "production"
     ? prodUrl
     : "http://localhost:3000"
-export const goatCounterId = "ahurle-dev"
-export const tinyLetterUsername = "ahurle"

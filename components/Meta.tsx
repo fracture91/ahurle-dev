@@ -21,7 +21,7 @@ export const Meta: React.FC<{
       </title>
       <link rel="icon" href="/favicon.ico" />
       <link rel="icon" href="/img/logo.svg" type="image/svg+xml" />
-      <meta name="copyright" content="Andrew Hurle" />
+      <meta name="copyright" content={globals.yourName} />
       {url && <link rel="canonical" href={url} />}
       {meta.description && (
         <meta name="description" content={meta.description} />
