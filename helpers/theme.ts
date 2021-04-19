@@ -291,6 +291,9 @@ export const theme = makeTheme({
     },
     p: {
       maxWidth: "65ch",
+      "figcaption &": {
+        maxWidth: "none",
+      },
       my: "1.5em",
       ":first-child": {
         mt: 0,

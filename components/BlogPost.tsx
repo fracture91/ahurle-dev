@@ -169,8 +169,8 @@ const TableOfContentsSidebar: React.FC<{ outline: Parent }> = ({ outline }) => {
     <div
       sx={{
         position: "sticky",
-        ml: "2em",
-        mr: "1em",
+        ml: "1.5em",
+        mr: "1.5em",
         mt: "2em",
         mb,
         top,

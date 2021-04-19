@@ -33,6 +33,8 @@ export const ImageRenderer: React.FC<React.ComponentPropsWithoutRef<"img">> = ({
           layout={layout}
           objectFit="contain"
           sizes={mainImageSizes}
+          // pngs look crappy at default quality of 75
+          quality={src?.endsWith(".png") ? 90 : 75}
           sx={{ borderRadius: "5px" }}
         />
       </div>
