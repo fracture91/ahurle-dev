@@ -8,12 +8,12 @@ export const Meta: React.FC<{
     title: string
     canonicalUrl?: string
     description?: string
-    image?: string
+    image?: { src: string; alt: string; width: number; height: number }
   }
 }> = ({ meta }) => {
   const router = useRouter()
   const url = new URL(meta.canonicalUrl || router.pathname, globals.url).href
-  const image = meta.image ? new URL(meta.image, globals.url).href : meta.image
+  const image = meta.image?.src && new URL(meta.image.src, globals.url).href
   return (
     <NextHead>
       <title>
@@ -22,32 +22,45 @@ export const Meta: React.FC<{
       <link rel="icon" href="/favicon.ico" />
       <link rel="icon" href="/img/logo.svg" type="image/svg+xml" />
       <meta name="copyright" content={globals.yourName} />
-      {url && <link rel="canonical" href={url} />}
-      {meta.description && (
-        <meta name="description" content={meta.description} />
+      {url && (
+        <>
+          <link rel="canonical" href={url} />
+          <meta property="og:url" content={url} />
+        </>
       )}
       <meta property="og:type" content="website" />
-      <meta name="og:title" property="og:title" content={meta.title} />
+      <meta name="twitter:title" property="og:title" content={meta.title} />
       {meta.description && (
-        <meta
-          name="og:description"
-          property="og:description"
-          content={meta.description}
-        />
+        <>
+          <meta name="description" content={meta.description} />
+          <meta
+            name="twitter:description"
+            property="og:description"
+            content={meta.description}
+          />
+        </>
       )}
       <meta property="og:site_name" content={globals.siteName} />
-      {meta.canonicalUrl && (
-        <meta property="og:url" content={meta.canonicalUrl} />
+      <meta
+        name="twitter:card"
+        content={image ? "summary_large_image" : "summary"}
+      />
+      <meta name="twitter:site" content={globals.twitterHandle} />
+      <meta name="twitter:creator" content={globals.twitterHandle} />
+      {meta.image && image && (
+        <>
+          <meta name="twitter:image" property="og:image" content={image} />
+          <meta
+            property="og:image:width"
+            content={meta.image.width.toString()}
+          />
+          <meta
+            property="og:image:height"
+            content={meta.image.height.toString()}
+          />
+          <meta name="twitter:image:alt" content={meta.image.alt} />
+        </>
       )}
-      <meta name="twitter:card" content="summary" />
-      <meta name="twitter:title" content={meta.title} />
-      {meta.description && (
-        <meta name="twitter:description" content={meta.description} />
-      )}
-      {/* <meta name="twitter:site" content={globals.twitterHandle} /> */}
-      {/* <meta name="twitter:creator" content={globals.twitterHandle} /> */}
-      {image && <meta name="twitter:image" content={image} />}
-      {image && <meta property="og:image" content={image} />}
     </NextHead>
   )
 }
