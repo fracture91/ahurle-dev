@@ -58,7 +58,11 @@ export const Meta: React.FC<{
             property="og:image:height"
             content={meta.image.height.toString()}
           />
-          <meta name="twitter:image:alt" content={meta.image.alt} />
+          <meta
+            name="twitter:image:alt"
+            property="og:image:alt"
+            content={meta.image.alt}
+          />
         </>
       )}
     </NextHead>
