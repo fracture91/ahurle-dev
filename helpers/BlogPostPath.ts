@@ -22,7 +22,9 @@ export class PagePath {
   }
 
   get urlPath(): string {
-    return this.pathFromPagesDir.replace(/\..*$/, "")
+    return this.pathFromPagesDir
+      .replace(/\..*$/, "")
+      .replace(/(^|\/)index$/, "")
   }
 
   get slug(): string {
@@ -68,10 +70,6 @@ export class PagePath {
 export class BlogPostPath extends PagePath {
   get pathFromBlogDir(): string {
     return this.pathFromPagesDir.replace(/^blog\//, "")
-  }
-
-  get urlPath(): string {
-    return `blog/${this.slug}`
   }
 
   // I wish I could narrow the types here, but that prevents overriding

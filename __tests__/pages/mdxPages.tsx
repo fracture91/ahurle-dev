@@ -23,7 +23,7 @@ describe("MDX pages", () => {
   if (paths.length <= 0) throw new Error("no pages")
 
   paths.forEach((path) => {
-    it(`renders ${path.urlPath}`, async () => {
+    it(`renders /${path.urlPath}`, async () => {
       const page = pages?.filter(
         (p) => p.urlPath === path.urlPath
       )[0] as PageMeta
