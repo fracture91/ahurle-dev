@@ -12,6 +12,10 @@ export const tinyLetterUsername = "ahurle"
 // export const email = ""
 
 const getUrl = (): string => {
+  // if called client-side, we know what the origin is for sure
+  // this could cause mismatches because of the inaccuracy of the below code
+  if (typeof window !== "undefined") return window.location.origin
+
   if (!process.env.VERCEL_ENV) return devUrl
 
   if (!process.env.VERCEL_URL)

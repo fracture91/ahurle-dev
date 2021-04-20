@@ -122,7 +122,7 @@ describe("Homepage", () => {
 
       await waitFor(() =>
         expect(window.location.href).toEqual(
-          "https://localhost/?hello=1#anchor"
+          "http://localhost:3000/?hello=1#anchor"
         )
       )
     })
