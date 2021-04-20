@@ -28,7 +28,11 @@ describe("Blog pages", () => {
       render()
       expectStatusCode(200)
       expect(screen.getByText(siteName)).toBeVisible()
-      expect(screen.getByText(post?.title)).toBeVisible()
+      if (post?.title) {
+        // this is for unpublished posts - I still want to test everything else
+        // eslint-disable-next-line jest/no-conditional-expect
+        expect(screen.getByText(post.title)).toBeVisible()
+      }
     })
   })
 })

@@ -12,7 +12,7 @@ export const getBlogStaticProps: AddArgument<
   BlogLayoutProps
 > = async (_context, layoutProps) => {
   const { meta, path: rawPath } = layoutProps
-  if (!meta.published) {
+  if (!meta.published && process.env.NODE_ENV === "production") {
     return { notFound: true }
   }
   const path = BlogPostPath.relativeToRoot(rawPath)
