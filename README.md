@@ -60,3 +60,17 @@ Note that vercel does not support node 15.x or higher yet. It will probably also
 - `yarn export` - Exports your site to static files. Equivalent to `next export`.
 - `yarn lint` - Run eslint and prettier checks. Use `yarn lint:eslint` or `yarn lint:prettier` for specific checks
 - `yarn test` - Run tests
+
+## License
+
+Most code © 2021 Andrew Hurle, [MIT License](./LICENSE)
+
+Based on [Devii](https://devii.dev/), © 2020 Colin McDonnell, [MIT License](https://github.com/colinhacks/devii/blob/31ffa9e1399acabd0f79f228dd19336864907165/LICENSE)
+
+[imageSizeLoader.js](./config/imageSizeLoader.js) based on [image-size-loader](https://github.com/boopathi/image-size-loader), © 2015 Patrick Collins and Boopathi Rajaa, [Apache License 2.0](https://github.com/boopathi/image-size-loader/blob/bf1f3bc31c1a9ef579a957a77514ef665681848c/LICENSE)
+
+[mdxDefaultLayout.js](./config/mdxDefaultLayout.js) based on [a file from silvenon.com](https://github.com/silvenon/silvenon.com/blob/3f1bfaad8ad4794cacd7623bff7627ce5e21ceda/etc/remark-mdx-default-layout.js), © 2020 Matija Marohnić <matija.marohnic@gmail.com> (silvenon.com), [MIT License](https://github.com/silvenon/silvenon.com/blob/3f1bfaad8ad4794cacd7623bff7627ce5e21ceda/license)
+
+[mdxImageMetadata.js](./config/mdxImageMetadata.js) based on [a file from kylepfromer.com](https://github.com/kpfromer/portfolio/blob/ba194a9a82c176f7e58f912572d6a0ff8e8bad4c/plugins/image-metadata.ts), © 2019 Kyle Pfromer, [MIT License](https://github.com/kpfromer/portfolio/blob/ba194a9a82c176f7e58f912572d6a0ff8e8bad4c/LICENSE)
+
+[prismStyle.ts](./helpers/prismStyle.ts) based on [the darcula theme from react-syntax-highlighter](https://github.com/react-syntax-highlighter/react-syntax-highlighter/blob/efc3f7b7537d1729193b7a472067bcbe6cbecaf1/src/styles/prism/darcula.js), © 2019 Conor Hastings, [MIT License](https://github.com/react-syntax-highlighter/react-syntax-highlighter/blob/efc3f7b7537d1729193b7a472067bcbe6cbecaf1/LICENSE)
