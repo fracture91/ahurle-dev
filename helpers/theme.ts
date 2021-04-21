@@ -184,7 +184,6 @@ export const theme = makeTheme({
       boxShadow: "high",
       fontSize: 3,
       fontWeight: "bold",
-      padding: "1 3",
       cursor: "pointer",
       transition: "background-color 100ms ease, box-shadow 100ms ease",
       "&:hover, &:focus": {
