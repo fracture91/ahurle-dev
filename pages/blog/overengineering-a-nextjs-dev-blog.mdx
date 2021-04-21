@@ -161,7 +161,8 @@ this a major reason why I chose it. However, there were a couple of awkward thin
 There's a good solution for all of these problems called [MDX](https://mdxjs.com/). Rather than shipping all the parsers we need to the browser, we can do all the parsing at build time and ship pure JSX to the browser. This lets you go crazy with parser plugins without worrying about bundle size.
 
 Another benefit is that you can basically write JS wherever you want. You can export variables instead of using front-matter. You can import arbitrary React components and render them inline with your markdown, or just write JSX in place of HTML. That's very powerful!
-[For example](#todo), here's a component that increments a number when you click on it:
+[For example](https://github.com/fracture91/ahurle-dev/blob/fb0b9e4170c42aed327642f0f81e8f0ce526e119/pages/blog/overengineering-a-nextjs-dev-blog.mdx#L163-L166),
+here's a component that increments a number when you click on it:
 
 <IncrementButton startingNumber={0} />
 
