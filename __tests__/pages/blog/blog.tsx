@@ -4,6 +4,7 @@ import { loadPublishedBlogs, MetaAndContent } from "@/helpers/loader"
 import { BlogPostPath } from "@/helpers/BlogPostPath"
 import { BlogMeta } from "@/helpers/schema"
 import { expectStatusCode } from "@/__tests__/testUtils/assertions"
+import { siteName } from "@/helpers/globals"
 
 describe("Blog pages", () => {
   let posts: MetaAndContent<true>[] | undefined
@@ -26,8 +27,12 @@ describe("Blog pages", () => {
 
       render()
       expectStatusCode(200)
-      expect(screen.getByText("ahurle.dev")).toBeVisible()
-      expect(screen.getByText(post?.title)).toBeVisible()
+      expect(screen.getByText(siteName)).toBeVisible()
+      if (post?.title) {
+        // this is for unpublished posts - I still want to test everything else
+        // eslint-disable-next-line jest/no-conditional-expect
+        expect(screen.getByText(post.title)).toBeVisible()
+      }
     })
   })
 })

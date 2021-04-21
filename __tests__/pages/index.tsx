@@ -1,6 +1,7 @@
 import { getPage } from "next-page-tester"
 import { act, fireEvent, screen, waitFor } from "@testing-library/react"
 import { initWindowGoatcounter, endpoint } from "@/components/GoatCounter"
+import { siteName, yourName } from "@/helpers/globals"
 
 describe("Homepage", () => {
   beforeAll(() => {
@@ -22,8 +23,8 @@ describe("Homepage", () => {
   it("renders nicely", async () => {
     const { render } = await getPage({ route: "/", useDocument: true })
     render()
-    expect(screen.getByText("ahurle.dev")).toBeVisible()
-    expect(screen.getByText("Hi, I'm Andrew Hurle")).toBeVisible()
+    expect(screen.getByText(siteName)).toBeVisible()
+    expect(screen.getByText(`Hi, I'm ${yourName}`)).toBeVisible()
   })
 
   const renderAndAct = async (url?: string) => {
@@ -121,7 +122,7 @@ describe("Homepage", () => {
 
       await waitFor(() =>
         expect(window.location.href).toEqual(
-          "https://localhost/?hello=1#anchor"
+          "http://localhost:3000/?hello=1#anchor"
         )
       )
     })

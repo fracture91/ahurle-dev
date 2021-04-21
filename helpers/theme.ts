@@ -110,7 +110,7 @@ export const theme = makeTheme({
     prose: fonts([
       '"Lucida Bright"',
       "Lucidabright",
-      "Lucida Serif",
+      '"Lucida Serif"',
       "Lucida",
       '"DejaVu Serif"',
       '"Bitstream Vera Serif"',
@@ -184,7 +184,6 @@ export const theme = makeTheme({
       boxShadow: "high",
       fontSize: 3,
       fontWeight: "bold",
-      padding: "1 3",
       cursor: "pointer",
       transition: "background-color 100ms ease, box-shadow 100ms ease",
       "&:hover, &:focus": {
@@ -246,8 +245,12 @@ export const theme = makeTheme({
         // want this to apply to all img tags (e.g. next/image), not just Themed.img
         filter: (t) => t.colors?.imgFilter,
         // style the alt text nicely
-        backgroundColor: "background.highlightText",
         color: "primary",
+        // when JS is disabled, next/image has a transparent gif floating on top of a <noscript> tag
+        // make sure the background color does not apply to it, lest we create a dark shade over our image
+        ":not([src^='data:'])": {
+          backgroundColor: "background.highlightText",
+        },
       },
     },
     // not standard, special handling by me

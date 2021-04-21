@@ -49,8 +49,8 @@ export const AuthorLines: React.FC<{
 
       {post.author?.twitter && (
         <Separated>
-          <Themed.a href={`https://twitter.com/${post.author?.twitter}`}>
-            {`@${post.author?.twitter}`}
+          <Themed.a href={`https://twitter.com/${post.author.twitter}`}>
+            {post.author.twitter}
           </Themed.a>
         </Separated>
       )}

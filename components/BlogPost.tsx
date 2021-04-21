@@ -37,7 +37,7 @@ const BannerPhoto: React.FC<BlogMeta["bannerPhoto"]> = ({
       // todo: pass "sizes" attribute so 4k monitors don't get 4k images
     />
     {caption && (
-      <Figcaption>
+      <Figcaption sx={{ px: 3 }}>
         {typeof caption === "object" && caption.unsplash ? (
           <>
             Photo by{" "}

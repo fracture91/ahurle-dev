@@ -4,6 +4,7 @@ import { loadPageMetas } from "@/helpers/loader"
 import { BlogPostPath, PagePath } from "@/helpers/BlogPostPath"
 import { PageMeta } from "@/helpers/schema"
 import { expectStatusCode } from "@/__tests__/testUtils/assertions"
+import { siteName } from "@/helpers/globals"
 
 describe("MDX pages", () => {
   let pages: PageMeta[] | undefined
@@ -22,7 +23,7 @@ describe("MDX pages", () => {
   if (paths.length <= 0) throw new Error("no pages")
 
   paths.forEach((path) => {
-    it(`renders ${path.urlPath}`, async () => {
+    it(`renders /${path.urlPath}`, async () => {
       const page = pages?.filter(
         (p) => p.urlPath === path.urlPath
       )[0] as PageMeta
@@ -33,7 +34,7 @@ describe("MDX pages", () => {
 
       render()
       expectStatusCode(200)
-      expect(screen.getByText("ahurle.dev")).toBeVisible()
+      expect(screen.getByText(siteName)).toBeVisible()
       if (!page.bare) {
         // eslint-disable-next-line jest/no-conditional-expect
         expect(

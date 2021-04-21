@@ -39,7 +39,7 @@ export const prismStyle: ThemeUICSSObject = {
     color: "#6897bb",
   },
   ".property, .constant, .variable": {
-    color: "#9876aa",
+    color: "#cba2e1",
   },
   ".string, .char": {
     color: "#7ea06a",

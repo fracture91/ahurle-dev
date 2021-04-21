@@ -4,11 +4,11 @@ import { ShowMore, HideInitially } from "@/components/ShowMore"
 import { PostCardList } from "@/components/PostCardList"
 import { NewsletterForm } from "@/components/NewsletterForm"
 import { getIndexStaticProps } from "@/helpers/getIndexStaticProps"
-import { siteDescription as description } from "@/helpers/globals"
+import { siteDescription as description, yourName } from "@/helpers/globals"
 
 export const meta = {
-  title: "Andrew Hurle — Internet Lad",
-  visibleTitle: "Hi, I'm Andrew Hurle",
+  title: `${yourName} — Internet Lad`,
+  visibleTitle: `Hi, I'm ${yourName}`,
   description,
 }
 export const getStaticProps = (...args) =>
