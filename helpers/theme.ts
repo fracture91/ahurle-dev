@@ -110,7 +110,7 @@ export const theme = makeTheme({
     prose: fonts([
       '"Lucida Bright"',
       "Lucidabright",
-      "Lucida Serif",
+      '"Lucida Serif"',
       "Lucida",
       '"DejaVu Serif"',
       '"Bitstream Vera Serif"',
