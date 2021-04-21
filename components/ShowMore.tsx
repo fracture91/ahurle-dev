@@ -74,7 +74,7 @@ export const ShowMore: React.FC<{ id: string }> = ({ id, children }) => (
         display: "block",
         width: "100%",
         height: "2.6em",
-        opacity: 0.00001,
+        opacity: 0,
         zIndex: 1,
         cursor: theme.buttons.primary.cursor,
       }}

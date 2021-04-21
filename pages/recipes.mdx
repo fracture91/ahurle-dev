@@ -4,6 +4,24 @@ export const meta = {
   description: "Recipes I have made, eaten, and did not hate",
 }
 
+<a
+  href="/recipes/workflowy"
+  target="_blank"
+  rel="noreferrer noopener"
+  sx={{
+    position: "absolute",
+    right: "1em",
+    top: "calc(3em - 3px)",
+    bg: "white",
+    p: "5px",
+    pl: ["20px", null, "30px"],
+  }}
+>
+  Open recipes in a new tab
+</a>
+
+<!-- For some reason workflowy runs into an error on Safari, hence the fallback link above -->
+
 <iframe
   src="/recipes/workflowy"
   title="Embedded workflowy list of recipes"

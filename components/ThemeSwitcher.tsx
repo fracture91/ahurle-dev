@@ -88,7 +88,7 @@ const ThemeButton: WrapFC<
       checked={checked}
       aria-label={mode.title}
       {...rest}
-      sx={{ position: "absolute", opacity: 0.00001, cursor: "pointer" }}
+      sx={{ position: "absolute", opacity: 0, cursor: "pointer" }}
     />
     <mode.icon
       secondaryColor={checked ? "background.switchSelected" : "background"}
