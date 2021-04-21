@@ -135,13 +135,12 @@ const ExpandoLinks: WrapFC<"details"> = React.forwardRef(
     // We also want it to close when you click anywhere else on the page or move keyboard focus away.
     const handleBlur = (event: React.FocusEvent) => {
       // relatedTarget is where the focus is moving *to*
+      // avoid closing if focus is moving between elements contained by <details>
       if (
-        !(event.relatedTarget instanceof Node) ||
-        // avoid closing if focus is moving between elements contained by <details>
-        !detailsRef.current?.contains(event.relatedTarget) ||
-        // If we close the <details> after clicking a contained link, the link doesn't seem to work,
-        // so avoid closing in this situation as well
-        !isLink(event.relatedTarget)
+        !(
+          event.relatedTarget instanceof Node &&
+          detailsRef.current?.contains(event.relatedTarget)
+        )
       )
         detailsRef.current?.removeAttribute("open")
     }
