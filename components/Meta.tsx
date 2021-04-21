@@ -14,6 +14,7 @@ export const Meta: React.FC<{
   const router = useRouter()
   const url = new URL(meta.canonicalUrl || router.pathname, globals.url).href
   const image = meta.image?.src && new URL(meta.image.src, globals.url).href
+  const description = meta.description || globals.siteDescription
   return (
     <NextHead>
       <title>
@@ -30,13 +31,13 @@ export const Meta: React.FC<{
       )}
       <meta property="og:type" content="website" />
       <meta name="twitter:title" property="og:title" content={meta.title} />
-      {meta.description && (
+      {description && (
         <>
-          <meta name="description" content={meta.description} />
+          <meta name="description" content={description} />
           <meta
             name="twitter:description"
             property="og:description"
-            content={meta.description}
+            content={description}
           />
         </>
       )}
