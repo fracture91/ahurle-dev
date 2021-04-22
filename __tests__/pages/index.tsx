@@ -116,7 +116,9 @@ describe("Homepage", () => {
   })
   ;(["load", "error"] as const).forEach((action) => {
     it("removes utm params from URL once script loads", async () => {
-      await renderAndAct("/?utm_source=test&hello=1&ref=test#anchor")
+      await renderAndAct(
+        "/?utm_source=test&hello=1&ref=test&fbclid=1234#anchor"
+      )
       const script = document.querySelector("script[data-goatcounter]")
       fireEvent[action](script as Element)
 
