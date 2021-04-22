@@ -116,7 +116,8 @@ const cleanUtmParams = () => {
   const params = window.location.search.slice(1).split("&")
   // keep in sync with "campaign parameters" setting
   // https://ahurle-dev.goatcounter.com/settings/main
-  const newParams = params.filter((p) => !p.match(/^(utm_.*|ref)=/))
+  // fbclid is automatically added to outgoing facebook links
+  const newParams = params.filter((p) => !p.match(/^(utm_.*|ref|fbclid)=/))
   if (newParams.length === params.length) return
   const search = newParams.length ? `?${newParams.join("&")}` : ""
   const url = window.location.pathname + search + window.location.hash
