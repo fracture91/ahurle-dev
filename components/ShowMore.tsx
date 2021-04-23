@@ -66,6 +66,8 @@ export const ShowMore: React.FC<{ id: string }> = ({ id, children }) => (
     <input
       id={id}
       type="checkbox"
+      data-goatcounter-click={id}
+      data-goatcounter-title={id}
       sx={{
         position: "absolute",
         bottom: "-5px",

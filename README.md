@@ -1,8 +1,12 @@
 # ahurle-dev
 
-Powers the ahurle.dev website and developer blog. Heavily modified fork of [Devii](https://github.com/colinhacks/devii).
+Powers the
+[ahurle.dev](https://ahurle.dev/?utm_source=github)
+website and developer blog. Heavily modified fork of
+[Devii](https://github.com/colinhacks/devii).
 
-[I wrote a blog post about this project](https://ahurle.dev/blog/overengineering-a-nextjs-dev-blog) if you want some more context on why it exists.
+[I wrote a blog post about this project](https://ahurle.dev/blog/overengineering-a-nextjs-dev-blog?utm_source=github)
+if you want some more context on why it exists.
 
 Feel free to fork this repo for your own website! I know how annoying it is to get everything working nicely if you were to start from scratch instead. All I ask is that you style it a little differently - make it "yours". And remove my blog posts and stuff, of course. It would also be nice if you linked back to me, but it's all MIT licensed so... 🤷‍♂️
 
