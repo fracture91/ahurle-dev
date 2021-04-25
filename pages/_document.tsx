@@ -7,6 +7,7 @@ import Document, {
   DocumentInitialProps,
 } from "next/document"
 import { extractCritical } from "@emotion/server"
+import { InitializeColorMode } from "theme-ui"
 import { preLoadClass } from "@/components/RemovePreLoadClass"
 import { SentryLoader } from "@/components/SentryLoader"
 import { GoatCounterPixel } from "@/components/GoatCounterPixel"
@@ -40,6 +41,8 @@ class MyDocument extends Document {
       <Html lang="en-US" className={preLoadClass}>
         <Head />
         <body>
+          {/* when JS enabled, blocks rendering until preferred scheme read from localstorage/media */}
+          <InitializeColorMode key="theme-ui-no-flash" />
           <Main />
           {/* Note that any scripts executing before this point (InitializeColorMode) won't have Sentry coverage */}
           <SentryLoader />

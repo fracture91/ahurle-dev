@@ -3,12 +3,7 @@ import Head from "next/head"
 import { AppProps } from "next/app"
 import { Global, CacheProvider, css } from "@emotion/react"
 import { cache } from "@emotion/css"
-import {
-  InitializeColorMode,
-  CSSObject,
-  css as themeuicss,
-  Flex,
-} from "theme-ui"
+import { CSSObject, css as themeuicss, Flex } from "theme-ui"
 import { createColorStyles } from "@theme-ui/color-modes"
 import { theme } from "@/helpers/theme"
 import { Footer } from "@/components/Footer"
@@ -52,8 +47,6 @@ const App: React.FC<AppProps> = ({ Component, pageProps }) => (
       <BodyStyle />
       {/* important: prefers-color-scheme rules come after built-in theme-ui rules */}
       <DarkMediaStyle />
-      {/* when JS enabled, blocks rendering until preferred scheme read from localstorage/media */}
-      <InitializeColorMode key="theme-ui-no-flash" />
       <RemovePreLoadClass />
       <Flex sx={{ flexDirection: "column", height: "100%" }}>
         <Flex sx={{ flexDirection: "column", flex: "1 0 0" }}>
