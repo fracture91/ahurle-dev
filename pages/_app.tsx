@@ -3,12 +3,7 @@ import Head from "next/head"
 import { AppProps } from "next/app"
 import { Global, CacheProvider, css } from "@emotion/react"
 import { cache } from "@emotion/css"
-import {
-  InitializeColorMode,
-  CSSObject,
-  css as themeuicss,
-  Flex,
-} from "theme-ui"
+import { CSSObject, css as themeuicss, Flex } from "theme-ui"
 import { createColorStyles } from "@theme-ui/color-modes"
 import { theme } from "@/helpers/theme"
 import { Footer } from "@/components/Footer"
@@ -16,7 +11,7 @@ import { Header } from "@/components/Header"
 import { CSSReset } from "@/components/CSSReset"
 import { ThemeMeta } from "@/components/ThemeMeta"
 import { RemovePreLoadClass } from "@/components/RemovePreLoadClass"
-import { GoatCounterScript, GoatCounterPixel } from "@/components/GoatCounter"
+import { GoatCounterScript } from "@/components/GoatCounterScript"
 import { MyThemeProvider } from "@/components/MyThemeProvider"
 
 // HACK: grab theme-ui's generated styles from non-exported function - see /patches
@@ -52,8 +47,6 @@ const App: React.FC<AppProps> = ({ Component, pageProps }) => (
       <BodyStyle />
       {/* important: prefers-color-scheme rules come after built-in theme-ui rules */}
       <DarkMediaStyle />
-      {/* when JS enabled, blocks rendering until preferred scheme read from localstorage/media */}
-      <InitializeColorMode key="theme-ui-no-flash" />
       <RemovePreLoadClass />
       <Flex sx={{ flexDirection: "column", height: "100%" }}>
         <Flex sx={{ flexDirection: "column", flex: "1 0 0" }}>
@@ -65,7 +58,6 @@ const App: React.FC<AppProps> = ({ Component, pageProps }) => (
         <Footer />
       </Flex>
       <GoatCounterScript />
-      <GoatCounterPixel />
     </MyThemeProvider>
   </CacheProvider>
 )

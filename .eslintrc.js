@@ -13,7 +13,7 @@ module.exports = {
     "plugin:mdx/recommended",
   ],
   reportUnusedDisableDirectives: true, // pair with --max-warnings=0
-  ignorePatterns: ["node_modules/*", ".next/*", "out/*"],
+  ignorePatterns: ["node_modules/*", ".next/*", "out/*", "vendor/*"],
   overrides: [
     {
       files: "*.{ts,tsx}",
