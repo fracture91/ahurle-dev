@@ -42,3 +42,8 @@ global.beforeEach(() => {
 global.afterEach(() => {
   window.location = oldLocation
 })
+
+global.beforeEach(() => {
+  // match the way it looks in prod
+  process.env.VERCEL_GIT_REPO_OWNER ||= "fracture91"
+})

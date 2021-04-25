@@ -5,6 +5,7 @@ declare global {
       VERCEL_ENV?: "production" | "preview" | "development" | ""
       VERCEL_URL?: string
       VERCEL_GIT_COMMIT_SHA?: string
+      VERCEL_GIT_REPO_OWNER?: string
       NEXT_PUBLIC_VERCEL_GIT_COMMIT_SHA?: string
     }
   }

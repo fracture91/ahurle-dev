@@ -36,41 +36,6 @@ declare global {
 
 export const endpoint = `https://${globals.goatCounterId}.goatcounter.com/count`
 
-const RealGoatCounterPixel: React.FC = () => {
-  const router = useRouter()
-  const params = new URLSearchParams()
-  const query = new URLSearchParams(router.query as Record<string, string>)
-  params.set("p", router.pathname)
-  params.set("q", query.toString())
-  // normally "r" is used for referrer, but since I can't grab that with SSG I'll use it
-  // to help distinguish pixel pageviews from JS ones in case they're botty
-  params.set("r", "gcpixel")
-  // there are more params available but I'd need SSR for that
-
-  // safeguard against people forking my repo and poisoning my data, like below
-  if (
-    process.env.NODE_ENV !== "test" &&
-    globals.goatCounterId === "ahurle-dev" &&
-    (globals.siteName !== "ahurle.dev" ||
-      // Skip analytics for all the staging vercel.app domains and localhost
-      process.env.VERCEL_URL !== "ahurle.dev")
-  )
-    return null
-
-  return (
-    <noscript>
-      <img src={`${endpoint}?${params.toString()}`} alt="" />
-    </noscript>
-  )
-}
-
-/**
- * Fallback for when JS is turned off
- */
-export const GoatCounterPixel: React.FC = globals.goatCounterId
-  ? RealGoatCounterPixel
-  : () => null
-
 // eslint-disable-next-line @typescript-eslint/no-empty-function
 const noop = () => {}
 

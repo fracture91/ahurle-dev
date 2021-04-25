@@ -1,6 +1,6 @@
 import { getPage } from "next-page-tester"
 import { act, fireEvent, screen, waitFor } from "@testing-library/react"
-import { initWindowGoatcounter, endpoint } from "@/components/GoatCounter"
+import { initWindowGoatcounter, endpoint } from "@/components/GoatCounterScript"
 import { siteName, yourName } from "@/helpers/globals"
 
 describe("Homepage", () => {

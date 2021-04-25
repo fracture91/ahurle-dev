@@ -16,7 +16,7 @@ import { Header } from "@/components/Header"
 import { CSSReset } from "@/components/CSSReset"
 import { ThemeMeta } from "@/components/ThemeMeta"
 import { RemovePreLoadClass } from "@/components/RemovePreLoadClass"
-import { GoatCounterScript, GoatCounterPixel } from "@/components/GoatCounter"
+import { GoatCounterScript } from "@/components/GoatCounterScript"
 import { MyThemeProvider } from "@/components/MyThemeProvider"
 
 // HACK: grab theme-ui's generated styles from non-exported function - see /patches
@@ -65,7 +65,6 @@ const App: React.FC<AppProps> = ({ Component, pageProps }) => (
         <Footer />
       </Flex>
       <GoatCounterScript />
-      <GoatCounterPixel />
     </MyThemeProvider>
   </CacheProvider>
 )

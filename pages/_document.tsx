@@ -9,6 +9,7 @@ import Document, {
 import { extractCritical } from "@emotion/server"
 import { preLoadClass } from "@/components/RemovePreLoadClass"
 import { SentryLoader } from "@/components/SentryLoader"
+import { GoatCounterPixel } from "@/components/GoatCounterPixel"
 
 class MyDocument extends Document {
   static async getInitialProps(
@@ -43,6 +44,8 @@ class MyDocument extends Document {
           {/* Note that any scripts executing before this point (InitializeColorMode) won't have Sentry coverage */}
           <SentryLoader />
           <NextScript />
+          {/* eslint-disable-next-line no-underscore-dangle */}
+          <GoatCounterPixel {...this.props.__NEXT_DATA__} />
         </body>
       </Html>
     )
