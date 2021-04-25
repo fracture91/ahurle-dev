@@ -42,3 +42,17 @@ const getUrl = (): string => {
  * This provides the best guess for that URL, but can sometimes be wrong.
  */
 export const url = getUrl()
+
+// awkward: calling this function at the top level causes problems in tests
+// because window is apparently defined when it should not be
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+export const serverEnv = () => {
+  if (typeof window !== "undefined")
+    throw new Error("serverEnv is only accurate on the server")
+
+  return (
+    process.env.VERCEL_ENV ||
+    (process.env.NODE_ENV === "test" && "test") ||
+    "development"
+  )
+}
