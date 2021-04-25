@@ -8,6 +8,7 @@ import Document, {
 } from "next/document"
 import { extractCritical } from "@emotion/server"
 import { preLoadClass } from "@/components/RemovePreLoadClass"
+import { SentryLoader } from "@/components/SentryLoader"
 
 class MyDocument extends Document {
   static async getInitialProps(
@@ -39,6 +40,8 @@ class MyDocument extends Document {
         <Head />
         <body>
           <Main />
+          {/* Note that any scripts executing before this point (InitializeColorMode) won't have Sentry coverage */}
+          <SentryLoader />
           <NextScript />
         </body>
       </Html>
