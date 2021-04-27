@@ -8,6 +8,12 @@ export const siteCreationDate = "April 19, 2021 20:00:00 GMT"
 export const twitterHandle = "@adhurle"
 export const goatCounterId = "ahurle-dev"
 export const tinyLetterUsername = "ahurle"
+
+// if you want to use Sentry, sign up for an account and put your key/dsn here
+// if you don't want to use Sentry, set either of these to null to disable
+export const sentryPublicKey = "aacf3f04ba9b4c3594a77b95e9bad106"
+export const sentryDsn = `https://${sentryPublicKey}@o578375.ingest.sentry.io/5734570`
+
 // intentionally left blank in an effort to avoid bots seeing it
 // export const email = ""
 
