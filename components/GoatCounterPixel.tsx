@@ -19,7 +19,7 @@ const RealGoatCounterPixel: React.FC<{
     // Skip analytics for all the staging vercel.app domains and localhost
     // I also want to make assertions against this pixel in test mode
     !["test", "production"].includes(globals.serverEnv()) ||
-    // safeguard against people forking my repo and poisoning my data, like below
+    // safeguard against people forking my repo and poisoning my data, like in GoatCounterScript
     (globals.goatCounterId === "ahurle-dev" &&
       process.env.VERCEL_GIT_REPO_OWNER !== "fracture91")
   )
