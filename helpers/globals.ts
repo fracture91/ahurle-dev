@@ -1,3 +1,5 @@
+import type { Author } from "./schema"
+
 const prodUrl = "https://ahurle.dev"
 const devUrl = "http://localhost:3000"
 
@@ -6,6 +8,17 @@ export const siteName = "ahurle.dev"
 export const siteDescription = `Portfolio and writings from full-stack software engineer ${yourName}`
 export const siteCreationDate = "April 19, 2021 20:00:00 GMT"
 export const twitterHandle = "@adhurle"
+
+// used when blog posts don't specify an author
+export const defaultBlogAuthor: Author | undefined = {
+  name: yourName,
+  twitter: twitterHandle,
+  photo: {
+    src: "/img/me.jpg",
+    alt: `Closeup of ${yourName}, smiling`,
+  },
+}
+
 export const goatCounterId = "ahurle-dev"
 export const tinyLetterUsername = "ahurle"
 

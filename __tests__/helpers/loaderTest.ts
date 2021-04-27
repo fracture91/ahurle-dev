@@ -56,6 +56,14 @@ describe("loader", () => {
         })
       ).toMatchInlineSnapshot(`
         Object {
+          "author": Object {
+            "name": "Andrew Hurle",
+            "photo": Object {
+              "alt": "Closeup of Andrew Hurle, smiling",
+              "src": "/img/me.jpg",
+            },
+            "twitter": "@adhurle",
+          },
           "bannerPhoto": undefined,
           "canonicalUrl": "http://localhost:3000/blog/whatever",
           "datePublished": 86400000,
@@ -74,6 +82,14 @@ describe("loader", () => {
       await expect(subject.processRawBlogMeta({ module, path })).resolves
         .toMatchInlineSnapshot(`
               Object {
+                "author": Object {
+                  "name": "Andrew Hurle",
+                  "photo": Object {
+                    "alt": "Closeup of Andrew Hurle, smiling",
+                    "src": "/img/me.jpg",
+                  },
+                  "twitter": "@adhurle",
+                },
                 "bannerPhoto": undefined,
                 "canonicalUrl": "http://localhost:3000/blog/whatever",
                 "datePublished": 86400000,
@@ -86,6 +102,15 @@ describe("loader", () => {
                 "urlPath": "blog/whatever",
               }
             `)
+    })
+
+    it("allows overriding the default blog author", async () => {
+      module.meta.author = {
+        name: "Bob",
+      }
+      await expect(
+        subject.processRawBlogMeta({ module, path })
+      ).resolves.toHaveProperty("author", { name: "Bob" })
     })
 
     it("fails when title is missing", async () => {
@@ -115,6 +140,14 @@ describe("loader", () => {
       await expect(subject.processRawBlogMeta({ module, path })).resolves
         .toMatchInlineSnapshot(`
               Object {
+                "author": Object {
+                  "name": "Andrew Hurle",
+                  "photo": Object {
+                    "alt": "Closeup of Andrew Hurle, smiling",
+                    "src": "/img/me.jpg",
+                  },
+                  "twitter": "@adhurle",
+                },
                 "bannerPhoto": Object {
                   "alt": "alt",
                   "height": 452,

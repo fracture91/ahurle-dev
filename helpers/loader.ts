@@ -118,6 +118,7 @@ export const processRawBlogMeta = async ({
     return {
       ...raw,
       urlPath,
+      author: raw.author || globals.defaultBlogAuthor,
       description: raw.description || module.excerpt,
       slug: path.slug,
       canonicalUrl: new URL(raw.canonicalUrl || urlPath, globals.url).href,
