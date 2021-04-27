@@ -29,6 +29,5 @@ yarn-error.log*
 firebase.json
 .firebaserc
 .firebase/*
-.nvmrc
 .vscode
 .history
