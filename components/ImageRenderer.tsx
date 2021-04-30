@@ -25,6 +25,7 @@ export const ImageRenderer: React.FC<React.ComponentPropsWithoutRef<"img">> = ({
         These situations seem to be handled reasonably at runtime.
         @ts-ignore: doesn't like how width/height can come with layout=="fill"
       */}
+        {/* eslint-disable-next-line jsx-a11y/alt-text */}
         <LazyImage
           // @ts-ignore: src is required here but optional above
           src={src}

@@ -2,6 +2,9 @@ const path = require("path")
 
 // keep in sync with imageSizeLoader
 // This is a good-enough stub for now, but could fall apart if I'm ever... taking screenshots?
+// Sadly, this breaks the default export in tests since it's not quite compatible with ESM,
+// and jest's ESM support is experimental so I'm scared to try it.
+// I recommend `import { src } from "myImage.jpg"` instead
 module.exports = {
   process(src, filename, _config, _options) {
     const name = `/${path.basename(filename)}`

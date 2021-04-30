@@ -1,4 +1,6 @@
 import Link from "next/link"
+import { Middle } from "@/components/PageSection"
+import { IndexTop } from "@/components/IndexTop"
 import { Button } from "theme-ui"
 import { ShowMore, HideInitially } from "@/components/ShowMore"
 import { PostCardList } from "@/components/PostCardList"
@@ -7,12 +9,19 @@ import { getIndexStaticProps } from "@/helpers/getIndexStaticProps"
 import { siteDescription as description, yourName } from "@/helpers/globals"
 
 export const meta = {
+  bare: true,
   title: `${yourName} — Internet Lad`,
   visibleTitle: `Hi, I'm ${yourName}`,
   description,
 }
 export const getStaticProps = (...args) =>
   getIndexStaticProps(...args, layoutProps)
+
+<!-- eslint-disable react/no-unescaped-entities -->
+
+<IndexTop visibleTitle={meta.visibleTitle} />
+
+<Middle>
 
 Welcome to my internet website. I'm a full-stack software engineer who loves Ruby, TypeScript, React, and I guess Python is okay too. I also like videogames, dancing, music, and food. My blog posts are mostly technical, but I'll write about other stuff too.
 
@@ -35,8 +44,6 @@ You can also try emailing me at any string at this domain. I may not have time t
 <NewsletterForm sx={{ mb: "2.5em" }} />
 
 # Timeline
-
-<!-- eslint-disable react/no-unescaped-entities -->
 
 <ShowMore id="show-more-timeline">
 
@@ -236,5 +243,7 @@ You can also try emailing me at any string at this domain. I may not have time t
 </HideInitially>
 
 </ShowMore>
+
+</Middle>
 
 <!-- eslint-enable react/no-unescaped-entities -->

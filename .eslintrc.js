@@ -71,6 +71,7 @@ module.exports = {
       },
     ],
     "import/prefer-default-export": "off",
+    "jsx-a11y/alt-text": ["error", { img: ["Image", "LazyImage"] }],
     "react/react-in-jsx-scope": "off", // next.js uses new JSX transform by default
     "react/prop-types": "off", // use types instead
     "react/jsx-filename-extension": [
