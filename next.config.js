@@ -55,8 +55,11 @@ module.exports = withPlugins(
         // this is an upper bound but I don't know if 4k * 3x DPR even exists, so not worth it
       ],
     },
-    /** @param {import("webpack").Configuration} config */
-    webpack(config) {
+    /**
+     * @param {import("webpack").Configuration} config
+     * @param {{isServer: boolean}} second
+     */
+    webpack(config, { isServer }) {
       config.module?.rules.push({
         test: /\.md$/,
         use: "raw-loader",
@@ -70,6 +73,16 @@ module.exports = withPlugins(
       nextImagesRule.use?.unshift({
         loader: "./config/imageSizeLoader",
       })
+      if (isServer) {
+        const originalEntryFunc = /** @type {import("webpack").EntryFunc} */ (config.entry)
+        config.entry = () => {
+          const promise = /** @type {Promise<import("webpack").Entry>} */ (originalEntryFunc())
+          return promise.then((entry) => ({
+            ...entry,
+            "generate-rss": "./scripts/generate-rss.js",
+          }))
+        }
+      }
       return config
     },
     async redirects() {

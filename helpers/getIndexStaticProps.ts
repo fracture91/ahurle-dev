@@ -1,7 +1,7 @@
 import { GetStaticProps, GetStaticPropsResult } from "next"
 import removeUndefined from "rundef"
 import { BlogMeta } from "@/helpers/schema"
-import { generateRSS } from "@/helpers/rssUtil"
+// import { generateRSS } from "@/helpers/rssUtil"
 import { PageLayoutProps, loadPublishedBlogs } from "@/helpers/loader"
 import {
   getPageStaticProps,
@@ -25,7 +25,7 @@ export const getIndexStaticProps: AddArgument<
   const posts = await loadPublishedBlogs()
 
   // comment out to turn off RSS generation during build step.
-  await generateRSS(posts)
+  // await generateRSS(posts)
 
   return {
     ...pageStaticProps,

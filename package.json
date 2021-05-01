@@ -32,7 +32,9 @@
   "scripts": {
     "postinstall": "patch-package",
     "dev": "next dev",
+    "build:rss": "node .next/server/generate-rss.js",
     "build": "next build",
+    "postbuild": "yarn build:rss",
     "start": "next start",
     "export": "next export",
     "lint": "yarn lint:eslint; yarn lint:prettier",
