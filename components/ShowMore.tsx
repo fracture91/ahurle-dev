@@ -34,9 +34,10 @@ export const ShowMoreButton: WrapFC<
       },
       ...(focusBasisSelector
         ? {
-            [`${focusBasisSelector}:focus ~ &, ${focusBasisSelector}:hover ~ &`]: {
-              ...theme.buttons.primary["&:hover, &:focus"],
-            },
+            [`${focusBasisSelector}:focus ~ &, ${focusBasisSelector}:hover ~ &`]:
+              {
+                ...theme.buttons.primary["&:hover, &:focus"],
+              },
             [`${focusBasisSelector}:focus-visible ~ &`]: browserKbFocusStyles,
           }
         : {}),

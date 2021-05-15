@@ -8,7 +8,8 @@ const shiftHeadings = require("hast-util-shift-heading")
  * Downgrades all headings if H1 is present.
  * I'm assuming an H1 already exists on the page outside of this doc.
  */
-module.exports = () =>
+module.exports =
+  () =>
   /**
    * @param {import("unist").Parent} tree
    * @param {import("vfile").VFile} _file

@@ -135,13 +135,10 @@ export const ThemeSwitcher: React.FC = () => {
     },
     [setThemeUIColorMode]
   )
-  const [
-    persistedMode,
-    setPersistedMode,
-    removePersistedMode,
-  ] = useLocalStorage<ColorMode | undefined>(STORAGE_KEY, undefined, {
-    raw: true,
-  })
+  const [persistedMode, setPersistedMode, removePersistedMode] =
+    useLocalStorage<ColorMode | undefined>(STORAGE_KEY, undefined, {
+      raw: true,
+    })
 
   const [firstRender, setFirstRender] = useState(true)
   const metaMode: MetaMode | undefined = MetaMode.all.find(

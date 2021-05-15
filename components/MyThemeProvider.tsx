@@ -8,9 +8,9 @@ import { UnwrapImages } from "@/components/UnwrapImages"
 import { Figcaption } from "@/components/Figcaption"
 import React from "react"
 
-const MDXPre: React.FC<
-  React.ComponentPropsWithoutRef<"pre">
-> = React.memo((props) => <Themed.pre {...props} sx={prismStyle} />)
+const MDXPre: React.FC<React.ComponentPropsWithoutRef<"pre">> = React.memo(
+  (props) => <Themed.pre {...props} sx={prismStyle} />
+)
 
 const MDXLink: React.FC<React.ComponentPropsWithoutRef<"a">> = ({
   children,

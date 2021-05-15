@@ -83,9 +83,10 @@ export const prismStyle: ThemeUICSSObject = {
       color: "#ffc66d",
     },
     ".token.selector": {
-      "> .token.class, > .token.attribute, > .token.pseudo-class, > .token.pseudo-element": {
-        color: "#ffc66d",
-      },
+      "> .token.class, > .token.attribute, > .token.pseudo-class, > .token.pseudo-element":
+        {
+          color: "#ffc66d",
+        },
     },
   },
 }

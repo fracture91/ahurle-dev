@@ -41,7 +41,7 @@ export class PagePath {
   }
 
   myClass<T extends typeof PagePath>(): T {
-    return (this.constructor as unknown) as T
+    return this.constructor as unknown as T
   }
 
   glob<T extends typeof PagePath>(this: InstanceType<T>): InstanceType<T>[] {

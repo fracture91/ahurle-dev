@@ -148,7 +148,7 @@ const onRouteChange = () => {
   window.goatcounter.queue = []
   // goatcounter does not track pushState changes automatically - do it myself
   // count() param is not actually required, but all other calls to it should have {event: true}
-  window.goatcounter.count((undefined as unknown) as CountVars)
+  window.goatcounter.count(undefined as unknown as CountVars)
   // Goatcounter only adds event listeners on load e.g. for tracking data-goatcounter-click.
   // Re-add them after the page changes, when a bunch of stuff has definitely re-rendered.
   // Goatcounter is smart enough to avoid adding duplicate listeners.

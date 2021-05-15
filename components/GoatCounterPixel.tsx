@@ -35,6 +35,5 @@ const RealGoatCounterPixel: React.FC<{
 /**
  * Fallback for when JS is turned off - only render on the server!
  */
-export const GoatCounterPixel: typeof RealGoatCounterPixel = globals.goatCounterId
-  ? RealGoatCounterPixel
-  : () => null
+export const GoatCounterPixel: typeof RealGoatCounterPixel =
+  globals.goatCounterId ? RealGoatCounterPixel : () => null

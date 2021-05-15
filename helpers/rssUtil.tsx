@@ -18,7 +18,7 @@ const NoopEmotionCache: EmotionCache = {
   sheet: {
     // eslint-disable-next-line @typescript-eslint/no-empty-function
     insert(..._args) {},
-    container: (null as unknown) as HTMLElement,
+    container: null as unknown as HTMLElement,
     key: "",
     // eslint-disable-next-line @typescript-eslint/no-empty-function
     flush(..._args) {},
