@@ -182,7 +182,7 @@ export const ThemeSwitcher: React.FC = () => {
     (selectedMode: MetaMode, _event: ChangeEvent<HTMLInputElement>) => {
       if (!selectedMode.themeUIColorMode) {
         setColorModeAndClass(
-          getPreferredColorScheme() || theme.initialColorModeName,
+          getPreferredColorScheme() || theme.config.initialColorModeName,
           // note that by removing the class I'm relying on DarkMediaStyle here
           { removeClass: true }
         )
