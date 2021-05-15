@@ -25,7 +25,7 @@ Feel free to fork this repo for your own website! I know how annoying it is to g
 - ESLint, Prettier, Jest, and a CI config for [Github Actions](https://github.com/features/actions?utm_source=ahurle-dev) - Free!
 - Newsletter signup with [TinyLetter](https://tinyletter.com/?utm_source=ahurle-dev)
 - Excerpt, Table of Contents, and Reading Time get extracted from each blog post
-- SEO, a11y, RSS, page speed are all in pretty good shape
+- SEO, a11y, RSS, sitemap, page speed are all in pretty good shape
 
 ## Getting started
 
@@ -75,6 +75,10 @@ There are a few basic things you'll want to change right away to make it "your" 
 ### [helpers/globals.ts](./helpers/globals.ts)
 
 The constants in this file are pretty self-explanatory. Change the name to match your name, the domain to match yours, etc.
+
+### [next-sitemap.js](./next-sitemap.js)
+
+I got lazy here and duplicated some config from `globals.ts` - change the URL to match your prodUrl, and add any exclusions for e.g. unpublished blog posts.
 
 ### GoatCounter
 
