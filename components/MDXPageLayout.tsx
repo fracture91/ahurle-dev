@@ -1,8 +1,8 @@
-import type { PageLayoutProps } from "@/helpers/loader"
 import { Themed } from "theme-ui"
 import { Middle, Top } from "@/components/PageSection"
 import { PageStaticProps } from "@/helpers/getPageStaticProps"
 import { PageMeta } from "@/helpers/schema"
+import type { PageLayoutProps } from "@/helpers/loader"
 import { Meta } from "./Meta"
 
 const ThisHead: React.FC<{ meta: PageMeta }> = ({ meta }) => (

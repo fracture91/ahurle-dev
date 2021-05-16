@@ -2,11 +2,11 @@ import { ThemeProvider, Themed } from "theme-ui"
 import Link from "next/link"
 import { theme } from "@/helpers/theme"
 import { prismStyle } from "@/helpers/prismStyle"
-import type { MDXProviderComponents } from "@theme-ui/mdx"
 import { ImageRenderer } from "@/components/ImageRenderer"
 import { UnwrapImages } from "@/components/UnwrapImages"
 import { Figcaption } from "@/components/Figcaption"
 import React from "react"
+import type { MDXProviderComponents } from "@theme-ui/mdx"
 
 const MDXPre: React.FC<React.ComponentPropsWithoutRef<"pre">> = React.memo(
   (props) => <Themed.pre {...props} sx={prismStyle} />
