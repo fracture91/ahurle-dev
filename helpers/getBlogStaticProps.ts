@@ -3,8 +3,8 @@ import removeUndefined from "rundef"
 import { BlogMeta } from "@/helpers/schema"
 import { BlogPostPath } from "@/helpers/BlogPostPath"
 import { BlogLayoutProps, processRawBlogMeta } from "@/helpers/loader"
-import type { AddArgument } from "@/helpers/AddArgument"
 import fs from "fs"
+import type { AddArgument } from "@/helpers/AddArgument"
 
 export type BlogStaticProps = { processedMeta: BlogMeta }
 

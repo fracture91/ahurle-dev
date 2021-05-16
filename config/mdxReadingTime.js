@@ -10,7 +10,8 @@ const blockTypes = ["paragraph", "heading", "listItem", "blockquote"]
 // - lone punctuation (" - ") counts as words
 // - any additional text from JSX or rehype plugins doesn't count against reading time
 
-module.exports = () =>
+module.exports =
+  () =>
   /**
    * @param {import("unist").Parent} tree
    * @param {import("vfile").VFile} _file

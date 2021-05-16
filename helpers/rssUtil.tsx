@@ -3,8 +3,8 @@ import RSS from "rss"
 import fs from "fs"
 import { renderToStaticMarkup } from "react-dom/server"
 import { CacheProvider, EmotionCache } from "@emotion/react"
-import type { MDXBlogLayout } from "@/components/MDXBlogLayout"
 import { MyThemeProvider } from "@/components/MyThemeProvider"
+import type { MDXBlogLayout } from "@/components/MDXBlogLayout"
 import * as globals from "./globals"
 import { MetaAndContent } from "./loader"
 
@@ -18,7 +18,7 @@ const NoopEmotionCache: EmotionCache = {
   sheet: {
     // eslint-disable-next-line @typescript-eslint/no-empty-function
     insert(..._args) {},
-    container: (null as unknown) as HTMLElement,
+    container: null as unknown as HTMLElement,
     key: "",
     // eslint-disable-next-line @typescript-eslint/no-empty-function
     flush(..._args) {},

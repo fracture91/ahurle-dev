@@ -11,12 +11,13 @@ const truncate = require("lodash/truncate")
  * separator?: TOps["separator"],
  * omission?: TOps["omission"]
  * }} options */
-module.exports = ({
-  maxParagraphs = 3,
-  maxLen = 300,
-  separator = /[\p{P}\p{Z}]+/u, // unicode punctuation, separators
-  omission = "…",
-} = {}) =>
+module.exports =
+  ({
+    maxParagraphs = 3,
+    maxLen = 300,
+    separator = /[\p{P}\p{Z}]+/u, // unicode punctuation, separators
+    omission = "…",
+  } = {}) =>
   /**
    * @param {import("unist").Parent} tree
    * @param {import("vfile").VFile} _file

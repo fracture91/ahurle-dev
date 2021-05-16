@@ -135,13 +135,10 @@ export const ThemeSwitcher: React.FC = () => {
     },
     [setThemeUIColorMode]
   )
-  const [
-    persistedMode,
-    setPersistedMode,
-    removePersistedMode,
-  ] = useLocalStorage<ColorMode | undefined>(STORAGE_KEY, undefined, {
-    raw: true,
-  })
+  const [persistedMode, setPersistedMode, removePersistedMode] =
+    useLocalStorage<ColorMode | undefined>(STORAGE_KEY, undefined, {
+      raw: true,
+    })
 
   const [firstRender, setFirstRender] = useState(true)
   const metaMode: MetaMode | undefined = MetaMode.all.find(
@@ -182,7 +179,7 @@ export const ThemeSwitcher: React.FC = () => {
     (selectedMode: MetaMode, _event: ChangeEvent<HTMLInputElement>) => {
       if (!selectedMode.themeUIColorMode) {
         setColorModeAndClass(
-          getPreferredColorScheme() || theme.initialColorModeName,
+          getPreferredColorScheme() || theme.config.initialColorModeName,
           // note that by removing the class I'm relying on DarkMediaStyle here
           { removeClass: true }
         )

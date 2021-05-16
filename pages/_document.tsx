@@ -27,6 +27,7 @@ class MyDocument extends Document {
           <style
             // because of this emotion bug: https://github.com/emotion-js/emotion/issues/2158
             // it might be helpful to comment the next line when iterating on global styles
+            // possibly fixed by extractCriticalToChunks: https://github.com/emotion-js/emotion/pull/2334
             data-emotion={`css ${styles.ids.join(" ")}`}
             // eslint-disable-next-line react/no-danger
             dangerouslySetInnerHTML={{ __html: styles.css }}

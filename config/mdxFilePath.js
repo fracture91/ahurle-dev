@@ -3,7 +3,8 @@
 const u = require("unist-builder")
 const path = require("path")
 
-module.exports = () =>
+module.exports =
+  () =>
   /**
    * @param {import("unist").Parent} tree
    * @param {import("vfile").VFile} file

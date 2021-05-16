@@ -20,9 +20,9 @@ global.beforeEach(() => {
   // It is surely incomplete but works for my purposes.
   // Note that you likely need to set window.location.href to something in your test since
   // next-page-tester won't do that for you when you use getPage()
-  const location = (new URL(
+  const location = new URL(
     window.location.href
-  ) as unknown) as typeof window.location
+  ) as unknown as typeof window.location
   location.assign = jest.fn((href) => {
     location.href = href
   })

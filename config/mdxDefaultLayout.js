@@ -19,7 +19,8 @@ const path = require("path")
  * @typedef {{condition: (tree: Tree, file: File) => boolean, name: string, path: string}} Layout
  * @param {Layout[] | Layout} options
  */
-const remarkMdxDefaultLayout = (options = []) =>
+const remarkMdxDefaultLayout =
+  (options = []) =>
   /**
    * @param {Tree} tree
    * @param {File} file

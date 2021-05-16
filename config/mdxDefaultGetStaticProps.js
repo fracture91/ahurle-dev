@@ -13,7 +13,8 @@ const path = require("path")
  * @typedef {{condition: (tree: Tree, file: File) => boolean, name: string, path: string}} GSPConfig
  * @param {GSPConfig[] | GSPConfig} options
  */
-const mdxDefaultGetStaticProps = (options = []) =>
+const mdxDefaultGetStaticProps =
+  (options = []) =>
   /**
    * @param {Tree} tree
    * @param {File} file

@@ -97,10 +97,11 @@ const colors = {
 } as const
 
 export const theme = makeTheme({
-  useLocalStorage: false, // persists prefers-color-scheme by default :(
-  useColorSchemeMediaQuery: true, // default to the user's preferred mode
-  initialColorModeName: "light" as const,
-  useRootStyles: true,
+  config: {
+    useLocalStorage: false, // persists prefers-color-scheme by default :(
+    useColorSchemeMediaQuery: true, // default to the user's preferred mode
+    initialColorModeName: "light" as const,
+  },
   colors,
   breakpoints: ["40rem", "60rem", "120rem", "180rem"],
   space: [0, 4, 8, 16, 32, 64, 128, 256, 512],
@@ -458,18 +459,18 @@ export type Theme = typeof theme
 
 export type ColorMode =
   | keyof typeof theme.colors.modes
-  | typeof theme.initialColorModeName
+  | typeof theme.config.initialColorModeName
 
 export const colorModes: ColorMode[] = Object.keys(
   theme.colors.modes
 ) as ColorMode[]
-colorModes.unshift(theme.initialColorModeName)
+colorModes.unshift(theme.config.initialColorModeName)
 
 interface ContextValue extends Omit<GenericContextValue, "theme"> {
   theme: Theme
   colorMode: ColorMode
 }
 
-export const useThemeUI = (genericUseThemeUI as unknown) as () => ContextValue
+export const useThemeUI = genericUseThemeUI as unknown as () => ContextValue
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export const useColorMode = () => genericUseColorMode<ColorMode>()

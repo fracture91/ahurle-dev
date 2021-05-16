@@ -2,8 +2,8 @@ import React from "react"
 import { BlogMeta } from "@/helpers/schema"
 import { Box, Flex, Text, Themed } from "theme-ui"
 import Image from "next/image"
-import type * as readingTime from "reading-time"
 import { WrapFC } from "@/helpers/WrapFC"
+import type * as readingTime from "reading-time"
 
 /**
  * Takes advantage of whitespace collapsing to show separators only when two

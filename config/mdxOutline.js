@@ -20,7 +20,8 @@ const toSource = require("unist-util-source")
  * Recommend chaining after rehype-slug, rehype-autolink-headings, and rehypeDowngradeH1.
  * Raises an exception if heading levels are skipped.
  */
-module.exports = () =>
+module.exports =
+  () =>
   /**
    * @param {Parent} tree
    * @param {import("vfile").VFile} file
