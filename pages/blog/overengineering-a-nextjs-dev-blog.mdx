@@ -101,6 +101,8 @@ import darcula from "react-syntax-highlighter/dist/cjs/styles/prism/darcula"
 
 After this first cut of optimizations, the final JS weight came out to 178KB gzipped and 519KB uncompressed, or about a 50% reduction. I could stomach those numbers. And they get even better later on!
 
+> Note: After writing this article, I [upstreamed these optimizations](https://github.com/colinhacks/devii/pull/15) into Devii itself
+
 # Testing
 
 The next thing I looked into was how I could write automated tests for my pages. And I really mean _entire pages_ - In Rails I'm used to calling `get "/some/page"` and then inspecting the HTML or HTTP status code.
