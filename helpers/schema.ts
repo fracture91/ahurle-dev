@@ -1,17 +1,17 @@
 import * as z from "zod"
 
 const PhotoSchema = z.object({
-  src: z.string().nonempty(),
-  alt: z.string().nonempty(),
+  src: z.string().min(1),
+  alt: z.string().min(1),
 })
 export type Photo = z.infer<typeof PhotoSchema>
 
 const RawBannerPhotoSchema = PhotoSchema.extend({
   caption: z
     .string()
-    .nonempty()
+    .min(1)
     .optional()
-    .or(z.object({ unsplash: z.string().nonempty() })),
+    .or(z.object({ unsplash: z.string().min(1) })),
   width: z.number().int().positive().optional(),
   height: z.number().int().positive().optional(),
 }).strict()
@@ -26,9 +26,9 @@ export type BannerPhoto = z.infer<typeof BannerPhotoSchema>
 
 const AuthorSchema = z
   .object({
-    name: z.string().nonempty(),
+    name: z.string().min(1),
     photo: z.optional(PhotoSchema),
-    twitter: z.optional(z.string().nonempty()),
+    twitter: z.optional(z.string().min(1)),
   })
   .strict()
 export type Author = z.infer<typeof AuthorSchema>
@@ -36,10 +36,10 @@ export type Author = z.infer<typeof AuthorSchema>
 const RawPageMetaSchemaNoTransform = z
   .object({
     bare: z.boolean().optional(),
-    title: z.string().nonempty(),
-    visibleTitle: z.string().nonempty().optional(),
-    description: z.string().nonempty().optional(),
-    canonicalUrl: z.string().nonempty().optional(),
+    title: z.string().min(1),
+    visibleTitle: z.string().min(1).optional(),
+    description: z.string().min(1).optional(),
+    canonicalUrl: z.string().min(1).optional(),
   })
   .strict()
 export const RawPageMetaSchema = RawPageMetaSchemaNoTransform.transform(
@@ -58,14 +58,14 @@ export const RawBlogMetaSchema = RawPageMetaSchemaNoTransform.omit({
   bare: true,
 })
   .extend({
-    title: z.string().nonempty(),
-    subtitle: z.string().nonempty().optional(),
-    description: z.string().nonempty().optional(),
-    canonicalUrl: z.string().nonempty().optional(),
+    title: z.string().min(1),
+    subtitle: z.string().min(1).optional(),
+    description: z.string().min(1).optional(),
+    canonicalUrl: z.string().min(1).optional(),
     published: z.boolean().optional(),
     datePublished: z.number().int().positive().optional(),
     author: AuthorSchema.optional(),
-    tags: z.string().nonempty().array().optional(),
+    tags: z.string().min(1).array().optional(),
     bannerPhoto: RawBannerPhotoSchema.optional(),
     forcedTocVisibility: z.boolean().optional(),
     noForms: z.boolean().optional(),
