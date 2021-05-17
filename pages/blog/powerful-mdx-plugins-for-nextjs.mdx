@@ -1,0 +1,91 @@
+import * as mdxLogo from "@/public/img/mdx-logo.svg"
+import imgAttrs from "@/helpers/imgAttrs"
+
+export const meta = {
+  title: "Powerful MDX Plugins for Next.js",
+  published: true,
+  datePublished: 1621205087000,
+  bannerPhoto: {
+    ...imgAttrs(mdxLogo),
+    alt: "The MDX logo - a black 'M', downwards arrow, and orange 'X'",
+  },
+}
+
+Here is an introduction
+
+Despite the title of this article, these plugins are not strictly "for Next.js".  I'll go over some Next-specific setup and a few plugins to help with that, but most of these will work with any framework.
+
+# Basic, Testable MDX Setup
+
+There are
+[a ton of methods for integrating MDX with Next.js](https://www.joshwcomeau.com/blog/how-i-built-my-blog/#using-mdx-with-nextjs).
+I chose
+[@next/mdx](https://github.com/vercel/next.js/tree/canary/packages/next-mdx)
+for these reasons:
+
+* It's the "official" way, and uses the stable and popular [@mdx-js/mdx](https://github.com/mdx-js/mdx) v1
+* It allows using the full power of MDX (`import`, `export`, etc.).  next-mdx-remote disallows `import`/`export`.
+
+- all possible plugins: next-mdx-remote, xdm, next/mdx, kent c. dodds' thing
+- important caveats: plugins have to be written in vanilla Node JS, performance may be poor with hundreds of MDX files, may break with MDX v2
+- no plugins yet, just babel patch
+- babel patch: https://github.com/vercel/next.js/issues/12053#issuecomment-622939046
+- aside: Tried dynamically requiring MDX files in a blog/[slug].tsx file - next-page-tester didn't like it at the time
+- making things work the same way in jest as they do in webpack - jest-transformer-mdx + patch
+
+```jsx
+import { MDXBlogLayout } from "@/components/MDXBlogLayout"
+import { getBlogStaticProps } from "@/helpers/getBlogStaticProps"
+export const getStaticProps = (...args) =>
+  getBlogStaticProps(...args, layoutProps)
+export default MDXBlogLayout
+
+// more MDX follows...
+```
+
+# A Couple Simple Plugins
+
+- Need file path to e.g. get the blog post slug
+- This pattern of adding an export node at the end is very useful
+- Need to downgrade headers because I add one H1 at the top in my default layout
+
+```jsx
+export const meta = {
+  title: "A Cool Blog Post",
+  // ...
+}
+```
+
+Can write my headings like so:
+
+```md
+# First heading
+
+# Second heading
+
+## Nested inside second heading
+```
+
+```md
+## First heading
+
+## Second heading
+
+### Nested inside second heading
+```
+
+# Remove Boilerplate
+
+- Show plugins that avoid copypasta - mdxDefaultLayout, mdxDefaultGetStaticProps
+
+# Measure Reading Time
+
+# Extract Article Excerpts
+
+# Build Outlines for Table of Contents
+
+# Find Image Dimensions for next/image
+
+- Plugin for getting image sizes: https://kylepfromer.com/blog/nextjs-image-component-blog
+- Webpack loader for importing images in MDX with size info
+- Matching stub for jest
