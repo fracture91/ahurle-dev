@@ -29,7 +29,7 @@ for these reasons:
 Unfortunately, there are some caveats:
 
 - `@next/mdx` may not scale as well as alternatives, but I don't plan on writing hundreds of blog articles anyway
-- Because all of the MDX configuration happens in plain old Node JS files when Next boots, [none of my custom plugins can use TypeScript](https://github.com/vercel/next.js/issues/5318).  That is, unless I want to extract them out into a separate package which transpiles for me.  Luckily, [JSDoc comments](https://www.typescriptlang.org/docs/handbook/jsdoc-supported-types.html) can bridge the gap.
+- Because all of the MDX configuration happens in plain old Node JS files when Next boots, [none of my custom plugins can use TypeScript](https://github.com/vercel/next.js/issues/5318). That is, unless I want to extract them out into a separate package which transpiles for me. Luckily, [JSDoc comments](https://www.typescriptlang.org/docs/handbook/jsdoc-supported-types.html) can bridge the gap.
 
 Following the `@next/mdx` setup instructions will let you add files in `./pages/blog/a-cool-article.mdx`, and they will be treated like [any other page](https://nextjs.org/docs/basic-features/pages):
 
@@ -42,7 +42,7 @@ export const meta = {
 Hello world
 ```
 
-The next problem to solve is how to wrap a blog post in some kind of shared layout.  For example, I'd like to read the title from the `meta` object above so I can put it in `<head><title>A Cool Article</title></head>`, and put the `bannerPhoto` inside an `<img>` element that's bigger than other images in my markdown.  To do this, simply provide a component as a default export:
+The next problem to solve is how to wrap a blog post in some kind of shared layout. For example, I'd like to read the title from the `meta` object above so I can put it in `<head><title>A Cool Article</title></head>`, and put the `bannerPhoto` inside an `<img>` element that's bigger than other images in my markdown. To do this, simply provide a component as a default export:
 
 ```jsx
 import { MDXBlogLayout } from "@/components/MDXBlogLayout"
@@ -51,7 +51,7 @@ export default MDXBlogLayout
 
 The MDXBlogLayout component will receive [all exported data as props](https://mdxjs.com/advanced/components#layout-props).
 
-Another feature I'd like is to post-process the `meta` object at build time so I can validate its structure, add some defaults for missing data, etc.  Well, since our MDX file is just like any other page, we can export a [getStaticProps](https://nextjs.org/docs/basic-features/data-fetching#getstaticprops-static-generation) function which is responsible for this validation.
+Another feature I'd like is to post-process the `meta` object at build time so I can validate its structure, add some defaults for missing data, etc. Well, since our MDX file is just like any other page, we can export a [getStaticProps](https://nextjs.org/docs/basic-features/data-fetching#getstaticprops-static-generation) function which is responsible for this validation.
 
 ```jsx
 import { getBlogStaticProps } from "@/helpers/getBlogStaticProps"
@@ -59,20 +59,19 @@ export const getStaticProps = (...args) =>
   getBlogStaticProps(...args, layoutProps)
 ```
 
-`layoutProps` is magically provided by MDX - it contains all `export`ed data, including `meta`.  We want to pass that to the shared `getBlogStaticProps` so it can work with `meta`.  Note that this [will probably break in MDX v2](https://github.com/mdx-js/mdx/pull/1199)!
+`layoutProps` is magically provided by MDX - it contains all `export`ed data, including `meta`. We want to pass that to the shared `getBlogStaticProps` function so it can work with `meta`. Note that this [will probably break in MDX v2](https://github.com/mdx-js/mdx/pull/1199)!
 
-At this point, you'll probably run into a compilation error regarding `getStaticProps`.  You'll need [this babel plugin](https://github.com/vercel/next.js/issues/12053#issuecomment-622939046) from Matija Marohnić to fix it.  [Here it is in my repo](https://github.com/fracture91/ahurle-dev/blob/master/babel-plugin-nextjs-mdx-patch.js) for posterity.
+At this point, you'll probably run into a compilation error regarding `getStaticProps`. You'll need [this babel plugin](https://github.com/vercel/next.js/issues/12053#issuecomment-622939046) from Matija Marohnić to fix it. [Here it is in my repo](https://github.com/fracture91/ahurle-dev/blob/master/babel-plugin-nextjs-mdx-patch.js) for posterity.
 
-The final piece of the puzzle is getting this working in tests, specifically with [`next-page-tester`](https://github.com/toomuchdesign/next-page-tester/).  What's tricky about Jest is that it's a totally separate build environment from the webpack setup provided by Next.js.  It has no idea how to handle `import article from "@/pages/blog/a-cool-article.mdx"`.  Luckily, there is some magic called [`jest-transformer-mdx`](https://github.com/bitttttten/jest-transformer-mdx) which will teach Jest how to handle those imports.
+The final piece of the puzzle is getting this working in tests, specifically with [`next-page-tester`](https://github.com/toomuchdesign/next-page-tester/). What's tricky about Jest is that its build environment is totally separate from the webpack setup provided by Next.js. It has no idea how to handle `import article from "@/pages/blog/a-cool-article.mdx"`. Luckily, there is some magic called [`jest-transformer-mdx`](https://github.com/bitttttten/jest-transformer-mdx) which will teach Jest how to handle those imports.
 
-The problem with `jest-transformer-mdx` is that it does not have a way to configure MDX plugins.  I have [a PR up to solve the problem](https://github.com/bitttttten/jest-transformer-mdx/pull/20), but in the meantime you can use [this patch](https://github.com/fracture91/ahurle-dev/blob/master/patches/jest-transformer-mdx%2B2.2.0.patch).  This lets you [configure Jest like so](https://github.com/fracture91/ahurle-dev/blob/ef0fd642db4b70e958d85625a7a3652ae418811b/jest.config.js#L20-L23) to point at [a shared configuration file](https://github.com/fracture91/ahurle-dev/blob/ef0fd642db4b70e958d85625a7a3652ae418811b/config/mdxOptions.js#L54-L70), which is [also used by `@next/mdx`](https://github.com/fracture91/ahurle-dev/blob/ef0fd642db4b70e958d85625a7a3652ae418811b/next.config.js#L12-L15).  Now all of our MDX plugins will run in tests too, hooray!
-
+The problem with `jest-transformer-mdx` is that it does not have a way to configure MDX plugins. I have [a PR up to solve the problem](https://github.com/bitttttten/jest-transformer-mdx/pull/20), but in the meantime you can use [this patch](https://github.com/fracture91/ahurle-dev/blob/master/patches/jest-transformer-mdx%2B2.2.0.patch). This lets you [configure Jest like so](https://github.com/fracture91/ahurle-dev/blob/ef0fd642db4b70e958d85625a7a3652ae418811b/jest.config.js#L20-L23) to point at [a shared configuration file](https://github.com/fracture91/ahurle-dev/blob/ef0fd642db4b70e958d85625a7a3652ae418811b/config/mdxOptions.js#L54-L70), which is [also used by `@next/mdx`](https://github.com/fracture91/ahurle-dev/blob/ef0fd642db4b70e958d85625a7a3652ae418811b/next.config.js#L12-L15). Now all of our MDX plugins will run in tests too, hooray!
 
 # A Couple Simple Plugins
 
 Let's walk through some MDX plugin basics to get warmed up.
 
-Right now your shared configuration file looks something like this, since you have no plugins:
+Right now your shared configuration file should look something like this, since you have no plugins:
 
 ```js
 module.exports = {
@@ -81,19 +80,19 @@ module.exports = {
 }
 ```
 
-Plugins are separated into two categories: those that operate on an Abstract Syntax Tree representing the Markdown document (`remarkPlugins`), and those that operate on an AST representing the HTML that the Markdown turns into (`rehypePlugins`).  In both ASTs you can find some extra nodes representing MDX's `import`/`export` statements.
+Plugins are separated into two categories: those that operate on an Abstract Syntax Tree representing the Markdown document (`remarkPlugins`), and those that operate on an AST representing the HTML that the Markdown turns into (`rehypePlugins`). In both ASTs you can find some extra nodes representing MDX's `import`/`export`/`jsx` statements.
 
-Both kinds of plugins are basically functions which take two arguments: the first is the AST, the second is the file.  Plugins usually mutate the tree in order to work their magic.  You can read [the official docs](https://mdxjs.com/advanced/plugins) for more info. 
+Both kinds of plugins are basically functions which take two arguments: the first is the AST, the second is the file. Plugins usually mutate the tree in order to work their magic. You can read [the official docs](https://mdxjs.com/advanced/plugins) for more info.
 
-To get a little more concrete, here is a very simple plugin:
+To get a little more concrete, here is a very simple `remarkPlugin`:
 
 ```js
 const u = require("unist-builder")
 const path = require("path")
 
 module.exports =
-  () => // curried, often used for passing options to the plugin
-  (tree, file) => {
+  // curried, often used for passing options to the plugin
+  () => (tree, file) => {
     const pathName = path.relative(process.cwd(), file.path)
     const exportNode = u(
       "export",
@@ -103,50 +102,13 @@ module.exports =
   }
 ```
 
-In this plugin, I want to add an `export` statement containing the current file path, so I can grab a URL slug for the page in `getStaticProps`, among other things.  First I calculate a relative path to the file specified in the second argument, then I create an AST node representing an `export` statement, and then insert that node into the tree.  If I add this function to my `remarkPlugins` array, it will be like I typed `export const path = "./pages/blog/a-cool-article"` at the beginning of every file.
+In this plugin, I want to add an `export` statement containing the current file path, so I can grab a URL slug for the page in `getStaticProps`, among other things. First I calculate a relative path to the file specified in the second argument, then I create an AST node representing an `export` statement, and then insert that node into the tree. If I add this function to my `remarkPlugins` array, it will be like I typed `export const path = "./pages/blog/article-name-here.mdx"` at the beginning of every file.
 
-This "add an export statement" pattern is extremely useful and present in most of my other plugins.  It lets you use the added data inside the MDX file itself, outside of it with `import { path } from "@/pages/blog/a-cool-article.mdx"`, or inside `getStaticProps` thanks to the `layoutProps` magic we added earlier.
+This "add an export statement" pattern is extremely useful and present in most of my other plugins. It lets you use the added data inside the MDX file itself, outside of it with `import { path } from "@/pages/blog/a-cool-article.mdx"`, or inside `getStaticProps` thanks to the `layoutProps` magic we added earlier.
 
 ---
 
-Let's try to solve a different problem, this time with a `rehypePlugin`.  All of my blog articles add their own `<h1>` tag in `MDXBlogLayout`.
-
-Let's look at a plugin that actually examines the AST - this time with `rehype`:
-
-```js
-const visit = require("unist-util-visit")
-const shiftHeadings = require("hast-util-shift-heading")
-
-module.exports =
-  () =>
-  (tree, _file) => {
-    let hasH1 = false
-    visit(tree, ["element"], (node) => {
-      if (node.tagName === "h1") {
-        hasH1 = true
-        return visit.EXIT
-      }
-      return visit.CONTINUE
-    })
-    if (hasH1) {
-      shiftHeadings(tree, 1)
-    }
-  }
-```
-
-
-- Need file path to e.g. get the blog post slug
-- This pattern of adding an export node at the end is very useful
-- Need to downgrade headers because I add one H1 at the top in my default layout
-
-```jsx
-export const meta = {
-  title: "A Cool Blog Post",
-  // ...
-}
-```
-
-Can write my headings like so:
+Let's try to solve a different problem, this time with a `rehypePlugin`. All of my blog articles add their own `<h1>` tag in `MDXBlogLayout` based on `meta.title`. It's possible to accidentally end up with duplicate `<h1>` tags if I write some markdown like so:
 
 ```md
 # First heading
@@ -156,6 +118,8 @@ Can write my headings like so:
 ## Nested inside second heading
 ```
 
+Bots, screen readers, and the like expect a single `<h1>` tag per page, so I'd like to prevent this problem with a plugin that downgrades all headings. In some documents, I might remember to only include level 2 headings like so:
+
 ```md
 ## First heading
 
@@ -164,17 +128,92 @@ Can write my headings like so:
 ### Nested inside second heading
 ```
 
+This means we'll need to examine the AST to avoid an unnecessary heading downgrade. Let's see what that looks like:
+
+```js
+const visit = require("unist-util-visit")
+const shiftHeadings = require("hast-util-shift-heading")
+
+module.exports = () => (tree, _file) => {
+  let hasH1 = false
+  visit(tree, ["element"], (node) => {
+    if (node.tagName === "h1") {
+      hasH1 = true
+      return visit.EXIT
+    }
+    return visit.CONTINUE
+  })
+  if (hasH1) {
+    shiftHeadings(tree, 1)
+  }
+}
+```
+
+[`unist-util-visit`](https://github.com/syntax-tree/unist-util-visit) provides a `visit` function that will walk through the entire AST to find nodes of the given type, and call a callback for each one it finds. Since we're walking an HTML tree, we want to find nodes of type `"element"` (as opposed to `"text"` or `"comment"` or what-have-you). If we see any elements with a tagName of `"h1"`, we can set a `hasH1` flag to `true` and stop walking the tree.
+
+If we found an `h1` tag, we can call the handy [`hast-util-shift-heading`](https://github.com/syntax-tree/hast-util-shift-heading) function to downgrade all headings in the tree. That's it!
+
+The [unified ecosystem](https://unifiedjs.com/explore/project/syntax-tree/) has tons of little helper functions. I highly recommend skimming through them before writing your own plugin to see if you can save some effort.
+
 # Remove Boilerplate
 
-- Show plugins that avoid copypasta - mdxDefaultLayout, mdxDefaultGetStaticProps
+Now that we know how to mutate the AST, let's see what we can do about the boilerplate we'll need in every blog article. Recall that we need to do the following to wrap articles in a shared layout and use a shared `getStaticProps` function:
+
+```jsx
+import { MDXBlogLayout } from "@/components/MDXBlogLayout"
+export default MDXBlogLayout
+import { getBlogStaticProps } from "@/helpers/getBlogStaticProps"
+export const getStaticProps = (...args) =>
+  getBlogStaticProps(...args, layoutProps)
+```
+
+To avoid repeating ourselves, it would be nice if a plugin could add the import/export statements if they don't exist already. Once again, Matija Marohnić comes to the rescue with this [`remark-mdx-default-layout`](https://github.com/silvenon/silvenon.com/blob/3f1bfaad8ad4794cacd7623bff7627ce5e21ceda/etc/remark-mdx-default-layout.js) plugin. I've pulled [the plugin into my repo here](https://github.com/fracture91/ahurle-dev/blob/ef0fd642db4b70e958d85625a7a3652ae418811b/config/mdxDefaultLayout.js) and made some small improvements. Here's the plugin with all the configuration/types/error-checking removed for brevity:
+
+```js
+const u = require("unist-builder")
+const path = require("path")
+
+module.exports =
+  (options = []) =>
+  (tree, file) => {
+    // see if the file already contains a default export,
+    // in which case we can bail out early
+    const existingLayout = tree.children.find(
+      (node) => node.type === "export" && node.default
+    )
+
+    if (typeof existingLayout !== "undefined") {
+      return
+    }
+
+    const importNode = u(
+      "import",
+      `import { MDXBlogLayout } from "@/components/MDXBlogLayout"`
+    )
+    const exportNode = u("export", {
+      default: true,
+      value: `export default MDXBlogLayout`,
+    })
+
+    tree.children.unshift(importNode, exportNode)
+  }
+```
+
+You'll see that this plugin is very similar to the file path export plugin, but we need to add a preceding `import` node and make sure we're not colliding with existing exports. Note that the export node has a special `default: true` flag in this case.
+
+The real plugin allows [specifying different imports based on arbitrary conditions](https://github.com/fracture91/ahurle-dev/blob/ef0fd642db4b70e958d85625a7a3652ae418811b/config/mdxDefaultLayout.js#L18-L39). In my case, I want to make sure this behavior only applies to MDX documents inside `./pages/blog/`. I also created a [`mdxDefaultGetStaticProps`](https://github.com/fracture91/ahurle-dev/blob/ef0fd642db4b70e958d85625a7a3652ae418811b/config/mdxDefaultGetStaticProps.js) plugin that does the same thing for the `getStaticProps` export. [Here's my configuration for the plugins](https://github.com/fracture91/ahurle-dev/blob/ef0fd642db4b70e958d85625a7a3652ae418811b/config/mdxOptions.js#L16-L52).
+
+Now I can let _my computer_ - rather than my brain - worry about including the magic incantations in each MDX document 🙂
 
 # Measure Reading Time
 
+One neat feature I'd like on my blog is being able to see how long it will take to read 
+
 # Extract Article Excerpts
 
-# Build Outlines for Table of Contents
+# Build a Table of Contents
 
-# Find Image Dimensions for next/image
+# Find Image Dimensions
 
 - Plugin for getting image sizes: https://kylepfromer.com/blog/nextjs-image-component-blog
 - Webpack loader for importing images in MDX with size info
