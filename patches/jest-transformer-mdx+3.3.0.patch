@@ -1,0 +1,20 @@
+diff --git a/node_modules/jest-transformer-mdx/index.js b/node_modules/jest-transformer-mdx/index.js
+index a696a65..83dd35a 100644
+--- a/node_modules/jest-transformer-mdx/index.js
++++ b/node_modules/jest-transformer-mdx/index.js
+@@ -43,13 +43,13 @@ function resolveOptions(config) {
+ }
+ 
+ module.exports = {
+-	async processAsync(src, filepath, config) {
++	process(src, filepath, config) {
+ 		const options = resolveOptions(config)
+ 		const mdxOptions = resolveMdxOptions(options?.mdxOptions)
+ 
+ 		const withFrontMatter = parseFrontMatter(src, options?.frontMatterName)
+ 
+-		const jsx = await mdx(withFrontMatter, { ...mdxOptions, filepath })
++		const jsx = mdx.sync(withFrontMatter, { ...mdxOptions, filepath })
+ 
+ 		const toTransform = `import {mdx} from '@mdx-js/react';${jsx}`
+ 
