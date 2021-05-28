@@ -207,7 +207,56 @@ Now I can let _my computer_ - rather than my brain - worry about including the m
 
 # Measure Reading Time
 
-One neat feature I'd like on my blog is being able to see how long it will take to read 
+One neat feature I'd like on my blog is being able to show how long it will take to read a given article.  This is a solved problem - there's an npm package called [`reading-time`](https://github.com/ngryman/reading-time) which counts words in a given string and does some math to tell you how long it will take to read.  There's also [a Gatsby plugin](https://www.npmjs.com/package/gatsby-remark-reading-time) that will hook it up to MDX for you, but that isn't much help on Next.js.  Here's how we can get it working in our ideal `export` style:
+
+```js
+const u = require("unist-builder")
+const visit = require("unist-util-visit")
+const readingTime = require("reading-time")
+
+const blockTypes = ["paragraph", "heading", "listItem", "blockquote"]
+
+// known issues:
+// - lone punctuation (" - ") counts as words
+// - any additional text from JSX or rehype plugins doesn't count against reading time
+
+module.exports =
+  () =>
+  /**
+   * @param {import("unist").Parent} tree
+   * @param {import("vfile").VFile} _file
+   */
+  (tree, _file) => {
+    /** @type unknown[] */
+    const textContent = []
+    visit(tree, ["text", "inlineCode", "code"], (node, index, parent) => {
+      const isCode = node.type === "code"
+      if (
+        isCode ||
+        (parent && index === 0 && blockTypes.includes(parent.type))
+      ) {
+        // make sure block elements get their words separated from neighboring nodes
+        textContent.push(" ")
+      }
+      textContent.push(node.value)
+      if (
+        isCode ||
+        (parent &&
+          index === parent.children.length - 1 &&
+          blockTypes.includes(parent.type))
+      ) {
+        textContent.push(" ")
+      }
+    })
+    const time = readingTime(textContent.join(""))
+    const exportNode = u(
+      "export",
+      `export const readingTime = ${JSON.stringify(time)}`
+    )
+    tree.children.unshift(exportNode)
+  }
+
+```
 
 # Extract Article Excerpts
 
