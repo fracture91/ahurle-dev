@@ -19,7 +19,7 @@ module.exports = {
     "^.+\\.md$": "jest-raw-loader",
     "^.+\\.mdx$": [
       "jest-transformer-mdx",
-      { mdxOptions: "./config/mdxOptions" },
+      { mdxOptions: "./config/mdxOptions.js" },
     ],
     "^.+\\.(jpg|jpeg|png|svg|gif|ico|webp|jp2|avif)$":
       "<rootDir>/__tests__/config/imageTransform.js",
@@ -32,4 +32,5 @@ module.exports = {
     "^.+\\.module\\.(css|sass|scss)$": "identity-obj-proxy",
   },
   testURL: "http://localhost:3000/",
+  testEnvironment: "jsdom",
 }

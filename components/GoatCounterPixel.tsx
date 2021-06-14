@@ -27,6 +27,7 @@ const RealGoatCounterPixel: React.FC<{
 
   return (
     <noscript>
+      {/* eslint-disable-next-line @next/next/no-img-element */}
       <img src={`${endpoint}?${params.toString()}`} alt="" />
     </noscript>
   )
