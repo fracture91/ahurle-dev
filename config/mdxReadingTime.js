@@ -10,6 +10,10 @@ const blockTypes = ["paragraph", "heading", "listItem", "blockquote"]
 // - lone punctuation (" - ") counts as words
 // - any additional text from JSX or rehype plugins doesn't count against reading time
 
+const readingTimeOptions = {
+  wordsPerMinute: 265, // what medium uses, default 200
+}
+
 module.exports =
   () =>
   /**
@@ -38,7 +42,7 @@ module.exports =
         textContent.push(" ")
       }
     })
-    const time = readingTime(textContent.join(""))
+    const time = readingTime(textContent.join(""), readingTimeOptions)
     const exportNode = u(
       "export",
       `export const readingTime = ${JSON.stringify(time)}`
