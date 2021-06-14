@@ -5,6 +5,7 @@ module.exports = {
     node: true,
   },
   extends: [
+    "next",
     "plugin:react/recommended",
     "airbnb",
     "plugin:@typescript-eslint/recommended",
@@ -40,6 +41,7 @@ module.exports = {
       },
       rules: {
         "@typescript-eslint/explicit-module-boundary-types": "off",
+        "@next/next/no-img-element": "off",
       },
     },
   ],
