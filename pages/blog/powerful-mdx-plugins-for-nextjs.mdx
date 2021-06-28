@@ -260,7 +260,8 @@ The end result is an object that looks like this, which I can display however I 
 
 # Extract Article Excerpts
 
-When I display a list of my blog posts, I want to show a little excerpt of the article to give people a taste of what to expect. I also need the excerpt for SEO reasons. Here's a plugin that extracts an excerpt:
+When I display a list of my blog posts, I want to show a little excerpt of the article to give people a taste of what to expect. I also need the excerpt for SEO reasons.
+[Here's a plugin that extracts an excerpt](https://github.com/fracture91/ahurle-dev/blob/9c6ba565a521e75624599e8e0a26c688478ee878/config/mdxExcerpt.js):
 
 ```js
 const u = require("unist-builder")
@@ -311,6 +312,58 @@ module.exports =
 I won't explain the code in detail since it's very similar to the Reading Time plugin above, except we can bail out early once we have found a long enough snippet of text.
 
 # Build a Table of Contents
+
+There are lots of solutions for building a Table of Contents out of your markdown headings.  I've used [`doctoc`](https://github.com/thlorenz/doctoc) before, and there's a [`remark-toc`](https://github.com/remarkjs/remark-toc) plugin.  These all have the same problem I mentioned before: they can only mutate the resulting HTML, rather than provide a data structure I can use in JSX-land.  Let's create that data structure!
+
+This plugin depends on `rehype-slug` and `rehype-autolink-headings` to generate anchor tags with `id` attributes next to my headings.  That makes it so a link like `<a href="#some-heading">` will scroll to the right place.
+
+```js
+const u = require("unist-builder")
+const visit = require("unist-util-visit")
+const headingRank = require("hast-util-heading-rank")
+const toString = require("hast-util-to-string")
+
+module.exports =
+  () =>
+  (tree, file) => {
+    const outline = u("root", [])
+    const parentStack = [outline]
+
+    visit(
+      tree,
+      "element",
+      (node) => {
+        const rank = headingRank(node)
+        if (rank === null) return visit.CONTINUE
+
+        const lastDepth = parentStack.length - 1
+        const depth = rank - 2
+        if (depth > lastDepth) {
+          const lastParent = parentStack.slice(-1)[0]
+          const lastChild = lastParent.children.slice(-1)[0]
+          parentStack.push(lastChild)
+        } else if (depth < lastDepth) {
+          const difference = lastDepth - depth
+          parentStack.splice(-difference, difference) // pop last N
+        }
+
+        const heading = u(
+          "heading",
+          { id: node.properties?.id, text: toString(node) },
+          []
+        )
+        parentStack.slice(-1)[0].children.push(heading)
+        return visit.CONTINUE
+      }
+    )
+
+    const exportNode = u(
+      "export",
+      `export const outline = ${JSON.stringify(outline)}`
+    )
+    tree.children.unshift(exportNode)
+  }
+```
 
 # Find Image Dimensions
 
