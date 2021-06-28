@@ -207,7 +207,7 @@ Now I can let _my computer_ - rather than my brain - worry about including the m
 
 # Measure Reading Time
 
-One neat feature I'd like on my blog is being able to show how long it will take to read a given article.  This is a solved problem - there's an npm package called [`reading-time`](https://github.com/ngryman/reading-time) which counts words in a given string and does some math to tell you how long it will take to read.  There's also [a Gatsby plugin](https://www.npmjs.com/package/gatsby-remark-reading-time) that will hook it up to MDX for you, but that isn't much help on Next.js.  Here's how we can get it working in our ideal `export` style:
+One neat feature I'd like on my blog is being able to show how long it will take to read a given article. This is a solved problem - there's an npm package called [`reading-time`](https://github.com/ngryman/reading-time) which counts words in a given string and does some math to tell you how long it will take to read. There's also [a Gatsby plugin](https://www.npmjs.com/package/gatsby-remark-reading-time) that will hook it up to MDX for you, but that isn't much help on Next.js. Here's how we can get it working in our ideal `export` style:
 
 ```js
 const u = require("unist-builder")
@@ -216,49 +216,99 @@ const readingTime = require("reading-time")
 
 const blockTypes = ["paragraph", "heading", "listItem", "blockquote"]
 
-// known issues:
-// - lone punctuation (" - ") counts as words
-// - any additional text from JSX or rehype plugins doesn't count against reading time
+module.exports = () => (tree, _file) => {
+  const textContent = []
+  visit(tree, ["text", "inlineCode", "code"], (node, index, parent) => {
+    const isCode = node.type === "code"
+    if (isCode || (parent && index === 0 && blockTypes.includes(parent.type))) {
+      // make sure block elements get their words separated from neighboring nodes
+      textContent.push(" ")
+    }
+    textContent.push(node.value)
+    if (
+      isCode ||
+      (parent &&
+        index === parent.children.length - 1 &&
+        blockTypes.includes(parent.type))
+    ) {
+      textContent.push(" ")
+    }
+  })
+  const time = readingTime(textContent.join(""))
+  const exportNode = u(
+    "export",
+    `export const readingTime = ${JSON.stringify(time)}`
+  )
+  tree.children.unshift(exportNode)
+}
+```
+
+We need to grab all readable text from the document and pass it to `reading-time`. I use `unist-util-visit` to walk through all of the `text`, `inlineCode`, and `code` nodes. `node.value` contains the readable text, so I keep appending it to a `textContent` array and then join it all together at the end. There's a quirk though: [block-level elements](https://developer.mozilla.org/en-US/docs/Web/HTML/Block-level_elements) like paragraphs will render on their own line in the browser, but `node.value` does not contain any spacing characters to reflect that. Naïvely joining those values will lead to text like `...that was cool.So anyway...`, and `cool.So` will count as a single word. Unacceptable! I detect when this happens and add spaces around text accordingly.
+
+The end result is an object that looks like this, which I can display however I want:
+
+```json
+{
+  "minutes": 0.815,
+  "text": "1 min read",
+  "time": 48900,
+  "words": 163
+}
+```
+
+[The full source code for this plugin can be found here](https://github.com/fracture91/ahurle-dev/blob/9c6ba565a521e75624599e8e0a26c688478ee878/config/mdxReadingTime.js).
+
+# Extract Article Excerpts
+
+When I display a list of my blog posts, I want to show a little excerpt of the article to give people a taste of what to expect. I also need the excerpt for SEO reasons. Here's a plugin that extracts an excerpt:
+
+```js
+const u = require("unist-builder")
+const visit = require("unist-util-visit")
+const truncate = require("lodash/truncate")
 
 module.exports =
-  () =>
-  /**
-   * @param {import("unist").Parent} tree
-   * @param {import("vfile").VFile} _file
-   */
+  ({
+    maxParagraphs = 3,
+    maxLen = 300,
+    separator = /[\p{P}\p{Z}]+/u, // unicode punctuation, separators
+    omission = "…",
+  } = {}) =>
   (tree, _file) => {
-    /** @type unknown[] */
-    const textContent = []
-    visit(tree, ["text", "inlineCode", "code"], (node, index, parent) => {
-      const isCode = node.type === "code"
-      if (
-        isCode ||
-        (parent && index === 0 && blockTypes.includes(parent.type))
-      ) {
-        // make sure block elements get their words separated from neighboring nodes
-        textContent.push(" ")
-      }
-      textContent.push(node.value)
-      if (
-        isCode ||
-        (parent &&
-          index === parent.children.length - 1 &&
-          blockTypes.includes(parent.type))
-      ) {
-        textContent.push(" ")
-      }
+    let excerpt = ""
+    let paragraphsRemaining = maxParagraphs
+    let done = false
+
+    visit(tree, "paragraph", (paragraphNode, _index, parent) => {
+      if (paragraphsRemaining <= 0) return visit.EXIT
+      // skip any paragraphs nested in e.g. admonitions, blockquotes, etc.
+      if (parent && parent?.type !== "root") return visit.SKIP
+
+      visit(paragraphNode, ["text", "inlineCode"], (textNode) => {
+        excerpt += textNode.value
+        excerpt = excerpt.replace(/\s{2,}/g, " ")
+        done = excerpt.length > maxLen
+        if (done) return visit.EXIT
+        return visit.CONTINUE
+      })
+
+      if (done) return visit.EXIT
+      excerpt += " "
+      paragraphsRemaining -= 1
+      return visit.CONTINUE
     })
-    const time = readingTime(textContent.join(""))
+
+    excerpt = truncate(excerpt.trim(), { length: maxLen, separator, omission })
+
     const exportNode = u(
       "export",
-      `export const readingTime = ${JSON.stringify(time)}`
+      `export const excerpt = ${JSON.stringify(excerpt)}`
     )
     tree.children.unshift(exportNode)
   }
-
 ```
 
-# Extract Article Excerpts
+I won't explain the code in detail since it's very similar to the Reading Time plugin above, except we can bail out early once we have found a long enough snippet of text.
 
 # Build a Table of Contents
 
