@@ -67,4 +67,7 @@ module.exports = {
     mdxOutline,
     mdxPrism,
   ],
+  renderer: `/** @jsxRuntime classic */
+import React from 'react';
+import { mdx } from '@mdx-js/react'`,
 }

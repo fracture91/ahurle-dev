@@ -17,7 +17,6 @@ const mdx = require("@next/mdx")({ options: mdxOptions })
 // @ts-ignore: missing types
 const images = require("next-images")
 
-/** @type import("next/dist/next-server/server/config").NextConfig */
 module.exports = withPlugins(
   [
     bundleAnalyzer,
@@ -65,6 +64,7 @@ module.exports = withPlugins(
         rule.test?.toString().includes("jpeg")
       )
       if (!nextImagesRule || !Array.isArray(nextImagesRule?.use)) {
+        return config
         throw new Error("Could not find next-images rule")
       }
       nextImagesRule.use?.unshift({

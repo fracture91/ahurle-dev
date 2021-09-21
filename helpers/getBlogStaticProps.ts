@@ -27,6 +27,7 @@ const pagesOutput = ".next/server/pages/"
  * and a 200 response.  Not ideal.  But nobody should be visiting this URL if it's unpublished...
  */
 const fixNextExport = (path: BlogPostPath): void => {
+  return
   const htmlPath = `${pagesOutput}${path.pathFromPagesDir.replace(
     /\..*$|$/,
     ".html"
