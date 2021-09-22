@@ -17,6 +17,7 @@ const mdx = require("@next/mdx")({ options: mdxOptions })
 // @ts-ignore: missing types
 const images = require("next-images")
 
+/** @type import("next/dist/server/config").NextConfig */
 module.exports = withPlugins(
   [
     bundleAnalyzer,
@@ -35,9 +36,11 @@ module.exports = withPlugins(
   {
     // esModule: true,
     // inlineImageLimit: false,
+    webpack5: false, // "importSource cannot be set when runtime is classic" in MDX files
     pageExtensions: ["js", "jsx", "ts", "tsx", "mdx"],
     reactStrictMode: true,
     images: {
+      disableStaticImages: true, // disabled with webpack5: false, just being explicit
       // https://nextjs.org/docs/basic-features/image-optimization#device-sizes
       // more accurate to think of this as "widths largest optimized images will be shown at"
       // these numbers have been tweaked from default because my main page area can only be 42em wide
@@ -64,7 +67,6 @@ module.exports = withPlugins(
         rule.test?.toString().includes("jpeg")
       )
       if (!nextImagesRule || !Array.isArray(nextImagesRule?.use)) {
-        return config
         throw new Error("Could not find next-images rule")
       }
       nextImagesRule.use?.unshift({

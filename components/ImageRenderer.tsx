@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/alt-text */
 import React from "react"
 import { mainImageSizes } from "@/helpers/theme"
 import { LazyImage } from "./LazyImage"
@@ -23,9 +24,8 @@ export const ImageRenderer: React.FC<React.ComponentPropsWithoutRef<"img">> = ({
         {/*
         I'm passing props in from markdown so this is all inherently type-unsafe, hence the ts-ignores.
         These situations seem to be handled reasonably at runtime.
-        @ts-ignore: doesn't like how width/height can come with layout=="fill"
-      */}
-        {/* eslint-disable-next-line jsx-a11y/alt-text */}
+        */}
+        {/* @ts-ignore: placeholder string vs. PlaceholderValue */}
         <LazyImage
           // @ts-ignore: src is required here but optional above
           src={src}

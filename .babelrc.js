@@ -21,12 +21,7 @@ const presets = [
 const mdxPresets = JSON.parse(JSON.stringify(presets))
 // https://github.com/mdx-js/mdx/issues/1441
 // MDX v1 uses the classic runtime and will complain about importSource
-console.log(mdxPresets)
-console.log(mdxPresets[0][1]["preset-react"])
 delete mdxPresets[0][1]["preset-react"].importSource
-// mdxPresets[0][1]["preset-react"].importSource = "wee"
-mdxPresets[0][1]["preset-react"].runtime = "classic"
-console.log(mdxPresets[0][1]["preset-react"])
 
 module.exports = {
   presets,
