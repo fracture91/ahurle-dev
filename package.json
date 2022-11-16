@@ -53,7 +53,7 @@
     "hast-util-shift-heading": "^2.0.1",
     "hast-util-to-string": "^1.0.4",
     "image-size": "^1.0.0",
-    "loader-utils": "^2.0.0",
+    "loader-utils": "^2.0.4",
     "lodash": "^4.17.21",
     "mdx-prism": "0.3.3",
     "next": "^10.0.9",
